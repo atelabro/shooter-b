@@ -1,0 +1,1508 @@
+fileFormatVersion: 2
+guid: a52f313fd679b43e59694feae81db9a4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1345917370559578986
+    second: rifleshot01_0
+  - first:
+      213: 2491444143758547942
+    second: rifleshot01_1
+  - first:
+      213: -7050644515800025731
+    second: rifleshot01_2
+  - first:
+      213: 8396454426781786694
+    second: rifleshot01_3
+  - first:
+      213: 2716969131414832143
+    second: rifleshot01_4
+  - first:
+      213: -4819548263727458309
+    second: rifleshot01_5
+  - first:
+      213: -1509176441206196663
+    second: rifleshot01_6
+  - first:
+      213: 75971047045283651
+    second: rifleshot01_7
+  - first:
+      213: -8425433472394924025
+    second: rifleshot01_8
+  - first:
+      213: 1575100085276651111
+    second: rifleshot01_9
+  - first:
+      213: -2900767574143666974
+    second: rifleshot01_10
+  - first:
+      213: 8071865731281368175
+    second: rifleshot01_11
+  - first:
+      213: 671030771230714604
+    second: rifleshot01_12
+  - first:
+      213: 3148046234667423372
+    second: rifleshot01_13
+  - first:
+      213: -3663948025881372440
+    second: rifleshot01_14
+  - first:
+      213: 3492120735280889930
+    second: rifleshot01_15
+  - first:
+      213: -3851768766122955638
+    second: rifleshot01_16
+  - first:
+      213: -5869825743125045170
+    second: rifleshot01_17
+  - first:
+      213: -2749719086671519694
+    second: rifleshot01_18
+  - first:
+      213: -3354276739424266709
+    second: rifleshot01_19
+  - first:
+      213: -1580893110063536199
+    second: rifleshot01_20
+  - first:
+      213: 7389394856586372363
+    second: rifleshot01_21
+  - first:
+      213: -8172262887322413456
+    second: rifleshot01_22
+  - first:
+      213: -7554321031970987768
+    second: rifleshot01_23
+  - first:
+      213: -944357987578901
+    second: rifleshot01_24
+  - first:
+      213: 7197579960348863706
+    second: rifleshot01_25
+  - first:
+      213: -8089558336544779189
+    second: rifleshot01_26
+  - first:
+      213: 8024129613904378809
+    second: rifleshot01_27
+  - first:
+      213: -4060356793867148788
+    second: rifleshot01_28
+  - first:
+      213: 7890957624742137706
+    second: rifleshot01_29
+  - first:
+      213: -9092066816379481861
+    second: rifleshot01_30
+  - first:
+      213: 225465226777511648
+    second: rifleshot01_31
+  - first:
+      213: 4133362009393683908
+    second: rifleshot01_32
+  - first:
+      213: -4794287594190561865
+    second: rifleshot01_33
+  - first:
+      213: 5860891867267725264
+    second: rifleshot01_34
+  - first:
+      213: 3572694391897916850
+    second: rifleshot01_35
+  - first:
+      213: -1380534989589665783
+    second: rifleshot01_36
+  - first:
+      213: -9149954903536255186
+    second: rifleshot01_37
+  - first:
+      213: 1967969537086079371
+    second: rifleshot01_38
+  - first:
+      213: -7071105970802436140
+    second: rifleshot01_39
+  - first:
+      213: 5336335361228972665
+    second: rifleshot01_40
+  - first:
+      213: 807630406130775991
+    second: rifleshot01_41
+  - first:
+      213: -5981051958147434681
+    second: rifleshot01_42
+  - first:
+      213: -4367802976074422460
+    second: rifleshot01_43
+  - first:
+      213: 5313251887592714199
+    second: rifleshot01_44
+  - first:
+      213: 3573753183212526821
+    second: rifleshot01_45
+  - first:
+      213: -7321107189880218195
+    second: rifleshot01_46
+  - first:
+      213: -2748297476251927253
+    second: rifleshot01_47
+  - first:
+      213: 2931162779241246746
+    second: rifleshot01_48
+  - first:
+      213: -3881751317980235913
+    second: rifleshot01_49
+  - first:
+      213: 2241311115430456703
+    second: rifleshot01_50
+  - first:
+      213: 5516429897021716971
+    second: rifleshot01_51
+  - first:
+      213: -4114584403954825480
+    second: rifleshot01_52
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: rifleshot01_0
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 110
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69cb4ce4847525de0800000000000000
+      internalID: -1345917370559578986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_1
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 108
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6eb947e9f33639220800000000000000
+      internalID: 2491444143758547942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_2
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 112
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d75fe263b24172e90800000000000000
+      internalID: -7050644515800025731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_3
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 107
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 642a51990d2368470800000000000000
+      internalID: 8396454426781786694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_4
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 87
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f04cea7a70d94b520800000000000000
+      internalID: 2716969131414832143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_5
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 100
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf79ca2a3668d1db0800000000000000
+      internalID: -4819548263727458309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_6
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 103
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 946348ec5045e0be0800000000000000
+      internalID: -1509176441206196663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_7
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 102
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34f3958c347ed0100800000000000000
+      internalID: 75971047045283651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_8
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 104
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 700f63f85e8d21b80800000000000000
+      internalID: -8425433472394924025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_9
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 89
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76e2a9cae21ebd510800000000000000
+      internalID: 1575100085276651111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_10
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 94
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e4f13f92476eb7d0800000000000000
+      internalID: -2900767574143666974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_11
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 89
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f64bca3bd17050070800000000000000
+      internalID: 8071865731281368175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_12
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 87
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cea20906eeaff4900800000000000000
+      internalID: 671030771230714604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_13
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 79
+        width: 19
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c869bd11f5b10bb20800000000000000
+      internalID: 3148046234667423372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_14
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 79
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e8d8d1deaa072dc0800000000000000
+      internalID: -3663948025881372440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_15
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 84
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4081338e41867030800000000000000
+      internalID: 3492120735280889930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_16
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 73
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8ceb4af6b4cb8ac0800000000000000
+      internalID: -3851768766122955638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_17
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 51
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e40a69716903a8ea0800000000000000
+      internalID: -5869825743125045170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_18
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 71
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23025de2f0907d9d0800000000000000
+      internalID: -2749719086671519694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_19
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 67
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b26d244c3173371d0800000000000000
+      internalID: -3354276739424266709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_20
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 65
+        width: 25
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b7ecc2a71a8f0ae0800000000000000
+      internalID: -1580893110063536199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_21
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 67
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b05edeba8776c8660800000000000000
+      internalID: 7389394856586372363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_22
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 72
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0761a06d33a469e80800000000000000
+      internalID: -8172262887322413456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_23
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 57
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8016b12cb09a92790800000000000000
+      internalID: -7554321031970987768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_24
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 55
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: beb0c958c15acfff0800000000000000
+      internalID: -944357987578901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_25
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 66
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adc601be6d0f2e360800000000000000
+      internalID: 7197579960348863706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_26
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 56
+        width: 16
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b44d270ad8d1cbf80800000000000000
+      internalID: -8089558336544779189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_27
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 55
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bb7674ce5f6b5f60800000000000000
+      internalID: 8024129613904378809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_28
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 53
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0264383207b6a7c0800000000000000
+      internalID: -4060356793867148788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_29
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 58
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6f4a60d620528d60800000000000000
+      internalID: 7890957624742137706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_30
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 45
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf0959ff66d72d180800000000000000
+      internalID: -9092066816379481861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_31
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 44
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e6c64fdd63012300800000000000000
+      internalID: 225465226777511648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_32
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 45
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cd510a19d6ac5930800000000000000
+      internalID: 4133362009393683908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_33
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 41
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bd953595d4477db0800000000000000
+      internalID: -4794287594190561865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_34
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 50
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d7f777d912165150800000000000000
+      internalID: 5860891867267725264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_35
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 47
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b50b18de92c49130800000000000000
+      internalID: 3572694391897916850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_36
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 33
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 908a289cdba57dce0800000000000000
+      internalID: -1380534989589665783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_37
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 32
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2fb0e76e74d40180800000000000000
+      internalID: -9149954903536255186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_38
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 37
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b814ec20ed1af4b10800000000000000
+      internalID: 1967969537086079371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_39
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 30
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d75d2975926edd90800000000000000
+      internalID: -7071105970802436140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_40
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 38
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 972a868ecb87e0a40800000000000000
+      internalID: 5336335361228972665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_41
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 31
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b7ba3b4397453b00800000000000000
+      internalID: 807630406130775991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_42
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 39
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 747b77bdee80ffca0800000000000000
+      internalID: -5981051958147434681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_43
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 24
+        width: 16
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 447a03ab5527263c0800000000000000
+      internalID: -4367802976074422460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_44
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 25
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7df2322e0767cb940800000000000000
+      internalID: 5313251887592714199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_45
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 23
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ecdd48e595889130800000000000000
+      internalID: 3573753183212526821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_46
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 19
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dad91a8bcc3366a90800000000000000
+      internalID: -7321107189880218195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_47
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 27
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2db6e6a1061cd9d0800000000000000
+      internalID: -2748297476251927253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_48
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 15
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a10758b84059da820800000000000000
+      internalID: 2931162779241246746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_49
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 10
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77732612ebf312ac0800000000000000
+      internalID: -3881751317980235913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_50
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 5
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7ded52a59cba1f10800000000000000
+      internalID: 2241311115430456703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_51
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 7
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be9f25893cb4e8c40800000000000000
+      internalID: 5516429897021716971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rifleshot01_52
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 13
+        width: 19
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f609ebd84f06e6c0800000000000000
+      internalID: -4114584403954825480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      rifleshot01_0: -1345917370559578986
+      rifleshot01_1: 2491444143758547942
+      rifleshot01_10: -2900767574143666974
+      rifleshot01_11: 8071865731281368175
+      rifleshot01_12: 671030771230714604
+      rifleshot01_13: 3148046234667423372
+      rifleshot01_14: -3663948025881372440
+      rifleshot01_15: 3492120735280889930
+      rifleshot01_16: -3851768766122955638
+      rifleshot01_17: -5869825743125045170
+      rifleshot01_18: -2749719086671519694
+      rifleshot01_19: -3354276739424266709
+      rifleshot01_2: -7050644515800025731
+      rifleshot01_20: -1580893110063536199
+      rifleshot01_21: 7389394856586372363
+      rifleshot01_22: -8172262887322413456
+      rifleshot01_23: -7554321031970987768
+      rifleshot01_24: -944357987578901
+      rifleshot01_25: 7197579960348863706
+      rifleshot01_26: -8089558336544779189
+      rifleshot01_27: 8024129613904378809
+      rifleshot01_28: -4060356793867148788
+      rifleshot01_29: 7890957624742137706
+      rifleshot01_3: 8396454426781786694
+      rifleshot01_30: -9092066816379481861
+      rifleshot01_31: 225465226777511648
+      rifleshot01_32: 4133362009393683908
+      rifleshot01_33: -4794287594190561865
+      rifleshot01_34: 5860891867267725264
+      rifleshot01_35: 3572694391897916850
+      rifleshot01_36: -1380534989589665783
+      rifleshot01_37: -9149954903536255186
+      rifleshot01_38: 1967969537086079371
+      rifleshot01_39: -7071105970802436140
+      rifleshot01_4: 2716969131414832143
+      rifleshot01_40: 5336335361228972665
+      rifleshot01_41: 807630406130775991
+      rifleshot01_42: -5981051958147434681
+      rifleshot01_43: -4367802976074422460
+      rifleshot01_44: 5313251887592714199
+      rifleshot01_45: 3573753183212526821
+      rifleshot01_46: -7321107189880218195
+      rifleshot01_47: -2748297476251927253
+      rifleshot01_48: 2931162779241246746
+      rifleshot01_49: -3881751317980235913
+      rifleshot01_5: -4819548263727458309
+      rifleshot01_50: 2241311115430456703
+      rifleshot01_51: 5516429897021716971
+      rifleshot01_52: -4114584403954825480
+      rifleshot01_6: -1509176441206196663
+      rifleshot01_7: 75971047045283651
+      rifleshot01_8: -8425433472394924025
+      rifleshot01_9: 1575100085276651111
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
