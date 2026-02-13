@@ -26,6 +26,7 @@ namespace ShooterB
         public Image ammoBulletIconPrefab;
 
         private readonly List<Image> ammoBulletIcons = new List<Image>();
+        private int lastKnownMaxAmmo = -1;
 
         private void Start()
         {
@@ -94,6 +95,7 @@ namespace ShooterB
             ammoBulletIcons.Clear();
 
             int maxAmmo = shooterController.GetMaxAmmo();
+            lastKnownMaxAmmo = maxAmmo;
             for (int i = 0; i < maxAmmo; i++)
             {
                 Image icon = Instantiate(ammoBulletIconPrefab, ammoContainer);
@@ -103,7 +105,16 @@ namespace ShooterB
 
         private void UpdateAmmoDisplay()
         {
-            if (shooterController == null || ammoBulletIcons.Count == 0)
+            if (shooterController == null)
+                return;
+
+            int maxAmmo = shooterController.GetMaxAmmo();
+            if (maxAmmo != lastKnownMaxAmmo)
+            {
+                BuildAmmoIcons();
+            }
+
+            if (ammoBulletIcons.Count == 0)
                 return;
 
             int currentAmmo = shooterController.GetCurrentAmmo();

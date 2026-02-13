@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 namespace ShooterB
 {
@@ -14,6 +15,8 @@ namespace ShooterB
 
         [Header("Weapons")]
         public Weapon activeWeapon;
+        private Rifle rifleWeapon;
+        private Cabirne cabirneWeapon;
 
         [Header("Prefabs")]
         public GameObject rifleBulletPrefab;
@@ -24,50 +27,85 @@ namespace ShooterB
 
         private void Awake()
         {
-            EnsureActiveWeapon();
+            EnsureWeaponsCreated();
+            if (activeWeapon == null)
+                activeWeapon = rifleWeapon;
         }
 
         private void Start()
         {
-            EnsureActiveWeapon();
+            EnsureWeaponsCreated();
+            if (activeWeapon == null)
+                activeWeapon = rifleWeapon;
 
             StartCoroutine(LogInitialization());
         }
 
+        private void Update()
+        {
+            if (Keyboard.current == null)
+                return;
+
+            if (Keyboard.current.digit1Key.wasPressedThisFrame && rifleWeapon != null)
+            {
+                activeWeapon = rifleWeapon;
+                ApplyOrUpdateIcon(activeWeapon);
+                Debug.Log("[SHOOTER] Switched weapon to Rifle");
+            }
+
+            if (Keyboard.current.digit2Key.wasPressedThisFrame && cabirneWeapon != null)
+            {
+                activeWeapon = cabirneWeapon;
+                ApplyOrUpdateIcon(activeWeapon);
+                Debug.Log("[SHOOTER] Switched weapon to Cabirne");
+            }
+        }
+
+        private void EnsureWeaponsCreated()
+        {
+            if (rifleWeapon == null)
+                rifleWeapon = CreateWeaponInstance<Rifle>("Rifle", Constants.WeaponType.Rifle);
+
+            if (cabirneWeapon == null)
+                cabirneWeapon = CreateWeaponInstance<Cabirne>("Cabirne", Constants.WeaponType.Cabirne);
+        }
+
+        private T CreateWeaponInstance<T>(string objectName, Constants.WeaponType expectedWeaponType) where T : Weapon
+        {
+            GameObject weaponObj = new GameObject(objectName);
+            weaponObj.transform.SetParent(transform);
+            T weapon = weaponObj.AddComponent<T>();
+            weapon.weaponType = expectedWeaponType;
+
+            if (rifleBulletPrefab != null && weapon.bulletPrefab == null)
+            {
+                weapon.bulletPrefab = rifleBulletPrefab;
+            }
+
+            if (expectedWeaponType == Constants.WeaponType.Rifle && defaultRifleIcon != null && weapon.weaponIcon == null)
+            {
+                weapon.weaponIcon = defaultRifleIcon;
+            }
+
+            ApplyOrUpdateIcon(weapon);
+            return weapon;
+        }
+
         private void EnsureActiveWeapon()
         {
-            if (activeWeapon != null)
-            {
-                ApplyIconIfMissing(activeWeapon);
-                return;
-            }
-
-            GameObject rifleObj = new GameObject("Rifle");
-            rifleObj.transform.SetParent(transform);
-            Rifle rifle = rifleObj.AddComponent<Rifle>();
-
-            if (rifleBulletPrefab != null)
-            {
-                rifle.bulletPrefab = rifleBulletPrefab;
-            }
-
-            if (defaultRifleIcon != null && rifle.weaponIcon == null)
-            {
-                rifle.weaponIcon = defaultRifleIcon;
-            }
-
-            activeWeapon = rifle;
-            ApplyIconIfMissing(activeWeapon);
-
             if (activeWeapon == null)
             {
                 Debug.LogError("[SHOOTER] Failed to initialize active weapon.");
             }
+            else
+            {
+                ApplyOrUpdateIcon(activeWeapon);
+            }
         }
 
-        private void ApplyIconIfMissing(Weapon weapon)
+        private void ApplyOrUpdateIcon(Weapon weapon)
         {
-            if (weapon == null || weapon.weaponIcon != null)
+            if (weapon == null)
                 return;
 
             Sprite mappedIcon = FindIconForWeaponType(weapon.weaponType);

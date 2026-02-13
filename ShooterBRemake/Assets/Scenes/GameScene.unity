@@ -546,6 +546,21 @@ MonoBehaviour:
   activeWeapon: {fileID: 0}
   rifleBulletPrefab: {fileID: 4120011112331769632, guid: 7a0390591e9a5438c883031664f521a7, type: 3}
   defaultRifleIcon: {fileID: 7475899495669246118, guid: 1aeeb6b2dc88a4272b34d4044e3d269a, type: 3}
+  weaponIcons:
+  - weaponType: 0
+    icon: {fileID: -6628414004274166170, guid: 93010cdc10e4f4ab58b0bb07ac4fe104, type: 3}
+  - weaponType: 1
+    icon: {fileID: 7475899495669246118, guid: 1aeeb6b2dc88a4272b34d4044e3d269a, type: 3}
+  - weaponType: 2
+    icon: {fileID: 5016666556499936973, guid: fed534b149b1b4daf9ee09b20ae03821, type: 3}
+  - weaponType: 3
+    icon: {fileID: 1504138971794400394, guid: 5dfec9032145145cb9dfa39b227d295f, type: 3}
+  - weaponType: 4
+    icon: {fileID: -3643976292785969496, guid: 84fe3da3b0fc646fd8275172d9675c8e, type: 3}
+  - weaponType: 5
+    icon: {fileID: 1376026771200505078, guid: 4fdc95b7ade3349b78ba00ce0f4ab381, type: 3}
+  - weaponType: 6
+    icon: {fileID: -2538522935036702881, guid: 0c5ad9cf192ef444abd361569c50c8f0, type: 3}
 --- !u!1 &643954659
 GameObject:
   m_ObjectHideFlags: 0
