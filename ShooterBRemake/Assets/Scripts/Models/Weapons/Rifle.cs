@@ -14,11 +14,7 @@ namespace ShooterB
 
             if (bulletPrefab == null)
             {
-                bulletPrefab = Resources.Load<GameObject>("Prefabs/RifleBullet");
-                if (bulletPrefab == null)
-                {
-                    Debug.LogWarning("[RIFLE] RifleBullet prefab not found in Resources/Prefabs/. Create it or assign manually.");
-                }
+                Debug.LogError("[RIFLE] bulletPrefab is not assigned. Assign it via ShooterController in the Inspector.");
             }
 
             base.Start();

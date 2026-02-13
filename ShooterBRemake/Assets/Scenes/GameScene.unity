@@ -544,7 +544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.ShooterController
   activeWeapon: {fileID: 0}
-  rifleBulletPrefab: {fileID: 4120011112331769632, guid: 4af897c8906404ec1952961d9a653b13, type: 3}
+  rifleBulletPrefab: {fileID: 4120011112331769632, guid: 7a0390591e9a5438c883031664f521a7, type: 3}
   defaultRifleIcon: {fileID: 7475899495669246118, guid: 1aeeb6b2dc88a4272b34d4044e3d269a, type: 3}
 --- !u!1 &643954659
 GameObject:
