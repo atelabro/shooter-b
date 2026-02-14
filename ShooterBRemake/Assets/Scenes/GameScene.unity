@@ -1361,7 +1361,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '3
+  m_text: '100
 
 '
   m_isRightToLeft: 0
@@ -1594,7 +1594,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -86, y: -10}
-  m_SizeDelta: {x: 400, y: 56}
+  m_SizeDelta: {x: 500, y: 56}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1620661369
 MonoBehaviour:
@@ -1774,7 +1774,7 @@ MonoBehaviour:
   scoreText: {fileID: 208818958}
   highScoreText: {fileID: 1275479485}
   multiplierText: {fileID: 643954661}
-  livesContainerController: {fileID: 0}
+  livesContainerController: {fileID: 1620661372}
   livesText: {fileID: 0}
   pauseButton: {fileID: 2039079474}
   menuButton: {fileID: 0}
