@@ -50,4 +50,4 @@ MonoBehaviour:
   fireDelay: 0
   refillDelay: 0
   weaponIcon: {fileID: 7475899495669246118, guid: 1aeeb6b2dc88a4272b34d4044e3d269a, type: 3}
-  bulletPrefab: {fileID: 4120011112331769632, guid: 7a0390591e9a5438c883031664f521a7, type: 3}
+  bulletPrefab: {fileID: 4120011112331769632, guid: 0ff1fbc710d549709db9f03ac5f10990, type: 3}

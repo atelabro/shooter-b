@@ -34,6 +34,12 @@ namespace ShooterB
             if (!CanShoot)
                 return false;
 
+            if (bulletPrefab == null)
+            {
+                Debug.LogError($"[WEAPON] {weaponName} bulletPrefab is NULL! Cannot shoot.");
+                return false;
+            }
+
             currentBullets--;
             lastFireTime = Time.time;
 
@@ -113,6 +119,15 @@ namespace ShooterB
             currentBullets = maxBullets;
             isRefilling = false;
             StopAllCoroutines();
+        }
+
+        public virtual Sprite GetAmmoHudSprite()
+        {
+            if (bulletPrefab == null)
+                return null;
+
+            SpriteRenderer renderer = bulletPrefab.GetComponent<SpriteRenderer>();
+            return renderer != null ? renderer.sprite : null;
         }
     }
 }

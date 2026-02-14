@@ -13,13 +13,7 @@ namespace ShooterB
             refillDelay = 0.6f;
 
             if (bulletPrefab == null)
-            {
-                bulletPrefab = Resources.Load<GameObject>("Prefabs/RifleBullet");
-                if (bulletPrefab == null)
-                {
-                    Debug.LogWarning("[CABIRNE] RifleBullet prefab not found in Resources/Prefabs/. Assign bulletPrefab manually.");
-                }
-            }
+                Debug.LogError("[CABIRNE] bulletPrefab is not assigned. Assign Cabirne bullet prefab via ShooterController or weapon prefab.");
 
             base.Start();
 

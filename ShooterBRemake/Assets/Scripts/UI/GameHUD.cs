@@ -24,9 +24,14 @@ namespace ShooterB
         public Image selectedWeaponIconImage;
         public Transform ammoContainer;
         public Image ammoBulletIconPrefab;
+        public float ammoIconSize = 56f;
+        public float ammoIconSpacing = 10f;
+        public float ammoContainerWidth = 900f;
 
         private readonly List<Image> ammoBulletIcons = new List<Image>();
         private int lastKnownMaxAmmo = -1;
+        private Constants.WeaponType? lastWeaponType = null;
+        private Sprite lastAmmoSprite = null;
 
         private void Start()
         {
@@ -38,6 +43,13 @@ namespace ShooterB
 
             if (shooterController == null)
                 shooterController = FindObjectOfType<ShooterController>();
+
+            if (ammoContainer == null)
+            {
+                GameObject containerObject = GameObject.Find("AmmoContainer");
+                if (containerObject != null)
+                    ammoContainer = containerObject.transform;
+            }
 
             BuildAmmoIcons();
             SubscribeToEvents();
@@ -86,8 +98,10 @@ namespace ShooterB
 
         private void BuildAmmoIcons()
         {
-            if (ammoContainer == null || ammoBulletIconPrefab == null || shooterController == null)
+            if (ammoContainer == null || shooterController == null)
                 return;
+
+            EnsureAmmoLayoutGroup();
 
             foreach (Transform child in ammoContainer)
                 Destroy(child.gameObject);
@@ -95,10 +109,16 @@ namespace ShooterB
             ammoBulletIcons.Clear();
 
             int maxAmmo = shooterController.GetMaxAmmo();
+            Sprite ammoSprite = shooterController.GetActiveWeaponAmmoSprite();
+            EnsureAmmoContainerWidth();
+
             lastKnownMaxAmmo = maxAmmo;
+            lastWeaponType = shooterController.GetActiveWeaponType();
+            lastAmmoSprite = ammoSprite;
+
             for (int i = 0; i < maxAmmo; i++)
             {
-                Image icon = Instantiate(ammoBulletIconPrefab, ammoContainer);
+                Image icon = CreateAmmoIcon(ammoSprite);
                 ammoBulletIcons.Add(icon);
             }
         }
@@ -109,7 +129,10 @@ namespace ShooterB
                 return;
 
             int maxAmmo = shooterController.GetMaxAmmo();
-            if (maxAmmo != lastKnownMaxAmmo)
+            Constants.WeaponType? weaponType = shooterController.GetActiveWeaponType();
+            Sprite ammoSprite = shooterController.GetActiveWeaponAmmoSprite();
+
+            if (maxAmmo != lastKnownMaxAmmo || weaponType != lastWeaponType || ammoSprite != lastAmmoSprite)
             {
                 BuildAmmoIcons();
             }
@@ -119,6 +142,7 @@ namespace ShooterB
 
             int currentAmmo = shooterController.GetCurrentAmmo();
 
+            int spentAmmo = Mathf.Max(0, maxAmmo - currentAmmo);
             for (int i = 0; i < ammoBulletIcons.Count; i++)
             {
                 Image icon = ammoBulletIcons[i];
@@ -126,9 +150,60 @@ namespace ShooterB
                     continue;
 
                 Color c = icon.color;
-                c.a = i < currentAmmo ? 1f : 0f;
+                c.a = i >= spentAmmo ? 1f : 0f;
                 icon.color = c;
             }
+        }
+
+        private Image CreateAmmoIcon(Sprite sprite)
+        {
+            Image icon;
+
+            if (ammoBulletIconPrefab != null)
+            {
+                icon = Instantiate(ammoBulletIconPrefab, ammoContainer);
+            }
+            else
+            {
+                GameObject iconObject = new GameObject("AmmoIcon", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+                iconObject.transform.SetParent(ammoContainer, false);
+
+                icon = iconObject.GetComponent<Image>();
+            }
+
+            RectTransform iconRect = icon.GetComponent<RectTransform>();
+            if (iconRect != null)
+                iconRect.sizeDelta = new Vector2(ammoIconSize, ammoIconSize);
+
+            icon.sprite = sprite;
+            icon.preserveAspect = true;
+            icon.enabled = sprite != null;
+            return icon;
+        }
+
+        private void EnsureAmmoLayoutGroup()
+        {
+            HorizontalLayoutGroup layoutGroup = ammoContainer.GetComponent<HorizontalLayoutGroup>();
+            if (layoutGroup == null)
+                layoutGroup = ammoContainer.gameObject.AddComponent<HorizontalLayoutGroup>();
+
+            layoutGroup.childAlignment = TextAnchor.MiddleRight;
+            layoutGroup.spacing = ammoIconSpacing;
+            layoutGroup.childControlWidth = false;
+            layoutGroup.childControlHeight = false;
+            layoutGroup.childForceExpandWidth = false;
+            layoutGroup.childForceExpandHeight = false;
+        }
+
+        private void EnsureAmmoContainerWidth()
+        {
+            RectTransform containerRect = ammoContainer as RectTransform;
+            if (containerRect == null)
+                return;
+
+            Vector2 size = containerRect.sizeDelta;
+            size.x = ammoContainerWidth;
+            containerRect.sizeDelta = size;
         }
 
         private void UpdateSelectedWeaponIcon()

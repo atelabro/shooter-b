@@ -12,6 +12,7 @@ namespace ShooterB
 
         [Header("Prefabs")]
         public GameObject rifleBulletPrefab;
+        public GameObject cabirneBulletPrefab;
         public Sprite defaultRifleIcon;
 
         [Header("Weapon Prefabs")]
@@ -30,6 +31,8 @@ namespace ShooterB
             EnsureWeaponsCreated();
             if (activeWeapon == null)
                 activeWeapon = rifleWeapon;
+
+            EnsureActiveWeapon();
 
             StartCoroutine(LogInitialization());
         }
@@ -57,41 +60,37 @@ namespace ShooterB
             if (rifleWeapon == null)
             {
                 if (rifleWeaponPrefab != null)
-                    rifleWeapon = CreateWeaponFromPrefab<Rifle>(rifleWeaponPrefab, "Rifle", Constants.WeaponType.Rifle);
+                    rifleWeapon = CreateWeaponFromPrefab<Rifle>(rifleWeaponPrefab, "Rifle", Constants.WeaponType.Rifle, rifleBulletPrefab, defaultRifleIcon);
                 else
-                    rifleWeapon = CreateWeaponInstance<Rifle>("Rifle", Constants.WeaponType.Rifle);
+                    rifleWeapon = CreateWeaponInstance<Rifle>("Rifle", Constants.WeaponType.Rifle, rifleBulletPrefab, defaultRifleIcon);
             }
 
             if (cabirneWeapon == null)
             {
                 if (cabirneWeaponPrefab != null)
-                    cabirneWeapon = CreateWeaponFromPrefab<Cabirne>(cabirneWeaponPrefab, "Cabirne", Constants.WeaponType.Cabirne);
+                    cabirneWeapon = CreateWeaponFromPrefab<Cabirne>(cabirneWeaponPrefab, "Cabirne", Constants.WeaponType.Cabirne, cabirneBulletPrefab, null);
                 else
-                    cabirneWeapon = CreateWeaponInstance<Cabirne>("Cabirne", Constants.WeaponType.Cabirne);
+                    cabirneWeapon = CreateWeaponInstance<Cabirne>("Cabirne", Constants.WeaponType.Cabirne, cabirneBulletPrefab, null);
             }
         }
 
-        private T CreateWeaponInstance<T>(string objectName, Constants.WeaponType expectedWeaponType) where T : Weapon
+        private T CreateWeaponInstance<T>(string objectName, Constants.WeaponType expectedWeaponType, GameObject defaultBulletPrefab, Sprite defaultIcon) where T : Weapon
         {
             GameObject weaponObj = new GameObject(objectName);
             weaponObj.transform.SetParent(transform);
             T weapon = weaponObj.AddComponent<T>();
             weapon.weaponType = expectedWeaponType;
 
-            if (rifleBulletPrefab != null && weapon.bulletPrefab == null)
-            {
-                weapon.bulletPrefab = rifleBulletPrefab;
-            }
+            if (defaultBulletPrefab != null && weapon.bulletPrefab == null)
+                weapon.bulletPrefab = defaultBulletPrefab;
 
-            if (expectedWeaponType == Constants.WeaponType.Rifle && defaultRifleIcon != null && weapon.weaponIcon == null)
-            {
-                weapon.weaponIcon = defaultRifleIcon;
-            }
+            if (defaultIcon != null && weapon.weaponIcon == null)
+                weapon.weaponIcon = defaultIcon;
 
             return weapon;
         }
 
-        private T CreateWeaponFromPrefab<T>(Weapon prefab, string fallbackName, Constants.WeaponType expectedWeaponType) where T : Weapon
+        private T CreateWeaponFromPrefab<T>(Weapon prefab, string fallbackName, Constants.WeaponType expectedWeaponType, GameObject defaultBulletPrefab, Sprite defaultIcon) where T : Weapon
         {
             Weapon weaponInstance = Instantiate(prefab, transform);
             weaponInstance.name = fallbackName;
@@ -106,10 +105,15 @@ namespace ShooterB
             {
                 Debug.LogError($"[SHOOTER] Prefab '{prefab.name}' does not contain required component {typeof(T).Name}. Falling back to runtime-created weapon.");
                 Destroy(weaponInstance.gameObject);
-                return CreateWeaponInstance<T>(fallbackName, expectedWeaponType);
+                return CreateWeaponInstance<T>(fallbackName, expectedWeaponType, defaultBulletPrefab, defaultIcon);
             }
 
             typedWeapon.weaponType = expectedWeaponType;
+            if (typedWeapon.bulletPrefab == null && defaultBulletPrefab != null)
+                typedWeapon.bulletPrefab = defaultBulletPrefab;
+            if (typedWeapon.weaponIcon == null && defaultIcon != null)
+                typedWeapon.weaponIcon = defaultIcon;
+
             return typedWeapon;
         }
 
@@ -167,6 +171,16 @@ namespace ShooterB
         public bool IsRefilling()
         {
             return activeWeapon != null && activeWeapon.IsRefilling;
+        }
+
+        public Sprite GetActiveWeaponAmmoSprite()
+        {
+            return activeWeapon != null ? activeWeapon.GetAmmoHudSprite() : null;
+        }
+
+        public Constants.WeaponType? GetActiveWeaponType()
+        {
+            return activeWeapon != null ? activeWeapon.weaponType : (Constants.WeaponType?)null;
         }
     }
 }
