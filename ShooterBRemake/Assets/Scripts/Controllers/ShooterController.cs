@@ -14,6 +14,10 @@ namespace ShooterB
         public GameObject rifleBulletPrefab;
         public Sprite defaultRifleIcon;
 
+        [Header("Weapon Prefabs")]
+        public Weapon rifleWeaponPrefab;
+        public Weapon cabirneWeaponPrefab;
+
         private void Awake()
         {
             EnsureWeaponsCreated();
@@ -51,10 +55,20 @@ namespace ShooterB
         private void EnsureWeaponsCreated()
         {
             if (rifleWeapon == null)
-                rifleWeapon = CreateWeaponInstance<Rifle>("Rifle", Constants.WeaponType.Rifle);
+            {
+                if (rifleWeaponPrefab != null)
+                    rifleWeapon = CreateWeaponFromPrefab<Rifle>(rifleWeaponPrefab, "Rifle", Constants.WeaponType.Rifle);
+                else
+                    rifleWeapon = CreateWeaponInstance<Rifle>("Rifle", Constants.WeaponType.Rifle);
+            }
 
             if (cabirneWeapon == null)
-                cabirneWeapon = CreateWeaponInstance<Cabirne>("Cabirne", Constants.WeaponType.Cabirne);
+            {
+                if (cabirneWeaponPrefab != null)
+                    cabirneWeapon = CreateWeaponFromPrefab<Cabirne>(cabirneWeaponPrefab, "Cabirne", Constants.WeaponType.Cabirne);
+                else
+                    cabirneWeapon = CreateWeaponInstance<Cabirne>("Cabirne", Constants.WeaponType.Cabirne);
+            }
         }
 
         private T CreateWeaponInstance<T>(string objectName, Constants.WeaponType expectedWeaponType) where T : Weapon
@@ -75,6 +89,28 @@ namespace ShooterB
             }
 
             return weapon;
+        }
+
+        private T CreateWeaponFromPrefab<T>(Weapon prefab, string fallbackName, Constants.WeaponType expectedWeaponType) where T : Weapon
+        {
+            Weapon weaponInstance = Instantiate(prefab, transform);
+            weaponInstance.name = fallbackName;
+
+            T typedWeapon = weaponInstance as T;
+            if (typedWeapon == null)
+            {
+                typedWeapon = weaponInstance.GetComponent<T>();
+            }
+
+            if (typedWeapon == null)
+            {
+                Debug.LogError($"[SHOOTER] Prefab '{prefab.name}' does not contain required component {typeof(T).Name}. Falling back to runtime-created weapon.");
+                Destroy(weaponInstance.gameObject);
+                return CreateWeaponInstance<T>(fallbackName, expectedWeaponType);
+            }
+
+            typedWeapon.weaponType = expectedWeaponType;
+            return typedWeapon;
         }
 
         private void EnsureActiveWeapon()
