@@ -2,9 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace ShooterB
 {
@@ -16,16 +13,8 @@ namespace ShooterB
         public TextMeshProUGUI multiplierText;
 
         [Header("Lives Display")]
+        public LivesContainerController livesContainerController;
         public TextMeshProUGUI livesText;
-        public Transform livesContainer;
-        public Image lifeIconPrefab;
-        public Sprite lifeIconSprite;
-        public Sprite lifeOffSprite;
-        public float lifeIconSize = 80f;
-        public float lifeIconSpacing = 8f;
-        public int maxDisplayedLives = 5;
-        public TextMeshProUGUI livesOverflowText;
-        public float livesOverflowLeftPadding = 0f;
 
         [Header("Buttons")]
         public Button pauseButton;
@@ -41,13 +30,9 @@ namespace ShooterB
         public float ammoContainerWidth = 900f;
 
         private readonly List<Image> ammoBulletIcons = new List<Image>();
-        private readonly List<Image> lifeIcons = new List<Image>();
         private int lastKnownMaxAmmo = -1;
         private Constants.WeaponType? lastWeaponType = null;
         private Sprite lastAmmoSprite = null;
-        private int lastKnownLifeSlots = -1;
-        private TextMeshProUGUI runtimeLivesOverflowText;
-        private bool suppressValidationBuild = false;
 
         private void Start()
         {
@@ -60,6 +45,9 @@ namespace ShooterB
             if (shooterController == null)
                 shooterController = FindObjectOfType<ShooterController>();
 
+            if (livesContainerController == null)
+                livesContainerController = FindObjectOfType<LivesContainerController>();
+
             if (ammoContainer == null)
             {
                 GameObject containerObject = GameObject.Find("AmmoContainer");
@@ -67,38 +55,12 @@ namespace ShooterB
                     ammoContainer = containerObject.transform;
             }
 
-            ResolveLivesContainer();
-            BuildLivesIcons();
             BuildAmmoIcons();
             SubscribeToEvents();
             UpdateAllUI();
 
-            if (livesText != null)
-                livesText.gameObject.SetActive(false);
-
             Debug.Log("GameHUD initialized");
         }
-
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            if (Application.isPlaying || suppressValidationBuild)
-                return;
-
-            if (livesContainer == null)
-                return;
-
-            EditorApplication.delayCall += () =>
-            {
-                if (this == null || Application.isPlaying || suppressValidationBuild)
-                    return;
-
-                suppressValidationBuild = true;
-                BuildLivesIconsEditorPreview();
-                suppressValidationBuild = false;
-            };
-        }
-#endif
 
         private void OnDestroy()
         {
@@ -175,16 +137,14 @@ namespace ShooterB
             Sprite ammoSprite = shooterController.GetActiveWeaponAmmoSprite();
 
             if (maxAmmo != lastKnownMaxAmmo || weaponType != lastWeaponType || ammoSprite != lastAmmoSprite)
-            {
                 BuildAmmoIcons();
-            }
 
             if (ammoBulletIcons.Count == 0)
                 return;
 
             int currentAmmo = shooterController.GetCurrentAmmo();
-
             int spentAmmo = Mathf.Max(0, maxAmmo - currentAmmo);
+
             for (int i = 0; i < ammoBulletIcons.Count; i++)
             {
                 Image icon = ammoBulletIcons[i];
@@ -209,7 +169,6 @@ namespace ShooterB
             {
                 GameObject iconObject = new GameObject("AmmoIcon", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
                 iconObject.transform.SetParent(ammoContainer, false);
-
                 icon = iconObject.GetComponent<Image>();
             }
 
@@ -248,201 +207,6 @@ namespace ShooterB
             containerRect.sizeDelta = size;
         }
 
-        private void ResolveLivesContainer()
-        {
-            if (livesContainer != null)
-                return;
-
-            Debug.LogWarning("[HUD] LivesContainer is not assigned on GameHUD. Assign it in Inspector.");
-        }
-
-        private void BuildLivesIcons()
-        {
-            if (livesContainer == null)
-                return;
-
-            EnsureLivesLayoutGroup();
-
-            if (TryUseExistingLivesIcons())
-            {
-                EnsureLivesOverflowText();
-                return;
-            }
-
-            foreach (Transform child in livesContainer)
-                Destroy(child.gameObject);
-
-            lifeIcons.Clear();
-
-            int currentLives = GameManager.Instance != null ? GameManager.Instance.Lives : Constants.INITIAL_LIVES;
-            int slots = GetDesiredLifeSlotCount(currentLives);
-            lastKnownLifeSlots = slots;
-
-            Sprite lifeSprite = GetLifeSprite();
-
-            for (int i = 0; i < slots; i++)
-            {
-                Image icon = CreateLifeIcon(lifeSprite);
-                lifeIcons.Add(icon);
-            }
-
-            EnsureLivesOverflowText();
-        }
-
-        private bool TryUseExistingLivesIcons()
-        {
-            lifeIcons.Clear();
-
-            foreach (Transform child in livesContainer)
-            {
-                if (child == null)
-                    continue;
-
-                TextMeshProUGUI tmp = child.GetComponent<TextMeshProUGUI>();
-                if (tmp != null)
-                    continue;
-
-                Image icon = child.GetComponent<Image>();
-                if (icon == null)
-                    continue;
-
-                lifeIcons.Add(icon);
-            }
-
-            if (lifeIcons.Count == 0)
-                return false;
-
-            lastKnownLifeSlots = lifeIcons.Count;
-            return true;
-        }
-
-#if UNITY_EDITOR
-        private void BuildLivesIconsEditorPreview()
-        {
-            EnsureLivesLayoutGroup();
-            ClearLivesContainerChildrenImmediate();
-            lifeIcons.Clear();
-
-            int slots = Mathf.Max(1, Mathf.Min(maxDisplayedLives, Constants.INITIAL_LIVES));
-            lastKnownLifeSlots = slots;
-
-            Sprite lifeSprite = GetLifeSprite();
-            for (int i = 0; i < slots; i++)
-            {
-                Image icon = CreateLifeIcon(lifeSprite);
-                lifeIcons.Add(icon);
-            }
-
-            EnsureLivesOverflowText();
-            if (livesOverflowText != null)
-            {
-                livesOverflowText.gameObject.SetActive(false);
-            }
-        }
-
-        private void ClearLivesContainerChildrenImmediate()
-        {
-            List<GameObject> children = new List<GameObject>();
-            for (int i = 0; i < livesContainer.childCount; i++)
-            {
-                children.Add(livesContainer.GetChild(i).gameObject);
-            }
-
-            foreach (GameObject child in children)
-            {
-                if (child == null)
-                    continue;
-
-                if (Application.isPlaying)
-                    Destroy(child);
-                else
-                    DestroyImmediate(child);
-            }
-        }
-#endif
-
-        private void EnsureLivesLayoutGroup()
-        {
-            HorizontalLayoutGroup layoutGroup = livesContainer.GetComponent<HorizontalLayoutGroup>();
-            if (layoutGroup == null)
-            {
-                layoutGroup = livesContainer.gameObject.AddComponent<HorizontalLayoutGroup>();
-                layoutGroup.childAlignment = TextAnchor.MiddleLeft;
-                layoutGroup.spacing = lifeIconSpacing;
-                layoutGroup.childControlWidth = false;
-                layoutGroup.childControlHeight = false;
-                layoutGroup.childForceExpandWidth = false;
-                layoutGroup.childForceExpandHeight = false;
-            }
-        }
-
-        private Sprite GetLifeSprite()
-        {
-            if (lifeIconSprite != null)
-                return lifeIconSprite;
-
-            if (lifeIconPrefab != null)
-                return lifeIconPrefab.sprite;
-
-            return null;
-        }
-
-        private Image CreateLifeIcon(Sprite sprite)
-        {
-            Image icon;
-
-            if (lifeIconPrefab != null)
-            {
-                icon = Instantiate(lifeIconPrefab, livesContainer);
-            }
-            else
-            {
-                GameObject iconObject = new GameObject("LifeIcon", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-                iconObject.transform.SetParent(livesContainer, false);
-                icon = iconObject.GetComponent<Image>();
-            }
-
-            RectTransform rect = icon.GetComponent<RectTransform>();
-            if (rect != null)
-                rect.sizeDelta = new Vector2(lifeIconSize, lifeIconSize);
-
-            icon.sprite = sprite;
-            icon.preserveAspect = true;
-            icon.enabled = sprite != null;
-            return icon;
-        }
-
-        private void EnsureLivesOverflowText()
-        {
-            if (livesContainer == null)
-                return;
-
-            if (livesOverflowText != null)
-                return;
-
-            if (runtimeLivesOverflowText == null)
-            {
-                GameObject overflowObj = new GameObject("LivesOverflowText", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI), typeof(LayoutElement));
-                overflowObj.transform.SetParent(livesContainer, false);
-                runtimeLivesOverflowText = overflowObj.GetComponent<TextMeshProUGUI>();
-                runtimeLivesOverflowText.fontSize = 42;
-                runtimeLivesOverflowText.color = Color.white;
-                runtimeLivesOverflowText.alignment = TextAlignmentOptions.Center;
-                runtimeLivesOverflowText.raycastTarget = false;
-
-                LayoutElement layoutElement = overflowObj.GetComponent<LayoutElement>();
-                layoutElement.ignoreLayout = true;
-            }
-
-            livesOverflowText = runtimeLivesOverflowText;
-            livesOverflowText.transform.SetAsFirstSibling();
-            RectTransform overflowRect = livesOverflowText.rectTransform;
-            overflowRect.anchorMin = new Vector2(0f, 1f);
-            overflowRect.anchorMax = new Vector2(0f, 1f);
-            overflowRect.pivot = new Vector2(0f, 1f);
-            overflowRect.anchoredPosition = new Vector2(livesOverflowLeftPadding, 0f);
-        }
-
         private void UpdateSelectedWeaponIcon()
         {
             if (selectedWeaponIconImage == null)
@@ -470,11 +234,7 @@ namespace ShooterB
             if (scoreText != null)
             {
                 scoreText.text = $"Score: {score}";
-
-                if (GameManager.Instance.IsNewHighScore())
-                    scoreText.color = Color.green;
-                else
-                    scoreText.color = Color.white;
+                scoreText.color = GameManager.Instance.IsNewHighScore() ? Color.green : Color.white;
             }
         }
 
@@ -498,55 +258,14 @@ namespace ShooterB
 
         private void UpdateLives(int lives)
         {
-            if (livesContainer == null)
+            if (livesContainerController != null)
             {
-                ResolveLivesContainer();
-                BuildLivesIcons();
-            }
-
-            int slots = GetDesiredLifeSlotCount(lives);
-            if (slots != lastKnownLifeSlots)
-            {
-                BuildLivesIcons();
-            }
-
-            if (lifeIcons.Count == 0)
+                livesContainerController.SetLives(lives);
                 return;
-
-            int shownLives = Mathf.Clamp(lives, 0, lifeIcons.Count);
-            Sprite availableSprite = GetLifeSprite();
-            Sprite lostSprite = lifeOffSprite != null ? lifeOffSprite : availableSprite;
-            bool hasOverflowLives = lives > lifeIcons.Count;
-            if (hasOverflowLives)
-                shownLives = lifeIcons.Count;
-            int lostCount = lifeIcons.Count - shownLives;
-
-            for (int i = 0; i < lifeIcons.Count; i++)
-            {
-                Image icon = lifeIcons[i];
-                if (icon == null)
-                    continue;
-
-                bool isLost = i < lostCount;
-                icon.sprite = isLost ? lostSprite : availableSprite;
-                icon.enabled = icon.sprite != null;
             }
 
-            EnsureLivesOverflowText();
-            if (livesOverflowText != null)
-            {
-                livesOverflowText.gameObject.SetActive(hasOverflowLives);
-                if (hasOverflowLives)
-                    livesOverflowText.text = lives.ToString();
-            }
-        }
-
-        private int GetDesiredLifeSlotCount(int lives)
-        {
-            int baseLives = Mathf.Max(1, Constants.INITIAL_LIVES);
-            int maxSlots = Mathf.Max(1, maxDisplayedLives);
-            int dynamicSlots = Mathf.Max(baseLives, lives, lastKnownLifeSlots);
-            return Mathf.Clamp(dynamicSlots, 1, maxSlots);
+            if (livesText != null)
+                livesText.text = $"Lives: {lives}";
         }
 
         private void OnPauseClicked()
