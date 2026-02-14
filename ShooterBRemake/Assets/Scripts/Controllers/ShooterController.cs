@@ -1,18 +1,10 @@
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 namespace ShooterB
 {
     public class ShooterController : MonoBehaviour
     {
-        [System.Serializable]
-        public class WeaponIconEntry
-        {
-            public Constants.WeaponType weaponType;
-            public Sprite icon;
-        }
-
         [Header("Weapons")]
         public Weapon activeWeapon;
         private Rifle rifleWeapon;
@@ -21,9 +13,6 @@ namespace ShooterB
         [Header("Prefabs")]
         public GameObject rifleBulletPrefab;
         public Sprite defaultRifleIcon;
-
-        [Header("Weapon Icons")]
-        public List<WeaponIconEntry> weaponIcons = new List<WeaponIconEntry>();
 
         private void Awake()
         {
@@ -49,14 +38,12 @@ namespace ShooterB
             if (Keyboard.current.digit1Key.wasPressedThisFrame && rifleWeapon != null)
             {
                 activeWeapon = rifleWeapon;
-                ApplyOrUpdateIcon(activeWeapon);
                 Debug.Log("[SHOOTER] Switched weapon to Rifle");
             }
 
             if (Keyboard.current.digit2Key.wasPressedThisFrame && cabirneWeapon != null)
             {
                 activeWeapon = cabirneWeapon;
-                ApplyOrUpdateIcon(activeWeapon);
                 Debug.Log("[SHOOTER] Switched weapon to Cabirne");
             }
         }
@@ -87,7 +74,6 @@ namespace ShooterB
                 weapon.weaponIcon = defaultRifleIcon;
             }
 
-            ApplyOrUpdateIcon(weapon);
             return weapon;
         }
 
@@ -99,36 +85,11 @@ namespace ShooterB
             }
             else
             {
-                ApplyOrUpdateIcon(activeWeapon);
+                if (activeWeapon.weaponType == Constants.WeaponType.Rifle && activeWeapon.weaponIcon == null && defaultRifleIcon != null)
+                {
+                    activeWeapon.weaponIcon = defaultRifleIcon;
+                }
             }
-        }
-
-        private void ApplyOrUpdateIcon(Weapon weapon)
-        {
-            if (weapon == null)
-                return;
-
-            Sprite mappedIcon = FindIconForWeaponType(weapon.weaponType);
-            if (mappedIcon != null)
-            {
-                weapon.weaponIcon = mappedIcon;
-            }
-            else if (weapon.weaponType == Constants.WeaponType.Rifle && defaultRifleIcon != null)
-            {
-                weapon.weaponIcon = defaultRifleIcon;
-            }
-        }
-
-        private Sprite FindIconForWeaponType(Constants.WeaponType weaponType)
-        {
-            for (int i = 0; i < weaponIcons.Count; i++)
-            {
-                WeaponIconEntry entry = weaponIcons[i];
-                if (entry != null && entry.weaponType == weaponType && entry.icon != null)
-                    return entry.icon;
-            }
-
-            return null;
         }
 
         private System.Collections.IEnumerator LogInitialization()
