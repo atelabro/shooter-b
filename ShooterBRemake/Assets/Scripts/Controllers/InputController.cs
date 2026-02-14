@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 namespace ShooterB
 {
@@ -53,10 +54,24 @@ namespace ShooterB
                 shouldShoot = true;
             }
 
-            if (shouldShoot && shooterController != null)
+            if (shouldShoot && !IsPointerOverUI() && shooterController != null)
             {
                 shooterController.Shoot(worldPosition);
             }
+        }
+
+        private bool IsPointerOverUI()
+        {
+            if (EventSystem.current == null)
+                return false;
+
+            if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+            {
+                int touchId = Touchscreen.current.primaryTouch.touchId.ReadValue();
+                return EventSystem.current.IsPointerOverGameObject(touchId);
+            }
+
+            return EventSystem.current.IsPointerOverGameObject();
         }
     }
 }

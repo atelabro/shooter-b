@@ -155,27 +155,27 @@ namespace ShooterB
 
                 if (difficulty < 11)
                 {
-                    baseDelay = 2.5f;
+                    baseDelay = 2.2f; // was 2.5f
                     randomRange = 1.0f;
                 }
                 else if (difficulty < 20)
                 {
-                    baseDelay = 2.0f;
+                    baseDelay = 1.7f; // was 2.0f
                     randomRange = 1.0f;
                 }
                 else if (difficulty < 30)
                 {
-                    baseDelay = 1.5f;
+                    baseDelay = 1.2f; // was 1.5f
                     randomRange = 1.0f;
                 }
                 else if (difficulty < 35)
                 {
-                    baseDelay = 1.0f;
+                    baseDelay = 0.7f; // was 1.0f
                     randomRange = 0.9f;
                 }
                 else
                 {
-                    baseDelay = 0.5f;
+                    baseDelay = 0.35f; // was 0.5f
                     randomRange = 0.4f;
                 }
 
@@ -185,7 +185,7 @@ namespace ShooterB
 
         public static class DuckSpeed
         {
-            public const float BASE_SPEED = 2f;
+            public const float BASE_SPEED = 3f; // was 2f
 
             public static float GetSpeed(int difficulty)
             {
