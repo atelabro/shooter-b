@@ -1380,6 +1380,14 @@ MonoBehaviour:
   highScoreText: {fileID: 1275479485}
   multiplierText: {fileID: 643954661}
   livesText: {fileID: 652517963}
+  livesContainer: {fileID: 0}
+  lifeIconPrefab: {fileID: 0}
+  lifeIconSprite: {fileID: -5537399003457608579, guid: a542a20018f8843dcb10f8db7715d102, type: 3}
+  lifeOffSprite: {fileID: 2394906803966841779, guid: a542a20018f8843dcb10f8db7715d102, type: 3}
+  lifeIconSize: 80
+  lifeIconSpacing: 8
+  maxDisplayedLives: 5
+  livesToPauseSpacing: 16
   pauseButton: {fileID: 2039079474}
   menuButton: {fileID: 0}
   shooterController: {fileID: 439035275}

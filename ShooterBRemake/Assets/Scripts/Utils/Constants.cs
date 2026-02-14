@@ -7,7 +7,7 @@ namespace ShooterB
         public const float CAMERA_WIDTH = 1920f;
         public const float CAMERA_HEIGHT = 1080f;
 
-        public const int INITIAL_LIVES = 99;
+        public const int INITIAL_LIVES = 3;
         public const int MAX_LIVES = 99;
         public const int BONUS_LIFE_BIRD_COUNT = 50;
 
