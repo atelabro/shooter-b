@@ -24,6 +24,7 @@ namespace ShooterB
         protected float currentDistance;
         protected bool bangTriggered = false;
         protected bool isActive = false;
+        protected GameObject poolSourcePrefab;
 
         protected virtual void Awake()
         {
@@ -156,7 +157,15 @@ namespace ShooterB
         protected virtual void Dispose()
         {
             isActive = false;
-            Destroy(gameObject, 0.1f);
+            if (rb != null)
+                rb.linearVelocity = Vector2.zero;
+
+            BulletPool.Return(poolSourcePrefab, gameObject);
+        }
+
+        public virtual void SetPoolSourcePrefab(GameObject sourcePrefab)
+        {
+            poolSourcePrefab = sourcePrefab;
         }
 
         private void OnDrawGizmos()

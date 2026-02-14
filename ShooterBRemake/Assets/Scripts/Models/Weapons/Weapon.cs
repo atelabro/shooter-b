@@ -66,7 +66,7 @@ namespace ShooterB
             Vector2 gunPosition = GetGunPosition();
             Debug.Log($"[WEAPON] Gun position calculated: {gunPosition}");
 
-            GameObject bulletObj = Instantiate(bulletPrefab);
+            GameObject bulletObj = BulletPool.Get(bulletPrefab);
             bulletObj.transform.position = new Vector3(gunPosition.x, gunPosition.y, -5);
             Debug.Log($"[WEAPON] Bullet GameObject instantiated: {bulletObj.name}");
 
@@ -75,6 +75,7 @@ namespace ShooterB
 
             if (bullet != null)
             {
+                bullet.SetPoolSourcePrefab(bulletPrefab);
                 bullet.Initialize(targetPosition, weaponType);
                 Debug.Log($"[WEAPON] Bullet spawned at {gunPosition}, traveling to {targetPosition}");
             }
