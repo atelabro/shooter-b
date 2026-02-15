@@ -7,22 +7,16 @@ namespace ShooterB
     {
         private static readonly Dictionary<string, string> BackgroundPaths = new Dictionary<string, string>
         {
+            { "arcade_eifel_paris", "Backgrounds/bckEifelParis" },
             { "arcade_moulen_paris", "Backgrounds/bckMoulenParis" },
-            { "arcade_notre_dame_paris", "Backgrounds/bckNotreDameParis" },
-            { "arcade_paris_eiffel", "Backgrounds/bckParisEiffel" },
-            { "arcade_paris_louvre", "Backgrounds/bckParisLouvre" },
-            { "arcade_sacre_paris", "Backgrounds/bckSacreParis" },
-            { "arcade_triumpe_paris", "Backgrounds/bckTriumpeParis" }
+            { "arcade_notre_dame_paris", "Backgrounds/bckNotreDameParis" }
         };
 
         private static readonly string[] ArcadeBackgroundKeys =
         {
+            "arcade_eifel_paris",
             "arcade_moulen_paris",
-            "arcade_notre_dame_paris",
-            "arcade_paris_eiffel",
-            "arcade_paris_louvre",
-            "arcade_sacre_paris",
-            "arcade_triumpe_paris"
+            "arcade_notre_dame_paris"
         };
 
         public static Constants.GameMode ResolveMode(Constants.GameMode? mode = null)

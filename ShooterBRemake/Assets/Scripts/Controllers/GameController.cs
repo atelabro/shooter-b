@@ -9,6 +9,7 @@ namespace ShooterB
         public SpriteRenderer backgroundRenderer;
         public bool useBackgroundShade = true;
         [Range(0f, 0.5f)] public float backgroundShade = 0.25f;
+        public bool backgroundFillScreen = false;
 
         private void Start()
         {
@@ -72,6 +73,29 @@ namespace ShooterB
             {
                 backgroundRenderer.color = Color.white;
             }
+
+            FitBackgroundToCamera();
+        }
+
+        private void FitBackgroundToCamera()
+        {
+            if (backgroundRenderer == null || backgroundRenderer.sprite == null || mainCamera == null)
+                return;
+
+            Vector2 spriteSize = backgroundRenderer.sprite.bounds.size;
+            if (spriteSize.x <= 0f || spriteSize.y <= 0f)
+                return;
+
+            float cameraHeight = mainCamera.orthographicSize * 2f;
+            float cameraWidth = cameraHeight * mainCamera.aspect;
+
+            float widthRatio = cameraWidth / spriteSize.x;
+            float heightRatio = cameraHeight / spriteSize.y;
+            float scale = backgroundFillScreen
+                ? Mathf.Max(widthRatio, heightRatio) // cover (can crop)
+                : Mathf.Min(widthRatio, heightRatio); // contain (no crop)
+
+            backgroundRenderer.transform.localScale = new Vector3(scale, scale, 1f);
         }
 
         private void Update()
