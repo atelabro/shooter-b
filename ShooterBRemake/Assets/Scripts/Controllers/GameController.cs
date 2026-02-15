@@ -6,6 +6,7 @@ namespace ShooterB
     {
         [Header("Camera")]
         public Camera mainCamera;
+        public SpriteRenderer backgroundRenderer;
 
         private void Start()
         {
@@ -15,6 +16,8 @@ namespace ShooterB
             {
                 GameManager.Instance.InitializeGame(Constants.GameMode.Normal);
             }
+
+            ApplyBackground();
 
             Debug.Log($"GameController started - Score: {GameManager.Instance.Score}, Lives: {GameManager.Instance.Lives}, Difficulty: {GameManager.Instance.Difficulty}");
         }
@@ -31,6 +34,31 @@ namespace ShooterB
 
                 Debug.Log($"Camera configured - Orthographic size: {mainCamera.orthographicSize}");
             }
+        }
+
+        private void ApplyBackground()
+        {
+            if (backgroundRenderer == null)
+            {
+                GameObject backgroundObject = GameObject.Find("Background");
+                if (backgroundObject != null)
+                    backgroundRenderer = backgroundObject.GetComponent<SpriteRenderer>();
+            }
+
+            if (backgroundRenderer == null)
+            {
+                Debug.LogWarning("[GameController] Background renderer is missing.");
+                return;
+            }
+
+            Sprite background = BackgroundManager.GetBackgroundForMode(GameManager.Instance.CurrentGameMode);
+            if (background == null)
+            {
+                Debug.LogWarning("[GameController] Background sprite could not be loaded.");
+                return;
+            }
+
+            backgroundRenderer.sprite = background;
         }
 
         private void Update()
