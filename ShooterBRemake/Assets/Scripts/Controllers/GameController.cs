@@ -7,6 +7,8 @@ namespace ShooterB
         [Header("Camera")]
         public Camera mainCamera;
         public SpriteRenderer backgroundRenderer;
+        public bool useBackgroundShade = true;
+        [Range(0f, 0.5f)] public float backgroundShade = 0.25f;
 
         private void Start()
         {
@@ -59,6 +61,17 @@ namespace ShooterB
             }
 
             backgroundRenderer.sprite = background;
+
+            if (useBackgroundShade)
+            {
+                float s = Mathf.Clamp01(backgroundShade);
+                float tint = 1f - s;
+                backgroundRenderer.color = new Color(tint, tint, tint, 1f);
+            }
+            else
+            {
+                backgroundRenderer.color = Color.white;
+            }
         }
 
         private void Update()
