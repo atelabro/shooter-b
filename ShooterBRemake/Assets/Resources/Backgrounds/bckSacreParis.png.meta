@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 91282ca993fa84b1e8d6a53789a42acf
+guid: b3af991c8b43442618312924b2f4a49c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1002494531061923773
-    second: bckMoulenParis 1_0
+      213: 2225196649216103463
+    second: bckSacreParis_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bckMoulenParis 1_0
+      name: bckSacreParis_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 34048c2198c6612f0800000000000000
-      internalID: -1002494531061923773
+      spriteID: 7245ae7109c71ee10800000000000000
+      internalID: 2225196649216103463
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bckMoulenParis 1_0: -1002494531061923773
+      bckSacreParis_0: 2225196649216103463
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

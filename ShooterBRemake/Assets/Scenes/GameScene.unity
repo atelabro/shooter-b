@@ -626,6 +626,8 @@ MonoBehaviour:
   backgroundRenderer: {fileID: 0}
   useBackgroundShade: 1
   backgroundShade: 0.32
+  backgroundFillScreen: 1
+  alignBackgroundTopLeft: 1
 --- !u!4 &439035272
 Transform:
   m_ObjectHideFlags: 0

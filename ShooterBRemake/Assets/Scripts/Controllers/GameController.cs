@@ -10,6 +10,7 @@ namespace ShooterB
         public bool useBackgroundShade = true;
         [Range(0f, 0.5f)] public float backgroundShade = 0.25f;
         public bool backgroundFillScreen = false;
+        public bool alignBackgroundTopLeft = true;
 
         private void Start()
         {
@@ -96,6 +97,26 @@ namespace ShooterB
                 : Mathf.Min(widthRatio, heightRatio); // contain (no crop)
 
             backgroundRenderer.transform.localScale = new Vector3(scale, scale, 1f);
+
+            if (alignBackgroundTopLeft)
+                AlignBackgroundTopLeft();
+        }
+
+        private void AlignBackgroundTopLeft()
+        {
+            if (backgroundRenderer == null || mainCamera == null)
+                return;
+
+            Vector3 cameraPosition = mainCamera.transform.position;
+            float cameraHeight = mainCamera.orthographicSize * 2f;
+            float cameraWidth = cameraHeight * mainCamera.aspect;
+            Vector2 backgroundSize = backgroundRenderer.bounds.size;
+
+            float x = cameraPosition.x - (cameraWidth * 0.5f) + (backgroundSize.x * 0.5f);
+            float y = cameraPosition.y + (cameraHeight * 0.5f) - (backgroundSize.y * 0.5f);
+
+            Vector3 position = backgroundRenderer.transform.position;
+            backgroundRenderer.transform.position = new Vector3(x, y, position.z);
         }
 
         private void Update()
