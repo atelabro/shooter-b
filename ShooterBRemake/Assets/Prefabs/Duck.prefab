@@ -175,7 +175,7 @@ MonoBehaviour:
   speed: 10
   targetAliveHeightWorld: 1.8
   type0SizeMultiplier: 1.0
-  type1SizeMultiplier: 0.95
+  type1SizeMultiplier: 1.1
   type2SizeMultiplier: 1.04
   type3SizeMultiplier: 0.87
   type4SizeMultiplier: 0.83

@@ -26,6 +26,10 @@ namespace ShooterB
         [Header("Spawn Timing")]
         private float nextSpawnTime;
 
+        [Header("Debug")]
+        [SerializeField] private bool enableSpawnDistributionDebug = false;
+        [SerializeField] private int spawnDistributionLogInterval = 100;
+
         [Header("Screen Bounds")]
         private float spawnX;
         private float minY;
@@ -36,10 +40,13 @@ namespace ShooterB
         private float boundLeft;
 
         private bool isSpawning = false;
+        private int totalSpawnedCount = 0;
+        private int[] spawnCountsByType;
 
         private void Awake()
         {
             Debug.Log($"[DUCKSPAWNER] Awake called on {gameObject.name}");
+            spawnCountsByType = new int[System.Enum.GetValues(typeof(Constants.DuckType)).Length];
             ValidateDuckTypeFrames();
             InitializeDuckPool();
             CalculateSpawnBounds();
@@ -179,6 +186,7 @@ namespace ShooterB
         {
             if (!isSpawning)
             {
+                ResetSpawnDistributionCounters();
                 isSpawning = true;
                 nextSpawnTime = Time.time + 2f;
                 StartCoroutine(SpawnCoroutine());
@@ -219,6 +227,7 @@ namespace ShooterB
             }
 
             Constants.DuckType duckType = SelectDuckType();
+            RecordDuckSpawn(duckType);
             Vector2 spawnPosition = GetRandomSpawnPosition();
 
             Duck duck = duckObj.GetComponent<Duck>();
@@ -315,6 +324,77 @@ namespace ShooterB
                 return Constants.DuckType.Type3;
             else
                 return Constants.DuckType.Type4;
+        }
+
+        private void ResetSpawnDistributionCounters()
+        {
+            totalSpawnedCount = 0;
+            if (spawnCountsByType == null)
+            {
+                spawnCountsByType = new int[System.Enum.GetValues(typeof(Constants.DuckType)).Length];
+                return;
+            }
+
+            for (int i = 0; i < spawnCountsByType.Length; i++)
+            {
+                spawnCountsByType[i] = 0;
+            }
+        }
+
+        private void RecordDuckSpawn(Constants.DuckType duckType)
+        {
+            if (spawnCountsByType == null)
+            {
+                spawnCountsByType = new int[System.Enum.GetValues(typeof(Constants.DuckType)).Length];
+            }
+
+            int duckTypeIndex = (int)duckType;
+            if (duckTypeIndex >= 0 && duckTypeIndex < spawnCountsByType.Length)
+            {
+                spawnCountsByType[duckTypeIndex]++;
+            }
+
+            totalSpawnedCount++;
+
+            if (!enableSpawnDistributionDebug || spawnDistributionLogInterval <= 0 || totalSpawnedCount % spawnDistributionLogInterval != 0)
+            {
+                return;
+            }
+
+            LogSpawnDistribution();
+        }
+
+        private void LogSpawnDistribution()
+        {
+            if (totalSpawnedCount <= 0 || spawnCountsByType == null || spawnCountsByType.Length == 0)
+            {
+                return;
+            }
+
+            Debug.Log(
+                $"[DUCKSPAWNER] Spawn distribution @ {totalSpawnedCount} spawns | " +
+                $"Type0: {GetActualPercent(Constants.DuckType.Type0):F1}% (exp {Constants.DuckSpawnProbability.TYPE_0 * 100f:F1}%) | " +
+                $"Type1: {GetActualPercent(Constants.DuckType.Type1):F1}% (exp {Constants.DuckSpawnProbability.TYPE_1 * 100f:F1}%) | " +
+                $"Type2: {GetActualPercent(Constants.DuckType.Type2):F1}% (exp {Constants.DuckSpawnProbability.TYPE_2 * 100f:F1}%) | " +
+                $"Type3: {GetActualPercent(Constants.DuckType.Type3):F1}% (exp {Constants.DuckSpawnProbability.TYPE_3 * 100f:F1}%) | " +
+                $"Type4: {GetActualPercent(Constants.DuckType.Type4):F1}% (exp {Constants.DuckSpawnProbability.TYPE_4 * 100f:F1}%)"
+            );
+        }
+
+        private float GetActualPercent(Constants.DuckType duckType)
+        {
+            if (totalSpawnedCount <= 0 || spawnCountsByType == null)
+            {
+                return 0f;
+            }
+
+            int duckTypeIndex = (int)duckType;
+            if (duckTypeIndex < 0 || duckTypeIndex >= spawnCountsByType.Length)
+            {
+                return 0f;
+            }
+
+            return (spawnCountsByType[duckTypeIndex] / (float)totalSpawnedCount) * 100f;
         }
 
         private Vector2 GetRandomSpawnPosition()
