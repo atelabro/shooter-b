@@ -174,11 +174,13 @@ MonoBehaviour:
   pointValue: 1
   speed: 10
   targetAliveHeightWorld: 1.8
-  type0SizeMultiplier: 1.0
+  type0SizeMultiplier: 1
   type1SizeMultiplier: 1.1
   type2SizeMultiplier: 1.04
   type3SizeMultiplier: 0.87
-  type4SizeMultiplier: 0.83
+  type4SizeMultiplier: 1
+  targetHitRadiusWorld: 0.45
+  type4DeathFrameOverride: 1
 --- !u!95 &5044256694237563094
 Animator:
   serializedVersion: 7
