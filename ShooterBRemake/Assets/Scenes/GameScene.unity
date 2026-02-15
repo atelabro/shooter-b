@@ -361,11 +361,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.DuckSpawner
   duckPrefab: {fileID: 5614944451369821607, guid: 39cbb8804f74145ba8ef5a8d5ea5ea84, type: 3}
-  type0PrivateFrames: []
-  type1RamboFrames: []
-  type2KimonoFrames: []
-  type3CheFrames: []
-  type4SoldierFrames: []
+  type0PrivateFrames:
+  - {fileID: 8970140985421866577, guid: 84513cf09effa4655a736a4f33beb3b9, type: 3}
+  - {fileID: 4707101471195459936, guid: 84513cf09effa4655a736a4f33beb3b9, type: 3}
+  - {fileID: 482110467347037162, guid: 84513cf09effa4655a736a4f33beb3b9, type: 3}
+  - {fileID: 4401072202229534343, guid: 84513cf09effa4655a736a4f33beb3b9, type: 3}
+  - {fileID: 7208149309791355968, guid: 84513cf09effa4655a736a4f33beb3b9, type: 3}
+  - {fileID: -3650846433374116319, guid: 84513cf09effa4655a736a4f33beb3b9, type: 3}
+  - {fileID: -2528281846400206584, guid: 84513cf09effa4655a736a4f33beb3b9, type: 3}
+  - {fileID: 1021302300609256550, guid: 84513cf09effa4655a736a4f33beb3b9, type: 3}
+  type1RamboFrames:
+  - {fileID: -7022361165772086157, guid: 54f29bf145dca439bb68dfbc56b9cf9d, type: 3}
+  - {fileID: 2869950404896186425, guid: 54f29bf145dca439bb68dfbc56b9cf9d, type: 3}
+  - {fileID: 6106987508875742909, guid: 54f29bf145dca439bb68dfbc56b9cf9d, type: 3}
+  - {fileID: 7072474875832585268, guid: 54f29bf145dca439bb68dfbc56b9cf9d, type: 3}
+  - {fileID: 1136779930080145282, guid: 54f29bf145dca439bb68dfbc56b9cf9d, type: 3}
+  - {fileID: 2749080138838453053, guid: 54f29bf145dca439bb68dfbc56b9cf9d, type: 3}
+  - {fileID: 3576326925228632303, guid: 54f29bf145dca439bb68dfbc56b9cf9d, type: 3}
+  - {fileID: 7966612720516375004, guid: 54f29bf145dca439bb68dfbc56b9cf9d, type: 3}
+  type2KimonoFrames:
+  - {fileID: 4145772656397211207, guid: 998cd7cc3dd70412d931fed3599814d1, type: 3}
+  - {fileID: -6782833597376242789, guid: 998cd7cc3dd70412d931fed3599814d1, type: 3}
+  - {fileID: 4484267266601492605, guid: 998cd7cc3dd70412d931fed3599814d1, type: 3}
+  - {fileID: -1742301630784567403, guid: 998cd7cc3dd70412d931fed3599814d1, type: 3}
+  - {fileID: 4069153734109294126, guid: 998cd7cc3dd70412d931fed3599814d1, type: 3}
+  - {fileID: -1487951581736457141, guid: 998cd7cc3dd70412d931fed3599814d1, type: 3}
+  - {fileID: 9165945851448093381, guid: 998cd7cc3dd70412d931fed3599814d1, type: 3}
+  - {fileID: -2390155493681170610, guid: 998cd7cc3dd70412d931fed3599814d1, type: 3}
+  type3CheFrames:
+  - {fileID: -8484454810490162261, guid: 9e7ef4b7af05d47cf85a57691abd1dce, type: 3}
+  - {fileID: 7730998535823414873, guid: 9e7ef4b7af05d47cf85a57691abd1dce, type: 3}
+  - {fileID: 4873244966203090990, guid: 9e7ef4b7af05d47cf85a57691abd1dce, type: 3}
+  - {fileID: -573584576041187828, guid: 9e7ef4b7af05d47cf85a57691abd1dce, type: 3}
+  - {fileID: -400711472984261192, guid: 9e7ef4b7af05d47cf85a57691abd1dce, type: 3}
+  - {fileID: 9146231801878384010, guid: 9e7ef4b7af05d47cf85a57691abd1dce, type: 3}
+  - {fileID: -4390397585264966165, guid: 9e7ef4b7af05d47cf85a57691abd1dce, type: 3}
+  - {fileID: -1951484317590716167, guid: 9e7ef4b7af05d47cf85a57691abd1dce, type: 3}
+  type4SoldierFrames:
+  - {fileID: 7321996589452555861, guid: d8090a636c5bd40b095cec9e6e0238ee, type: 3}
+  - {fileID: 2514249899381376293, guid: d8090a636c5bd40b095cec9e6e0238ee, type: 3}
+  - {fileID: -8411908963707285073, guid: d8090a636c5bd40b095cec9e6e0238ee, type: 3}
+  - {fileID: -5190488169532872021, guid: d8090a636c5bd40b095cec9e6e0238ee, type: 3}
+  - {fileID: 4320657604893684996, guid: d8090a636c5bd40b095cec9e6e0238ee, type: 3}
+  - {fileID: 8457064289295693115, guid: d8090a636c5bd40b095cec9e6e0238ee, type: 3}
+  - {fileID: 3541737041052746452, guid: d8090a636c5bd40b095cec9e6e0238ee, type: 3}
+  - {fileID: -8208497361308722453, guid: d8090a636c5bd40b095cec9e6e0238ee, type: 3}
   gameCamera: {fileID: 1280628808}
   poolSize: 20
 --- !u!4 &215247075

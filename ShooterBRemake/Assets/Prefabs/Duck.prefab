@@ -173,6 +173,12 @@ MonoBehaviour:
   duckType: 0
   pointValue: 1
   speed: 10
+  targetAliveHeightWorld: 1.8
+  type0SizeMultiplier: 1.0
+  type1SizeMultiplier: 0.95
+  type2SizeMultiplier: 1.04
+  type3SizeMultiplier: 0.87
+  type4SizeMultiplier: 0.83
 --- !u!95 &5044256694237563094
 Animator:
   serializedVersion: 7

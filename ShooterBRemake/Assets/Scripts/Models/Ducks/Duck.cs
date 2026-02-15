@@ -17,6 +17,14 @@ namespace ShooterB
         private int patternChangeCounter = 0;
         private const int PATTERN_CHANGE_FRAMES = 20;
 
+        [Header("Visual Normalization")]
+        [SerializeField] private float targetAliveHeightWorld = 1.8f;
+        [SerializeField] private float type0SizeMultiplier = 1f;
+        [SerializeField] private float type1SizeMultiplier = 1f;
+        [SerializeField] private float type2SizeMultiplier = 1f;
+        [SerializeField] private float type3SizeMultiplier = 1f;
+        [SerializeField] private float type4SizeMultiplier = 1f;
+
         [Header("Components")]
         private Rigidbody2D rb;
         private CircleCollider2D col;
@@ -93,7 +101,6 @@ namespace ShooterB
             aliveFrameTimer = 0f;
 
             transform.position = new Vector3(startPosition.x, startPosition.y, -5);
-            transform.localScale = Vector3.one * 1f;
             velocity = new Vector2(speed, 0);
 
             if (spriteRenderer != null)
@@ -112,6 +119,8 @@ namespace ShooterB
                 spriteRenderer.sortingOrder = 10;
                 spriteRenderer.enabled = true;
             }
+
+            ApplyNormalizedScale();
 
             screenTop = boundTop;
             screenBottom = boundBottom;
@@ -135,6 +144,38 @@ namespace ShooterB
             SelectRandomPattern();
             isDead = false;
             gameObject.SetActive(true);
+        }
+
+        private void ApplyNormalizedScale()
+        {
+            if (spriteRenderer == null || spriteRenderer.sprite == null)
+            {
+                transform.localScale = Vector3.one;
+                return;
+            }
+
+            float spriteHeightAtScaleOne = spriteRenderer.sprite.rect.height / spriteRenderer.sprite.pixelsPerUnit;
+            if (spriteHeightAtScaleOne <= 0f)
+            {
+                transform.localScale = Vector3.one * GetTypeSizeMultiplier(duckType);
+                return;
+            }
+
+            float normalizedScale = (targetAliveHeightWorld / spriteHeightAtScaleOne) * GetTypeSizeMultiplier(duckType);
+            transform.localScale = Vector3.one * normalizedScale;
+        }
+
+        private float GetTypeSizeMultiplier(Constants.DuckType type)
+        {
+            switch (type)
+            {
+                case Constants.DuckType.Type0: return type0SizeMultiplier;
+                case Constants.DuckType.Type1: return type1SizeMultiplier;
+                case Constants.DuckType.Type2: return type2SizeMultiplier;
+                case Constants.DuckType.Type3: return type3SizeMultiplier;
+                case Constants.DuckType.Type4: return type4SizeMultiplier;
+                default: return 1f;
+            }
         }
 
         private void Start()
