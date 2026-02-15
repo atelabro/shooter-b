@@ -408,6 +408,9 @@ MonoBehaviour:
   - {fileID: -8208497361308722453, guid: d8090a636c5bd40b095cec9e6e0238ee, type: 3}
   gameCamera: {fileID: 1280628808}
   poolSize: 20
+  enableSpawnDistributionDebug: 1
+  spawnDistributionLogInterval: 100
+  forceType4TestMode: 1
 --- !u!4 &215247075
 Transform:
   m_ObjectHideFlags: 0
