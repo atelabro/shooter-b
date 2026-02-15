@@ -361,6 +361,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.DuckSpawner
   duckPrefab: {fileID: 5614944451369821607, guid: 39cbb8804f74145ba8ef5a8d5ea5ea84, type: 3}
+  type0PrivateFrames: []
+  type1RamboFrames: []
+  type2KimonoFrames: []
+  type3CheFrames: []
+  type4SoldierFrames: []
   gameCamera: {fileID: 1280628808}
   poolSize: 20
 --- !u!4 &215247075

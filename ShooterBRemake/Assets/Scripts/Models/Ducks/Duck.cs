@@ -31,6 +31,10 @@ namespace ShooterB
 
         private bool isDead = false;
         private Sprite aliveSprite;
+        private Sprite[] aliveFrames;
+        private int aliveFrameIndex;
+        private float aliveFrameTimer;
+        private const float ALIVE_ANIMATION_FPS = 12f;
 
         private const float DEAD_GRAVITY = 2f;
         private const float DEAD_CLEANUP_TIME = 2f;
@@ -79,11 +83,14 @@ namespace ShooterB
             Debug.Log($"[DUCK] Death sprites loaded: {DEATH_SPRITE_COUNT} frames ({frameWidth}x{frameHeight} each)");
         }
 
-        public void Initialize(Constants.DuckType type, int difficulty, Vector2 startPosition, float boundTop, float boundBottom, float boundRight, float boundLeft)
+        public void Initialize(Constants.DuckType type, int difficulty, Vector2 startPosition, float boundTop, float boundBottom, float boundRight, float boundLeft, Sprite[] typeAliveFrames)
         {
             duckType = type;
             pointValue = Constants.DuckPoints.GetPoints(type);
             speed = Constants.DuckSpeed.GetSpeed(difficulty);
+            aliveFrames = typeAliveFrames;
+            aliveFrameIndex = 0;
+            aliveFrameTimer = 0f;
 
             transform.position = new Vector3(startPosition.x, startPosition.y, -5);
             transform.localScale = Vector3.one * 1f;
@@ -91,7 +98,12 @@ namespace ShooterB
 
             if (spriteRenderer != null)
             {
-                if (aliveSprite != null)
+                if (aliveFrames != null && aliveFrames.Length > 0)
+                {
+                    spriteRenderer.sprite = aliveFrames[0];
+                    aliveSprite = aliveFrames[0];
+                }
+                else if (aliveSprite != null)
                 {
                     spriteRenderer.sprite = aliveSprite;
                 }
@@ -117,8 +129,7 @@ namespace ShooterB
 
             if (animator != null)
             {
-                animator.SetBool("IsDead", false);
-                animator.SetBool("IsFlying", true);
+                animator.enabled = false;
             }
 
             SelectRandomPattern();
@@ -138,6 +149,8 @@ namespace ShooterB
         {
             if (isDead) return;
 
+            AnimateAliveSprite();
+
             patternChangeCounter++;
             if (patternChangeCounter >= PATTERN_CHANGE_FRAMES)
             {
@@ -149,6 +162,25 @@ namespace ShooterB
             EnforceBoundaries();
 
             rb.linearVelocity = velocity;
+        }
+
+        private void AnimateAliveSprite()
+        {
+            if (aliveFrames == null || aliveFrames.Length <= 1 || spriteRenderer == null)
+            {
+                return;
+            }
+
+            aliveFrameTimer += Time.fixedDeltaTime;
+            float frameDuration = 1f / ALIVE_ANIMATION_FPS;
+            if (aliveFrameTimer < frameDuration)
+            {
+                return;
+            }
+
+            aliveFrameTimer -= frameDuration;
+            aliveFrameIndex = (aliveFrameIndex + 1) % aliveFrames.Length;
+            spriteRenderer.sprite = aliveFrames[aliveFrameIndex];
         }
 
         private void SelectRandomPattern()
@@ -254,11 +286,7 @@ namespace ShooterB
                 col.enabled = false;
             }
 
-            // Stop animator so it doesnt override the death sprite
-            if (animator != null)
-            {
-                animator.enabled = false;
-            }
+            // Animator is disabled; death sprite is controlled directly.
 
             // Enable gravity to make it fall
             rb.bodyType = RigidbodyType2D.Dynamic;
@@ -307,11 +335,7 @@ namespace ShooterB
         {
             CancelInvoke(nameof(ReturnToPool));
 
-            // Re-enable animator for next use
-            if (animator != null)
-            {
-                animator.enabled = true;
-            }
+            // Animator remains disabled; alive animation is code-driven.
 
             if (transform.parent == null)
             {

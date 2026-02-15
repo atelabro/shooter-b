@@ -9,6 +9,13 @@ namespace ShooterB
         [Header("Duck Prefab")]
         public GameObject duckPrefab;
 
+        [Header("Duck Type Frames")]
+        public Sprite[] type0PrivateFrames;
+        public Sprite[] type1RamboFrames;
+        public Sprite[] type2KimonoFrames;
+        public Sprite[] type3CheFrames;
+        public Sprite[] type4SoldierFrames;
+
         [Header("Camera")]
         public Camera gameCamera;
 
@@ -33,9 +40,88 @@ namespace ShooterB
         private void Awake()
         {
             Debug.Log($"[DUCKSPAWNER] Awake called on {gameObject.name}");
+            ValidateDuckTypeFrames();
             InitializeDuckPool();
             CalculateSpawnBounds();
         }
+
+        private void ValidateDuckTypeFrames()
+        {
+            ValidateTypeFrames(type0PrivateFrames, Constants.DuckType.Type0, nameof(type0PrivateFrames));
+            ValidateTypeFrames(type1RamboFrames, Constants.DuckType.Type1, nameof(type1RamboFrames));
+            ValidateTypeFrames(type2KimonoFrames, Constants.DuckType.Type2, nameof(type2KimonoFrames));
+            ValidateTypeFrames(type3CheFrames, Constants.DuckType.Type3, nameof(type3CheFrames));
+            ValidateTypeFrames(type4SoldierFrames, Constants.DuckType.Type4, nameof(type4SoldierFrames));
+        }
+
+        private void ValidateTypeFrames(Sprite[] frames, Constants.DuckType type, string fieldName)
+        {
+            if (frames == null || frames.Length == 0)
+            {
+                Debug.LogWarning($"[DUCKSPAWNER] No frames set for {type} ({fieldName}). Falling back to Type0 frames.");
+            }
+        }
+
+        [ContextMenu("Auto-Populate Duck Frames")]
+        private void AutoPopulateDuckFrames()
+        {
+#if UNITY_EDITOR
+            type0PrivateFrames = LoadFramesFromSheet("Assets/Sprites/smallAnimatedPrivate.png", "smallAnimatedPrivate_");
+            type1RamboFrames = LoadFramesFromSheet("Assets/Sprites/smallAnimatedRambo.png", "smallAnimatedRambo_");
+            type2KimonoFrames = LoadFramesFromSheet("Assets/Sprites/smallAnimatedKimono.png", "smallAnimatedKimono_");
+            type3CheFrames = LoadFramesFromSheet("Assets/Sprites/smallAnimatedChe.png", "smallAnimatedChe_");
+            type4SoldierFrames = LoadFramesFromSheet("Assets/Sprites/smallAnimatedSoldier.png", "smallAnimatedSoldier_");
+
+            UnityEditor.EditorUtility.SetDirty(this);
+
+            Debug.Log(
+                $"[DUCKSPAWNER] Auto-populated duck frames: " +
+                $"Type0={type0PrivateFrames.Length}, " +
+                $"Type1={type1RamboFrames.Length}, " +
+                $"Type2={type2KimonoFrames.Length}, " +
+                $"Type3={type3CheFrames.Length}, " +
+                $"Type4={type4SoldierFrames.Length}"
+            );
+#else
+            Debug.LogWarning("[DUCKSPAWNER] Auto-Populate Duck Frames is only available in Unity Editor.");
+#endif
+        }
+
+#if UNITY_EDITOR
+        private static Sprite[] LoadFramesFromSheet(string assetPath, string spriteNamePrefix)
+        {
+            UnityEngine.Object[] assets = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(assetPath);
+            List<Sprite> frames = new List<Sprite>();
+
+            foreach (UnityEngine.Object asset in assets)
+            {
+                if (asset is Sprite sprite && sprite.name.StartsWith(spriteNamePrefix, System.StringComparison.Ordinal))
+                {
+                    frames.Add(sprite);
+                }
+            }
+
+            frames.Sort((a, b) => ExtractFrameIndex(a.name).CompareTo(ExtractFrameIndex(b.name)));
+            return frames.ToArray();
+        }
+
+        private static int ExtractFrameIndex(string spriteName)
+        {
+            int underscoreIndex = spriteName.LastIndexOf('_');
+            if (underscoreIndex < 0 || underscoreIndex >= spriteName.Length - 1)
+            {
+                return int.MaxValue;
+            }
+
+            string suffix = spriteName.Substring(underscoreIndex + 1);
+            if (int.TryParse(suffix, out int index))
+            {
+                return index;
+            }
+
+            return int.MaxValue;
+        }
+#endif
 
         private void Start()
         {
@@ -138,9 +224,43 @@ namespace ShooterB
             Duck duck = duckObj.GetComponent<Duck>();
             if (duck != null)
             {
-                duck.Initialize(duckType, GameManager.Instance.Difficulty, spawnPosition, boundTop, boundBottom, boundRight, boundLeft);
+                Sprite[] duckFrames = GetFramesForType(duckType);
+                duck.Initialize(duckType, GameManager.Instance.Difficulty, spawnPosition, boundTop, boundBottom, boundRight, boundLeft, duckFrames);
                 GameManager.Instance.BirdCreated();
             }
+        }
+
+        private Sprite[] GetFramesForType(Constants.DuckType type)
+        {
+            Sprite[] selectedFrames;
+            switch (type)
+            {
+                case Constants.DuckType.Type0:
+                    selectedFrames = type0PrivateFrames;
+                    break;
+                case Constants.DuckType.Type1:
+                    selectedFrames = type1RamboFrames;
+                    break;
+                case Constants.DuckType.Type2:
+                    selectedFrames = type2KimonoFrames;
+                    break;
+                case Constants.DuckType.Type3:
+                    selectedFrames = type3CheFrames;
+                    break;
+                case Constants.DuckType.Type4:
+                    selectedFrames = type4SoldierFrames;
+                    break;
+                default:
+                    selectedFrames = type0PrivateFrames;
+                    break;
+            }
+
+            if (selectedFrames == null || selectedFrames.Length == 0)
+            {
+                return type0PrivateFrames;
+            }
+
+            return selectedFrames;
         }
 
         private GameObject GetDuckFromPool()
