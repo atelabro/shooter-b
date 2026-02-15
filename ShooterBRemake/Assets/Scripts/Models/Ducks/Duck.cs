@@ -25,6 +25,10 @@ namespace ShooterB
         [SerializeField] private float type3SizeMultiplier = 1f;
         [SerializeField] private float type4SizeMultiplier = 1f;
 
+        [Header("Hitbox Normalization")]
+        [SerializeField] private float targetHitRadiusWorld = 0.45f;
+        [SerializeField] private float deathSpriteScaleMultiplier = 1.25f;
+
         [Header("Components")]
         private Rigidbody2D rb;
         private CircleCollider2D col;
@@ -46,11 +50,6 @@ namespace ShooterB
 
         private const float DEAD_GRAVITY = 2f;
         private const float DEAD_CLEANUP_TIME = 2f;
-        private const int DEATH_SPRITE_COUNT = 7;
-        private const float DEATH_SPRITE_PPU = 32f;
-
-        private static Sprite[] deathSprites;
-        private static bool deathSpritesLoaded = false;
 
         private void Awake()
         {
@@ -61,34 +60,6 @@ namespace ShooterB
 
             rb.gravityScale = 0;
             rb.bodyType = RigidbodyType2D.Kinematic;
-
-            LoadDeathSprites();
-        }
-
-        private static void LoadDeathSprites()
-        {
-            if (deathSpritesLoaded) return;
-
-            Texture2D tex = Resources.Load<Texture2D>("allDeadDucks");
-            if (tex == null)
-            {
-                Debug.LogError("[DUCK] allDeadDucks texture not found in Resources folder.");
-                return;
-            }
-
-            deathSprites = new Sprite[DEATH_SPRITE_COUNT];
-            int frameWidth = tex.width / DEATH_SPRITE_COUNT;
-            int frameHeight = tex.height;
-
-            for (int i = 0; i < DEATH_SPRITE_COUNT; i++)
-            {
-                Rect rect = new Rect(i * frameWidth, 0, frameWidth, frameHeight);
-                Vector2 pivot = new Vector2(0.5f, 0.5f);
-                deathSprites[i] = Sprite.Create(tex, rect, pivot, DEATH_SPRITE_PPU);
-            }
-
-            deathSpritesLoaded = true;
-            Debug.Log($"[DUCK] Death sprites loaded: {DEATH_SPRITE_COUNT} frames ({frameWidth}x{frameHeight} each)");
         }
 
         public void Initialize(Constants.DuckType type, int difficulty, Vector2 startPosition, float boundTop, float boundBottom, float boundRight, float boundLeft, Sprite[] typeAliveFrames)
@@ -121,6 +92,7 @@ namespace ShooterB
             }
 
             ApplyNormalizedScale();
+            ApplyNormalizedHitbox();
 
             screenTop = boundTop;
             screenBottom = boundBottom;
@@ -176,6 +148,23 @@ namespace ShooterB
                 case Constants.DuckType.Type4: return type4SizeMultiplier;
                 default: return 1f;
             }
+        }
+
+        private void ApplyNormalizedHitbox()
+        {
+            if (col == null)
+            {
+                return;
+            }
+
+            float uniformScale = Mathf.Abs(transform.localScale.x);
+            if (uniformScale < 0.0001f)
+            {
+                col.radius = targetHitRadiusWorld;
+                return;
+            }
+
+            col.radius = targetHitRadiusWorld / uniformScale;
         }
 
         private void Start()
@@ -312,11 +301,37 @@ namespace ShooterB
                 aliveSprite = spriteRenderer.sprite;
             }
 
-            // Swap to weapon-specific death sprite
-            Sprite deathSprite = GetDeathSprite(weaponType);
-            if (deathSprite != null && spriteRenderer != null)
+            // Stop alive animation source to ensure nothing overwrites the death sprite after hit.
+            aliveFrames = null;
+
+            if (animator != null)
             {
-                spriteRenderer.sprite = deathSprite;
+                animator.enabled = false;
+            }
+
+            // Swap to weapon-specific death sprite with a safe fallback.
+            Sprite deathSprite = GetDeathSprite(weaponType);
+
+            if (spriteRenderer != null)
+            {
+                if (deathSprite != null)
+                {
+                    float aliveHeightWorld = spriteRenderer.bounds.size.y;
+                    spriteRenderer.sprite = deathSprite;
+                    float deathHeightWorld = spriteRenderer.bounds.size.y;
+                    if (aliveHeightWorld > 0f && deathHeightWorld > 0f)
+                    {
+                        transform.localScale *= aliveHeightWorld / deathHeightWorld;
+                    }
+                    transform.localScale *= deathSpriteScaleMultiplier;
+                }
+
+                spriteRenderer.enabled = true;
+                spriteRenderer.color = Color.white;
+            }
+            else
+            {
+                Debug.LogWarning($"[DUCK] SpriteRenderer missing on hit for type {duckType}.");
             }
 
             // Keep current scale -- PPU handles sizing relative to the alive sprite
@@ -342,33 +357,13 @@ namespace ShooterB
 
         private Sprite GetDeathSprite(Constants.WeaponType weaponType)
         {
-            if (deathSprites == null || deathSprites.Length == 0)
+            Sprite registeredDeathSprite = Weapon.GetRegisteredDeathSprite(weaponType);
+            if (registeredDeathSprite != null)
             {
-                Debug.LogWarning("[DUCK] Death sprites not loaded.");
-                return null;
+                return registeredDeathSprite;
             }
 
-            // Frame index matches weapon enum order:
-            // Rifle=0, Cabirne=1, Beretta=2, MrSulko=3, LaserGun=4, TeslaGun=5, PiranhaGun=6
-            // Original mapping: Beretta=0, Cabirne=1, Rifle=2, LaserGun=3, PiranhaGun=4, MrSulko=5, TeslaGun=6
-            int frameIndex;
-            switch (weaponType)
-            {
-                case Constants.WeaponType.Beretta:    frameIndex = 0; break;
-                case Constants.WeaponType.Cabirne:    frameIndex = 1; break;
-                case Constants.WeaponType.Rifle:      frameIndex = 2; break;
-                case Constants.WeaponType.LaserGun:   frameIndex = 3; break;
-                case Constants.WeaponType.PiranhaGun: frameIndex = 4; break;
-                case Constants.WeaponType.MrSulko:    frameIndex = 5; break;
-                case Constants.WeaponType.TeslaGun:   frameIndex = 6; break;
-                default:                              frameIndex = 2; break;
-            }
-
-            if (frameIndex >= 0 && frameIndex < deathSprites.Length)
-            {
-                return deathSprites[frameIndex];
-            }
-
+            Debug.LogWarning($"[DUCK] No registered death sprite for weapon {weaponType}.");
             return null;
         }
 

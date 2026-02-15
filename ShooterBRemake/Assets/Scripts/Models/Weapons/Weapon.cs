@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace ShooterB
 {
@@ -16,9 +17,15 @@ namespace ShooterB
         [Header("Bullet")]
         public GameObject bulletPrefab;
 
+        [Header("Death Sprite")]
+        public Sprite deathSprite;
+
         protected int currentBullets;
         protected bool isRefilling = false;
         protected float lastFireTime = 0f;
+
+        private static readonly Dictionary<Constants.WeaponType, Sprite> deathSpritesByWeaponType =
+            new Dictionary<Constants.WeaponType, Sprite>();
 
         public int CurrentBullets => currentBullets;
         public bool IsRefilling => isRefilling;
@@ -27,6 +34,28 @@ namespace ShooterB
         protected virtual void Start()
         {
             currentBullets = maxBullets;
+            RegisterConfiguredDeathSprite();
+        }
+
+        public void RegisterConfiguredDeathSprite()
+        {
+            RegisterDeathSprite(weaponType, deathSprite);
+        }
+
+        public static void RegisterDeathSprite(Constants.WeaponType weaponType, Sprite sprite)
+        {
+            if (sprite == null)
+            {
+                return;
+            }
+
+            deathSpritesByWeaponType[weaponType] = sprite;
+        }
+
+        public static Sprite GetRegisteredDeathSprite(Constants.WeaponType weaponType)
+        {
+            deathSpritesByWeaponType.TryGetValue(weaponType, out Sprite sprite);
+            return sprite;
         }
 
         public virtual bool Shoot(Vector2 targetPosition)

@@ -410,7 +410,6 @@ MonoBehaviour:
   poolSize: 20
   enableSpawnDistributionDebug: 1
   spawnDistributionLogInterval: 100
-  forceType4TestMode: 1
 --- !u!4 &215247075
 Transform:
   m_ObjectHideFlags: 0

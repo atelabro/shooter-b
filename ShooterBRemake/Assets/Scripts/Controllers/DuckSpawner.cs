@@ -313,14 +313,18 @@ namespace ShooterB
         private Constants.DuckType SelectDuckType()
         {
             float random = Random.Range(0f, 1f);
+            float type0Threshold = Constants.DuckSpawnProbability.TYPE_0;
+            float type1Threshold = type0Threshold + Constants.DuckSpawnProbability.TYPE_1;
+            float type2Threshold = type1Threshold + Constants.DuckSpawnProbability.TYPE_2;
+            float type3Threshold = type2Threshold + Constants.DuckSpawnProbability.TYPE_3;
 
-            if (random < Constants.DuckSpawnProbability.TYPE_0)
+            if (random < type0Threshold)
                 return Constants.DuckType.Type0;
-            else if (random < Constants.DuckSpawnProbability.TYPE_0 + Constants.DuckSpawnProbability.TYPE_1)
+            else if (random < type1Threshold)
                 return Constants.DuckType.Type1;
-            else if (random < Constants.DuckSpawnProbability.TYPE_0 + Constants.DuckSpawnProbability.TYPE_1 + Constants.DuckSpawnProbability.TYPE_2)
+            else if (random < type2Threshold)
                 return Constants.DuckType.Type2;
-            else if (random < 0.96f)
+            else if (random < type3Threshold)
                 return Constants.DuckType.Type3;
             else
                 return Constants.DuckType.Type4;

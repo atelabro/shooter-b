@@ -69,7 +69,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 1
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -140,7 +140,7 @@ TextureImporter:
         height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 2, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -158,11 +158,11 @@ TextureImporter:
         serializedVersion: 2
         x: 58
         y: 0
-        width: 64
+        width: 63
         height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 2, y: 0, z: 1, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -178,9 +178,9 @@ TextureImporter:
       name: allDeadDucks_2
       rect:
         serializedVersion: 2
-        x: 118
+        x: 120
         y: 0
-        width: 64
+        width: 60
         height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -206,7 +206,7 @@ TextureImporter:
         height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 2, y: 0, z: 2, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -224,11 +224,11 @@ TextureImporter:
         serializedVersion: 2
         x: 238
         y: 0
-        width: 64
+        width: 62
         height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 2, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -244,13 +244,13 @@ TextureImporter:
       name: allDeadDucks_5
       rect:
         serializedVersion: 2
-        x: 298
+        x: 296
         y: 0
         width: 64
         height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 2, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -272,7 +272,7 @@ TextureImporter:
         height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 2, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -288,7 +288,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: ea752abf767b340eab701a14b2f8b64f
     internalID: 0
     vertices: []
     indices: 

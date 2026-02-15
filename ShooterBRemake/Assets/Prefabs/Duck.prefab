@@ -178,9 +178,9 @@ MonoBehaviour:
   type1SizeMultiplier: 1.1
   type2SizeMultiplier: 1.04
   type3SizeMultiplier: 0.87
-  type4SizeMultiplier: 1
+  type4SizeMultiplier: 0.8
   targetHitRadiusWorld: 0.45
-  type4DeathFrameOverride: 1
+  deathSpriteScaleMultiplier: 0.6
 --- !u!95 &5044256694237563094
 Animator:
   serializedVersion: 7

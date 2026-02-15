@@ -29,6 +29,7 @@ namespace ShooterB
         private void Start()
         {
             EnsureWeaponsCreated();
+            RegisterWeaponDeathSprites();
             if (activeWeapon == null)
                 activeWeapon = rifleWeapon;
 
@@ -72,6 +73,8 @@ namespace ShooterB
                 else
                     cabirneWeapon = CreateWeaponInstance<Cabirne>("Cabirne", Constants.WeaponType.Cabirne, cabirneBulletPrefab, null);
             }
+
+            RegisterWeaponDeathSprites();
         }
 
         private T CreateWeaponInstance<T>(string objectName, Constants.WeaponType expectedWeaponType, GameObject defaultBulletPrefab, Sprite defaultIcon) where T : Weapon
@@ -130,6 +133,15 @@ namespace ShooterB
                     activeWeapon.weaponIcon = defaultRifleIcon;
                 }
             }
+        }
+
+        private void RegisterWeaponDeathSprites()
+        {
+            if (rifleWeapon != null)
+                rifleWeapon.RegisterConfiguredDeathSprite();
+
+            if (cabirneWeapon != null)
+                cabirneWeapon.RegisterConfiguredDeathSprite();
         }
 
         private System.Collections.IEnumerator LogInitialization()
