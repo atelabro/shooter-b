@@ -624,6 +624,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.GameController
   mainCamera: {fileID: 1280628808}
   backgroundRenderer: {fileID: 0}
+  useBackgroundShade: 1
+  backgroundShade: 0.32
 --- !u!4 &439035272
 Transform:
   m_ObjectHideFlags: 0
