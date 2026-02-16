@@ -13,6 +13,7 @@ namespace ShooterB
         public float fireDelay;
         public float refillDelay;
         public Sprite weaponIcon;
+        public Sprite ammoHudSprite;
 
         [Header("Bullet")]
         public GameObject bulletPrefab;
@@ -153,6 +154,9 @@ namespace ShooterB
 
         public virtual Sprite GetAmmoHudSprite()
         {
+            if (ammoHudSprite != null)
+                return ammoHudSprite;
+
             if (bulletPrefab == null)
                 return null;
 
