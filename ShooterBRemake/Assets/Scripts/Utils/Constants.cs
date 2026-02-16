@@ -144,10 +144,28 @@ namespace ShooterB
                 else
                     return 100;
             }
+
+            public static int GetBirdsForNextDifficultyArcadeVeryHard(int currentDifficulty)
+            {
+                if (currentDifficulty >= 1 && currentDifficulty <= 10)
+                    return 4;
+                else if (currentDifficulty >= 11 && currentDifficulty <= 20)
+                    return 6;
+                else if (currentDifficulty >= 21 && currentDifficulty <= 30)
+                    return 8;
+                else
+                    return 10;
+            }
         }
 
         public static class SpawnTiming
         {
+            public const float ARCADE_VERY_HARD_MULTIPLIER = 0.90f;
+            public const float ARCADE_VERY_HARD_MIN_DELAY = 0.16f;
+            public const float ARCADE_VERY_HARD_INITIAL_DELAY = 0.70f;
+            public const int ARCADE_VERY_HARD_MIN_ACTIVE_DUCKS = 5;
+            public const int ARCADE_VERY_HARD_SPAWN_BATCH = 1;
+
             public static float GetSpawnDelay(int difficulty)
             {
                 float baseDelay;
@@ -186,6 +204,7 @@ namespace ShooterB
         public static class DuckSpeed
         {
             public const float BASE_SPEED = 3f; // was 2f
+            public const float ARCADE_VERY_HARD_MULTIPLIER = 1.075f;
 
             public static float GetSpeed(int difficulty)
             {

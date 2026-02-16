@@ -67,6 +67,8 @@ namespace ShooterB
             duckType = type;
             pointValue = Constants.DuckPoints.GetPoints(type);
             speed = Constants.DuckSpeed.GetSpeed(difficulty);
+            if (GameManager.Instance.CurrentGameMode == Constants.GameMode.Arcade && GameManager.Instance.ArcadeVeryHardMode)
+                speed *= Constants.DuckSpeed.ARCADE_VERY_HARD_MULTIPLIER;
             aliveFrames = typeAliveFrames;
             aliveFrameIndex = 0;
             aliveFrameTimer = 0f;

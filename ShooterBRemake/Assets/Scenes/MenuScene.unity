@@ -899,6 +899,8 @@ MonoBehaviour:
   quitButton: {fileID: 422015577}
   highScoreText: {fileID: 451682059}
   titleText: {fileID: 0}
+  gameMode: 1
+  arcadeVeryHard: 1
 --- !u!4 &688693834
 Transform:
   m_ObjectHideFlags: 0

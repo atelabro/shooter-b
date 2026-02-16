@@ -29,6 +29,7 @@ namespace ShooterB
         public Constants.GameMode CurrentGameMode { get; private set; }
         public bool IsPaused { get; private set; }
         public bool IsGameOver { get; private set; }
+        public bool ArcadeVeryHardMode { get; private set; }
 
         public event Action<long> OnScoreChanged;
         public event Action<int> OnMultiplierChanged;
@@ -56,7 +57,7 @@ namespace ShooterB
             CurrentGameMode = mode;
             Score = 0;
             BirdCount = 0;
-            Difficulty = Constants.INITIAL_DIFFICULTY;
+            Difficulty = mode == Constants.GameMode.Arcade && ArcadeVeryHardMode ? 5 : Constants.INITIAL_DIFFICULTY;
             Lives = Constants.INITIAL_LIVES;
             IsPaused = false;
             IsGameOver = false;
@@ -155,7 +156,16 @@ namespace ShooterB
 
         private void UpdateBirdsUntilNextDifficulty()
         {
-            birdsUntilNextDifficulty = Constants.DifficultyProgression.GetBirdsForNextDifficulty(Difficulty);
+            bool veryHardArcade = CurrentGameMode == Constants.GameMode.Arcade && ArcadeVeryHardMode;
+            birdsUntilNextDifficulty = veryHardArcade
+                ? Constants.DifficultyProgression.GetBirdsForNextDifficultyArcadeVeryHard(Difficulty)
+                : Constants.DifficultyProgression.GetBirdsForNextDifficulty(Difficulty);
+        }
+
+        public void SetArcadeVeryHardMode(bool enabled)
+        {
+            ArcadeVeryHardMode = enabled;
+            Debug.Log($"Arcade very hard mode set to: {ArcadeVeryHardMode}");
         }
 
         public void PauseGame()

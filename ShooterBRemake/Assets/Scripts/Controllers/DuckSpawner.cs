@@ -42,6 +42,7 @@ namespace ShooterB
         private bool isSpawning = false;
         private int totalSpawnedCount = 0;
         private int[] spawnCountsByType;
+        private int activeDuckCount = 0;
 
         private void Awake()
         {
@@ -188,7 +189,7 @@ namespace ShooterB
             {
                 ResetSpawnDistributionCounters();
                 isSpawning = true;
-                nextSpawnTime = Time.time + 2f;
+                nextSpawnTime = Time.time + GetInitialSpawnDelay();
                 StartCoroutine(SpawnCoroutine());
                 Debug.Log("Duck spawning started");
             }
@@ -207,10 +208,36 @@ namespace ShooterB
             {
                 if (Time.time >= nextSpawnTime)
                 {
-                    SpawnDuck();
+                    int ducksToSpawn = IsArcadeVeryHardEnabled() ? Random.Range(1, 3) : 1;
+                    for (int i = 0; i < ducksToSpawn; i++)
+                    {
+                        SpawnDuck();
+                    }
 
                     float spawnDelay = Constants.SpawnTiming.GetSpawnDelay(GameManager.Instance.Difficulty);
+                    if (IsArcadeVeryHardEnabled())
+                    {
+                        spawnDelay = Mathf.Max(Constants.SpawnTiming.ARCADE_VERY_HARD_MIN_DELAY, spawnDelay * Constants.SpawnTiming.ARCADE_VERY_HARD_MULTIPLIER);
+                    }
+                    else if (GameManager.Instance.Difficulty >= 35)
+                    {
+                        spawnDelay = Mathf.Max(0.1f, spawnDelay);
+                    }
+
                     nextSpawnTime = Time.time + spawnDelay;
+                }
+
+                if (IsArcadeVeryHardEnabled())
+                {
+                    int shortfall = Constants.SpawnTiming.ARCADE_VERY_HARD_MIN_ACTIVE_DUCKS - activeDuckCount;
+                    if (shortfall > 0)
+                    {
+                        int ducksToSpawnNow = Mathf.Min(shortfall, Constants.SpawnTiming.ARCADE_VERY_HARD_SPAWN_BATCH);
+                        for (int i = 0; i < ducksToSpawnNow; i++)
+                        {
+                            SpawnDuck();
+                        }
+                    }
                 }
 
                 yield return new WaitForSeconds(0.1f);
@@ -236,6 +263,7 @@ namespace ShooterB
                 Sprite[] duckFrames = GetFramesForType(duckType);
                 duck.Initialize(duckType, GameManager.Instance.Difficulty, spawnPosition, boundTop, boundBottom, boundRight, boundLeft, duckFrames);
                 GameManager.Instance.BirdCreated();
+                activeDuckCount++;
             }
         }
 
@@ -307,6 +335,7 @@ namespace ShooterB
 
             duck.SetActive(false);
             duckPool.Enqueue(duck);
+            activeDuckCount = Mathf.Max(0, activeDuckCount - 1);
             Debug.Log($"Duck returned to pool. Pool size: {duckPool.Count}");
         }
 
@@ -411,6 +440,19 @@ namespace ShooterB
         private void OnDestroy()
         {
             StopSpawning();
+        }
+
+        private bool IsArcadeVeryHardEnabled()
+        {
+            return GameManager.Instance.CurrentGameMode == Constants.GameMode.Arcade && GameManager.Instance.ArcadeVeryHardMode;
+        }
+
+        private float GetInitialSpawnDelay()
+        {
+            if (IsArcadeVeryHardEnabled())
+                return Constants.SpawnTiming.ARCADE_VERY_HARD_INITIAL_DELAY;
+
+            return 2f;
         }
     }
 }

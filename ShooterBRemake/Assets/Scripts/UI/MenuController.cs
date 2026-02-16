@@ -12,6 +12,10 @@ namespace ShooterB
         public TextMeshProUGUI highScoreText;
         public TextMeshProUGUI titleText;
 
+        [Header("Mode Settings")]
+        public Constants.GameMode gameMode = Constants.GameMode.Normal;
+        public bool arcadeVeryHard = false;
+
         private void Start()
         {
             if (playButton != null)
@@ -30,8 +34,10 @@ namespace ShooterB
 
         private void OnPlayClicked()
         {
-            Debug.Log("Play button clicked - Starting Normal mode");
-            SceneController.Instance.LoadGameScene(Constants.GameMode.Normal);
+            bool isArcade = gameMode == Constants.GameMode.Arcade;
+            GameManager.Instance.SetArcadeVeryHardMode(isArcade && arcadeVeryHard);
+            Debug.Log($"Play button clicked - Starting {gameMode} mode (Arcade Very Hard: {isArcade && arcadeVeryHard})");
+            SceneController.Instance.LoadGameScene(gameMode);
         }
 
         private void OnQuitClicked()

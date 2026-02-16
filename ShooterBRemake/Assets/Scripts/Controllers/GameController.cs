@@ -20,11 +20,6 @@ namespace ShooterB
         {
             SetupCamera();
 
-            if (GameManager.Instance.Score == 0)
-            {
-                GameManager.Instance.InitializeGame(Constants.GameMode.Normal);
-            }
-
             ApplyBackground();
             ResolveModalReferences();
             HideModals();
