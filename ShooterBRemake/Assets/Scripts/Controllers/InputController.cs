@@ -9,6 +9,7 @@ namespace ShooterB
         [Header("References")]
         public Camera gameCamera;
         public ShooterController shooterController;
+        public PauseModalController pauseModalController;
 
         private void Start()
         {
@@ -20,15 +21,43 @@ namespace ShooterB
                 shooterController = FindObjectOfType<ShooterController>();
             }
 
+            if (pauseModalController == null)
+            {
+                pauseModalController = FindObjectOfType<PauseModalController>(true);
+            }
+
             Debug.Log($"[INPUT] InputController initialized");
         }
 
         private void Update()
         {
+            HandlePauseInput();
+
             if (GameManager.Instance.IsPaused || GameManager.Instance.IsGameOver)
                 return;
 
             HandleInput();
+        }
+
+        private void HandlePauseInput()
+        {
+            if (GameManager.Instance.IsGameOver || Keyboard.current == null)
+                return;
+
+            if (Keyboard.current.escapeKey.wasPressedThisFrame)
+            {
+                if (pauseModalController == null)
+                    pauseModalController = FindObjectOfType<PauseModalController>(true);
+
+                if (pauseModalController != null)
+                {
+                    pauseModalController.Toggle();
+                }
+                else
+                {
+                    Debug.LogWarning("[INPUT] PauseModalController not found for Escape handling.");
+                }
+            }
         }
 
         private void HandleInput()

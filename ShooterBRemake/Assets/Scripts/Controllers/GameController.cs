@@ -12,6 +12,10 @@ namespace ShooterB
         public bool backgroundFillScreen = false;
         public bool alignBackgroundTopLeft = true;
 
+        [Header("Modals")]
+        public PauseModalController pauseModalController;
+        public GameOverModalController gameOverModalController;
+
         private void Start()
         {
             SetupCamera();
@@ -22,8 +26,17 @@ namespace ShooterB
             }
 
             ApplyBackground();
+            ResolveModalReferences();
+            HideModals();
+            GameManager.Instance.OnGameOver += HandleGameOver;
 
             Debug.Log($"GameController started - Score: {GameManager.Instance.Score}, Lives: {GameManager.Instance.Lives}, Difficulty: {GameManager.Instance.Difficulty}");
+        }
+
+        private void OnDestroy()
+        {
+            if (GameManager.Instance != null)
+                GameManager.Instance.OnGameOver -= HandleGameOver;
         }
 
         private void SetupCamera()
@@ -119,19 +132,43 @@ namespace ShooterB
             backgroundRenderer.transform.position = new Vector3(x, y, position.z);
         }
 
-        private void Update()
+        private void ResolveModalReferences()
         {
-            // TODO: Implement new Input System for Escape key
-            // Temporarily disabled to avoid Input System error
-            /*
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (pauseModalController == null)
+                pauseModalController = FindObjectOfType<PauseModalController>(true);
+
+            if (gameOverModalController == null)
+                gameOverModalController = FindObjectOfType<GameOverModalController>(true);
+
+            if (pauseModalController == null)
+                Debug.LogWarning("[GameController] PauseModalController not found in scene.");
+
+            if (gameOverModalController == null)
+                Debug.LogWarning("[GameController] GameOverModalController not found in scene.");
+        }
+
+        private void HideModals()
+        {
+            if (pauseModalController != null)
+                pauseModalController.Hide();
+
+            if (gameOverModalController != null)
+                gameOverModalController.Hide();
+        }
+
+        private void HandleGameOver()
+        {
+            if (gameOverModalController == null)
             {
-                if (GameManager.Instance.IsPaused)
-                    GameManager.Instance.ResumeGame();
-                else
-                    GameManager.Instance.PauseGame();
+                Debug.LogWarning("[GameController] Cannot show game-over modal. Reference is missing.");
+                return;
             }
-            */
+
+            gameOverModalController.Show(
+                GameManager.Instance.Score,
+                GameManager.Instance.HighScore,
+                GameManager.Instance.CurrentGameMode,
+                GameManager.Instance.IsNewHighScore());
         }
     }
 }

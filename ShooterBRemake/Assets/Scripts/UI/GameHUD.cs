@@ -19,6 +19,7 @@ namespace ShooterB
         [Header("Buttons")]
         public Button pauseButton;
         public Button menuButton;
+        public PauseModalController pauseModalController;
 
         [Header("Ammo Display")]
         public ShooterController shooterController;
@@ -54,6 +55,9 @@ namespace ShooterB
                 if (containerObject != null)
                     ammoContainer = containerObject.transform;
             }
+
+            if (pauseModalController == null)
+                pauseModalController = FindObjectOfType<PauseModalController>(true);
 
             BuildAmmoIcons();
             SubscribeToEvents();
@@ -270,18 +274,26 @@ namespace ShooterB
 
         private void OnPauseClicked()
         {
-            if (GameManager.Instance.IsPaused)
-                GameManager.Instance.ResumeGame();
+            if (pauseModalController != null)
+            {
+                pauseModalController.Show();
+            }
             else
-                GameManager.Instance.PauseGame();
-
-            Debug.Log($"Pause toggled - IsPaused: {GameManager.Instance.IsPaused}");
+            {
+                Debug.LogWarning("[GameHUD] Pause button pressed but PauseModalController is missing.");
+            }
         }
 
         private void OnMenuClicked()
         {
-            Debug.Log("Menu button clicked");
-            SceneController.Instance.ReturnToMenu();
+            if (pauseModalController != null)
+            {
+                pauseModalController.Show();
+            }
+            else
+            {
+                Debug.LogWarning("[GameHUD] Menu button pressed but PauseModalController is missing.");
+            }
         }
     }
 }

@@ -51,6 +51,16 @@ namespace ShooterB
             SceneManager.LoadScene(GetSceneName(Constants.SceneType.Game));
         }
 
+        public void ReloadCurrentGameScene()
+        {
+            Time.timeScale = 1f;
+            Constants.GameMode mode = GameManager.Instance.CurrentGameMode;
+            Debug.Log($"Reloading game scene with mode: {mode}");
+
+            GameManager.Instance.InitializeGame(mode);
+            SceneManager.LoadScene(GetSceneName(Constants.SceneType.Game));
+        }
+
         public void ReturnToMenu()
         {
             Time.timeScale = 1f;

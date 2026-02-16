@@ -34,6 +34,7 @@ namespace ShooterB
         public event Action<int> OnMultiplierChanged;
         public event Action<int> OnLivesChanged;
         public event Action<int> OnDifficultyChanged;
+        public event Action<bool> OnPauseStateChanged;
         public event Action OnGameOver;
         public event Action<Constants.MultiKillType, int> OnComboKill;
 
@@ -159,22 +160,24 @@ namespace ShooterB
 
         public void PauseGame()
         {
-            if (!IsGameOver)
-            {
-                IsPaused = true;
-                Time.timeScale = 0f;
-                Debug.Log("Game paused");
-            }
+            if (IsGameOver || IsPaused)
+                return;
+
+            IsPaused = true;
+            Time.timeScale = 0f;
+            OnPauseStateChanged?.Invoke(true);
+            Debug.Log("Game paused");
         }
 
         public void ResumeGame()
         {
-            if (!IsGameOver)
-            {
-                IsPaused = false;
-                Time.timeScale = 1f;
-                Debug.Log("Game resumed");
-            }
+            if (IsGameOver || !IsPaused)
+                return;
+
+            IsPaused = false;
+            Time.timeScale = 1f;
+            OnPauseStateChanged?.Invoke(false);
+            Debug.Log("Game resumed");
         }
 
         public void RestartGame()
@@ -186,9 +189,14 @@ namespace ShooterB
 
         private void TriggerGameOver()
         {
+            if (IsGameOver)
+                return;
+
             IsGameOver = true;
+            IsPaused = false;
             Time.timeScale = 0f;
             SaveHighScore();
+            OnPauseStateChanged?.Invoke(false);
             OnGameOver?.Invoke();
             Debug.Log($"Game Over! Final Score: {Score}, High Score: {HighScore}");
         }
