@@ -1582,9 +1582,12 @@ MonoBehaviour:
   activeWeapon: {fileID: 0}
   rifleBulletPrefab: {fileID: 4120011112331769632, guid: 7a0390591e9a5438c883031664f521a7, type: 3}
   cabirneBulletPrefab: {fileID: 4120011112331769632, guid: 0ff1fbc710d549709db9f03ac5f10990, type: 3}
+  piranhaBulletPrefab: {fileID: 4120011112331769632, guid: 6d8f4f8dc86f48c1a5d8c2f0b6e9a123, type: 3}
   defaultRifleIcon: {fileID: 7475899495669246118, guid: 1aeeb6b2dc88a4272b34d4044e3d269a, type: 3}
+  defaultPiranhaIcon: {fileID: -2538522935036702881, guid: 0c5ad9cf192ef444abd361569c50c8f0, type: 3}
   rifleWeaponPrefab: {fileID: 7312278767487371377, guid: 64b7ab8107b68491a93959d416d5ff22, type: 3}
   cabirneWeaponPrefab: {fileID: 883359885173164188, guid: 29a30b49e22474328bc2b6d6713bc5d4, type: 3}
+  piranhaWeaponPrefab: {fileID: 883359885173164188, guid: 8ab1df6b4f02484bb7b77e2d9e178c45, type: 3}
 --- !u!1 &452998658
 GameObject:
   m_ObjectHideFlags: 0

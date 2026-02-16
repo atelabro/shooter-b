@@ -9,15 +9,19 @@ namespace ShooterB
         public Weapon activeWeapon;
         private Rifle rifleWeapon;
         private Cabirne cabirneWeapon;
+        private PiranhaGun piranhaWeapon;
 
         [Header("Prefabs")]
         public GameObject rifleBulletPrefab;
         public GameObject cabirneBulletPrefab;
+        public GameObject piranhaBulletPrefab;
         public Sprite defaultRifleIcon;
+        public Sprite defaultPiranhaIcon;
 
         [Header("Weapon Prefabs")]
         public Weapon rifleWeaponPrefab;
         public Weapon cabirneWeaponPrefab;
+        public Weapon piranhaWeaponPrefab;
 
         private void Awake()
         {
@@ -54,6 +58,12 @@ namespace ShooterB
                 activeWeapon = cabirneWeapon;
                 Debug.Log("[SHOOTER] Switched weapon to Cabirne");
             }
+
+            if (Keyboard.current.digit3Key.wasPressedThisFrame && piranhaWeapon != null)
+            {
+                activeWeapon = piranhaWeapon;
+                Debug.Log("[SHOOTER] Switched weapon to PiranhaGun");
+            }
         }
 
         private void EnsureWeaponsCreated()
@@ -72,6 +82,14 @@ namespace ShooterB
                     cabirneWeapon = CreateWeaponFromPrefab<Cabirne>(cabirneWeaponPrefab, "Cabirne", Constants.WeaponType.Cabirne, cabirneBulletPrefab, null);
                 else
                     cabirneWeapon = CreateWeaponInstance<Cabirne>("Cabirne", Constants.WeaponType.Cabirne, cabirneBulletPrefab, null);
+            }
+
+            if (piranhaWeapon == null)
+            {
+                if (piranhaWeaponPrefab != null)
+                    piranhaWeapon = CreateWeaponFromPrefab<PiranhaGun>(piranhaWeaponPrefab, "PiranhaGun", Constants.WeaponType.PiranhaGun, piranhaBulletPrefab, defaultPiranhaIcon);
+                else
+                    piranhaWeapon = CreateWeaponInstance<PiranhaGun>("PiranhaGun", Constants.WeaponType.PiranhaGun, piranhaBulletPrefab, defaultPiranhaIcon);
             }
 
             RegisterWeaponDeathSprites();
@@ -142,6 +160,9 @@ namespace ShooterB
 
             if (cabirneWeapon != null)
                 cabirneWeapon.RegisterConfiguredDeathSprite();
+
+            if (piranhaWeapon != null)
+                piranhaWeapon.RegisterConfiguredDeathSprite();
         }
 
         private System.Collections.IEnumerator LogInitialization()

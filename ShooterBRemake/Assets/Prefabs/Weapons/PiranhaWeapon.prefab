@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1760129795177388805
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7648946833376092360}
+  - component: {fileID: 883359885173164188}
+  m_Layer: 0
+  m_Name: PiranhaWeapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7648946833376092360
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760129795177388805}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &883359885173164188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760129795177388805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc9b810471114f438792e9c2f5debef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.PiranhaGun
+  weaponName: 
+  weaponType: 6
+  maxBullets: 0
+  fireDelay: 0
+  refillDelay: 0
+  weaponIcon: {fileID: -2538522935036702881, guid: 0c5ad9cf192ef444abd361569c50c8f0, type: 3}
+  ammoHudSprite: {fileID: 4579467820477603570, guid: 29240804669fb4b5da879f336167765f, type: 3}
+  bulletPrefab: {fileID: 4120011112331769632, guid: 6d8f4f8dc86f48c1a5d8c2f0b6e9a123, type: 3}
+  deathSprite: {fileID: 2480948345665660767, guid: 0a1bb0c0d31c245c3b14b7fa1017da6a, type: 3}
