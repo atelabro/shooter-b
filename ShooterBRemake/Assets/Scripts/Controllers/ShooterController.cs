@@ -47,10 +47,10 @@ namespace ShooterB
             if (Keyboard.current == null)
                 return;
 
-            if (Keyboard.current.digit1Key.wasPressedThisFrame && rifleWeapon != null)
+            if (Keyboard.current.digit1Key.wasPressedThisFrame && piranhaWeapon != null)
             {
-                activeWeapon = rifleWeapon;
-                Debug.Log("[SHOOTER] Switched weapon to Rifle");
+                activeWeapon = piranhaWeapon;
+                Debug.Log("[SHOOTER] Switched weapon to PiranhaGun");
             }
 
             if (Keyboard.current.digit2Key.wasPressedThisFrame && cabirneWeapon != null)
@@ -59,10 +59,10 @@ namespace ShooterB
                 Debug.Log("[SHOOTER] Switched weapon to Cabirne");
             }
 
-            if (Keyboard.current.digit3Key.wasPressedThisFrame && piranhaWeapon != null)
+            if (Keyboard.current.digit3Key.wasPressedThisFrame && rifleWeapon != null)
             {
-                activeWeapon = piranhaWeapon;
-                Debug.Log("[SHOOTER] Switched weapon to PiranhaGun");
+                activeWeapon = rifleWeapon;
+                Debug.Log("[SHOOTER] Switched weapon to Rifle");
             }
         }
 
