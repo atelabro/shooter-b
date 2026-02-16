@@ -50,6 +50,6 @@ MonoBehaviour:
   fireDelay: 0
   refillDelay: 0
   weaponIcon: {fileID: 4744181451099729236, guid: 93552ab3a8f414aacad0c77fc64d607b, type: 3}
-  ammoHudSprite: {fileID: -3583987681585357762, guid: 2303dd53a2dff45199777f42fea13196, type: 3}
+  ammoHudSprite: {fileID: 1376026771200505078, guid: 4fdc95b7ade3349b78ba00ce0f4ab381, type: 3}
   bulletPrefab: {fileID: 4120011112331769632, guid: c7a12d32f01f48218de1f4cb8f01ab63, type: 3}
-  deathSprite: {fileID: -3583987681585357762, guid: 0a1bb0c0d31c245c3b14b7fa1017da6a, type: 3}
+  deathSprite: {fileID: -3583987681585357762, guid: 2303dd53a2dff45199777f42fea13196, type: 3}
