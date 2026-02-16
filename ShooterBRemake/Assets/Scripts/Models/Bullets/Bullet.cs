@@ -12,6 +12,7 @@ namespace ShooterB
         public float secondRadius = 0.2f;
         public float effectiveRadius = 0.45f;
         public float baseSpeed = 35f;
+        public float visualScaleMultiplier = 1f;
 
         protected Rigidbody2D rb;
         protected CircleCollider2D col;
@@ -116,7 +117,8 @@ namespace ShooterB
 
             float progress = 1f - (currentDistance / initialDistance);
             float currentRadius = Mathf.Lerp(startRadius, secondRadius, progress);
-            transform.localScale = Vector3.one * currentRadius * 2f;
+            float visualScale = Mathf.Max(0.01f, visualScaleMultiplier);
+            transform.localScale = Vector3.one * currentRadius * 2f * visualScale;
 
             if (col != null)
             {

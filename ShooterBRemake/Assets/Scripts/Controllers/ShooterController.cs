@@ -10,18 +10,22 @@ namespace ShooterB
         private Rifle rifleWeapon;
         private Cabirne cabirneWeapon;
         private PiranhaGun piranhaWeapon;
+        private TeslaGun teslaWeapon;
 
         [Header("Prefabs")]
         public GameObject rifleBulletPrefab;
         public GameObject cabirneBulletPrefab;
         public GameObject piranhaBulletPrefab;
+        public GameObject teslaBulletPrefab;
         public Sprite defaultRifleIcon;
         public Sprite defaultPiranhaIcon;
+        public Sprite defaultTeslaIcon;
 
         [Header("Weapon Prefabs")]
         public Weapon rifleWeaponPrefab;
         public Weapon cabirneWeaponPrefab;
         public Weapon piranhaWeaponPrefab;
+        public Weapon teslaWeaponPrefab;
 
         private void Awake()
         {
@@ -64,6 +68,12 @@ namespace ShooterB
                 activeWeapon = rifleWeapon;
                 Debug.Log("[SHOOTER] Switched weapon to Rifle");
             }
+
+            if (Keyboard.current.digit4Key.wasPressedThisFrame && teslaWeapon != null)
+            {
+                activeWeapon = teslaWeapon;
+                Debug.Log("[SHOOTER] Switched weapon to TeslaGun");
+            }
         }
 
         private void EnsureWeaponsCreated()
@@ -90,6 +100,14 @@ namespace ShooterB
                     piranhaWeapon = CreateWeaponFromPrefab<PiranhaGun>(piranhaWeaponPrefab, "PiranhaGun", Constants.WeaponType.PiranhaGun, piranhaBulletPrefab, defaultPiranhaIcon);
                 else
                     piranhaWeapon = CreateWeaponInstance<PiranhaGun>("PiranhaGun", Constants.WeaponType.PiranhaGun, piranhaBulletPrefab, defaultPiranhaIcon);
+            }
+
+            if (teslaWeapon == null)
+            {
+                if (teslaWeaponPrefab != null)
+                    teslaWeapon = CreateWeaponFromPrefab<TeslaGun>(teslaWeaponPrefab, "TeslaGun", Constants.WeaponType.TeslaGun, teslaBulletPrefab, defaultTeslaIcon);
+                else
+                    teslaWeapon = CreateWeaponInstance<TeslaGun>("TeslaGun", Constants.WeaponType.TeslaGun, teslaBulletPrefab, defaultTeslaIcon);
             }
 
             RegisterWeaponDeathSprites();
@@ -163,6 +181,9 @@ namespace ShooterB
 
             if (piranhaWeapon != null)
                 piranhaWeapon.RegisterConfiguredDeathSprite();
+
+            if (teslaWeapon != null)
+                teslaWeapon.RegisterConfiguredDeathSprite();
         }
 
         private System.Collections.IEnumerator LogInitialization()

@@ -136,10 +136,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 62
+        width: 60
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -156,12 +156,12 @@ TextureImporter:
       name: allDeadDucks_1
       rect:
         serializedVersion: 2
-        x: 58
+        x: 60
         y: 0
-        width: 64
+        width: 60
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -178,12 +178,12 @@ TextureImporter:
       name: allDeadDucks_2
       rect:
         serializedVersion: 2
-        x: 118
+        x: 120
         y: 0
-        width: 64
+        width: 60
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -200,12 +200,12 @@ TextureImporter:
       name: allDeadDucks_3
       rect:
         serializedVersion: 2
-        x: 178
+        x: 180
         y: 0
-        width: 64
+        width: 60
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -222,12 +222,12 @@ TextureImporter:
       name: allDeadDucks_4
       rect:
         serializedVersion: 2
-        x: 238
+        x: 240
         y: 0
-        width: 64
+        width: 60
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -244,12 +244,12 @@ TextureImporter:
       name: allDeadDucks_5
       rect:
         serializedVersion: 2
-        x: 298
+        x: 300
         y: 0
-        width: 64
+        width: 60
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -266,12 +266,12 @@ TextureImporter:
       name: allDeadDucks_6
       rect:
         serializedVersion: 2
-        x: 358
+        x: 360
         y: 0
-        width: 62
+        width: 60
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -288,7 +288,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: ab797ea6af0e6421e881ab789f0e7266
     internalID: 0
     vertices: []
     indices: 
