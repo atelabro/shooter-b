@@ -6,9 +6,9 @@ namespace ShooterB
     {
         protected override void Awake()
         {
-            startRadius = 0.6f;
-            secondRadius = 0.2f;
-            effectiveRadius = 0.45f;
+            startRadius = 0.2f;
+            secondRadius = 0.7f;
+            effectiveRadius = 0.9f;
             baseSpeed = 50f;
 
             base.Awake();
