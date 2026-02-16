@@ -15,8 +15,7 @@ namespace ShooterB
 
         private void Start()
         {
-            if (modalRoot == null)
-                modalRoot = gameObject;
+            EnsureModalRoot();
 
             if (resumeButton != null)
                 resumeButton.onClick.AddListener(OnResumeClicked);
@@ -26,14 +25,14 @@ namespace ShooterB
 
             if (menuButton != null)
                 menuButton.onClick.AddListener(OnMenuClicked);
-
-            Hide();
         }
 
         public void Show()
         {
             if (GameManager.Instance.IsGameOver)
                 return;
+
+            EnsureModalRoot();
 
             if (modalRoot != null)
                 modalRoot.SetActive(true);
@@ -43,6 +42,8 @@ namespace ShooterB
 
         public void Hide()
         {
+            EnsureModalRoot();
+
             if (modalRoot != null)
                 modalRoot.SetActive(false);
         }
@@ -72,6 +73,12 @@ namespace ShooterB
         public void OnMenuClicked()
         {
             SceneController.Instance.ReturnToMenu();
+        }
+
+        private void EnsureModalRoot()
+        {
+            if (modalRoot == null)
+                modalRoot = gameObject;
         }
     }
 }
