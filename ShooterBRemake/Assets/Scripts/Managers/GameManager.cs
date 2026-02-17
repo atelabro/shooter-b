@@ -52,12 +52,12 @@ namespace ShooterB
             DontDestroyOnLoad(gameObject);
         }
 
-        public void InitializeGame(Constants.GameMode mode)
+        public void InitializeGame(Constants.GameMode mode, int startingDifficulty = Constants.INITIAL_DIFFICULTY)
         {
             CurrentGameMode = mode;
             Score = 0;
             BirdCount = 0;
-            Difficulty = mode == Constants.GameMode.Arcade && ArcadeVeryHardMode ? 5 : Constants.INITIAL_DIFFICULTY;
+            Difficulty = mode == Constants.GameMode.Arcade && ArcadeVeryHardMode ? 5 : startingDifficulty;
             Lives = Constants.INITIAL_LIVES;
             IsPaused = false;
             IsGameOver = false;
@@ -213,21 +213,22 @@ namespace ShooterB
 
         private void LoadHighScore()
         {
-            string key = CurrentGameMode == Constants.GameMode.Normal
-                ? Constants.PREFS_HIGH_SCORE_NORMAL
-                : Constants.PREFS_HIGH_SCORE_ARCADE;
+            if (CurrentGameMode == Constants.GameMode.Campaign)
+            {
+                HighScore = 0;
+                return;
+            }
 
-            HighScore = PlayerPrefs.GetInt(key, 0);
+            HighScore = PlayerPrefs.GetInt(Constants.PREFS_HIGH_SCORE_ARCADE, 0);
             Debug.Log($"High score loaded: {HighScore} for mode {CurrentGameMode}");
         }
 
         private void SaveHighScore()
         {
-            string key = CurrentGameMode == Constants.GameMode.Normal
-                ? Constants.PREFS_HIGH_SCORE_NORMAL
-                : Constants.PREFS_HIGH_SCORE_ARCADE;
+            if (CurrentGameMode == Constants.GameMode.Campaign)
+                return;
 
-            PlayerPrefs.SetInt(key, (int)HighScore);
+            PlayerPrefs.SetInt(Constants.PREFS_HIGH_SCORE_ARCADE, (int)HighScore);
             PlayerPrefs.Save();
             Debug.Log($"High score saved: {HighScore} for mode {CurrentGameMode}");
         }

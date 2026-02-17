@@ -36,7 +36,7 @@ namespace ShooterB
 
             switch (resolvedMode)
             {
-                case Constants.GameMode.Normal:
+                case Constants.GameMode.Campaign:
                     // Placeholder: Normal mode will use selected background ID later.
                     return LoadRandomArcadeBackground();
                 case Constants.GameMode.Arcade:

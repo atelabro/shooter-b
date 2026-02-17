@@ -24,12 +24,11 @@ namespace ShooterB
         public const int SORTING_LAYER_BULLETS = 15;
         public const int SORTING_LAYER_UI = 20;
 
-        public const string PREFS_HIGH_SCORE_NORMAL = "HighScore_Normal";
         public const string PREFS_HIGH_SCORE_ARCADE = "HighScore_Arcade";
 
         public enum GameMode
         {
-            Normal,
+            Campaign,
             Arcade
         }
 
@@ -71,6 +70,7 @@ namespace ShooterB
         {
             Splash,
             Menu,
+            CampaignMap,
             Game,
             Loading
         }

@@ -146,8 +146,74 @@
 
 ### 4.4 High Score Persistence
 - Save to PlayerPrefs
-- Separate scores for Normal and Arcade modes
+- Arcade mode only (Campaign has no global high score)
 - Display in menu and game over screen
+
+## Phase 4.5: Campaign Mode
+
+**Goal:** Stage-based world travel progression with star ratings
+
+### Story: The Duck Uprising
+Ducks have gained intelligence and are taking over cities one by one. You are the last licensed
+duck hunter hired by D.U.C.K. (Department of Urban Containment and Killing), a secret government
+agency. Your mission: push the duck invasion back city by city before they reach the capital and
+the world falls under duck control. Each city you liberate is a stage. The further you go, the
+more organized and aggressive the ducks become.
+
+### Concept
+- Campaign is a world travel experience - the player moves between cities around the world
+- Each city = one stage with a unique background, duck spawn pattern, and difficulty config
+- Pressing Campaign in the menu opens the Campaign Map Scene (not the game directly)
+- No global high score - progression is measured by stars earned per stage
+
+### Campaign Map Scene (new scene: CampaignMapScene)
+- Intermediate scene between MenuScene and GameScene
+- Shows a world map or city list with all stages
+- Each stage node shows: city name, locked/unlocked state, stars earned (0-3)
+- Tapping an unlocked stage loads the GameScene configured for that stage
+- Back button returns to MenuScene
+- SceneController gets a new LoadCampaignMapScene() method
+
+### Stage Star System
+- Each stage awards 0-3 stars based on in-stage performance (score thresholds defined per stage)
+- Stars persisted per stage: PlayerPrefs key pattern "Campaign_Stage_{N}_Stars"
+- Minimum cumulative stars required to unlock next stage (defined per stage)
+- Replaying a completed stage can improve the star rating
+
+### Stage Definition (StageConfig ScriptableObject)
+- stageIndex: int
+- cityName: string (e.g. "Paris", "New York", "Tokyo")
+- backgroundId: string (maps to a background asset)
+- spawnPattern: enum or config (unique duck behavior per city)
+- duckCountGoal: int (how many ducks to kill to finish the stage)
+- starThreshold1/2/3: int (score required for 1, 2, or 3 stars)
+- starsRequiredToUnlock: int (cumulative stars needed to access this stage)
+- startingDifficulty: int (each city can start at a different difficulty)
+
+### Planned Cities / Stages
+The duck uprising started in rural areas and is spreading to major world cities. Stages escalate
+in duck aggression, speed, and organization. D.U.C.K. briefings introduce each city with a short
+flavor text before the stage starts.
+
+- Stage 1: Countryside (the uprising begins - slow scattered ducks, tutorial pace, red/yellow background)
+- Stage 2: Paris (ducks have taken the Eiffel Tower - medium pace, Paris background)
+- Stage 3: New York (duck gridlock on Manhattan - faster ducks, New York background)
+- Stage 4+: More cities TBD (Tokyo, London, Sydney, etc.)
+- Final stage: The Capital (last stand - maximum difficulty, the Duck Commander boss?)
+
+### Duck Spawn Patterns per City (SpawnPattern)
+- Each stage config references a spawn pattern that controls:
+  - Duck types probability weights (more rare ducks in harder cities)
+  - Spawn timing overrides
+  - Movement pattern distribution (GoStraight vs GoTop/GoBottom ratio)
+  - Fleet size (single, double, fleet)
+
+### CampaignProgressManager (new)
+- Singleton, persists across scenes
+- Tracks stars earned per stage in PlayerPrefs
+- Exposes: GetStarsForStage(stageIndex), IsStageUnlocked(stageIndex), SaveStageStars(stageIndex, stars)
+- Loaded stage config passed to GameManager on stage start
+- Separate from GameManager high score logic
 
 ## Phase 5: Advanced Features
 
@@ -244,6 +310,9 @@
 1. Fix current duck issues (flickering, speed, removal)
 2. Implement basic shooting (Phase 1.1-1.4)
 3. Add collision detection and scoring
+4. [ ] Tesla chain targeting: ignore ducks outside visible camera bounds (on-screen ducks only)
+5. Campaign Map Scene + CampaignProgressManager + StageConfig ScriptableObject
+6. Wire Campaign button -> CampaignMapScene -> GameScene with stage config
 
 **Short-term (Next week):**
 4. Implement all 7 weapons (Phase 2)

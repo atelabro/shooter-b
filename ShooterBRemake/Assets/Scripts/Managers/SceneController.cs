@@ -51,6 +51,22 @@ namespace ShooterB
             SceneManager.LoadScene(GetSceneName(Constants.SceneType.Game));
         }
 
+        public void LoadCampaignMapScene()
+        {
+            CurrentScene = Constants.SceneType.CampaignMap;
+            Debug.Log("Loading campaign map scene");
+            SceneManager.LoadScene(GetSceneName(Constants.SceneType.CampaignMap));
+        }
+
+        public void LoadCampaignStage(StageConfig config)
+        {
+            CurrentScene = Constants.SceneType.Game;
+            Debug.Log($"Loading campaign stage: {config.cityName} (index {config.stageIndex})");
+
+            GameManager.Instance.InitializeGame(Constants.GameMode.Campaign, config.startingDifficulty);
+            SceneManager.LoadScene(GetSceneName(Constants.SceneType.Game));
+        }
+
         public void ReloadCurrentGameScene()
         {
             Time.timeScale = 1f;
@@ -86,6 +102,8 @@ namespace ShooterB
                     return "SplashScene";
                 case Constants.SceneType.Menu:
                     return "MenuScene";
+                case Constants.SceneType.CampaignMap:
+                    return "CampaignMapScene";
                 case Constants.SceneType.Game:
                     return "GameScene";
                 case Constants.SceneType.Loading:

@@ -7,19 +7,19 @@ namespace ShooterB
     public class MenuController : MonoBehaviour
     {
         [Header("UI Elements")]
-        public Button playButton;
+        public Button campaignButton;
+        public Button arcadeButton;
         public Button quitButton;
         public TextMeshProUGUI highScoreText;
         public TextMeshProUGUI titleText;
 
-        [Header("Mode Settings")]
-        public Constants.GameMode gameMode = Constants.GameMode.Normal;
-        public bool arcadeVeryHard = false;
-
         private void Start()
         {
-            if (playButton != null)
-                playButton.onClick.AddListener(OnPlayClicked);
+            if (campaignButton != null)
+                campaignButton.onClick.AddListener(OnCampaignClicked);
+
+            if (arcadeButton != null)
+                arcadeButton.onClick.AddListener(OnArcadeClicked);
 
             if (quitButton != null)
                 quitButton.onClick.AddListener(OnQuitClicked);
@@ -28,21 +28,20 @@ namespace ShooterB
 
             if (titleText != null)
                 titleText.text = "DUCKOFF";
-
-            Debug.Log("MenuController initialized");
         }
 
-        private void OnPlayClicked()
+        private void OnCampaignClicked()
         {
-            bool isArcade = gameMode == Constants.GameMode.Arcade;
-            GameManager.Instance.SetArcadeVeryHardMode(isArcade && arcadeVeryHard);
-            Debug.Log($"Play button clicked - Starting {gameMode} mode (Arcade Very Hard: {isArcade && arcadeVeryHard})");
-            SceneController.Instance.LoadGameScene(gameMode);
+            SceneController.Instance.LoadCampaignMapScene();
+        }
+
+        private void OnArcadeClicked()
+        {
+            SceneController.Instance.LoadGameScene(Constants.GameMode.Arcade);
         }
 
         private void OnQuitClicked()
         {
-            Debug.Log("Quit button clicked");
             SceneController.Instance.QuitGame();
         }
 
@@ -50,7 +49,7 @@ namespace ShooterB
         {
             if (highScoreText != null)
             {
-                int highScore = PlayerPrefs.GetInt(Constants.PREFS_HIGH_SCORE_NORMAL, 0);
+                int highScore = PlayerPrefs.GetInt(Constants.PREFS_HIGH_SCORE_ARCADE, 0);
                 highScoreText.text = $"High Score: {highScore}";
             }
         }
