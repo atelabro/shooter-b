@@ -1,15 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace ShooterB
 {
     public class CampaignMapController : MonoBehaviour
     {
-        [Header("Stage Data")]
-        public StageConfig[] stages;
+        [Header("City Data")]
+        public CityConfig[] cities;
 
-        [Header("Stage Node UI")]
-        public CampaignStageNodeController[] stageNodes;
+        [Header("City Pins")]
+        public CityPinController[] cityPins;
+
+        [Header("City Panel")]
+        public CityPanelController cityPanel;
+
+        [Header("Top Bar")]
+        public TextMeshProUGUI totalStarsText;
 
         [Header("Buttons")]
         public Button backButton;
@@ -19,22 +26,40 @@ namespace ShooterB
             if (backButton != null)
                 backButton.onClick.AddListener(OnBackClicked);
 
-            RefreshStageNodes();
+            cityPanel.Initialize(cities);
+
+            RefreshPins();
+            RefreshTotalStars();
         }
 
-        private void RefreshStageNodes()
+        private void RefreshPins()
         {
-            for (int i = 0; i < stageNodes.Length; i++)
+            for (int i = 0; i < cityPins.Length; i++)
             {
-                if (i >= stages.Length)
+                if (i >= cities.Length)
                     break;
 
-                StageConfig config = stages[i];
-                bool isUnlocked = CampaignProgressManager.Instance.IsStageUnlocked(config);
-                int stars = CampaignProgressManager.Instance.GetStarsForStage(config.stageIndex);
+                CityConfig city = cities[i];
+                bool isUnlocked = CampaignProgressManager.Instance.IsCityUnlocked(city, cities);
+                CityConfig capturedCity = city;
 
-                stageNodes[i].Initialize(config, isUnlocked, stars);
+                cityPins[i].Initialize(city, isUnlocked, () => OnCityPinClicked(capturedCity));
             }
+        }
+
+        private void RefreshTotalStars()
+        {
+            if (totalStarsText == null)
+                return;
+
+            int earned = CampaignProgressManager.Instance.GetTotalStars(cities);
+            int max = CampaignProgressManager.Instance.GetMaxStars(cities);
+            totalStarsText.text = $"{earned} / {max}";
+        }
+
+        private void OnCityPinClicked(CityConfig city)
+        {
+            cityPanel.Show(city);
         }
 
         private void OnBackClicked()
