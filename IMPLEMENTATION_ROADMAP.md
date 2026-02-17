@@ -162,58 +162,70 @@ more organized and aggressive the ducks become.
 
 ### Concept
 - Campaign is a world travel experience - the player moves between cities around the world
-- Each city = one stage with a unique background, duck spawn pattern, and difficulty config
-- Pressing Campaign in the menu opens the Campaign Map Scene (not the game directly)
-- No global high score - progression is measured by stars earned per stage
+- Each city has multiple maps/levels inside it
+- Pressing Campaign opens CampaignMapScene (world map with city pins)
+- Tapping a city pin slides in a City Panel showing that city's maps
+- Tapping a map loads GameScene configured for that stage
+- No global high score - progression measured by stars earned per stage
 
-### Campaign Map Scene (new scene: CampaignMapScene)
-- Intermediate scene between MenuScene and GameScene
-- Shows a world map or city list with all stages
-- Each stage node shows: city name, locked/unlocked state, stars earned (0-3)
-- Tapping an unlocked stage loads the GameScene configured for that stage
+### Campaign Map Scene (CampaignMapScene)
+- World map image as background
+- Top bar: total stars earned / total stars possible (e.g. 7 / 30 stars)
+- City pins placed manually at geographic positions on the map
+- Each pin: icon + city name + locked/unlocked state
+- Tapping a city pin slides in the City Panel (no scene change)
 - Back button returns to MenuScene
-- SceneController gets a new LoadCampaignMapScene() method
 
-### Stage Star System
-- Each stage awards 0-3 stars based on in-stage performance (score thresholds defined per stage)
-- Stars persisted per stage: PlayerPrefs key pattern "Campaign_Stage_{N}_Stars"
-- Minimum cumulative stars required to unlock next stage (defined per stage)
-- Replaying a completed stage can improve the star rating
+### City Panel (slides in over the map)
+- Shows city name and D.U.C.K. briefing text
+- Lists all maps/levels for that city with 0-3 stars and locked/unlocked state
+- Tapping an unlocked map loads GameScene for that stage
+- Close button dismisses the panel
 
-### Stage Definition (StageConfig ScriptableObject)
-- stageIndex: int
-- cityName: string (e.g. "Paris", "New York", "Tokyo")
-- backgroundId: string (maps to a background asset)
-- spawnPattern: enum or config (unique duck behavior per city)
-- duckCountGoal: int (how many ducks to kill to finish the stage)
-- starThreshold1/2/3: int (score required for 1, 2, or 3 stars)
-- starsRequiredToUnlock: int (cumulative stars needed to access this stage)
-- startingDifficulty: int (each city can start at a different difficulty)
+### CityConfig ScriptableObject
+- cityName: string
+- pinPosition: Vector2 (position on the world map canvas)
+- stages: StageConfig[] (ordered list of maps within this city)
+- starsRequiredToUnlock: int (total stars needed to unlock this city)
 
-### Planned Cities / Stages
-The duck uprising started in rural areas and is spreading to major world cities. Stages escalate
-in duck aggression, speed, and organization. D.U.C.K. briefings introduce each city with a short
-flavor text before the stage starts.
+### StageConfig ScriptableObject
+- stageIndex: int (unique across all cities)
+- mapName: string (e.g. "Day 1", "The Eiffel Tower")
+- briefingText: string (D.U.C.K. flavor text)
+- backgroundId: string
+- duckKillGoal: int
+- starThreshold1/2/3: int
+- starsRequiredToUnlock: int (stars within city to unlock this map)
+- startingDifficulty: int
 
-- Stage 1: Countryside (the uprising begins - slow scattered ducks, tutorial pace, red/yellow background)
-- Stage 2: Paris (ducks have taken the Eiffel Tower - medium pace, Paris background)
-- Stage 3: New York (duck gridlock on Manhattan - faster ducks, New York background)
-- Stage 4+: More cities TBD (Tokyo, London, Sydney, etc.)
-- Final stage: The Capital (last stand - maximum difficulty, the Duck Commander boss?)
+### Star System
+- Each map awards 0-3 stars based on score vs thresholds
+- Stars persisted per stage: PlayerPrefs key "Campaign_Stage_{N}_Stars"
+- Replaying improves star rating if score is better
+- City unlocked by total stars across all previous cities
+- Map within city unlocked by stars within that city
 
-### Duck Spawn Patterns per City (SpawnPattern)
-- Each stage config references a spawn pattern that controls:
-  - Duck types probability weights (more rare ducks in harder cities)
+### Planned Cities
+- Countryside (always unlocked, tutorial pace, red/yellow background)
+- Paris (medium pace, Paris background)
+- New York (faster ducks, New York background)
+- More TBD: Tokyo, London, Sydney, etc.
+- Final: The Capital (max difficulty, Duck Commander?)
+
+### Duck Spawn Patterns per City
+- Each stage references a spawn pattern controlling:
+  - Duck type probability weights
   - Spawn timing overrides
-  - Movement pattern distribution (GoStraight vs GoTop/GoBottom ratio)
-  - Fleet size (single, double, fleet)
+  - Movement pattern distribution
+  - Fleet size
 
-### CampaignProgressManager (new)
+### CampaignProgressManager
 - Singleton, persists across scenes
-- Tracks stars earned per stage in PlayerPrefs
-- Exposes: GetStarsForStage(stageIndex), IsStageUnlocked(stageIndex), SaveStageStars(stageIndex, stars)
-- Loaded stage config passed to GameManager on stage start
-- Separate from GameManager high score logic
+- GetStarsForStage(stageIndex), SaveStageStars(stageIndex, stars)
+- IsStageUnlocked(StageConfig, CityConfig), IsCityUnlocked(CityConfig)
+- GetTotalStars(CityConfig[]), GetMaxStars(CityConfig[])
+- CalculateStars(StageConfig, score) returns 0-3
+- ActiveStageConfig holds current stage being played
 
 ## Phase 5: Advanced Features
 

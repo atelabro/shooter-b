@@ -6,7 +6,7 @@ namespace ShooterB
     public class StageConfig : ScriptableObject
     {
         public int stageIndex;
-        public string cityName;
+        public string mapName;
         [TextArea] public string briefingText;
         public string backgroundId;
         public int duckKillGoal;
