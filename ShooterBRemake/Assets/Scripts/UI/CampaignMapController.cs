@@ -26,6 +26,7 @@ namespace ShooterB
             if (backButton != null)
                 backButton.onClick.AddListener(OnBackClicked);
 
+            if (cityPanel != null)
             cityPanel.Initialize(cities);
 
             RefreshPins();
@@ -59,7 +60,8 @@ namespace ShooterB
 
         private void OnCityPinClicked(CityConfig city)
         {
-            cityPanel.Show(city);
+            if (cityPanel != null)
+                cityPanel.Show(city);
         }
 
         private void OnBackClicked()

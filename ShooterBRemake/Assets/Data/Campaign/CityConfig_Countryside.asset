@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f372f08ed27514277aa37c0253c2e049, type: 3}
+  m_Name: CityConfig_Countryside
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CityConfig
+  cityName: Countryside
+  briefingText: The uprising began here. Scattered duck forces, low organization.
+    Good place to start agent.
+  pinPosition: {x: 150, y: 50}
+  stages:
+  - {fileID: 11400000, guid: ae43f7b453f49468194da62fc9d3838a, type: 2}
+  - {fileID: 11400000, guid: 81cf26c7b60334a369761278c8bc714a, type: 2}
+  - {fileID: 11400000, guid: d61cbb8d75e1c4284b24c73d516fee59, type: 2}
+  starsRequiredToUnlock: 0

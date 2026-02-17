@@ -12,27 +12,26 @@ namespace ShooterB
         public TextMeshProUGUI briefingText;
         public Button closeButton;
 
-        [Header("Stage Entries")]
+        [Header("Stage Cards")]
         public Transform stageListContainer;
         public CampaignStageEntryController stageEntryPrefab;
 
-        [Header("Slide Animation")]
-        public float slideSpeed = 8f;
+        [Header("Pop Animation")]
+        public float animSpeed = 8f;
 
         private RectTransform rectTransform;
-        private float panelWidth;
         private CityConfig[] allCities;
-        private Coroutine slideCoroutine;
+        private Coroutine animCoroutine;
 
         private void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
-            panelWidth = rectTransform.rect.width;
 
             if (closeButton != null)
                 closeButton.onClick.AddListener(Hide);
 
             gameObject.SetActive(false);
+
         }
 
         public void Initialize(CityConfig[] cities)
@@ -52,19 +51,20 @@ namespace ShooterB
                 briefingText.text = city.briefingText;
 
             gameObject.SetActive(true);
+            rectTransform.localScale = Vector3.zero;
 
-            if (slideCoroutine != null)
-                StopCoroutine(slideCoroutine);
+            if (animCoroutine != null)
+                StopCoroutine(animCoroutine);
 
-            slideCoroutine = StartCoroutine(SlideTo(0f));
+            animCoroutine = StartCoroutine(ScaleTo(Vector3.one));
         }
 
         public void Hide()
         {
-            if (slideCoroutine != null)
-                StopCoroutine(slideCoroutine);
+            if (animCoroutine != null)
+                StopCoroutine(animCoroutine);
 
-            slideCoroutine = StartCoroutine(SlideTo(panelWidth, deactivateOnDone: true));
+            animCoroutine = StartCoroutine(ScaleTo(Vector3.zero, deactivateOnDone: true));
         }
 
         private void PopulateStageList(CityConfig city)
@@ -76,7 +76,7 @@ namespace ShooterB
 
                 CampaignStageEntryController entry = Instantiate(stageEntryPrefab, stageListContainer);
                 StageConfig capturedStage = stage;
-                entry.Initialize(stage, city, isUnlocked, stars, () => OnStageSelected(capturedStage));
+                entry.Initialize(stage, isUnlocked, stars, () => OnStageSelected(capturedStage));
             }
         }
 
@@ -92,16 +92,15 @@ namespace ShooterB
                 Destroy(child.gameObject);
         }
 
-        private IEnumerator SlideTo(float targetX, bool deactivateOnDone = false)
+        private IEnumerator ScaleTo(Vector3 targetScale, bool deactivateOnDone = false)
         {
-            while (!Mathf.Approximately(rectTransform.anchoredPosition.x, targetX))
+            while ((rectTransform.localScale - targetScale).sqrMagnitude > 0.0001f)
             {
-                float newX = Mathf.Lerp(rectTransform.anchoredPosition.x, targetX, Time.deltaTime * slideSpeed);
-                rectTransform.anchoredPosition = new Vector2(newX, rectTransform.anchoredPosition.y);
+                rectTransform.localScale = Vector3.Lerp(rectTransform.localScale, targetScale, Time.deltaTime * animSpeed);
                 yield return null;
             }
 
-            rectTransform.anchoredPosition = new Vector2(targetX, rectTransform.anchoredPosition.y);
+            rectTransform.localScale = targetScale;
 
             if (deactivateOnDone)
                 gameObject.SetActive(false);

@@ -8,6 +8,7 @@ namespace ShooterB
     public class CampaignStageEntryController : MonoBehaviour
     {
         [Header("UI Elements")]
+        public Image backgroundImage;
         public TextMeshProUGUI mapNameText;
         public GameObject[] starIcons;
         public GameObject lockOverlay;
@@ -15,9 +16,12 @@ namespace ShooterB
 
         private Action onClickCallback;
 
-        public void Initialize(StageConfig stage, CityConfig city, bool isUnlocked, int starsEarned, Action onClick)
+        public void Initialize(StageConfig stage, bool isUnlocked, int starsEarned, Action onClick)
         {
             onClickCallback = onClick;
+
+            if (backgroundImage != null && stage.backgroundSprite != null)
+                backgroundImage.sprite = stage.backgroundSprite;
 
             if (mapNameText != null)
                 mapNameText.text = stage.mapName;
