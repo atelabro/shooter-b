@@ -15,6 +15,6 @@ MonoBehaviour:
   cityName: New York
   briefingText: Duck gridlock on Manhattan. The streets belong to them now. Take
     it back.
-  pinPosition: {x: -280, y: 80}
+  pinPosition: {x: -460, y: 100}
   stages: []
   starsRequiredToUnlock: 9

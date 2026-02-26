@@ -72,7 +72,11 @@ namespace ShooterB
 
         public void OnMenuClicked()
         {
-            SceneController.Instance.ReturnToMenu();
+            Time.timeScale = 1f;
+            if (GameManager.Instance.CurrentGameMode == Constants.GameMode.Campaign)
+                SceneController.Instance.LoadCampaignMapScene();
+            else
+                SceneController.Instance.ReturnToMenu();
         }
 
         private void EnsureModalRoot()

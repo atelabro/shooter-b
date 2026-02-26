@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
-  m_Name: StageConfig_Countryside_1
+  m_Name: StageConfig_Countryside_2
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
-  stageIndex: 1
-  mapName: Countryside - Day 2
-  briefingText: "First contact. They are disorganized but numerous.\n  Take them
-    down."
-  backgroundSprite: {fileID: 7303333120049856264, guid: 56a257f092fb243488709311ee9df296, type: 3}
-  starThreshold1: 100
-  starThreshold2: 250
-  starThreshold3: 500
-  starsRequiredToUnlock: 1
-  startingDifficulty: 2
+  stageIndex: 2
+  mapName: Countryside - Day 3
+  briefingText: They are adapting. Move faster, aim better.
+  backgroundSprite: {fileID: 808548114997151697, guid: f9563fc123b9a49b986102e7fc471528, type: 3}
+  starThreshold1: 40
+  starThreshold2: 60
+  starThreshold3: 79
+  starsRequiredToUnlock: 3
+  startingDifficulty: 3
+  spawnConfig: {fileID: 0}

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f9c2f30b515174b2894056391fecef3b
+guid: f9563fc123b9a49b986102e7fc471528
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4038168531452570246
-    second: bckEifelParis 1_0
+      213: 808548114997151697
+    second: training_3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bckEifelParis 1_0
+      name: training_3_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1536
-        height: 1024
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a75db93ad1b85f7c0800000000000000
-      internalID: -4038168531452570246
+      spriteID: 1d7873a0a3a883b00800000000000000
+      internalID: 808548114997151697
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bckEifelParis 1_0: -4038168531452570246
+      training_3_0: 808548114997151697
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
