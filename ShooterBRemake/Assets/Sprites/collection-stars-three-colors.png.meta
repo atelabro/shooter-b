@@ -1,0 +1,416 @@
+fileFormatVersion: 2
+guid: db3f792b81ed34f6390a608767080f99
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3302650454433535116
+    second: collection-stars-three-colors_0
+  - first:
+      213: -7047970807624589069
+    second: collection-stars-three-colors_1
+  - first:
+      213: 8187951022384246752
+    second: collection-stars-three-colors_2
+  - first:
+      213: 7064490654513824040
+    second: collection-stars-three-colors_3
+  - first:
+      213: 1643230330063856266
+    second: collection-stars-three-colors_4
+  - first:
+      213: -1926976715413085014
+    second: collection-stars-three-colors_5
+  - first:
+      213: 7638922655549692833
+    second: collection-stars-three-colors_6
+  - first:
+      213: 6271844940128205698
+    second: collection-stars-three-colors_7
+  - first:
+      213: -6774307132458504320
+    second: collection-stars-three-colors_8
+  - first:
+      213: -236790493181349211
+    second: collection-stars-three-colors_9
+  - first:
+      213: -3042138805282985423
+    second: collection-stars-three-colors_10
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: collection-stars-three-colors_0
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 1352
+        width: 421
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47be43ee8e0aa22d0800000000000000
+      internalID: -3302650454433535116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collection-stars-three-colors_1
+      rect:
+        serializedVersion: 2
+        x: 790
+        y: 1353
+        width: 420
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f0a63864e3903e90800000000000000
+      internalID: -7047970807624589069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collection-stars-three-colors_2
+      rect:
+        serializedVersion: 2
+        x: 1375
+        y: 1353
+        width: 421
+        height: 443
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ef628fb21271a170800000000000000
+      internalID: 8187951022384246752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collection-stars-three-colors_3
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 830
+        width: 421
+        height: 447
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8210d5d22dc1a0260800000000000000
+      internalID: 7064490654513824040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collection-stars-three-colors_4
+      rect:
+        serializedVersion: 2
+        x: 790
+        y: 830
+        width: 421
+        height: 447
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a82aa9b674dedc610800000000000000
+      internalID: 1643230330063856266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collection-stars-three-colors_5
+      rect:
+        serializedVersion: 2
+        x: 1375
+        y: 830
+        width: 421
+        height: 447
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa4aa5b03e00245e0800000000000000
+      internalID: -1926976715413085014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collection-stars-three-colors_6
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 238
+        width: 475
+        height: 538
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ab19b6bea7e20a60800000000000000
+      internalID: 7638922655549692833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collection-stars-three-colors_7
+      rect:
+        serializedVersion: 2
+        x: 763
+        y: 238
+        width: 474
+        height: 538
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28b3cae4eb11a0750800000000000000
+      internalID: 6271844940128205698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collection-stars-three-colors_8
+      rect:
+        serializedVersion: 2
+        x: 1348
+        y: 273
+        width: 474
+        height: 504
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08f6a6a0e83dcf1a0800000000000000
+      internalID: -6774307132458504320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collection-stars-three-colors_9
+      rect:
+        serializedVersion: 2
+        x: 706
+        y: 61
+        width: 31
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a27cbf0d40c6bcf0800000000000000
+      internalID: -236790493181349211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: collection-stars-three-colors_10
+      rect:
+        serializedVersion: 2
+        x: 979
+        y: 58
+        width: 49
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13a2da1efd628c5d0800000000000000
+      internalID: -3042138805282985423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      collection-stars-three-colors_0: -3302650454433535116
+      collection-stars-three-colors_1: -7047970807624589069
+      collection-stars-three-colors_10: -3042138805282985423
+      collection-stars-three-colors_2: 8187951022384246752
+      collection-stars-three-colors_3: 7064490654513824040
+      collection-stars-three-colors_4: 1643230330063856266
+      collection-stars-three-colors_5: -1926976715413085014
+      collection-stars-three-colors_6: 7638922655549692833
+      collection-stars-three-colors_7: 6271844940128205698
+      collection-stars-three-colors_8: -6774307132458504320
+      collection-stars-three-colors_9: -236790493181349211
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

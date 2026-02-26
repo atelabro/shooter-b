@@ -23,6 +23,7 @@ namespace ShooterB
         public long Score { get; private set; }
         public int Multiplier { get; private set; }
         public long BirdCount { get; private set; }
+        public int BirdsKilled { get; private set; }
         public int Difficulty { get; private set; }
         public long HighScore { get; private set; }
         public int Lives { get; private set; }
@@ -38,6 +39,8 @@ namespace ShooterB
         public event Action<bool> OnPauseStateChanged;
         public event Action OnGameOver;
         public event Action<Constants.MultiKillType, int> OnComboKill;
+        public event Action<int> OnBirdsKilledChanged;
+        public event Action OnStageComplete;
 
         private int birdsUntilNextDifficulty;
 
@@ -57,6 +60,7 @@ namespace ShooterB
             CurrentGameMode = mode;
             Score = 0;
             BirdCount = 0;
+            BirdsKilled = 0;
             Difficulty = mode == Constants.GameMode.Arcade && ArcadeVeryHardMode ? 5 : startingDifficulty;
             Lives = Constants.INITIAL_LIVES;
             IsPaused = false;
@@ -102,7 +106,30 @@ namespace ShooterB
             int pointsEarned = basePoints * Multiplier;
 
             AddPoints(pointsEarned);
+
+            BirdsKilled++;
+            OnBirdsKilledChanged?.Invoke(BirdsKilled);
+
+            if (CurrentGameMode == Constants.GameMode.Campaign)
+                CheckStageClearCondition();
+
             Debug.Log($"Duck killed - Type: {duckType}, Base: {basePoints}, Multiplier: {Multiplier}, Earned: {pointsEarned}");
+        }
+
+        private void CheckStageClearCondition()
+        {
+            StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
+            if (stage == null || BirdsKilled < stage.duckKillGoal)
+                return;
+
+            if (IsGameOver)
+                return;
+
+            IsGameOver = true;
+            IsPaused = false;
+            Time.timeScale = 0f;
+            OnStageComplete?.Invoke();
+            Debug.Log($"Stage complete! Killed {BirdsKilled}/{stage.duckKillGoal} ducks. Score: {Score}");
         }
 
         public void BirdPassed()

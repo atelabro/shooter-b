@@ -36,17 +36,23 @@ namespace ShooterB
         {
             EnsureModalRoot();
 
+            bool isCampaign = mode == Constants.GameMode.Campaign;
+
             if (finalScoreText != null)
                 finalScoreText.text = $"Score: {finalScore}";
 
             if (highScoreText != null)
-                highScoreText.text = $"High: {highScore}";
+            {
+                highScoreText.gameObject.SetActive(!isCampaign);
+                if (!isCampaign)
+                    highScoreText.text = $"High: {highScore}";
+            }
 
             if (modeText != null)
                 modeText.text = $"Mode: {mode}";
 
             if (newHighScoreBadge != null)
-                newHighScoreBadge.SetActive(isNewHighScore);
+                newHighScoreBadge.SetActive(!isCampaign && isNewHighScore);
 
             if (modalRoot != null)
                 modalRoot.SetActive(true);
@@ -67,7 +73,10 @@ namespace ShooterB
 
         public void OnMenuClicked()
         {
-            SceneController.Instance.ReturnToMenu();
+            if (GameManager.Instance.CurrentGameMode == Constants.GameMode.Campaign)
+                SceneController.Instance.LoadCampaignMapScene();
+            else
+                SceneController.Instance.ReturnToMenu();
         }
 
         private void EnsureModalRoot()

@@ -63,6 +63,7 @@ namespace ShooterB
             CurrentScene = Constants.SceneType.Game;
             Debug.Log($"Loading campaign stage: {config.mapName} (index {config.stageIndex})");
 
+            CampaignProgressManager.Instance.SetActiveStage(config);
             GameManager.Instance.InitializeGame(Constants.GameMode.Campaign, config.startingDifficulty);
             SceneManager.LoadScene(GetSceneName(Constants.SceneType.Game));
         }

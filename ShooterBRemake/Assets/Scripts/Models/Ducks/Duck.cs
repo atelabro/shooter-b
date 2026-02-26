@@ -41,6 +41,10 @@ namespace ShooterB
         private float screenRight;
         private float screenLeft;
 
+        private float movementWeightGoStraight = 0.4f;
+        private float movementWeightGoTop = 0.3f;
+        private float movementWeightGoBottom = 0.3f;
+
         private bool isDead = false;
         private Sprite aliveSprite;
         private Sprite[] aliveFrames;
@@ -62,11 +66,14 @@ namespace ShooterB
             rb.bodyType = RigidbodyType2D.Kinematic;
         }
 
-        public void Initialize(Constants.DuckType type, int difficulty, Vector2 startPosition, float boundTop, float boundBottom, float boundRight, float boundLeft, Sprite[] typeAliveFrames)
+        public void Initialize(Constants.DuckType type, int difficulty, Vector2 startPosition, float boundTop, float boundBottom, float boundRight, float boundLeft, Sprite[] typeAliveFrames, float goStraightWeight = 0.4f, float goTopWeight = 0.3f, float goBottomWeight = 0.3f)
         {
             duckType = type;
             pointValue = Constants.DuckPoints.GetPoints(type);
             speed = Constants.DuckSpeed.GetSpeed(difficulty);
+            movementWeightGoStraight = goStraightWeight;
+            movementWeightGoTop = goTopWeight;
+            movementWeightGoBottom = goBottomWeight;
             if (GameManager.Instance.CurrentGameMode == Constants.GameMode.Arcade && GameManager.Instance.ArcadeVeryHardMode)
                 speed *= Constants.DuckSpeed.ARCADE_VERY_HARD_MULTIPLIER;
             aliveFrames = typeAliveFrames;
@@ -217,11 +224,12 @@ namespace ShooterB
 
         private void SelectRandomPattern()
         {
-            int random = Random.Range(0, 11);
+            float total = movementWeightGoStraight + movementWeightGoTop + movementWeightGoBottom;
+            float random = Random.Range(0f, total);
 
-            if (random < 3)
+            if (random < movementWeightGoTop)
                 currentPattern = Constants.MovementPattern.GoTop;
-            else if (random > 7)
+            else if (random < movementWeightGoTop + movementWeightGoBottom)
                 currentPattern = Constants.MovementPattern.GoBottom;
             else
                 currentPattern = Constants.MovementPattern.GoStraight;

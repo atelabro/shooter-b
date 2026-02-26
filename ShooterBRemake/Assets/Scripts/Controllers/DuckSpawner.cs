@@ -214,16 +214,7 @@ namespace ShooterB
                         SpawnDuck();
                     }
 
-                    float spawnDelay = Constants.SpawnTiming.GetSpawnDelay(GameManager.Instance.Difficulty);
-                    if (IsArcadeVeryHardEnabled())
-                    {
-                        spawnDelay = Mathf.Max(Constants.SpawnTiming.ARCADE_VERY_HARD_MIN_DELAY, spawnDelay * Constants.SpawnTiming.ARCADE_VERY_HARD_MULTIPLIER);
-                    }
-                    else if (GameManager.Instance.Difficulty >= 35)
-                    {
-                        spawnDelay = Mathf.Max(0.1f, spawnDelay);
-                    }
-
+                    float spawnDelay = GetNextSpawnDelay();
                     nextSpawnTime = Time.time + spawnDelay;
                 }
 
@@ -246,6 +237,11 @@ namespace ShooterB
 
         private void SpawnDuck()
         {
+            StageSpawnConfig spawnConfig = GetActiveSpawnConfig();
+
+            if (spawnConfig != null && spawnConfig.maxActiveDucks > 0 && activeDuckCount >= spawnConfig.maxActiveDucks)
+                return;
+
             GameObject duckObj = GetDuckFromPool();
             if (duckObj == null)
             {
@@ -253,7 +249,7 @@ namespace ShooterB
                 return;
             }
 
-            Constants.DuckType duckType = SelectDuckType();
+            Constants.DuckType duckType = SelectDuckType(spawnConfig);
             RecordDuckSpawn(duckType);
             Vector2 spawnPosition = GetRandomSpawnPosition();
 
@@ -261,10 +257,24 @@ namespace ShooterB
             if (duck != null)
             {
                 Sprite[] duckFrames = GetFramesForType(duckType);
-                duck.Initialize(duckType, GameManager.Instance.Difficulty, spawnPosition, boundTop, boundBottom, boundRight, boundLeft, duckFrames);
+                float straight = spawnConfig != null ? spawnConfig.weightGoStraight : 0.4f;
+                float top = spawnConfig != null ? spawnConfig.weightGoTop : 0.3f;
+                float bottom = spawnConfig != null ? spawnConfig.weightGoBottom : 0.3f;
+                duck.Initialize(duckType, GameManager.Instance.Difficulty, spawnPosition, boundTop, boundBottom, boundRight, boundLeft, duckFrames, straight, top, bottom);
+                if (spawnConfig != null && spawnConfig.duckSpeedMultiplier != 1f)
+                    duck.speed *= spawnConfig.duckSpeedMultiplier;
                 GameManager.Instance.BirdCreated();
                 activeDuckCount++;
             }
+        }
+
+        private StageSpawnConfig GetActiveSpawnConfig()
+        {
+            if (GameManager.Instance.CurrentGameMode != Constants.GameMode.Campaign)
+                return null;
+
+            StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
+            return stage != null ? stage.spawnConfig : null;
         }
 
         private Sprite[] GetFramesForType(Constants.DuckType type)
@@ -339,24 +349,35 @@ namespace ShooterB
             Debug.Log($"Duck returned to pool. Pool size: {duckPool.Count}");
         }
 
-        private Constants.DuckType SelectDuckType()
+        private Constants.DuckType SelectDuckType(StageSpawnConfig spawnConfig = null)
         {
-            float random = Random.Range(0f, 1f);
-            float type0Threshold = Constants.DuckSpawnProbability.TYPE_0;
-            float type1Threshold = type0Threshold + Constants.DuckSpawnProbability.TYPE_1;
-            float type2Threshold = type1Threshold + Constants.DuckSpawnProbability.TYPE_2;
-            float type3Threshold = type2Threshold + Constants.DuckSpawnProbability.TYPE_3;
-
-            if (random < type0Threshold)
-                return Constants.DuckType.Type0;
-            else if (random < type1Threshold)
-                return Constants.DuckType.Type1;
-            else if (random < type2Threshold)
-                return Constants.DuckType.Type2;
-            else if (random < type3Threshold)
-                return Constants.DuckType.Type3;
-            else
+            if (spawnConfig != null && spawnConfig.HasTypeWeightOverride())
+            {
+                float total = spawnConfig.weightType0 + spawnConfig.weightType1 + spawnConfig.weightType2
+                    + spawnConfig.weightType3 + spawnConfig.weightType4;
+                float random = Random.Range(0f, total);
+                float cursor = spawnConfig.weightType0;
+                if (random < cursor) return Constants.DuckType.Type0;
+                cursor += spawnConfig.weightType1;
+                if (random < cursor) return Constants.DuckType.Type1;
+                cursor += spawnConfig.weightType2;
+                if (random < cursor) return Constants.DuckType.Type2;
+                cursor += spawnConfig.weightType3;
+                if (random < cursor) return Constants.DuckType.Type3;
                 return Constants.DuckType.Type4;
+            }
+
+            float r = Random.Range(0f, 1f);
+            float t0 = Constants.DuckSpawnProbability.TYPE_0;
+            float t1 = t0 + Constants.DuckSpawnProbability.TYPE_1;
+            float t2 = t1 + Constants.DuckSpawnProbability.TYPE_2;
+            float t3 = t2 + Constants.DuckSpawnProbability.TYPE_3;
+
+            if (r < t0) return Constants.DuckType.Type0;
+            if (r < t1) return Constants.DuckType.Type1;
+            if (r < t2) return Constants.DuckType.Type2;
+            if (r < t3) return Constants.DuckType.Type3;
+            return Constants.DuckType.Type4;
         }
 
         private void ResetSpawnDistributionCounters()
@@ -445,6 +466,27 @@ namespace ShooterB
         private bool IsArcadeVeryHardEnabled()
         {
             return GameManager.Instance.CurrentGameMode == Constants.GameMode.Arcade && GameManager.Instance.ArcadeVeryHardMode;
+        }
+
+        private float GetNextSpawnDelay()
+        {
+            StageSpawnConfig spawnConfig = GetActiveSpawnConfig();
+            if (spawnConfig != null && spawnConfig.spawnDelayBase > 0f)
+            {
+                float variance = spawnConfig.spawnDelayVariance > 0f
+                    ? Random.Range(-spawnConfig.spawnDelayVariance, spawnConfig.spawnDelayVariance)
+                    : 0f;
+                return Mathf.Max(0.1f, spawnConfig.spawnDelayBase + variance);
+            }
+
+            float delay = Constants.SpawnTiming.GetSpawnDelay(GameManager.Instance.Difficulty);
+            if (IsArcadeVeryHardEnabled())
+                return Mathf.Max(Constants.SpawnTiming.ARCADE_VERY_HARD_MIN_DELAY, delay * Constants.SpawnTiming.ARCADE_VERY_HARD_MULTIPLIER);
+
+            if (GameManager.Instance.Difficulty >= 35)
+                return Mathf.Max(0.1f, delay);
+
+            return delay;
         }
 
         private float GetInitialSpawnDelay()

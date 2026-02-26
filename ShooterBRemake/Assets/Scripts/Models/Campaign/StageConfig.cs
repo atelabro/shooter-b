@@ -15,5 +15,6 @@ namespace ShooterB
         public int starThreshold3;
         public int starsRequiredToUnlock;
         public int startingDifficulty;
+        public StageSpawnConfig spawnConfig;
     }
 }
