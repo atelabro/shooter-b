@@ -9,7 +9,6 @@ namespace ShooterB
         public string mapName;
         [TextArea] public string briefingText;
         public Sprite backgroundSprite;
-        public int duckKillGoal;
         public int starThreshold1;
         public int starThreshold2;
         public int starThreshold3;

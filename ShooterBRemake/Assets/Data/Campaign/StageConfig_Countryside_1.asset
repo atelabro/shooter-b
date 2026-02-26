@@ -17,7 +17,6 @@ MonoBehaviour:
   briefingText: "First contact. They are disorganized but numerous.\n  Take them
     down."
   backgroundSprite: {fileID: 7303333120049856264, guid: 56a257f092fb243488709311ee9df296, type: 3}
-  duckKillGoal: 30
   starThreshold1: 100
   starThreshold2: 250
   starThreshold3: 500

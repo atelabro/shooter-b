@@ -60,12 +60,12 @@ namespace ShooterB
 
         public void LoadCampaignStage(StageConfig config)
         {
-            CurrentScene = Constants.SceneType.Game;
+            CurrentScene = Constants.SceneType.CampaignGame;
             Debug.Log($"Loading campaign stage: {config.mapName} (index {config.stageIndex})");
 
             CampaignProgressManager.Instance.SetActiveStage(config);
             GameManager.Instance.InitializeGame(Constants.GameMode.Campaign, config.startingDifficulty);
-            SceneManager.LoadScene(GetSceneName(Constants.SceneType.Game));
+            SceneManager.LoadScene(GetSceneName(Constants.SceneType.CampaignGame));
         }
 
         public void ReloadCurrentGameScene()
@@ -75,7 +75,7 @@ namespace ShooterB
             Debug.Log($"Reloading game scene with mode: {mode}");
 
             GameManager.Instance.InitializeGame(mode);
-            SceneManager.LoadScene(GetSceneName(Constants.SceneType.Game));
+            SceneManager.LoadScene(GetSceneName(CurrentScene));
         }
 
         public void ReturnToMenu()
@@ -107,6 +107,8 @@ namespace ShooterB
                     return "CampaignMapScene";
                 case Constants.SceneType.Game:
                     return "GameScene";
+                case Constants.SceneType.CampaignGame:
+                    return "CampaignGameScene";
                 case Constants.SceneType.Loading:
                     return "LoadingScene";
                 default:

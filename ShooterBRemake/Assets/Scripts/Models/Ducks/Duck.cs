@@ -390,14 +390,14 @@ namespace ShooterB
                 return;
             }
 
-            DuckSpawner spawner = transform.parent.GetComponent<DuckSpawner>();
+            IDuckSpawner spawner = transform.parent.GetComponent<IDuckSpawner>();
             if (spawner != null)
             {
                 spawner.ReturnDuckToPool(gameObject);
             }
             else
             {
-                Debug.LogWarning($"DuckSpawner not found on parent '{transform.parent.name}'. Deactivating duck.");
+                Debug.LogWarning($"IDuckSpawner not found on parent '{transform.parent.name}'. Deactivating duck.");
                 gameObject.SetActive(false);
             }
         }

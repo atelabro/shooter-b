@@ -40,7 +40,6 @@ namespace ShooterB
         public event Action OnGameOver;
         public event Action<Constants.MultiKillType, int> OnComboKill;
         public event Action<int> OnBirdsKilledChanged;
-        public event Action OnStageComplete;
 
         private int birdsUntilNextDifficulty;
 
@@ -110,26 +109,7 @@ namespace ShooterB
             BirdsKilled++;
             OnBirdsKilledChanged?.Invoke(BirdsKilled);
 
-            if (CurrentGameMode == Constants.GameMode.Campaign)
-                CheckStageClearCondition();
-
             Debug.Log($"Duck killed - Type: {duckType}, Base: {basePoints}, Multiplier: {Multiplier}, Earned: {pointsEarned}");
-        }
-
-        private void CheckStageClearCondition()
-        {
-            StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
-            if (stage == null || BirdsKilled < stage.duckKillGoal)
-                return;
-
-            if (IsGameOver)
-                return;
-
-            IsGameOver = true;
-            IsPaused = false;
-            Time.timeScale = 0f;
-            OnStageComplete?.Invoke();
-            Debug.Log($"Stage complete! Killed {BirdsKilled}/{stage.duckKillGoal} ducks. Score: {Score}");
         }
 
         public void BirdPassed()

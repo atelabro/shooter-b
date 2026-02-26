@@ -15,7 +15,6 @@ namespace ShooterB
         [Header("Modals")]
         public PauseModalController pauseModalController;
         public GameOverModalController gameOverModalController;
-        public StageCompleteModalController stageCompleteModalController;
 
         private void Start()
         {
@@ -25,7 +24,6 @@ namespace ShooterB
             ResolveModalReferences();
             HideModals();
             GameManager.Instance.OnGameOver += HandleGameOver;
-            GameManager.Instance.OnStageComplete += HandleStageComplete;
 
             Debug.Log($"GameController started - Score: {GameManager.Instance.Score}, Lives: {GameManager.Instance.Lives}, Difficulty: {GameManager.Instance.Difficulty}");
         }
@@ -35,7 +33,6 @@ namespace ShooterB
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.OnGameOver -= HandleGameOver;
-                GameManager.Instance.OnStageComplete -= HandleStageComplete;
             }
         }
 
@@ -140,9 +137,6 @@ namespace ShooterB
             if (gameOverModalController == null)
                 gameOverModalController = FindObjectOfType<GameOverModalController>(true);
 
-            if (stageCompleteModalController == null)
-                stageCompleteModalController = FindObjectOfType<StageCompleteModalController>(true);
-
             if (pauseModalController == null)
                 Debug.LogWarning("[GameController] PauseModalController not found in scene.");
 
@@ -157,9 +151,6 @@ namespace ShooterB
 
             if (gameOverModalController != null)
                 gameOverModalController.Hide();
-
-            if (stageCompleteModalController != null)
-                stageCompleteModalController.Hide();
         }
 
         private void HandleGameOver()
@@ -175,24 +166,6 @@ namespace ShooterB
                 GameManager.Instance.HighScore,
                 GameManager.Instance.CurrentGameMode,
                 GameManager.Instance.IsNewHighScore());
-        }
-
-        private void HandleStageComplete()
-        {
-            StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
-            if (stage == null)
-            {
-                Debug.LogWarning("[GameController] Stage complete but no ActiveStageConfig set.");
-                return;
-            }
-
-            if (stageCompleteModalController == null)
-            {
-                Debug.LogWarning("[GameController] StageCompleteModalController not found in scene.");
-                return;
-            }
-
-            stageCompleteModalController.Show(stage, GameManager.Instance.Score);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ShooterB
 {
-    public class DuckSpawner : MonoBehaviour
+    public class DuckSpawner : MonoBehaviour, IDuckSpawner
     {
         [Header("Duck Prefab")]
         public GameObject duckPrefab;
@@ -191,7 +191,7 @@ namespace ShooterB
                 isSpawning = true;
                 nextSpawnTime = Time.time + GetInitialSpawnDelay();
                 StartCoroutine(SpawnCoroutine());
-                Debug.Log("Duck spawning started");
+                Debug.Log("Duck spawning started - Arcade random");
             }
         }
 
@@ -237,10 +237,7 @@ namespace ShooterB
 
         private void SpawnDuck()
         {
-            StageSpawnConfig spawnConfig = GetActiveSpawnConfig();
-
-            if (spawnConfig != null && spawnConfig.maxActiveDucks > 0 && activeDuckCount >= spawnConfig.maxActiveDucks)
-                return;
+            Constants.DuckType duckType = SelectDuckType();
 
             GameObject duckObj = GetDuckFromPool();
             if (duckObj == null)
@@ -249,7 +246,6 @@ namespace ShooterB
                 return;
             }
 
-            Constants.DuckType duckType = SelectDuckType(spawnConfig);
             RecordDuckSpawn(duckType);
             Vector2 spawnPosition = GetRandomSpawnPosition();
 
@@ -257,24 +253,10 @@ namespace ShooterB
             if (duck != null)
             {
                 Sprite[] duckFrames = GetFramesForType(duckType);
-                float straight = spawnConfig != null ? spawnConfig.weightGoStraight : 0.4f;
-                float top = spawnConfig != null ? spawnConfig.weightGoTop : 0.3f;
-                float bottom = spawnConfig != null ? spawnConfig.weightGoBottom : 0.3f;
-                duck.Initialize(duckType, GameManager.Instance.Difficulty, spawnPosition, boundTop, boundBottom, boundRight, boundLeft, duckFrames, straight, top, bottom);
-                if (spawnConfig != null && spawnConfig.duckSpeedMultiplier != 1f)
-                    duck.speed *= spawnConfig.duckSpeedMultiplier;
+                duck.Initialize(duckType, GameManager.Instance.Difficulty, spawnPosition, boundTop, boundBottom, boundRight, boundLeft, duckFrames);
                 GameManager.Instance.BirdCreated();
                 activeDuckCount++;
             }
-        }
-
-        private StageSpawnConfig GetActiveSpawnConfig()
-        {
-            if (GameManager.Instance.CurrentGameMode != Constants.GameMode.Campaign)
-                return null;
-
-            StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
-            return stage != null ? stage.spawnConfig : null;
         }
 
         private Sprite[] GetFramesForType(Constants.DuckType type)
@@ -349,24 +331,8 @@ namespace ShooterB
             Debug.Log($"Duck returned to pool. Pool size: {duckPool.Count}");
         }
 
-        private Constants.DuckType SelectDuckType(StageSpawnConfig spawnConfig = null)
+        private Constants.DuckType SelectDuckType()
         {
-            if (spawnConfig != null && spawnConfig.HasTypeWeightOverride())
-            {
-                float total = spawnConfig.weightType0 + spawnConfig.weightType1 + spawnConfig.weightType2
-                    + spawnConfig.weightType3 + spawnConfig.weightType4;
-                float random = Random.Range(0f, total);
-                float cursor = spawnConfig.weightType0;
-                if (random < cursor) return Constants.DuckType.Type0;
-                cursor += spawnConfig.weightType1;
-                if (random < cursor) return Constants.DuckType.Type1;
-                cursor += spawnConfig.weightType2;
-                if (random < cursor) return Constants.DuckType.Type2;
-                cursor += spawnConfig.weightType3;
-                if (random < cursor) return Constants.DuckType.Type3;
-                return Constants.DuckType.Type4;
-            }
-
             float r = Random.Range(0f, 1f);
             float t0 = Constants.DuckSpawnProbability.TYPE_0;
             float t1 = t0 + Constants.DuckSpawnProbability.TYPE_1;
@@ -470,15 +436,6 @@ namespace ShooterB
 
         private float GetNextSpawnDelay()
         {
-            StageSpawnConfig spawnConfig = GetActiveSpawnConfig();
-            if (spawnConfig != null && spawnConfig.spawnDelayBase > 0f)
-            {
-                float variance = spawnConfig.spawnDelayVariance > 0f
-                    ? Random.Range(-spawnConfig.spawnDelayVariance, spawnConfig.spawnDelayVariance)
-                    : 0f;
-                return Mathf.Max(0.1f, spawnConfig.spawnDelayBase + variance);
-            }
-
             float delay = Constants.SpawnTiming.GetSpawnDelay(GameManager.Instance.Difficulty);
             if (IsArcadeVeryHardEnabled())
                 return Mathf.Max(Constants.SpawnTiming.ARCADE_VERY_HARD_MIN_DELAY, delay * Constants.SpawnTiming.ARCADE_VERY_HARD_MULTIPLIER);

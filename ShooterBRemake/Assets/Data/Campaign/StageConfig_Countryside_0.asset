@@ -16,9 +16,9 @@ MonoBehaviour:
   mapName: Countryside - Day 1
   briefingText: First contact. They are disorganized but numerous. Take them down.
   backgroundSprite: {fileID: -3829833265535652981, guid: a2a72f6b6a1034434a964c5cf424f62d, type: 3}
-  duckKillGoal: 20
   starThreshold1: 50
   starThreshold2: 150
   starThreshold3: 300
   starsRequiredToUnlock: 0
   startingDifficulty: 1
+  spawnConfig: {fileID: 11400000, guid: 090a064bb16a44599ab06bf13c44da16, type: 2}

@@ -72,6 +72,7 @@ namespace ShooterB
             Menu,
             CampaignMap,
             Game,
+            CampaignGame,
             Loading
         }
 

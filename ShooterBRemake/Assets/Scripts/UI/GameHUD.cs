@@ -12,10 +12,6 @@ namespace ShooterB
         public TextMeshProUGUI highScoreText;
         public TextMeshProUGUI multiplierText;
 
-        [Header("Campaign Display")]
-        public TextMeshProUGUI killProgressText;
-        public TextMeshProUGUI starThresholdsText;
-
         [Header("Lives Display")]
         public LivesContainerController livesContainerController;
         public TextMeshProUGUI livesText;
@@ -80,7 +76,6 @@ namespace ShooterB
             GameManager.Instance.OnScoreChanged += UpdateScore;
             GameManager.Instance.OnMultiplierChanged += UpdateMultiplier;
             GameManager.Instance.OnLivesChanged += UpdateLives;
-            GameManager.Instance.OnBirdsKilledChanged += UpdateKillProgress;
         }
 
         private void UnsubscribeFromEvents()
@@ -90,7 +85,6 @@ namespace ShooterB
                 GameManager.Instance.OnScoreChanged -= UpdateScore;
                 GameManager.Instance.OnMultiplierChanged -= UpdateMultiplier;
                 GameManager.Instance.OnLivesChanged -= UpdateLives;
-                GameManager.Instance.OnBirdsKilledChanged -= UpdateKillProgress;
             }
         }
 
@@ -102,34 +96,6 @@ namespace ShooterB
             UpdateHighScore();
             UpdateAmmoDisplay();
             UpdateSelectedWeaponIcon();
-
-            if (GameManager.Instance.CurrentGameMode == Constants.GameMode.Campaign)
-                ApplyCampaignMode();
-        }
-
-        private void ApplyCampaignMode()
-        {
-            if (highScoreText != null)
-                highScoreText.gameObject.SetActive(false);
-
-            StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
-
-            if (killProgressText != null)
-            {
-                killProgressText.gameObject.SetActive(true);
-                int goal = stage != null ? stage.duckKillGoal : 0;
-                killProgressText.text = $"0 / {goal}";
-            }
-
-            if (starThresholdsText != null && stage != null)
-            {
-                starThresholdsText.gameObject.SetActive(true);
-                starThresholdsText.text = $"1* {stage.starThreshold1}  2* {stage.starThreshold2}  3* {stage.starThreshold3}";
-            }
-            else if (starThresholdsText != null)
-            {
-                starThresholdsText.gameObject.SetActive(false);
-            }
         }
 
         private void Update()
@@ -304,16 +270,6 @@ namespace ShooterB
 
             if (livesText != null)
                 livesText.text = $"Lives: {lives}";
-        }
-
-        private void UpdateKillProgress(int birdsKilled)
-        {
-            if (killProgressText == null)
-                return;
-
-            StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
-            int goal = stage != null ? stage.duckKillGoal : 0;
-            killProgressText.text = $"{birdsKilled} / {goal}";
         }
 
         private void OnPauseClicked()
