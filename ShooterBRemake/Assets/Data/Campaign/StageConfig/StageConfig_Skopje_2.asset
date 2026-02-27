@@ -15,7 +15,7 @@ MonoBehaviour:
   stageIndex: 5
   mapName: Old Bazaar (Carsija)
   briefingText: Tight lanes and fast angle changes. Precision over panic.
-  backgroundSprite: {fileID: 808548114997151697, guid: f9563fc123b9a49b986102e7fc471528, type: 3}
+  backgroundSprite: {fileID: 5461148535016659524, guid: dd1d131ecc9034273b186391b87da1a0, type: 3}
   starThreshold1: 85
   starThreshold2: 120
   starThreshold3: 160

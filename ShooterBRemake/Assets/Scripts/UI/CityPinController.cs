@@ -20,7 +20,6 @@ namespace ShooterB
         private void Awake()
         {
             EnsureReferences();
-            EnsureCityNameLabel();
         }
 
         public void Initialize(CityConfig config, bool isUnlocked, Action onClick)
@@ -28,7 +27,7 @@ namespace ShooterB
             onClickCallback = onClick;
 
             if (cityNameText != null)
-                cityNameText.text = config.cityName.ToUpperInvariant();
+                cityNameText.text = config.cityName;
 
             if (pinImage != null)
             {
@@ -96,34 +95,10 @@ namespace ShooterB
                 if (lockTransform != null)
                     lockIcon = lockTransform.gameObject;
             }
+
+            if (cityNameText == null)
+                cityNameText = GetComponentInChildren<TextMeshProUGUI>(true);
         }
 
-        private void EnsureCityNameLabel()
-        {
-            if (cityNameText != null)
-                return;
-
-            cityNameText = GetComponentInChildren<TextMeshProUGUI>(true);
-            if (cityNameText != null)
-                return;
-
-            GameObject go = new GameObject("CityNameText", typeof(RectTransform));
-            RectTransform rt = go.GetComponent<RectTransform>();
-            rt.SetParent(transform, false);
-            rt.anchorMin = new Vector2(0.5f, 1f);
-            rt.anchorMax = new Vector2(0.5f, 1f);
-            rt.pivot = new Vector2(0.5f, 1f);
-            rt.anchoredPosition = new Vector2(0f, -12f);
-            rt.sizeDelta = new Vector2(50f, 18f);
-
-            cityNameText = go.AddComponent<TextMeshProUGUI>();
-            cityNameText.alignment = TextAlignmentOptions.Center;
-            cityNameText.enableWordWrapping = false;
-            cityNameText.enableAutoSizing = true;
-            cityNameText.fontSizeMin = 6f;
-            cityNameText.fontSizeMax = 12f;
-            cityNameText.color = new Color(1f, 0.87f, 0.2f, 1f);
-            cityNameText.raycastTarget = false;
-        }
     }
 }
