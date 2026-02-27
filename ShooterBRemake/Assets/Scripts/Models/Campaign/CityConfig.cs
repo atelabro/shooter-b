@@ -7,6 +7,7 @@ namespace ShooterB
     {
         public string cityName;
         [TextArea] public string briefingText;
+        public string pinSpriteResourcePath;
         public Vector2 pinPosition;
         public StageConfig[] stages;
         public int starsRequiredToUnlock;

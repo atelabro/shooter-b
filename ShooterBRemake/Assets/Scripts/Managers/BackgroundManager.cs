@@ -7,11 +7,11 @@ namespace ShooterB
     {
         private static readonly Dictionary<string, string> BackgroundPaths = new Dictionary<string, string>
         {
-            { "arcade_arc_de_triumphe", "Backgrounds/bckArcDeTriumphe" },
-            { "arcade_eifel_paris", "Backgrounds/bckEifelParis" },
-            { "arcade_louvre_paris", "Backgrounds/bckLouvreParis" },
-            { "arcade_moulen_paris", "Backgrounds/bckMoulenParis" },
-            { "arcade_notre_dame_paris", "Backgrounds/bckNotreDameParis" },
+            { "arcade_arc_de_triumphe", "Backgrounds/bckArcDeTriumpe" },
+            { "arcade_eifel_paris", "Backgrounds/bckEiffelParis" },
+            { "arcade_louvre_paris", "Backgrounds/bckLouvre" },
+            { "arcade_moulen_paris", "Backgrounds/bckMoulen" },
+            { "arcade_notre_dame_paris", "Backgrounds/bckNotreDame" },
             { "arcade_sacre_paris", "Backgrounds/bckSacreParis" }
         };
 

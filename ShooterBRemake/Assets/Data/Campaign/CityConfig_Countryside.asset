@@ -15,7 +15,8 @@ MonoBehaviour:
   cityName: Countryside
   briefingText: The uprising began here. Scattered duck forces, low organization.
     Good place to start agent.
-  pinPosition: {x: 150, y: 50}
+  pinSpriteResourcePath: Pins/FarmBadge
+  pinPosition: {x: 40, y: 240}
   stages:
   - {fileID: 11400000, guid: ae43f7b453f49468194da62fc9d3838a, type: 2}
   - {fileID: 11400000, guid: 81cf26c7b60334a369761278c8bc714a, type: 2}

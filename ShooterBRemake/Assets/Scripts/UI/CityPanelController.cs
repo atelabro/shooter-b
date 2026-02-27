@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections;
+using System;
 
 namespace ShooterB
 {
     public class CityPanelController : MonoBehaviour
     {
+        public event Action OnPanelHidden;
+
         [Header("UI Elements")]
         public TextMeshProUGUI cityNameText;
         public TextMeshProUGUI briefingText;
@@ -16,31 +18,23 @@ namespace ShooterB
         public Transform stageListContainer;
         public CampaignStageEntryController stageEntryPrefab;
 
-        [Header("Pop Animation")]
-        public float animSpeed = 8f;
-
-        private RectTransform rectTransform;
-        private CityConfig[] allCities;
-        private Coroutine animCoroutine;
-
         private void Awake()
         {
-            rectTransform = GetComponent<RectTransform>();
-
             if (closeButton != null)
                 closeButton.onClick.AddListener(Hide);
 
             gameObject.SetActive(false);
-
         }
 
-        public void Initialize(CityConfig[] cities)
+        public void Initialize(CityConfig[] _cities)
         {
-            allCities = cities;
         }
 
         public void Show(CityConfig city)
         {
+            if (city == null)
+                return;
+
             ClearStageList();
             PopulateStageList(city);
 
@@ -51,24 +45,20 @@ namespace ShooterB
                 briefingText.text = city.briefingText;
 
             gameObject.SetActive(true);
-            rectTransform.localScale = Vector3.zero;
-
-            if (animCoroutine != null)
-                StopCoroutine(animCoroutine);
-
-            animCoroutine = StartCoroutine(ScaleTo(Vector3.one));
+            transform.SetAsLastSibling();
         }
 
         public void Hide()
         {
-            if (animCoroutine != null)
-                StopCoroutine(animCoroutine);
-
-            animCoroutine = StartCoroutine(ScaleTo(Vector3.zero, deactivateOnDone: true));
+            gameObject.SetActive(false);
+            OnPanelHidden?.Invoke();
         }
 
         private void PopulateStageList(CityConfig city)
         {
+            if (stageListContainer == null || stageEntryPrefab == null)
+                return;
+
             foreach (StageConfig stage in city.stages)
             {
                 bool isUnlocked = CampaignProgressManager.Instance.IsStageUnlocked(stage, city);
@@ -88,22 +78,11 @@ namespace ShooterB
 
         private void ClearStageList()
         {
+            if (stageListContainer == null)
+                return;
+
             foreach (Transform child in stageListContainer)
                 Destroy(child.gameObject);
-        }
-
-        private IEnumerator ScaleTo(Vector3 targetScale, bool deactivateOnDone = false)
-        {
-            while ((rectTransform.localScale - targetScale).sqrMagnitude > 0.0001f)
-            {
-                rectTransform.localScale = Vector3.Lerp(rectTransform.localScale, targetScale, Time.deltaTime * animSpeed);
-                yield return null;
-            }
-
-            rectTransform.localScale = targetScale;
-
-            if (deactivateOnDone)
-                gameObject.SetActive(false);
         }
     }
 }
