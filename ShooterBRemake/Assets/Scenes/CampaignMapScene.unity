@@ -178,8 +178,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: D.U.C.K. OPERATIONS
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
+  m_sharedMaterial: {fileID: 5430614821553359432, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -203,8 +203,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 56
+  m_fontSizeBase: 56
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2763,8 +2763,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0 / 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
+  m_sharedMaterial: {fileID: 5430614821553359432, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2857,7 +2857,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: -120}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1715746402
@@ -2913,6 +2913,8 @@ MonoBehaviour:
   cityNameText: {fileID: 2012709396}
   briefingText: {fileID: 1789426597}
   closeButton: {fileID: 148163026}
+  typingCharsPerSecond: 45
+  punctuationPause: 0.08
   stageListContainer: {fileID: 1759266711}
   stageEntryPrefab: {fileID: 4158173576686283911, guid: 23420ef5eec0a4b7a959763657aa8b04, type: 3}
 --- !u!1 &1734840354
@@ -3190,8 +3192,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
+  m_sharedMaterial: {fileID: 5430614821553359432, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3443,6 +3445,13 @@ MonoBehaviour:
   focusedPinViewportX: 0.25
   focusedPinViewportY: 0.5
   autoOpenLatestCityPanel: 1
+  enableMapDrag: 1
+  dragThresholdPixels: 12
+  dragSensitivity: 1
+  enableMapZoom: 1
+  zoomStep: 0.15
+  pinchZoomSensitivity: 0.005
+  doubleTapTimeWindow: 0.3
 --- !u!1 &1985967780
 GameObject:
   m_ObjectHideFlags: 0
@@ -3610,8 +3619,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: CityNameText
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
+  m_sharedMaterial: {fileID: 5430614821553359432, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

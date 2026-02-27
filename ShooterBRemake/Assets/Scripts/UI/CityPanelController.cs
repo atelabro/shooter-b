@@ -49,6 +49,9 @@ namespace ShooterB
             if (cityNameText != null)
                 cityNameText.text = city.cityName;
 
+            gameObject.SetActive(true);
+            transform.SetAsLastSibling();
+
             if (briefingText != null)
             {
                 if (briefingTypingCoroutine != null)
@@ -56,9 +59,6 @@ namespace ShooterB
 
                 briefingTypingCoroutine = StartCoroutine(TypeBriefing(city.briefingText ?? string.Empty));
             }
-
-            gameObject.SetActive(true);
-            transform.SetAsLastSibling();
         }
 
         public void Hide()

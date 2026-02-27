@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 namespace ShooterB
 {
@@ -30,6 +33,15 @@ namespace ShooterB
         [Range(0f, 1f)] public float focusedPinViewportX = 0.26f;
         [Range(0f, 1f)] public float focusedPinViewportY = 0.55f;
         public bool autoOpenLatestCityPanel = true;
+        [Header("Map Drag")]
+        public bool enableMapDrag = true;
+        [Min(0f)] public float dragThresholdPixels = 12f;
+        [Min(0f)] public float dragSensitivity = 1f;
+        [Header("Map Zoom")]
+        public bool enableMapZoom = true;
+        [Min(0.01f)] public float zoomStep = 0.15f;
+        [Min(0.01f)] public float pinchZoomSensitivity = 0.005f;
+        [Min(0f)] public float doubleTapTimeWindow = 0.3f;
 
         private RectTransform canvasRect;
         private RectTransform backgroundRect;
@@ -37,6 +49,13 @@ namespace ShooterB
         private Coroutine focusCoroutine;
         private readonly List<CityPinController> runtimePins = new List<CityPinController>();
         private Coroutine delayedPanelOpenCoroutine;
+        private bool isPointerDown;
+        private bool isDraggingMap;
+        private int activeTouchId = -1;
+        private Vector2 pointerDownScreenPosition;
+        private Vector2 lastPointerScreenPosition;
+        private float currentMapScale = 1f;
+        private float lastTapTime = -10f;
 
         private void Start()
         {
@@ -55,6 +74,12 @@ namespace ShooterB
             RefreshTotalStars();
             EnsureActiveStageOnEnter();
             FocusLatestOpenedCityOnEnter();
+        }
+
+        private void Update()
+        {
+            HandleMapDragInput();
+            HandleMapZoomInput();
         }
 
         private void RefreshPins()
@@ -316,10 +341,12 @@ namespace ShooterB
         private Vector2 ClampMapAnchoredPositionToBounds(Vector2 position, float scale)
         {
             Vector2 canvasSize = canvasRect.rect.size;
-            float clampedScale = Mathf.Max(1f, scale);
+            Vector2 mapBaseSize = backgroundRect.rect.size;
+            float clampedScale = Mathf.Max(0.01f, scale);
+            Vector2 scaledMapSize = mapBaseSize * clampedScale;
 
-            float maxOffsetX = (canvasSize.x * clampedScale - canvasSize.x) * 0.5f;
-            float maxOffsetY = (canvasSize.y * clampedScale - canvasSize.y) * 0.5f;
+            float maxOffsetX = Mathf.Max(0f, (scaledMapSize.x - canvasSize.x) * 0.5f);
+            float maxOffsetY = Mathf.Max(0f, (scaledMapSize.y - canvasSize.y) * 0.5f);
 
             return new Vector2(
                 Mathf.Clamp(position.x, -maxOffsetX, maxOffsetX),
@@ -356,6 +383,7 @@ namespace ShooterB
             pinsContainerRect.anchoredPosition = targetAnchoredPosition;
             backgroundRect.localScale = endScale;
             pinsContainerRect.localScale = endScale;
+            currentMapScale = targetScale;
             focusCoroutine = null;
         }
 
@@ -368,6 +396,384 @@ namespace ShooterB
                 cityPanel.Show(city);
 
             delayedPanelOpenCoroutine = null;
+        }
+
+        private void HandleMapDragInput()
+        {
+            if (!enableMapDrag || canvasRect == null || backgroundRect == null || pinsContainerRect == null)
+                return;
+
+            if (TryGetPointerDown(out Vector2 downPos, out int pointerId))
+            {
+                TryHandleDoubleTapZoom();
+                isPointerDown = true;
+                isDraggingMap = false;
+                activeTouchId = pointerId;
+                pointerDownScreenPosition = downPos;
+                lastPointerScreenPosition = downPos;
+                return;
+            }
+
+            if (!isPointerDown)
+                return;
+
+            if (TryGetPointerUp(activeTouchId))
+            {
+                ResetDragState();
+                return;
+            }
+
+            if (!TryGetPointerPosition(activeTouchId, out Vector2 currentScreenPos))
+                return;
+
+            if (!isDraggingMap)
+            {
+                float threshold = Mathf.Max(0f, dragThresholdPixels);
+                if ((currentScreenPos - pointerDownScreenPosition).sqrMagnitude < threshold * threshold)
+                    return;
+
+                isDraggingMap = true;
+
+                if (focusCoroutine != null)
+                {
+                    StopCoroutine(focusCoroutine);
+                    focusCoroutine = null;
+                }
+
+                if (delayedPanelOpenCoroutine != null)
+                {
+                    StopCoroutine(delayedPanelOpenCoroutine);
+                    delayedPanelOpenCoroutine = null;
+                }
+
+                if (cityPanel != null && cityPanel.gameObject.activeInHierarchy)
+                    cityPanel.Hide();
+            }
+
+            Vector2 screenDelta = currentScreenPos - lastPointerScreenPosition;
+            lastPointerScreenPosition = currentScreenPos;
+
+            float canvasScale = canvasRect.lossyScale.x;
+            if (canvasScale <= 0f)
+                canvasScale = 1f;
+
+            Vector2 anchoredDelta = (screenDelta / canvasScale) * dragSensitivity;
+            Vector2 targetPosition = backgroundRect.anchoredPosition + anchoredDelta;
+            float currentScale = Mathf.Max(1f, backgroundRect.localScale.x);
+            targetPosition = ClampMapAnchoredPositionToBounds(targetPosition, currentScale);
+
+            backgroundRect.anchoredPosition = targetPosition;
+            pinsContainerRect.anchoredPosition = targetPosition;
+        }
+
+        private void ResetDragState()
+        {
+            isPointerDown = false;
+            isDraggingMap = false;
+            activeTouchId = -1;
+        }
+
+        private static bool TryGetPointerDown(out Vector2 screenPosition, out int pointerId)
+        {
+#if ENABLE_INPUT_SYSTEM
+            if (Touchscreen.current != null)
+            {
+                foreach (var touch in Touchscreen.current.touches)
+                {
+                    var phase = touch.phase.ReadValue();
+                    if (phase == UnityEngine.InputSystem.TouchPhase.Began)
+                    {
+                        screenPosition = touch.position.ReadValue();
+                        pointerId = touch.touchId.ReadValue();
+                        return true;
+                    }
+                }
+            }
+
+            if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                screenPosition = Mouse.current.position.ReadValue();
+                pointerId = -999;
+                return true;
+            }
+#endif
+#if ENABLE_LEGACY_INPUT_MANAGER
+            if (Input.touchCount > 0)
+            {
+                for (int i = 0; i < Input.touchCount; i++)
+                {
+                    Touch touch = Input.GetTouch(i);
+                    if (touch.phase == TouchPhase.Began)
+                    {
+                        screenPosition = touch.position;
+                        pointerId = touch.fingerId;
+                        return true;
+                    }
+                }
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                screenPosition = Input.mousePosition;
+                pointerId = -999;
+                return true;
+            }
+#endif
+
+            screenPosition = Vector2.zero;
+            pointerId = -1;
+            return false;
+        }
+
+        private static bool TryGetPointerPosition(int pointerId, out Vector2 screenPosition)
+        {
+#if ENABLE_INPUT_SYSTEM
+            if (pointerId == -999)
+            {
+                if (Mouse.current != null && Mouse.current.leftButton.isPressed)
+                {
+                    screenPosition = Mouse.current.position.ReadValue();
+                    return true;
+                }
+
+                screenPosition = Vector2.zero;
+                return false;
+            }
+
+            if (Touchscreen.current != null)
+            {
+                foreach (var touch in Touchscreen.current.touches)
+                {
+                    if (touch.touchId.ReadValue() != pointerId)
+                        continue;
+
+                    var phase = touch.phase.ReadValue();
+                    if (phase == UnityEngine.InputSystem.TouchPhase.Ended || phase == UnityEngine.InputSystem.TouchPhase.Canceled)
+                        break;
+
+                    screenPosition = touch.position.ReadValue();
+                    return true;
+                }
+            }
+
+            screenPosition = Vector2.zero;
+            return false;
+#endif
+#if ENABLE_LEGACY_INPUT_MANAGER
+            if (pointerId == -999)
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    screenPosition = Input.mousePosition;
+                    return true;
+                }
+
+                screenPosition = Vector2.zero;
+                return false;
+            }
+
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                Touch touch = Input.GetTouch(i);
+                if (touch.fingerId == pointerId)
+                {
+                    screenPosition = touch.position;
+                    return true;
+                }
+            }
+
+            screenPosition = Vector2.zero;
+            return false;
+#endif
+        }
+
+        private static bool TryGetPointerUp(int pointerId)
+        {
+#if ENABLE_INPUT_SYSTEM
+            if (pointerId == -999)
+                return Mouse.current == null || Mouse.current.leftButton.wasReleasedThisFrame;
+
+            if (Touchscreen.current != null)
+            {
+                foreach (var touch in Touchscreen.current.touches)
+                {
+                    if (touch.touchId.ReadValue() != pointerId)
+                        continue;
+
+                    var phase = touch.phase.ReadValue();
+                    return phase == UnityEngine.InputSystem.TouchPhase.Ended || phase == UnityEngine.InputSystem.TouchPhase.Canceled;
+                }
+            }
+
+            // touch is no longer present
+            return true;
+#endif
+#if ENABLE_LEGACY_INPUT_MANAGER
+            if (pointerId == -999)
+                return Input.GetMouseButtonUp(0);
+
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                Touch touch = Input.GetTouch(i);
+                if (touch.fingerId == pointerId)
+                    return touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled;
+            }
+
+            return false;
+#endif
+        }
+
+        private void HandleMapZoomInput()
+        {
+            if (!enableMapZoom || canvasRect == null || backgroundRect == null || pinsContainerRect == null)
+                return;
+
+            if (cityPanel != null && cityPanel.gameObject.activeInHierarchy)
+                return;
+
+            float zoomDelta = 0f;
+
+            if (TryGetPinchZoomDelta(out float pinchDelta))
+            {
+                zoomDelta = pinchDelta * pinchZoomSensitivity;
+            }
+            else
+            {
+                float wheel = GetMouseWheelDelta();
+                if (Mathf.Abs(wheel) > Mathf.Epsilon)
+                    zoomDelta = wheel * zoomStep;
+            }
+
+            if (Mathf.Abs(zoomDelta) <= Mathf.Epsilon)
+                return;
+
+            if (focusCoroutine != null)
+            {
+                StopCoroutine(focusCoroutine);
+                focusCoroutine = null;
+            }
+
+            if (delayedPanelOpenCoroutine != null)
+            {
+                StopCoroutine(delayedPanelOpenCoroutine);
+                delayedPanelOpenCoroutine = null;
+            }
+
+            float maxZoom = Mathf.Max(1f, focusZoomScale);
+            currentMapScale = Mathf.Clamp(currentMapScale + zoomDelta, 1f, maxZoom);
+
+            Vector3 zoomScale = Vector3.one * currentMapScale;
+            backgroundRect.localScale = zoomScale;
+            pinsContainerRect.localScale = zoomScale;
+
+            Vector2 clampedPosition = ClampMapAnchoredPositionToBounds(backgroundRect.anchoredPosition, currentMapScale);
+            backgroundRect.anchoredPosition = clampedPosition;
+            pinsContainerRect.anchoredPosition = clampedPosition;
+        }
+
+        private static float GetMouseWheelDelta()
+        {
+#if ENABLE_INPUT_SYSTEM
+            if (Mouse.current != null)
+                return Mouse.current.scroll.ReadValue().y / 120f;
+#endif
+#if ENABLE_LEGACY_INPUT_MANAGER
+            return Input.mouseScrollDelta.y;
+#endif
+            return 0f;
+        }
+
+        private static bool TryGetPinchZoomDelta(out float pinchDelta)
+        {
+#if ENABLE_INPUT_SYSTEM
+            if (Touchscreen.current != null)
+            {
+                Vector2 p0 = default, p1 = default;
+                Vector2 d0 = default, d1 = default;
+                bool has0 = false, has1 = false;
+
+                foreach (var touch in Touchscreen.current.touches)
+                {
+                    if (!touch.press.isPressed)
+                        continue;
+
+                    if (!has0)
+                    {
+                        p0 = touch.position.ReadValue();
+                        d0 = touch.delta.ReadValue();
+                        has0 = true;
+                        continue;
+                    }
+
+                    p1 = touch.position.ReadValue();
+                    d1 = touch.delta.ReadValue();
+                    has1 = true;
+                    break;
+                }
+
+                if (has0 && has1)
+                {
+                    float prevDistance = Vector2.Distance(p0 - d0, p1 - d1);
+                    float currentDistance = Vector2.Distance(p0, p1);
+                    pinchDelta = currentDistance - prevDistance;
+                    return true;
+                }
+            }
+#endif
+#if ENABLE_LEGACY_INPUT_MANAGER
+            if (Input.touchCount >= 2)
+            {
+                Touch t0 = Input.GetTouch(0);
+                Touch t1 = Input.GetTouch(1);
+                Vector2 prevT0 = t0.position - t0.deltaPosition;
+                Vector2 prevT1 = t1.position - t1.deltaPosition;
+                float prevDistance = Vector2.Distance(prevT0, prevT1);
+                float currentDistance = Vector2.Distance(t0.position, t1.position);
+                pinchDelta = currentDistance - prevDistance;
+                return true;
+            }
+#endif
+            pinchDelta = 0f;
+            return false;
+        }
+
+        private void TryHandleDoubleTapZoom()
+        {
+            if (!enableMapZoom)
+                return;
+
+            float now = Time.unscaledTime;
+            if (now - lastTapTime > Mathf.Max(0f, doubleTapTimeWindow))
+            {
+                lastTapTime = now;
+                return;
+            }
+
+            lastTapTime = -10f;
+
+            if (focusCoroutine != null)
+            {
+                StopCoroutine(focusCoroutine);
+                focusCoroutine = null;
+            }
+
+            if (delayedPanelOpenCoroutine != null)
+            {
+                StopCoroutine(delayedPanelOpenCoroutine);
+                delayedPanelOpenCoroutine = null;
+            }
+
+            float maxZoom = Mathf.Max(1f, focusZoomScale);
+            float targetScale = currentMapScale < (maxZoom - 0.01f) ? maxZoom : 1f;
+            currentMapScale = targetScale;
+
+            Vector3 zoomScale = Vector3.one * currentMapScale;
+            backgroundRect.localScale = zoomScale;
+            pinsContainerRect.localScale = zoomScale;
+
+            Vector2 clampedPosition = ClampMapAnchoredPositionToBounds(backgroundRect.anchoredPosition, currentMapScale);
+            backgroundRect.anchoredPosition = clampedPosition;
+            pinsContainerRect.anchoredPosition = clampedPosition;
         }
     }
 }
