@@ -16,9 +16,9 @@ MonoBehaviour:
   mapName: Kale Fortress
   briefingText: Elevated routes and long shots. Control tempo to survive.
   backgroundSprite: {fileID: -4767486021674482408, guid: bb99289c8c7b44e7aab4367c6b7b72b6, type: 3}
-  starThreshold1: 110
-  starThreshold2: 155
-  starThreshold3: 205
+  starThreshold1: 66
+  starThreshold2: 116
+  starThreshold3: 165
   starsRequiredToUnlock: 8
   startingDifficulty: 7
   spawnConfig: {fileID: 11400000, guid: 4799e6b39c93450d8be264954ed8f67e, type: 2}

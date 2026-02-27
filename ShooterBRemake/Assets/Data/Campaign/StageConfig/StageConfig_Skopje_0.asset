@@ -16,9 +16,9 @@ MonoBehaviour:
   mapName: Macedonia Square
   briefingText: First urban push in Skopje. Wide sightlines, fast reactions.
   backgroundSprite: {fileID: 4934435490208857515, guid: ffa1e0eb27ca14f0589c2cc28e809d41, type: 3}
-  starThreshold1: 50
-  starThreshold2: 70
-  starThreshold3: 90
+  starThreshold1: 12
+  starThreshold2: 20
+  starThreshold3: 29
   starsRequiredToUnlock: 0
   startingDifficulty: 4
   spawnConfig: {fileID: 11400000, guid: 4d370821427d48cb912b463684425a7e, type: 2}

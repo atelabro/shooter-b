@@ -88,6 +88,10 @@ namespace ShooterB
 
         private void OnCityPinClicked(CityConfig city)
         {
+            int cityIndex = System.Array.IndexOf(cities, city);
+            if (cityPins != null && cityIndex >= 0 && cityIndex < cityPins.Length && cityPins[cityIndex] != null)
+                cityPins[cityIndex].transform.SetAsLastSibling();
+
             FocusMapOnCity(city);
 
             if (cityPanel != null)

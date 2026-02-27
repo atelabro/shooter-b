@@ -11,7 +11,10 @@ namespace ShooterB
         public Image backgroundImage;
         public TextMeshProUGUI mapNameText;
         public GameObject[] starIcons;
+        public Sprite starFilledSprite;
+        public Sprite starEmptySprite;
         public GameObject lockOverlay;
+        public GameObject lockIcon;
         public Button entryButton;
 
         private Action onClickCallback;
@@ -29,6 +32,9 @@ namespace ShooterB
             if (lockOverlay != null)
                 lockOverlay.SetActive(!isUnlocked);
 
+            if (lockIcon != null)
+                lockIcon.SetActive(!isUnlocked);
+
             if (entryButton != null)
             {
                 entryButton.interactable = isUnlocked;
@@ -38,8 +44,19 @@ namespace ShooterB
 
             for (int i = 0; i < starIcons.Length; i++)
             {
-                if (starIcons[i] != null)
-                    starIcons[i].SetActive(i < starsEarned);
+                if (starIcons[i] == null)
+                    continue;
+
+                starIcons[i].SetActive(true);
+
+                Image starImage = starIcons[i].GetComponent<Image>();
+                if (starImage == null)
+                    continue;
+
+                bool isFilled = i < starsEarned;
+                Sprite target = isFilled ? starFilledSprite : starEmptySprite;
+                if (target != null)
+                    starImage.sprite = target;
             }
         }
     }

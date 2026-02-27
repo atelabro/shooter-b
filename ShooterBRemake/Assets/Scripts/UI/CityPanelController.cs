@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Collections;
 
 namespace ShooterB
 {
@@ -13,10 +14,15 @@ namespace ShooterB
         public TextMeshProUGUI cityNameText;
         public TextMeshProUGUI briefingText;
         public Button closeButton;
+        [Header("Briefing Animation")]
+        [Min(1f)] public float typingCharsPerSecond = 45f;
+        [Min(0f)] public float punctuationPause = 0.08f;
 
         [Header("Stage Cards")]
         public Transform stageListContainer;
         public CampaignStageEntryController stageEntryPrefab;
+
+        private Coroutine briefingTypingCoroutine;
         private CityConfig[] allCities;
 
         private void Awake()
@@ -44,7 +50,12 @@ namespace ShooterB
                 cityNameText.text = city.cityName;
 
             if (briefingText != null)
-                briefingText.text = city.briefingText;
+            {
+                if (briefingTypingCoroutine != null)
+                    StopCoroutine(briefingTypingCoroutine);
+
+                briefingTypingCoroutine = StartCoroutine(TypeBriefing(city.briefingText ?? string.Empty));
+            }
 
             gameObject.SetActive(true);
             transform.SetAsLastSibling();
@@ -52,6 +63,12 @@ namespace ShooterB
 
         public void Hide()
         {
+            if (briefingTypingCoroutine != null)
+            {
+                StopCoroutine(briefingTypingCoroutine);
+                briefingTypingCoroutine = null;
+            }
+
             gameObject.SetActive(false);
             OnPanelHidden?.Invoke();
         }
@@ -85,6 +102,37 @@ namespace ShooterB
 
             foreach (Transform child in stageListContainer)
                 Destroy(child.gameObject);
+        }
+
+        private IEnumerator TypeBriefing(string fullText)
+        {
+            if (briefingText == null)
+                yield break;
+
+            briefingText.text = string.Empty;
+
+            if (string.IsNullOrEmpty(fullText))
+            {
+                briefingTypingCoroutine = null;
+                yield break;
+            }
+
+            float secondsPerCharacter = 1f / Mathf.Max(1f, typingCharsPerSecond);
+            for (int i = 0; i < fullText.Length; i++)
+            {
+                briefingText.text += fullText[i];
+                yield return new WaitForSeconds(secondsPerCharacter);
+
+                if (IsPunctuation(fullText[i]))
+                    yield return new WaitForSeconds(punctuationPause);
+            }
+
+            briefingTypingCoroutine = null;
+        }
+
+        private static bool IsPunctuation(char c)
+        {
+            return c == '.' || c == ',' || c == '!' || c == '?' || c == ';' || c == ':';
         }
     }
 }
