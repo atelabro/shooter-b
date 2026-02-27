@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_Skopje_0
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 3
+  mapName: Macedonia Square
+  briefingText: First urban push in Skopje. Wide sightlines, fast reactions.
+  backgroundSprite: {fileID: 8573759762229030196, guid: dd06b6aa8b1f743eea1656cdbcb36baa, type: 3}
+  starThreshold1: 50
+  starThreshold2: 70
+  starThreshold3: 90
+  starsRequiredToUnlock: 0
+  startingDifficulty: 4
+  spawnConfig: {fileID: 11400000, guid: 4d370821427d48cb912b463684425a7e, type: 2}

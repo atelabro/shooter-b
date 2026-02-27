@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_Skopje_1
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 4
+  mapName: Stone Bridge & Vardar
+  briefingText: Movement near the bridge is chaotic. Track silhouettes and commit.
+  backgroundSprite: {fileID: -4733943478823697903, guid: 4edc43d3cf22b44abbae19dc3868a298, type: 3}
+  starThreshold1: 65
+  starThreshold2: 90
+  starThreshold3: 120
+  starsRequiredToUnlock: 2
+  startingDifficulty: 5
+  spawnConfig: {fileID: 11400000, guid: 072be2c531f646ce835cb6a781c71bb6, type: 2}

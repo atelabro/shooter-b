@@ -86,6 +86,25 @@ namespace ShooterB
             return starsInCity >= stage.starsRequiredToUnlock;
         }
 
+        public bool IsStageUnlocked(StageConfig stage, CityConfig city, CityConfig[] allCities)
+        {
+            if (city == null || city.stages == null || city.stages.Length == 0 || stage == null)
+                return false;
+
+            if (stage == city.stages[0])
+                return IsCityUnlocked(city, allCities);
+
+            int starsInCity = 0;
+            foreach (StageConfig s in city.stages)
+            {
+                if (s == stage)
+                    break;
+                starsInCity += GetStarsForStage(s.stageIndex);
+            }
+
+            return starsInCity >= stage.starsRequiredToUnlock;
+        }
+
         // --- City unlocking ---
 
         public bool IsCityUnlocked(CityConfig city)

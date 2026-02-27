@@ -149,7 +149,7 @@ namespace ShooterB
                     if (stage == null)
                         continue;
 
-                    if (CampaignProgressManager.Instance.IsStageUnlocked(stage, city))
+                    if (CampaignProgressManager.Instance.IsStageUnlocked(stage, city, cities))
                     {
                         CampaignProgressManager.Instance.SetActiveStage(stage);
                         return;

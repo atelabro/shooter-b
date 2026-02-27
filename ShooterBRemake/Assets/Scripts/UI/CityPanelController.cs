@@ -17,6 +17,7 @@ namespace ShooterB
         [Header("Stage Cards")]
         public Transform stageListContainer;
         public CampaignStageEntryController stageEntryPrefab;
+        private CityConfig[] allCities;
 
         private void Awake()
         {
@@ -28,6 +29,7 @@ namespace ShooterB
 
         public void Initialize(CityConfig[] _cities)
         {
+            allCities = _cities;
         }
 
         public void Show(CityConfig city)
@@ -61,7 +63,7 @@ namespace ShooterB
 
             foreach (StageConfig stage in city.stages)
             {
-                bool isUnlocked = CampaignProgressManager.Instance.IsStageUnlocked(stage, city);
+                bool isUnlocked = CampaignProgressManager.Instance.IsStageUnlocked(stage, city, allCities);
                 int stars = CampaignProgressManager.Instance.GetStarsForStage(stage.stageIndex);
 
                 CampaignStageEntryController entry = Instantiate(stageEntryPrefab, stageListContainer);

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_Paris_4
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 12
+  mapName: Sacre-Coeur Heights
+  briefingText: Final Paris push at altitude. Zero hesitation.
+  backgroundSprite: {fileID: 2225196649216103463, guid: 23fae774f981e429094988ae3bdbbed1, type: 3}
+  starThreshold1: 85
+  starThreshold2: 135
+  starThreshold3: 185
+  starsRequiredToUnlock: 11
+  startingDifficulty: 13
+  spawnConfig: {fileID: 11400000, guid: 76428f7dee60468a99d19fc06b2cef66, type: 2}
