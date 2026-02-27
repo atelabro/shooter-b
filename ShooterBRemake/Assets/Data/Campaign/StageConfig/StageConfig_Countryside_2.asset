@@ -21,4 +21,4 @@ MonoBehaviour:
   starThreshold3: 79
   starsRequiredToUnlock: 3
   startingDifficulty: 3
-  spawnConfig: {fileID: 0}
+  spawnConfig: {fileID: 11400000, guid: 8c4d6567d68ff47e89d3714dbec8a3b1, type: 2}
