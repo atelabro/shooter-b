@@ -16,6 +16,7 @@ namespace ShooterB
         public Sprite[] type2KimonoFrames;
         public Sprite[] type3CheFrames;
         public Sprite[] type4SoldierFrames;
+        public Sprite[] type5PhalarxFrames;
 
         [Header("Camera")]
         public Camera gameCamera;
@@ -230,6 +231,7 @@ namespace ShooterB
                 case Constants.DuckType.Type2: frames = type2KimonoFrames; break;
                 case Constants.DuckType.Type3: frames = type3CheFrames; break;
                 case Constants.DuckType.Type4: frames = type4SoldierFrames; break;
+                case Constants.DuckType.Type5: frames = type5PhalarxFrames; break;
                 default: frames = type0PrivateFrames; break;
             }
 

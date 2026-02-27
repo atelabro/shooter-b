@@ -17,49 +17,49 @@ MonoBehaviour:
     delay: 1
   - duckType: 3
     delay: 1.1
-  - duckType: 4
+  - duckType: 5
     delay: 1.2
-  - duckType: 1
+  - duckType: 5
     delay: 0.9
   - duckType: 3
     delay: 1
-  - duckType: 4
+  - duckType: 5
     delay: 1.1
   - duckType: 2
     delay: 0.9
-  - duckType: 4
+  - duckType: 5
     delay: 1
   - duckType: 3
     delay: 0.9
-  - duckType: 1
+  - duckType: 5
     delay: 0.8
-  - duckType: 4
+  - duckType: 5
     delay: 1
   - duckType: 2
     delay: 0.9
   - duckType: 3
     delay: 0.9
-  - duckType: 4
-    delay: 1
-  - duckType: 2
-    delay: 0.8
-  - duckType: 3
-    delay: 0.9
-  - duckType: 4
-    delay: 1
-  - duckType: 1
-    delay: 0.8
-  - duckType: 3
-    delay: 0.9
-  - duckType: 4
+  - duckType: 5
     delay: 1
   - duckType: 2
     delay: 0.8
-  - duckType: 4
+  - duckType: 3
+    delay: 0.9
+  - duckType: 5
+    delay: 1
+  - duckType: 5
+    delay: 0.8
+  - duckType: 3
+    delay: 0.9
+  - duckType: 5
+    delay: 1
+  - duckType: 2
+    delay: 0.8
+  - duckType: 5
     delay: 0.9
   - duckType: 3
     delay: 0.8
-  - duckType: 4
+  - duckType: 5
     delay: 0.9
   weightGoStraight: 0.3
   weightGoTop: 0.42

@@ -24,6 +24,7 @@ namespace ShooterB
         [SerializeField] private float type2SizeMultiplier = 1f;
         [SerializeField] private float type3SizeMultiplier = 1f;
         [SerializeField] private float type4SizeMultiplier = 1f;
+        [SerializeField] private float type5SizeMultiplier = 1f;
 
         [Header("Hitbox Normalization")]
         [SerializeField] private float targetHitRadiusWorld = 0.45f;
@@ -155,6 +156,7 @@ namespace ShooterB
                 case Constants.DuckType.Type2: return type2SizeMultiplier;
                 case Constants.DuckType.Type3: return type3SizeMultiplier;
                 case Constants.DuckType.Type4: return type4SizeMultiplier;
+                case Constants.DuckType.Type5: return type5SizeMultiplier;
                 default: return 1f;
             }
         }

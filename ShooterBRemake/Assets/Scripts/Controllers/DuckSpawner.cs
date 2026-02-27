@@ -15,6 +15,7 @@ namespace ShooterB
         public Sprite[] type2KimonoFrames;
         public Sprite[] type3CheFrames;
         public Sprite[] type4SoldierFrames;
+        public Sprite[] type5PhalarxFrames;
 
         [Header("Camera")]
         public Camera gameCamera;
@@ -60,6 +61,7 @@ namespace ShooterB
             ValidateTypeFrames(type2KimonoFrames, Constants.DuckType.Type2, nameof(type2KimonoFrames));
             ValidateTypeFrames(type3CheFrames, Constants.DuckType.Type3, nameof(type3CheFrames));
             ValidateTypeFrames(type4SoldierFrames, Constants.DuckType.Type4, nameof(type4SoldierFrames));
+            ValidateTypeFrames(type5PhalarxFrames, Constants.DuckType.Type5, nameof(type5PhalarxFrames));
         }
 
         private void ValidateTypeFrames(Sprite[] frames, Constants.DuckType type, string fieldName)
@@ -79,6 +81,7 @@ namespace ShooterB
             type2KimonoFrames = LoadFramesFromSheet("Assets/Sprites/smallAnimatedKimono.png", "smallAnimatedKimono_");
             type3CheFrames = LoadFramesFromSheet("Assets/Sprites/smallAnimatedChe.png", "smallAnimatedChe_");
             type4SoldierFrames = LoadFramesFromSheet("Assets/Sprites/smallAnimatedSoldier.png", "smallAnimatedSoldier_");
+            type5PhalarxFrames = LoadFramesFromSheet("Assets/Sprites/PhalarxMacedonianDuck/mkd01.png", "mkd01_");
 
             UnityEditor.EditorUtility.SetDirty(this);
 
@@ -88,7 +91,8 @@ namespace ShooterB
                 $"Type1={type1RamboFrames.Length}, " +
                 $"Type2={type2KimonoFrames.Length}, " +
                 $"Type3={type3CheFrames.Length}, " +
-                $"Type4={type4SoldierFrames.Length}"
+                $"Type4={type4SoldierFrames.Length}, " +
+                $"Type5={type5PhalarxFrames.Length}"
             );
 #else
             Debug.LogWarning("[DUCKSPAWNER] Auto-Populate Duck Frames is only available in Unity Editor.");
@@ -279,6 +283,9 @@ namespace ShooterB
                 case Constants.DuckType.Type4:
                     selectedFrames = type4SoldierFrames;
                     break;
+                case Constants.DuckType.Type5:
+                    selectedFrames = type5PhalarxFrames;
+                    break;
                 default:
                     selectedFrames = type0PrivateFrames;
                     break;
@@ -338,12 +345,14 @@ namespace ShooterB
             float t1 = t0 + Constants.DuckSpawnProbability.TYPE_1;
             float t2 = t1 + Constants.DuckSpawnProbability.TYPE_2;
             float t3 = t2 + Constants.DuckSpawnProbability.TYPE_3;
+            float t4 = t3 + Constants.DuckSpawnProbability.TYPE_4;
 
             if (r < t0) return Constants.DuckType.Type0;
             if (r < t1) return Constants.DuckType.Type1;
             if (r < t2) return Constants.DuckType.Type2;
             if (r < t3) return Constants.DuckType.Type3;
-            return Constants.DuckType.Type4;
+            if (r < t4) return Constants.DuckType.Type4;
+            return Constants.DuckType.Type5;
         }
 
         private void ResetSpawnDistributionCounters()
@@ -397,7 +406,8 @@ namespace ShooterB
                 $"Type1: {GetActualPercent(Constants.DuckType.Type1):F1}% (exp {Constants.DuckSpawnProbability.TYPE_1 * 100f:F1}%) | " +
                 $"Type2: {GetActualPercent(Constants.DuckType.Type2):F1}% (exp {Constants.DuckSpawnProbability.TYPE_2 * 100f:F1}%) | " +
                 $"Type3: {GetActualPercent(Constants.DuckType.Type3):F1}% (exp {Constants.DuckSpawnProbability.TYPE_3 * 100f:F1}%) | " +
-                $"Type4: {GetActualPercent(Constants.DuckType.Type4):F1}% (exp {Constants.DuckSpawnProbability.TYPE_4 * 100f:F1}%)"
+                $"Type4: {GetActualPercent(Constants.DuckType.Type4):F1}% (exp {Constants.DuckSpawnProbability.TYPE_4 * 100f:F1}%) | " +
+                $"Type5: {GetActualPercent(Constants.DuckType.Type5):F1}% (exp {Constants.DuckSpawnProbability.TYPE_5 * 100f:F1}%)"
             );
         }
 

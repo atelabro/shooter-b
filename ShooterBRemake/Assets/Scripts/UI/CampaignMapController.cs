@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -56,6 +57,7 @@ namespace ShooterB
         private Vector2 lastPointerScreenPosition;
         private float currentMapScale = 1f;
         private float lastTapTime = -10f;
+        private bool suppressNextPanelHideReset;
 
         private void Start()
         {
@@ -67,7 +69,7 @@ namespace ShooterB
             if (cityPanel != null)
             {
                 cityPanel.Initialize(cities);
-                cityPanel.OnPanelHidden += ResetMapFocus;
+                cityPanel.OnPanelHidden += OnCityPanelHidden;
             }
 
             RefreshPins();
@@ -134,7 +136,7 @@ namespace ShooterB
                 StopCoroutine(delayedPanelOpenCoroutine);
 
             if (cityPanel != null)
-                cityPanel.OnPanelHidden -= ResetMapFocus;
+                cityPanel.OnPanelHidden -= OnCityPanelHidden;
         }
 
         private void FocusLatestOpenedCityOnEnter()
@@ -221,6 +223,9 @@ namespace ShooterB
 
                 backgroundRect = background as RectTransform;
                 pinsContainerRect = pinsContainer as RectTransform;
+                if (backgroundRect != null && pinsContainerRect != null && backgroundRect.parent == pinsContainerRect.parent)
+                    pinsContainerRect.SetSiblingIndex(backgroundRect.GetSiblingIndex() + 1);
+
                 if (background != null)
                 {
                     Image backgroundImage = background.GetComponent<Image>();
@@ -405,6 +410,9 @@ namespace ShooterB
 
             if (TryGetPointerDown(out Vector2 downPos, out int pointerId))
             {
+                if (cityPanel != null && cityPanel.gameObject.activeInHierarchy && IsPointerOverUI(pointerId))
+                    return;
+
                 TryHandleDoubleTapZoom();
                 isPointerDown = true;
                 isDraggingMap = false;
@@ -424,6 +432,9 @@ namespace ShooterB
             }
 
             if (!TryGetPointerPosition(activeTouchId, out Vector2 currentScreenPos))
+                return;
+
+            if (cityPanel != null && cityPanel.gameObject.activeInHierarchy && IsPointerOverUI(activeTouchId))
                 return;
 
             if (!isDraggingMap)
@@ -447,7 +458,10 @@ namespace ShooterB
                 }
 
                 if (cityPanel != null && cityPanel.gameObject.activeInHierarchy)
+                {
+                    suppressNextPanelHideReset = true;
                     cityPanel.Hide();
+                }
             }
 
             Vector2 screenDelta = currentScreenPos - lastPointerScreenPosition;
@@ -737,6 +751,17 @@ namespace ShooterB
             return false;
         }
 
+        private static bool IsPointerOverUI(int pointerId)
+        {
+            if (EventSystem.current == null)
+                return false;
+
+            if (pointerId == -999)
+                return EventSystem.current.IsPointerOverGameObject();
+
+            return EventSystem.current.IsPointerOverGameObject(pointerId);
+        }
+
         private void TryHandleDoubleTapZoom()
         {
             if (!enableMapZoom)
@@ -774,6 +799,17 @@ namespace ShooterB
             Vector2 clampedPosition = ClampMapAnchoredPositionToBounds(backgroundRect.anchoredPosition, currentMapScale);
             backgroundRect.anchoredPosition = clampedPosition;
             pinsContainerRect.anchoredPosition = clampedPosition;
+        }
+
+        private void OnCityPanelHidden()
+        {
+            if (suppressNextPanelHideReset)
+            {
+                suppressNextPanelHideReset = false;
+                return;
+            }
+
+            ResetMapFocus();
         }
     }
 }

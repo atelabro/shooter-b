@@ -1007,6 +1007,15 @@ MonoBehaviour:
   - {fileID: 8457064289295693115, guid: d8090a636c5bd40b095cec9e6e0238ee, type: 3}
   - {fileID: 3541737041052746452, guid: d8090a636c5bd40b095cec9e6e0238ee, type: 3}
   - {fileID: -8208497361308722453, guid: d8090a636c5bd40b095cec9e6e0238ee, type: 3}
+  type5PhalarxFrames:
+  - {fileID: -214140672527751515, guid: 98905b0c268d84c8dac28842495b7b07, type: 3}
+  - {fileID: -6255197917108673726, guid: 1f9fa4b55e7914d92a78b35a20d68ba4, type: 3}
+  - {fileID: -5553512455525001545, guid: 53f67f5f352d54053858903609081de4, type: 3}
+  - {fileID: -3816602275496611451, guid: 166e7651a8b764b6cbb07541e47b12c8, type: 3}
+  - {fileID: -6176627855431503359, guid: 64fbb4274f4884fafa34bd34e8587d50, type: 3}
+  - {fileID: -1371878304548727910, guid: 2b2c398e1246846ac9aa373e6c9720f6, type: 3}
+  - {fileID: -1578738675634954837, guid: a65b855220b2b47c19e741caaebf8191, type: 3}
+  - {fileID: -4608560711566172762, guid: 29eacaec92d1944dfa79cdc2823e1d17, type: 3}
   gameCamera: {fileID: 1280628808}
   poolSize: 20
 --- !u!1 &237993236
@@ -2401,7 +2410,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CampaignHUD
   scoreText: {fileID: 208818958}
   multiplierText: {fileID: 0}
-  killProgressText: {fileID: 0}
   livesContainerController: {fileID: 1620661372}
   livesText: {fileID: 1368227299}
   pauseButton: {fileID: 2039079474}
