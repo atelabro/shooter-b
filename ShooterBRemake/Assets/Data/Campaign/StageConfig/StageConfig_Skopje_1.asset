@@ -16,9 +16,9 @@ MonoBehaviour:
   mapName: Stone Bridge & Vardar
   briefingText: Movement near the bridge is chaotic. Track silhouettes and commit.
   backgroundSprite: {fileID: -1432944543603230661, guid: a241a4c410bdf4ffc8a5e777d3e3a812, type: 3}
-  starThreshold1: 24
-  starThreshold2: 43
-  starThreshold3: 61
+  starThreshold1: 18
+  starThreshold2: 27
+  starThreshold3: 35
   starsRequiredToUnlock: 2
   startingDifficulty: 5
   spawnConfig: {fileID: 11400000, guid: 072be2c531f646ce835cb6a781c71bb6, type: 2}
