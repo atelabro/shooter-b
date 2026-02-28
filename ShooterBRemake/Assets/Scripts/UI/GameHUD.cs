@@ -375,7 +375,7 @@ namespace ShooterB
             }
         }
 
-        private void HandleComboKill(Constants.MultiKillType type, int bonusPoints)
+        private void HandleComboKill(Constants.MultiKillType type, int bonusPoints, Vector3 comboWorldPosition)
         {
             if (comboPopupPrefab == null)
                 return;
@@ -386,7 +386,52 @@ namespace ShooterB
             if (popupText != null)
                 popupText.text = GetComboLabel(type);
 
+            PositionPopupAtWorldPoint(popup, parent, comboWorldPosition);
+
             Destroy(popup, Mathf.Max(0.1f, comboPopupLifetime));
+        }
+
+        private void PositionPopupAtWorldPoint(GameObject popup, Transform parent, Vector3 worldPosition)
+        {
+            if (popup == null || parent == null)
+                return;
+
+            RectTransform popupRect = popup.GetComponent<RectTransform>();
+            if (popupRect == null)
+                return;
+
+            RectTransform parentRect = parent as RectTransform;
+            if (parentRect == null)
+            {
+                Canvas fallbackCanvas = parent.GetComponentInParent<Canvas>();
+                parentRect = fallbackCanvas != null ? fallbackCanvas.transform as RectTransform : transform as RectTransform;
+            }
+
+            if (parentRect == null)
+                return;
+
+            Camera cam = Camera.main;
+            if (cam == null)
+                cam = FindObjectOfType<Camera>();
+
+            Vector2 screenPoint = cam != null
+                ? cam.WorldToScreenPoint(worldPosition)
+                : new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+
+            Camera uiCamera = null;
+            Canvas canvas = parentRect.GetComponentInParent<Canvas>();
+            if (canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay)
+                uiCamera = canvas.worldCamera != null ? canvas.worldCamera : cam;
+
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, screenPoint, uiCamera, out Vector2 localPoint))
+            {
+                popupRect.anchoredPosition = localPoint;
+            }
+            else
+            {
+                // Fallback keeps popup away from the screen center when conversion fails.
+                popupRect.anchoredPosition = new Vector2(0f, 120f);
+            }
         }
 
         private static string GetComboLabel(Constants.MultiKillType type)

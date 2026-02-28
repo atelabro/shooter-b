@@ -156,28 +156,53 @@ namespace ShooterB
                 }
             }
 
-            TriggerComboIfNeeded(uniqueDucksHit.Count);
+            TriggerComboIfNeeded(uniqueDucksHit);
 
             Dispose();
         }
 
-        private void TriggerComboIfNeeded(int killsFromSingleImpact)
+        private void TriggerComboIfNeeded(HashSet<Duck> uniqueDucksHit)
         {
+            int killsFromSingleImpact = uniqueDucksHit != null ? uniqueDucksHit.Count : 0;
             if (killsFromSingleImpact < 2 || GameManager.Instance == null)
                 return;
 
+            Vector3 comboWorldPosition = GetComboWorldPosition(uniqueDucksHit);
+
             if (killsFromSingleImpact == 2)
             {
-                GameManager.Instance.AddComboPoints(Constants.MultiKillType.DoubleKill);
+                GameManager.Instance.AddComboPoints(Constants.MultiKillType.DoubleKill, comboWorldPosition);
             }
             else if (killsFromSingleImpact == 3)
             {
-                GameManager.Instance.AddComboPoints(Constants.MultiKillType.TripleKill);
+                GameManager.Instance.AddComboPoints(Constants.MultiKillType.TripleKill, comboWorldPosition);
             }
             else
             {
-                GameManager.Instance.AddComboPoints(Constants.MultiKillType.QuadraKill);
+                GameManager.Instance.AddComboPoints(Constants.MultiKillType.QuadraKill, comboWorldPosition);
             }
+        }
+
+        private Vector3 GetComboWorldPosition(HashSet<Duck> uniqueDucksHit)
+        {
+            if (uniqueDucksHit == null || uniqueDucksHit.Count == 0)
+                return transform.position;
+
+            Vector3 sum = Vector3.zero;
+            int count = 0;
+            foreach (Duck duck in uniqueDucksHit)
+            {
+                if (duck == null)
+                    continue;
+
+                sum += duck.transform.position;
+                count++;
+            }
+
+            if (count == 0)
+                return transform.position;
+
+            return sum / count;
         }
 
         protected virtual void Dispose()

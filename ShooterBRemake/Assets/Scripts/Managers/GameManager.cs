@@ -38,7 +38,7 @@ namespace ShooterB
         public event Action<int> OnDifficultyChanged;
         public event Action<bool> OnPauseStateChanged;
         public event Action OnGameOver;
-        public event Action<Constants.MultiKillType, int> OnComboKill;
+        public event Action<Constants.MultiKillType, int, Vector3> OnComboKill;
         public event Action<int> OnBirdsKilledChanged;
 
         private int birdsUntilNextDifficulty;
@@ -123,11 +123,12 @@ namespace ShooterB
             }
         }
 
-        public void AddComboPoints(Constants.MultiKillType type)
+        public void AddComboPoints(Constants.MultiKillType type, Vector3? worldPosition = null)
         {
             int bonusPoints = Constants.ComboPoints.GetPoints(type);
             AddPoints(bonusPoints);
-            OnComboKill?.Invoke(type, bonusPoints);
+            Vector3 comboPosition = worldPosition ?? Vector3.zero;
+            OnComboKill?.Invoke(type, bonusPoints, comboPosition);
             Debug.Log($"Combo! {type} - Bonus points: {bonusPoints}");
         }
 

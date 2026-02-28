@@ -4537,6 +4537,9 @@ MonoBehaviour:
   reloadGlowMaxAlpha: 0.75
   reloadGlowPulseSpeed: 8
   reloadTextFlashSpeed: 12
+  comboPopupPrefab: {fileID: 5400745645520572176, guid: 93b3551bf101d4aa59cd5d848aa42070, type: 3}
+  comboPopupContainer: {fileID: 0}
+  comboPopupLifetime: 1
 --- !u!4 &1651397104
 Transform:
   m_ObjectHideFlags: 0

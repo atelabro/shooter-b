@@ -66,24 +66,28 @@ namespace ShooterB
             primaryDuck.OnHit(firedByWeapon);
             Debug.Log($"[TESLA] Primary hit duck at {primaryHitPosition}");
 
+            bool spawnedChain = false;
             if (remainingChains > 0)
-                SpawnChainBullet(primaryHitPosition, remainingChains - 1);
+                spawnedChain = SpawnChainBullet(primaryHitPosition, remainingChains - 1);
+
+            if (!spawnedChain)
+                TriggerTeslaChainCombo(primaryHitPosition);
 
             Dispose();
         }
 
-        private void SpawnChainBullet(Vector2 origin, int chainsLeftForNextBullet)
+        private bool SpawnChainBullet(Vector2 origin, int chainsLeftForNextBullet)
         {
             Duck nextDuck = FindNearestUnhitDuck(origin, aoeRadius, hitDuckIds);
             if (nextDuck == null)
-                return;
+                return false;
 
             if (poolSourcePrefab == null)
-                return;
+                return false;
 
             GameObject chainBulletObject = BulletPool.Get(poolSourcePrefab);
             if (chainBulletObject == null)
-                return;
+                return false;
 
             chainBulletObject.transform.position = new Vector3(origin.x, origin.y, transform.position.z);
 
@@ -91,12 +95,33 @@ namespace ShooterB
             if (chainBullet == null)
             {
                 BulletPool.Return(poolSourcePrefab, chainBulletObject);
-                return;
+                return false;
             }
 
             chainBullet.SetPoolSourcePrefab(poolSourcePrefab);
             chainBullet.Initialize(nextDuck.transform.position, firedByWeapon);
             chainBullet.ConfigureChain(chainsLeftForNextBullet, hitDuckIds);
+            return true;
+        }
+
+        private void TriggerTeslaChainCombo(Vector2 comboWorldPosition)
+        {
+            int chainKillCount = hitDuckIds.Count;
+            if (chainKillCount < 2 || GameManager.Instance == null)
+                return;
+
+            if (chainKillCount == 2)
+            {
+                GameManager.Instance.AddComboPoints(Constants.MultiKillType.DoubleKill, comboWorldPosition);
+            }
+            else if (chainKillCount == 3)
+            {
+                GameManager.Instance.AddComboPoints(Constants.MultiKillType.TripleKill, comboWorldPosition);
+            }
+            else
+            {
+                GameManager.Instance.AddComboPoints(Constants.MultiKillType.QuadraKill, comboWorldPosition);
+            }
         }
 
         private Duck FindNearestUnhitDuck(Vector2 origin, float searchRadius, HashSet<int> alreadyHitDuckIds)
