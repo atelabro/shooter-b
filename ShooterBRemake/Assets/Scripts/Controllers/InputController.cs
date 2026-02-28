@@ -11,6 +11,8 @@ namespace ShooterB
         public ShooterController shooterController;
         public PauseModalController pauseModalController;
 
+        private bool isPointerHeld;
+
         private void Start()
         {
             if (gameCamera == null)
@@ -34,7 +36,13 @@ namespace ShooterB
             HandlePauseInput();
 
             if (GameManager.Instance.IsPaused || GameManager.Instance.IsGameOver)
+            {
+                if (isPointerHeld && shooterController != null)
+                    shooterController.EndFire();
+
+                isPointerHeld = false;
                 return;
+            }
 
             HandleInput();
         }
@@ -62,31 +70,74 @@ namespace ShooterB
 
         private void HandleInput()
         {
-            Vector2 worldPosition = Vector2.zero;
-            bool shouldShoot = false;
-
             float distanceFromCamera = Mathf.Abs(gameCamera.transform.position.z - (-5));
+            bool hasTouch = Touchscreen.current != null;
+            bool hasMouse = Mouse.current != null;
 
-            if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+            bool pressedThisFrame = false;
+            bool releasedThisFrame = false;
+            bool isPressed = false;
+            Vector2 screenPosition = Vector2.zero;
+
+            if (hasTouch)
             {
-                if (Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
+                var touch = Touchscreen.current.primaryTouch;
+                pressedThisFrame = touch.press.wasPressedThisFrame;
+                releasedThisFrame = touch.press.wasReleasedThisFrame;
+                isPressed = touch.press.isPressed;
+                screenPosition = touch.position.ReadValue();
+            }
+            else if (hasMouse)
+            {
+                pressedThisFrame = Mouse.current.leftButton.wasPressedThisFrame;
+                releasedThisFrame = Mouse.current.leftButton.wasReleasedThisFrame;
+                isPressed = Mouse.current.leftButton.isPressed;
+                screenPosition = Mouse.current.position.ReadValue();
+            }
+
+            if (pressedThisFrame)
+            {
+                if (IsPointerOverUI())
                 {
-                    Vector2 touchPosition = Touchscreen.current.primaryTouch.position.ReadValue();
-                    worldPosition = gameCamera.ScreenToWorldPoint(new Vector3(touchPosition.x, touchPosition.y, distanceFromCamera));
-                    shouldShoot = true;
+                    isPointerHeld = false;
+                    return;
                 }
-            }
-            else if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
-            {
-                Vector2 mousePosition = Mouse.current.position.ReadValue();
-                worldPosition = gameCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, distanceFromCamera));
-                shouldShoot = true;
+
+                isPointerHeld = true;
+                TryBeginFire(screenPosition, distanceFromCamera);
             }
 
-            if (shouldShoot && !IsPointerOverUI() && shooterController != null)
+            if (releasedThisFrame)
             {
-                shooterController.Shoot(worldPosition);
+                if (isPointerHeld && shooterController != null)
+                    shooterController.EndFire();
+
+                isPointerHeld = false;
+                return;
             }
+
+            if (isPressed && isPointerHeld)
+            {
+                TryUpdateFire(screenPosition, distanceFromCamera);
+            }
+        }
+
+        private void TryBeginFire(Vector2 screenPosition, float distanceFromCamera)
+        {
+            if (shooterController == null)
+                return;
+
+            Vector2 worldPosition = gameCamera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, distanceFromCamera));
+            shooterController.BeginFire(worldPosition);
+        }
+
+        private void TryUpdateFire(Vector2 screenPosition, float distanceFromCamera)
+        {
+            if (shooterController == null)
+                return;
+
+            Vector2 worldPosition = gameCamera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, distanceFromCamera));
+            shooterController.UpdateFire(worldPosition);
         }
 
         private bool IsPointerOverUI()

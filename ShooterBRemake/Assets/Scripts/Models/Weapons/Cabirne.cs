@@ -8,6 +8,7 @@ namespace ShooterB
         {
             weaponName = "Cabirne";
             weaponType = Constants.WeaponType.Cabirne;
+            fireMode = Constants.WeaponFireMode.SingleTap;
             maxBullets = 7;
             fireDelay = 0.2f;
             refillDelay = 0.6f;

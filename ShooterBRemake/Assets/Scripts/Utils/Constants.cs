@@ -43,6 +43,12 @@ namespace ShooterB
             PiranhaGun
         }
 
+        public enum WeaponFireMode
+        {
+            SingleTap,
+            HoldAutomatic
+        }
+
         public enum DuckType
         {
             Type0,

@@ -9,6 +9,7 @@ namespace ShooterB
         [Header("Weapon Properties")]
         public string weaponName;
         public Constants.WeaponType weaponType;
+        public Constants.WeaponFireMode fireMode = Constants.WeaponFireMode.SingleTap;
         public int maxBullets;
         public float fireDelay;
         public float refillDelay;
@@ -31,6 +32,7 @@ namespace ShooterB
         public int CurrentBullets => currentBullets;
         public bool IsRefilling => isRefilling;
         public bool CanShoot => currentBullets > 0 && !isRefilling && Time.time >= lastFireTime + fireDelay;
+        public bool CanAutoFire => fireMode == Constants.WeaponFireMode.HoldAutomatic;
 
         protected virtual void Start()
         {

@@ -1,0 +1,24 @@
+using UnityEngine;
+
+namespace ShooterB
+{
+    public class MrSulko : Weapon
+    {
+        protected override void Start()
+        {
+            weaponName = "MrSulko";
+            weaponType = Constants.WeaponType.MrSulko;
+            fireMode = Constants.WeaponFireMode.HoldAutomatic;
+            maxBullets = 30;
+            fireDelay = 0.1f;
+            refillDelay = 0.72f;
+
+            if (bulletPrefab == null)
+                Debug.LogError("[MRSULKO] bulletPrefab is not assigned. Assign MrSulko bullet prefab via ShooterController or weapon prefab.");
+
+            base.Start();
+
+            Debug.Log($"[MRSULKO] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
+        }
+    }
+}

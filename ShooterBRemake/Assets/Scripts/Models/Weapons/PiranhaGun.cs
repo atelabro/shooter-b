@@ -8,6 +8,7 @@ namespace ShooterB
         {
             weaponName = "PiranhaGun";
             weaponType = Constants.WeaponType.PiranhaGun;
+            fireMode = Constants.WeaponFireMode.SingleTap;
             maxBullets = 3;
             fireDelay = 0.9f;
             refillDelay = 1.4f;

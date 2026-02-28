@@ -8,6 +8,7 @@ namespace ShooterB
         {
             weaponName = "Rifle";
             weaponType = Constants.WeaponType.Rifle;
+            fireMode = Constants.WeaponFireMode.SingleTap;
             maxBullets = 2;
             fireDelay = 0.3f;
             refillDelay = 0.8f;

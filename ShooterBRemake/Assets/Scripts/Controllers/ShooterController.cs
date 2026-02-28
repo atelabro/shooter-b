@@ -11,21 +11,28 @@ namespace ShooterB
         private Cabirne cabirneWeapon;
         private PiranhaGun piranhaWeapon;
         private TeslaGun teslaWeapon;
+        private MrSulko mrSulkoWeapon;
 
         [Header("Prefabs")]
         public GameObject rifleBulletPrefab;
         public GameObject cabirneBulletPrefab;
         public GameObject piranhaBulletPrefab;
         public GameObject teslaBulletPrefab;
+        public GameObject mrSulkoBulletPrefab;
         public Sprite defaultRifleIcon;
         public Sprite defaultPiranhaIcon;
         public Sprite defaultTeslaIcon;
+        public Sprite defaultMrSulkoIcon;
 
         [Header("Weapon Prefabs")]
         public Weapon rifleWeaponPrefab;
         public Weapon cabirneWeaponPrefab;
         public Weapon piranhaWeaponPrefab;
         public Weapon teslaWeaponPrefab;
+        public Weapon mrSulkoWeaponPrefab;
+
+        private bool isFireHeld;
+        private Vector2 heldTargetPosition;
 
         private void Awake()
         {
@@ -48,31 +55,34 @@ namespace ShooterB
 
         private void Update()
         {
+            UpdateAutomaticFire();
+
             if (Keyboard.current == null)
                 return;
 
             if (Keyboard.current.digit1Key.wasPressedThisFrame && piranhaWeapon != null)
             {
-                activeWeapon = piranhaWeapon;
-                Debug.Log("[SHOOTER] Switched weapon to PiranhaGun");
+                SetActiveWeapon(piranhaWeapon, "PiranhaGun");
             }
 
             if (Keyboard.current.digit2Key.wasPressedThisFrame && cabirneWeapon != null)
             {
-                activeWeapon = cabirneWeapon;
-                Debug.Log("[SHOOTER] Switched weapon to Cabirne");
+                SetActiveWeapon(cabirneWeapon, "Cabirne");
             }
 
             if (Keyboard.current.digit3Key.wasPressedThisFrame && rifleWeapon != null)
             {
-                activeWeapon = rifleWeapon;
-                Debug.Log("[SHOOTER] Switched weapon to Rifle");
+                SetActiveWeapon(rifleWeapon, "Rifle");
             }
 
             if (Keyboard.current.digit4Key.wasPressedThisFrame && teslaWeapon != null)
             {
-                activeWeapon = teslaWeapon;
-                Debug.Log("[SHOOTER] Switched weapon to TeslaGun");
+                SetActiveWeapon(teslaWeapon, "TeslaGun");
+            }
+
+            if (Keyboard.current.digit5Key.wasPressedThisFrame && mrSulkoWeapon != null)
+            {
+                SetActiveWeapon(mrSulkoWeapon, "MrSulko");
             }
         }
 
@@ -108,6 +118,17 @@ namespace ShooterB
                     teslaWeapon = CreateWeaponFromPrefab<TeslaGun>(teslaWeaponPrefab, "TeslaGun", Constants.WeaponType.TeslaGun, teslaBulletPrefab, defaultTeslaIcon);
                 else
                     teslaWeapon = CreateWeaponInstance<TeslaGun>("TeslaGun", Constants.WeaponType.TeslaGun, teslaBulletPrefab, defaultTeslaIcon);
+            }
+
+            if (mrSulkoWeapon == null)
+            {
+                GameObject resolvedMrSulkoBulletPrefab = ResolveMrSulkoBulletPrefab();
+                Sprite resolvedMrSulkoIcon = defaultMrSulkoIcon != null ? defaultMrSulkoIcon : defaultRifleIcon;
+
+                if (mrSulkoWeaponPrefab != null)
+                    mrSulkoWeapon = CreateWeaponFromPrefab<MrSulko>(mrSulkoWeaponPrefab, "MrSulko", Constants.WeaponType.MrSulko, resolvedMrSulkoBulletPrefab, resolvedMrSulkoIcon);
+                else
+                    mrSulkoWeapon = CreateWeaponInstance<MrSulko>("MrSulko", Constants.WeaponType.MrSulko, resolvedMrSulkoBulletPrefab, resolvedMrSulkoIcon);
             }
 
             RegisterWeaponDeathSprites();
@@ -168,6 +189,11 @@ namespace ShooterB
                 {
                     activeWeapon.weaponIcon = defaultRifleIcon;
                 }
+
+                if (activeWeapon.weaponType == Constants.WeaponType.MrSulko && activeWeapon.weaponIcon == null && defaultMrSulkoIcon != null)
+                {
+                    activeWeapon.weaponIcon = defaultMrSulkoIcon;
+                }
             }
         }
 
@@ -184,6 +210,9 @@ namespace ShooterB
 
             if (teslaWeapon != null)
                 teslaWeapon.RegisterConfiguredDeathSprite();
+
+            if (mrSulkoWeapon != null)
+                mrSulkoWeapon.RegisterConfiguredDeathSprite();
         }
 
         private System.Collections.IEnumerator LogInitialization()
@@ -193,6 +222,46 @@ namespace ShooterB
         }
 
         public void Shoot(Vector2 targetPosition)
+        {
+            TryShoot(targetPosition, true);
+        }
+
+        public void BeginFire(Vector2 targetPosition)
+        {
+            isFireHeld = true;
+            heldTargetPosition = targetPosition;
+
+            if (activeWeapon == null)
+            {
+                Debug.LogWarning("[SHOOTER] No active weapon!");
+                return;
+            }
+
+            TryShoot(targetPosition, true);
+        }
+
+        public void UpdateFire(Vector2 targetPosition)
+        {
+            if (!isFireHeld)
+                return;
+
+            heldTargetPosition = targetPosition;
+        }
+
+        public void EndFire()
+        {
+            isFireHeld = false;
+        }
+
+        private void UpdateAutomaticFire()
+        {
+            if (!isFireHeld || activeWeapon == null || !activeWeapon.CanAutoFire)
+                return;
+
+            TryShoot(heldTargetPosition, false);
+        }
+
+        private void TryShoot(Vector2 targetPosition, bool logFailure)
         {
             if (activeWeapon == null)
             {
@@ -208,8 +277,36 @@ namespace ShooterB
             }
             else
             {
-                Debug.Log($"[SHOOTER] Cannot shoot - Ammo: {activeWeapon.CurrentBullets}, Refilling: {activeWeapon.IsRefilling}");
+                if (logFailure)
+                    Debug.Log($"[SHOOTER] Cannot shoot - Ammo: {activeWeapon.CurrentBullets}, Refilling: {activeWeapon.IsRefilling}");
             }
+        }
+
+        private void SetActiveWeapon(Weapon weapon, string weaponName)
+        {
+            activeWeapon = weapon;
+            Debug.Log($"[SHOOTER] Switched weapon to {weaponName}");
+        }
+
+        private GameObject ResolveMrSulkoBulletPrefab()
+        {
+            if (mrSulkoBulletPrefab != null)
+                return mrSulkoBulletPrefab;
+
+            if (cabirneBulletPrefab != null)
+            {
+                Debug.LogWarning("[SHOOTER] mrSulkoBulletPrefab is not assigned. Falling back to Cabirne bullet prefab.");
+                return cabirneBulletPrefab;
+            }
+
+            if (rifleBulletPrefab != null)
+            {
+                Debug.LogWarning("[SHOOTER] mrSulkoBulletPrefab is not assigned. Falling back to Rifle bullet prefab.");
+                return rifleBulletPrefab;
+            }
+
+            Debug.LogWarning("[SHOOTER] mrSulkoBulletPrefab is not assigned and no fallback bullet prefab is available.");
+            return null;
         }
 
         public int GetCurrentAmmo()
