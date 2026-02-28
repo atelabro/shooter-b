@@ -357,7 +357,10 @@ namespace ShooterB
             {
                 TextMeshProUGUI popupText = popup.GetComponent<TextMeshProUGUI>();
                 if (popupText != null)
+                {
                     popupText.text = comboLabel;
+                    popupText.color = GetComboColor(type);
+                }
             }
 
             PositionPopupAtWorldPoint(popup, parent, comboWorldPosition);
@@ -420,6 +423,21 @@ namespace ShooterB
                     return "QUADRA KILL";
                 default:
                     return "COMBO";
+            }
+        }
+
+        private static Color GetComboColor(Constants.MultiKillType type)
+        {
+            switch (type)
+            {
+                case Constants.MultiKillType.DoubleKill:
+                    return new Color(0.3820755f, 1f, 0.51313657f, 1f);
+                case Constants.MultiKillType.TripleKill:
+                    return new Color(1f, 0.302f, 0.302f, 1f);
+                case Constants.MultiKillType.QuadraKill:
+                    return new Color(0.705f, 0.424f, 1f, 1f);
+                default:
+                    return Color.white;
             }
         }
     }
