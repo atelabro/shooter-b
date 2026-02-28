@@ -11,12 +11,7 @@ namespace ShooterB
         public GameObject duckPrefab;
 
         [Header("Duck Type Frames")]
-        public Sprite[] type0PrivateFrames;
-        public Sprite[] type1RamboFrames;
-        public Sprite[] type2KimonoFrames;
-        public Sprite[] type3CheFrames;
-        public Sprite[] type4SoldierFrames;
-        public Sprite[] type5PhalarxFrames;
+        public DuckFrameLibrary duckFrameLibrary;
 
         [Header("Camera")]
         public Camera gameCamera;
@@ -41,6 +36,11 @@ namespace ShooterB
 
         private void Awake()
         {
+            if (duckFrameLibrary == null)
+            {
+                Debug.LogError("[CampaignDuckSpawner] duckFrameLibrary is not assigned.");
+            }
+
             InitializeDuckPool();
             CalculateSpawnBounds();
         }
@@ -223,20 +223,17 @@ namespace ShooterB
 
         private Sprite[] GetFramesForType(Constants.DuckType type)
         {
-            Sprite[] frames;
-            switch (type)
+            if (duckFrameLibrary == null)
             {
-                case Constants.DuckType.Type0: frames = type0PrivateFrames; break;
-                case Constants.DuckType.Type1: frames = type1RamboFrames; break;
-                case Constants.DuckType.Type2: frames = type2KimonoFrames; break;
-                case Constants.DuckType.Type3: frames = type3CheFrames; break;
-                case Constants.DuckType.Type4: frames = type4SoldierFrames; break;
-                case Constants.DuckType.Type5: frames = type5PhalarxFrames; break;
-                default: frames = type0PrivateFrames; break;
+                Debug.LogError("[CampaignDuckSpawner] duckFrameLibrary is not assigned.");
+                return null;
             }
 
+            Sprite[] frames = duckFrameLibrary.GetFrames(type);
             if (frames == null || frames.Length == 0)
-                return type0PrivateFrames;
+            {
+                Debug.LogError($"[CampaignDuckSpawner] No frames found for duck type {type} in duckFrameLibrary.");
+            }
 
             return frames;
         }

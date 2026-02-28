@@ -13,53 +13,53 @@ MonoBehaviour:
   m_Name: StageSpawnConfig_Skopje_4
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageSpawnConfig
   spawnSequence:
-  - duckType: 2
-    delay: 1
-  - duckType: 3
-    delay: 1.1
   - duckType: 5
+    delay: 1
+  - duckType: 6
+    delay: 1.1
+  - duckType: 2
     delay: 1.2
   - duckType: 5
     delay: 0.9
-  - duckType: 3
+  - duckType: 6
     delay: 1
-  - duckType: 5
+  - duckType: 3
     delay: 1.1
-  - duckType: 2
-    delay: 0.9
   - duckType: 5
+    delay: 0.9
+  - duckType: 6
     delay: 1
   - duckType: 3
     delay: 0.9
   - duckType: 5
     delay: 0.8
-  - duckType: 5
-    delay: 1
-  - duckType: 2
-    delay: 0.9
-  - duckType: 3
-    delay: 0.9
-  - duckType: 5
+  - duckType: 6
     delay: 1
   - duckType: 2
-    delay: 0.8
-  - duckType: 3
     delay: 0.9
   - duckType: 5
+    delay: 0.9
+  - duckType: 6
     delay: 1
   - duckType: 5
     delay: 0.8
-  - duckType: 3
+  - duckType: 6
     delay: 0.9
   - duckType: 5
     delay: 1
-  - duckType: 2
+  - duckType: 6
     delay: 0.8
   - duckType: 5
     delay: 0.9
-  - duckType: 3
-    delay: 0.8
+  - duckType: 6
+    delay: 1
   - duckType: 5
+    delay: 0.8
+  - duckType: 6
+    delay: 0.9
+  - duckType: 5
+    delay: 0.8
+  - duckType: 6
     delay: 0.9
   weightGoStraight: 0.3
   weightGoTop: 0.42

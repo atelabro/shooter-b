@@ -50,7 +50,8 @@ namespace ShooterB
             Type2,
             Type3,
             Type4,
-            Type5
+            MK_PHALARX,
+            MK_ARCHER
         }
 
         public enum MovementPattern
@@ -84,7 +85,8 @@ namespace ShooterB
             public const int TYPE_2 = 5;
             public const int TYPE_3 = 10;
             public const int TYPE_4 = 15;
-            public const int TYPE_5 = 1;
+            public const int MK_PHALARX = 1;
+            public const int MK_ARCHER = 1;
 
             public static int GetPoints(DuckType type)
             {
@@ -95,7 +97,8 @@ namespace ShooterB
                     case DuckType.Type2: return TYPE_2;
                     case DuckType.Type3: return TYPE_3;
                     case DuckType.Type4: return TYPE_4;
-                    case DuckType.Type5: return TYPE_5;
+                    case DuckType.MK_PHALARX: return MK_PHALARX;
+                    case DuckType.MK_ARCHER: return MK_ARCHER;
                     default: return TYPE_0;
                 }
             }
@@ -103,12 +106,13 @@ namespace ShooterB
 
         public static class DuckSpawnProbability
         {
-            public const float TYPE_0 = 0.68f;
+            public const float TYPE_0 = 0.66f;
             public const float TYPE_1 = 0.13f;
             public const float TYPE_2 = 0.07f;
             public const float TYPE_3 = 0.06f;
             public const float TYPE_4 = 0.04f;
-            public const float TYPE_5 = 0.02f;
+            public const float MK_PHALARX = 0.02f;
+            public const float MK_ARCHER = 0.02f;
 
             public const float SINGLE_DUCK = 0.60f;
             public const float DOUBLE_DUCK = 0.20f;

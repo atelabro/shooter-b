@@ -10,12 +10,7 @@ namespace ShooterB
         public GameObject duckPrefab;
 
         [Header("Duck Type Frames")]
-        public Sprite[] type0PrivateFrames;
-        public Sprite[] type1RamboFrames;
-        public Sprite[] type2KimonoFrames;
-        public Sprite[] type3CheFrames;
-        public Sprite[] type4SoldierFrames;
-        public Sprite[] type5PhalarxFrames;
+        public DuckFrameLibrary duckFrameLibrary;
 
         [Header("Camera")]
         public Camera gameCamera;
@@ -56,84 +51,28 @@ namespace ShooterB
 
         private void ValidateDuckTypeFrames()
         {
-            ValidateTypeFrames(type0PrivateFrames, Constants.DuckType.Type0, nameof(type0PrivateFrames));
-            ValidateTypeFrames(type1RamboFrames, Constants.DuckType.Type1, nameof(type1RamboFrames));
-            ValidateTypeFrames(type2KimonoFrames, Constants.DuckType.Type2, nameof(type2KimonoFrames));
-            ValidateTypeFrames(type3CheFrames, Constants.DuckType.Type3, nameof(type3CheFrames));
-            ValidateTypeFrames(type4SoldierFrames, Constants.DuckType.Type4, nameof(type4SoldierFrames));
-            ValidateTypeFrames(type5PhalarxFrames, Constants.DuckType.Type5, nameof(type5PhalarxFrames));
+            if (duckFrameLibrary == null)
+            {
+                Debug.LogError("[DUCKSPAWNER] duckFrameLibrary is not assigned.");
+                return;
+            }
+
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.Type0), Constants.DuckType.Type0, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.Type1), Constants.DuckType.Type1, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.Type2), Constants.DuckType.Type2, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.Type3), Constants.DuckType.Type3, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.Type4), Constants.DuckType.Type4, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.MK_PHALARX), Constants.DuckType.MK_PHALARX, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.MK_ARCHER), Constants.DuckType.MK_ARCHER, nameof(duckFrameLibrary));
         }
 
         private void ValidateTypeFrames(Sprite[] frames, Constants.DuckType type, string fieldName)
         {
             if (frames == null || frames.Length == 0)
             {
-                Debug.LogWarning($"[DUCKSPAWNER] No frames set for {type} ({fieldName}). Falling back to Type0 frames.");
+                Debug.LogError($"[DUCKSPAWNER] No frames set for {type} ({fieldName}).");
             }
         }
-
-        [ContextMenu("Auto-Populate Duck Frames")]
-        private void AutoPopulateDuckFrames()
-        {
-#if UNITY_EDITOR
-            type0PrivateFrames = LoadFramesFromSheet("Assets/Sprites/smallAnimatedPrivate.png", "smallAnimatedPrivate_");
-            type1RamboFrames = LoadFramesFromSheet("Assets/Sprites/smallAnimatedRambo.png", "smallAnimatedRambo_");
-            type2KimonoFrames = LoadFramesFromSheet("Assets/Sprites/smallAnimatedKimono.png", "smallAnimatedKimono_");
-            type3CheFrames = LoadFramesFromSheet("Assets/Sprites/smallAnimatedChe.png", "smallAnimatedChe_");
-            type4SoldierFrames = LoadFramesFromSheet("Assets/Sprites/smallAnimatedSoldier.png", "smallAnimatedSoldier_");
-            type5PhalarxFrames = LoadFramesFromSheet("Assets/Sprites/PhalarxMacedonianDuck/mkd01.png", "mkd01_");
-
-            UnityEditor.EditorUtility.SetDirty(this);
-
-            Debug.Log(
-                $"[DUCKSPAWNER] Auto-populated duck frames: " +
-                $"Type0={type0PrivateFrames.Length}, " +
-                $"Type1={type1RamboFrames.Length}, " +
-                $"Type2={type2KimonoFrames.Length}, " +
-                $"Type3={type3CheFrames.Length}, " +
-                $"Type4={type4SoldierFrames.Length}, " +
-                $"Type5={type5PhalarxFrames.Length}"
-            );
-#else
-            Debug.LogWarning("[DUCKSPAWNER] Auto-Populate Duck Frames is only available in Unity Editor.");
-#endif
-        }
-
-#if UNITY_EDITOR
-        private static Sprite[] LoadFramesFromSheet(string assetPath, string spriteNamePrefix)
-        {
-            UnityEngine.Object[] assets = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(assetPath);
-            List<Sprite> frames = new List<Sprite>();
-
-            foreach (UnityEngine.Object asset in assets)
-            {
-                if (asset is Sprite sprite && sprite.name.StartsWith(spriteNamePrefix, System.StringComparison.Ordinal))
-                {
-                    frames.Add(sprite);
-                }
-            }
-
-            frames.Sort((a, b) => ExtractFrameIndex(a.name).CompareTo(ExtractFrameIndex(b.name)));
-            return frames.ToArray();
-        }
-
-        private static int ExtractFrameIndex(string spriteName)
-        {
-            int underscoreIndex = spriteName.LastIndexOf('_');
-            if (underscoreIndex < 0 || underscoreIndex >= spriteName.Length - 1)
-            {
-                return int.MaxValue;
-            }
-
-            string suffix = spriteName.Substring(underscoreIndex + 1);
-            if (int.TryParse(suffix, out int index))
-            {
-                return index;
-            }
-
-            return int.MaxValue;
-        }
-#endif
 
         private void Start()
         {
@@ -265,38 +204,19 @@ namespace ShooterB
 
         private Sprite[] GetFramesForType(Constants.DuckType type)
         {
-            Sprite[] selectedFrames;
-            switch (type)
+            if (duckFrameLibrary == null)
             {
-                case Constants.DuckType.Type0:
-                    selectedFrames = type0PrivateFrames;
-                    break;
-                case Constants.DuckType.Type1:
-                    selectedFrames = type1RamboFrames;
-                    break;
-                case Constants.DuckType.Type2:
-                    selectedFrames = type2KimonoFrames;
-                    break;
-                case Constants.DuckType.Type3:
-                    selectedFrames = type3CheFrames;
-                    break;
-                case Constants.DuckType.Type4:
-                    selectedFrames = type4SoldierFrames;
-                    break;
-                case Constants.DuckType.Type5:
-                    selectedFrames = type5PhalarxFrames;
-                    break;
-                default:
-                    selectedFrames = type0PrivateFrames;
-                    break;
+                Debug.LogError("[DUCKSPAWNER] duckFrameLibrary is not assigned.");
+                return null;
             }
 
-            if (selectedFrames == null || selectedFrames.Length == 0)
+            Sprite[] frames = duckFrameLibrary.GetFrames(type);
+            if (frames == null || frames.Length == 0)
             {
-                return type0PrivateFrames;
+                Debug.LogError($"[DUCKSPAWNER] No frames found for duck type {type} in duckFrameLibrary.");
             }
 
-            return selectedFrames;
+            return frames;
         }
 
         private GameObject GetDuckFromPool()
@@ -346,13 +266,15 @@ namespace ShooterB
             float t2 = t1 + Constants.DuckSpawnProbability.TYPE_2;
             float t3 = t2 + Constants.DuckSpawnProbability.TYPE_3;
             float t4 = t3 + Constants.DuckSpawnProbability.TYPE_4;
+            float t5 = t4 + Constants.DuckSpawnProbability.MK_PHALARX;
 
             if (r < t0) return Constants.DuckType.Type0;
             if (r < t1) return Constants.DuckType.Type1;
             if (r < t2) return Constants.DuckType.Type2;
             if (r < t3) return Constants.DuckType.Type3;
             if (r < t4) return Constants.DuckType.Type4;
-            return Constants.DuckType.Type5;
+            if (r < t5) return Constants.DuckType.MK_PHALARX;
+            return Constants.DuckType.MK_ARCHER;
         }
 
         private void ResetSpawnDistributionCounters()
@@ -407,7 +329,8 @@ namespace ShooterB
                 $"Type2: {GetActualPercent(Constants.DuckType.Type2):F1}% (exp {Constants.DuckSpawnProbability.TYPE_2 * 100f:F1}%) | " +
                 $"Type3: {GetActualPercent(Constants.DuckType.Type3):F1}% (exp {Constants.DuckSpawnProbability.TYPE_3 * 100f:F1}%) | " +
                 $"Type4: {GetActualPercent(Constants.DuckType.Type4):F1}% (exp {Constants.DuckSpawnProbability.TYPE_4 * 100f:F1}%) | " +
-                $"Type5: {GetActualPercent(Constants.DuckType.Type5):F1}% (exp {Constants.DuckSpawnProbability.TYPE_5 * 100f:F1}%)"
+                $"MK_PHALARX: {GetActualPercent(Constants.DuckType.MK_PHALARX):F1}% (exp {Constants.DuckSpawnProbability.MK_PHALARX * 100f:F1}%) | " +
+                $"MK_ARCHER: {GetActualPercent(Constants.DuckType.MK_ARCHER):F1}% (exp {Constants.DuckSpawnProbability.MK_ARCHER * 100f:F1}%)"
             );
         }
 
