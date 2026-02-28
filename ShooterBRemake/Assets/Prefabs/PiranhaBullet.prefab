@@ -147,7 +147,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 4579467820477603570, guid: 29240804669fb4b5da879f336167765f, type: 3}
+  m_Sprite: {fileID: -3807317259276297779, guid: c3106131753ff486da81d42d703a1eb0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -173,7 +173,6 @@ MonoBehaviour:
   secondRadius: 0.08
   effectiveRadius: 0.16
   baseSpeed: 16.67
+  visualScaleMultiplier: 1
   variantSprites:
-  - {fileID: 4579467820477603570, guid: 29240804669fb4b5da879f336167765f, type: 3}
-  - {fileID: -7042727771204818173, guid: 29240804669fb4b5da879f336167765f, type: 3}
-  - {fileID: -1069205813595596817, guid: 29240804669fb4b5da879f336167765f, type: 3}
+  - {fileID: -3807317259276297779, guid: c3106131753ff486da81d42d703a1eb0, type: 3}

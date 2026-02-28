@@ -29,10 +29,24 @@ namespace ShooterB
         public float ammoIconSpacing = 10f;
         public float ammoContainerWidth = 900f;
 
+        [Header("Reload Feedback")]
+        public Image reloadGlowImage;
+        public TextMeshProUGUI reloadingText;
+        [Range(0f, 1f)] public float reloadGlowMinAlpha = 0.2f;
+        [Range(0f, 1f)] public float reloadGlowMaxAlpha = 0.75f;
+        public float reloadGlowPulseSpeed = 8f;
+        public float reloadTextFlashSpeed = 12f;
+
+        [Header("Combo Feedback")]
+        public GameObject comboPopupPrefab;
+        public Transform comboPopupContainer;
+        public float comboPopupLifetime = 1f;
+
         private readonly List<Image> ammoBulletIcons = new List<Image>();
         private int lastKnownMaxAmmo = -1;
         private Constants.WeaponType? lastWeaponType = null;
         private Sprite lastAmmoSprite = null;
+        private bool hasLoggedMissingReloadReferences = false;
 
         private void Start()
         {
@@ -55,6 +69,8 @@ namespace ShooterB
             if (pauseModalController == null)
                 pauseModalController = FindObjectOfType<PauseModalController>(true);
 
+            InitializeReloadFeedback();
+
             BuildAmmoIcons();
             SubscribeToEvents();
             UpdateAllUI();
@@ -70,6 +86,7 @@ namespace ShooterB
             GameManager.Instance.OnScoreChanged += UpdateScore;
             GameManager.Instance.OnMultiplierChanged += UpdateMultiplier;
             GameManager.Instance.OnLivesChanged += UpdateLives;
+            GameManager.Instance.OnComboKill += HandleComboKill;
         }
 
         private void UnsubscribeFromEvents()
@@ -79,6 +96,7 @@ namespace ShooterB
                 GameManager.Instance.OnScoreChanged -= UpdateScore;
                 GameManager.Instance.OnMultiplierChanged -= UpdateMultiplier;
                 GameManager.Instance.OnLivesChanged -= UpdateLives;
+                GameManager.Instance.OnComboKill -= HandleComboKill;
             }
         }
 
@@ -89,12 +107,14 @@ namespace ShooterB
             UpdateLives(GameManager.Instance.Lives);
             UpdateAmmoDisplay();
             UpdateSelectedWeaponIcon();
+            UpdateReloadFeedback();
         }
 
         private void Update()
         {
             UpdateAmmoDisplay();
             UpdateSelectedWeaponIcon();
+            UpdateReloadFeedback();
         }
 
         private void UpdateScore(long score)
@@ -109,6 +129,7 @@ namespace ShooterB
             {
                 multiplierText.text = $"x{multiplier}";
                 multiplierText.color = Constants.MultiplierColors.GetColor(multiplier);
+                multiplierText.gameObject.SetActive(false);
             }
         }
 
@@ -203,6 +224,64 @@ namespace ShooterB
             selectedWeaponIconImage.enabled = true;
         }
 
+        private void InitializeReloadFeedback()
+        {
+            if (reloadGlowImage != null)
+                reloadGlowImage.gameObject.SetActive(false);
+
+            if (reloadingText != null)
+            {
+                reloadingText.text = "reloading";
+                reloadingText.gameObject.SetActive(false);
+            }
+
+            WarnMissingReloadReferencesIfNeeded();
+        }
+
+        private void UpdateReloadFeedback()
+        {
+            if (shooterController == null)
+                return;
+
+            WarnMissingReloadReferencesIfNeeded();
+
+            bool isRefilling = shooterController.IsRefilling();
+
+            if (reloadGlowImage != null)
+            {
+                reloadGlowImage.gameObject.SetActive(isRefilling);
+                if (isRefilling)
+                {
+                    float pulse = 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * reloadGlowPulseSpeed);
+                    float alpha = Mathf.Lerp(reloadGlowMinAlpha, reloadGlowMaxAlpha, pulse);
+                    reloadGlowImage.color = new Color(1f, 0f, 0f, alpha);
+                }
+            }
+
+            if (reloadingText != null)
+            {
+                reloadingText.gameObject.SetActive(isRefilling);
+                if (isRefilling)
+                {
+                    float flash = 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * reloadTextFlashSpeed);
+                    float alpha = flash > 0.4f ? 1f : 0.15f;
+                    reloadingText.color = new Color(1f, 0f, 0f, alpha);
+                }
+            }
+        }
+
+        private void WarnMissingReloadReferencesIfNeeded()
+        {
+            if (hasLoggedMissingReloadReferences)
+                return;
+
+            if (reloadGlowImage != null && reloadingText != null)
+                return;
+
+            Debug.LogWarning("[CampaignHUD] Reload feedback references are not fully assigned. Assign both reloadGlowImage and reloadingText in the inspector.");
+            hasLoggedMissingReloadReferences = true;
+        }
+
         private Image CreateAmmoIcon(Sprite sprite)
         {
             Image icon;
@@ -259,6 +338,35 @@ namespace ShooterB
                 pauseModalController.Show();
             else
                 Debug.LogWarning("[CampaignHUD] Pause button pressed but PauseModalController is missing.");
+        }
+
+        private void HandleComboKill(Constants.MultiKillType type, int bonusPoints)
+        {
+            if (comboPopupPrefab == null)
+                return;
+
+            Transform parent = comboPopupContainer != null ? comboPopupContainer : transform;
+            GameObject popup = Instantiate(comboPopupPrefab, parent);
+            TextMeshProUGUI popupText = popup.GetComponent<TextMeshProUGUI>();
+            if (popupText != null)
+                popupText.text = GetComboLabel(type);
+
+            Destroy(popup, Mathf.Max(0.1f, comboPopupLifetime));
+        }
+
+        private static string GetComboLabel(Constants.MultiKillType type)
+        {
+            switch (type)
+            {
+                case Constants.MultiKillType.DoubleKill:
+                    return "DOUBLE KILL";
+                case Constants.MultiKillType.TripleKill:
+                    return "TRIPLE KILL";
+                case Constants.MultiKillType.QuadraKill:
+                    return "QUADRA KILL";
+                default:
+                    return "COMBO";
+            }
         }
     }
 }

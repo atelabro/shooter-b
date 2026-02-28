@@ -53,7 +53,8 @@ namespace ShooterB
             bangTriggered = false;
             isActive = true;
 
-            transform.localScale = Vector3.one * startRadius * 2f;
+            float visualScale = Mathf.Max(0.01f, visualScaleMultiplier);
+            transform.localScale = Vector3.one * startRadius * 2f * visualScale;
 
             // Rotate sprite to face travel direction.
             // The sprite points from bottom-right to top-left (135 degrees),
@@ -142,18 +143,41 @@ namespace ShooterB
         protected virtual void CheckCollisions()
         {
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, effectiveRadius);
+            HashSet<Duck> uniqueDucksHit = new HashSet<Duck>();
 
             foreach (Collider2D hit in hits)
             {
                 Duck duck = hit.GetComponent<Duck>();
                 if (duck != null)
                 {
+                    uniqueDucksHit.Add(duck);
                     duck.OnHit(firedByWeapon);
                     Debug.Log($"[BULLET] Hit duck at {hit.transform.position}");
                 }
             }
 
+            TriggerComboIfNeeded(uniqueDucksHit.Count);
+
             Dispose();
+        }
+
+        private void TriggerComboIfNeeded(int killsFromSingleImpact)
+        {
+            if (killsFromSingleImpact < 2 || GameManager.Instance == null)
+                return;
+
+            if (killsFromSingleImpact == 2)
+            {
+                GameManager.Instance.AddComboPoints(Constants.MultiKillType.DoubleKill);
+            }
+            else if (killsFromSingleImpact == 3)
+            {
+                GameManager.Instance.AddComboPoints(Constants.MultiKillType.TripleKill);
+            }
+            else
+            {
+                GameManager.Instance.AddComboPoints(Constants.MultiKillType.QuadraKill);
+            }
         }
 
         protected virtual void Dispose()

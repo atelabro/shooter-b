@@ -4,15 +4,19 @@ namespace ShooterB
 {
     public class PiranhaBullet : Bullet
     {
+        private const float LEGACY_PIRANHA_BULLET_HEIGHT_WORLD = 0.28f; // 28px at 100 PPU
+        private const float LEGACY_PIRANHA_VISUAL_SCALE = 1.9f;
+
         [Header("Piranha Variants")]
         public Sprite[] variantSprites;
 
         protected override void Awake()
         {
-            startRadius = 1.6f;
-            secondRadius = 1.0f;
-            effectiveRadius = 0.9f;
+            startRadius = 1.2f;
+            secondRadius = 0.6f;
+            effectiveRadius = 1.1f;
             baseSpeed = 16.67f;
+            visualScaleMultiplier = ComputeNormalizedPiranhaVisualScale();
 
             base.Awake();
         }
@@ -21,6 +25,10 @@ namespace ShooterB
         {
             ApplyRandomVariantSprite();
             base.Initialize(target, weaponType);
+
+            // Piranha v2 sprite is oriented bottom-to-top, same alignment rule as Tesla.
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
         }
 
         private void ApplyRandomVariantSprite()
@@ -32,6 +40,20 @@ namespace ShooterB
             Sprite selected = variantSprites[index];
             if (selected != null)
                 spriteRenderer.sprite = selected;
+        }
+
+        private float ComputeNormalizedPiranhaVisualScale()
+        {
+            SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+            Sprite sprite = renderer != null ? renderer.sprite : null;
+            if (sprite == null || sprite.pixelsPerUnit <= 0f)
+                return LEGACY_PIRANHA_VISUAL_SCALE;
+
+            float spriteHeightAtScaleOne = sprite.rect.height / sprite.pixelsPerUnit;
+            if (spriteHeightAtScaleOne <= 0f)
+                return LEGACY_PIRANHA_VISUAL_SCALE;
+
+            return LEGACY_PIRANHA_VISUAL_SCALE * (LEGACY_PIRANHA_BULLET_HEIGHT_WORLD / spriteHeightAtScaleOne);
         }
     }
 }
