@@ -382,9 +382,18 @@ namespace ShooterB
 
             Transform parent = comboPopupContainer != null ? comboPopupContainer : transform;
             GameObject popup = Instantiate(comboPopupPrefab, parent);
-            TextMeshProUGUI popupText = popup.GetComponent<TextMeshProUGUI>();
-            if (popupText != null)
-                popupText.text = GetComboLabel(type);
+            string comboLabel = GetComboLabel(type);
+            ComboPopupController popupController = popup.GetComponent<ComboPopupController>();
+            if (popupController != null)
+            {
+                popupController.Configure(type, comboLabel);
+            }
+            else
+            {
+                TextMeshProUGUI popupText = popup.GetComponent<TextMeshProUGUI>();
+                if (popupText != null)
+                    popupText.text = comboLabel;
+            }
 
             PositionPopupAtWorldPoint(popup, parent, comboWorldPosition);
 

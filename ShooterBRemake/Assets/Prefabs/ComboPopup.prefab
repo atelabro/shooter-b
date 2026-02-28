@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5210810011909955845}
   - component: {fileID: 6286624146257269730}
+  - component: {fileID: 2718891187221145631}
   - component: {fileID: 3328973722970560060}
   m_Layer: 5
   m_Name: ComboPopup
@@ -45,6 +46,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5400745645520572176}
   m_CullTransparentMesh: 1
+--- !u!114 &2718891187221145631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5400745645520572176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f1c1ff9d9f04a31a3da1bff248f6fb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.ComboPopupController
+  popupText: {fileID: 3328973722970560060}
+  doubleKillColor: {r: 0.3820755, g: 1, b: 0.51313657, a: 1}
+  tripleKillColor: {r: 1, g: 0.302, b: 0.302, a: 1}
+  quadraKillColor: {r: 0.705, g: 0.424, b: 1, a: 1}
 --- !u!114 &3328973722970560060
 MonoBehaviour:
   m_ObjectHideFlags: 0
