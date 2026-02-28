@@ -9,7 +9,7 @@ namespace ShooterB
             weaponName = "MrSulko";
             weaponType = Constants.WeaponType.MrSulko;
             fireMode = Constants.WeaponFireMode.HoldAutomatic;
-            maxBullets = 30;
+            maxBullets = 14;
             fireDelay = 0.1f;
             refillDelay = 0.72f;
 

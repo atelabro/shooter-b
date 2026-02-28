@@ -29,6 +29,7 @@ namespace ShooterB
         public float ammoIconSize = 56f;
         public float ammoIconSpacing = 10f;
         public float ammoContainerWidth = 900f;
+        public int maxDisplayedAmmoIcons = 10;
 
         [Header("Reload Feedback")]
         public Image reloadGlowImage;
@@ -138,13 +139,14 @@ namespace ShooterB
 
             int maxAmmo = shooterController.GetMaxAmmo();
             Sprite ammoSprite = shooterController.GetActiveWeaponAmmoSprite();
+            int displayIconCount = GetDisplayAmmoIconCount(maxAmmo);
             EnsureAmmoContainerWidth();
 
             lastKnownMaxAmmo = maxAmmo;
             lastWeaponType = shooterController.GetActiveWeaponType();
             lastAmmoSprite = ammoSprite;
 
-            for (int i = 0; i < maxAmmo; i++)
+            for (int i = 0; i < displayIconCount; i++)
             {
                 Image icon = CreateAmmoIcon(ammoSprite);
                 ammoBulletIcons.Add(icon);
@@ -167,7 +169,7 @@ namespace ShooterB
                 return;
 
             int currentAmmo = shooterController.GetCurrentAmmo();
-            int spentAmmo = Mathf.Max(0, maxAmmo - currentAmmo);
+            int spentAmmoDisplay = GetSpentAmmoDisplayCount(maxAmmo, currentAmmo);
 
             for (int i = 0; i < ammoBulletIcons.Count; i++)
             {
@@ -176,9 +178,26 @@ namespace ShooterB
                     continue;
 
                 Color c = icon.color;
-                c.a = i >= spentAmmo ? 1f : 0f;
+                c.a = i >= spentAmmoDisplay ? 1f : 0f;
                 icon.color = c;
             }
+        }
+
+        private int GetDisplayAmmoIconCount(int maxAmmo)
+        {
+            int iconLimit = Mathf.Max(1, maxDisplayedAmmoIcons);
+            return Mathf.Min(maxAmmo, iconLimit);
+        }
+
+        private int GetSpentAmmoDisplayCount(int maxAmmo, int currentAmmo)
+        {
+            int spentAmmo = Mathf.Max(0, maxAmmo - currentAmmo);
+            int displayCount = GetDisplayAmmoIconCount(maxAmmo);
+            if (displayCount <= 0 || maxAmmo <= displayCount)
+                return spentAmmo;
+
+            float chunkSize = (float)maxAmmo / displayCount;
+            return Mathf.Clamp(Mathf.FloorToInt(spentAmmo / chunkSize), 0, displayCount);
         }
 
         private Image CreateAmmoIcon(Sprite sprite)
