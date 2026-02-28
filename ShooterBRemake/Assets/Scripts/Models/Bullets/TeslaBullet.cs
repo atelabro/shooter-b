@@ -126,7 +126,13 @@ namespace ShooterB
 
         private Duck FindNearestUnhitDuck(Vector2 origin, float searchRadius, HashSet<int> alreadyHitDuckIds)
         {
-            Camera gameplayCamera = Camera.main;
+            Camera gameplayCamera = GetGameplayCamera();
+            if (gameplayCamera == null)
+            {
+                // Fail safe: without a camera we cannot validate viewport visibility.
+                return null;
+            }
+
             Collider2D[] nearby = Physics2D.OverlapCircleAll(origin, searchRadius);
             Duck closest = null;
             float closestSqrDistance = float.MaxValue;
@@ -148,6 +154,22 @@ namespace ShooterB
             }
 
             return closest;
+        }
+
+        private Camera GetGameplayCamera()
+        {
+            Camera cam = Camera.main;
+            if (cam != null && cam.isActiveAndEnabled)
+                return cam;
+
+            Camera[] allCameras = FindObjectsOfType<Camera>();
+            foreach (Camera candidate in allCameras)
+            {
+                if (candidate != null && candidate.isActiveAndEnabled)
+                    return candidate;
+            }
+
+            return null;
         }
 
         private static bool IsDuckVisibleOnScreen(Camera cameraRef, Vector3 worldPosition)
