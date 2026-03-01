@@ -401,6 +401,7 @@ GameObject:
   m_Component:
   - component: {fileID: 688693834}
   - component: {fileID: 688693833}
+  - component: {fileID: 9223372036854775809}
   m_Layer: 0
   m_Name: ArmoryController
   m_TagString: Untagged
@@ -1284,6 +1285,38 @@ Transform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
+--- !u!114 &9223372036854775808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590253292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28c11a75baea74dbd8410744a27073e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRect: {fileID: 1590253296}
+  applyLeft: 1
+  applyRight: 1
+  applyTop: 1
+  applyBottom: 1
+  extraPaddingPx: {x: 0, y: 0}
+--- !u!114 &9223372036854775809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688693832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da43b1c63a6ad4360a3585be381e1950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allowLandscapeLeft: 1
+  allowLandscapeRight: 1
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:

@@ -24,6 +24,12 @@ namespace ShooterB
             Screen.autorotateToPortraitUpsideDown = false;
             Screen.autorotateToLandscapeLeft = allowLandscapeLeft;
             Screen.autorotateToLandscapeRight = allowLandscapeRight;
+
+            if (allowLandscapeLeft)
+                Screen.orientation = ScreenOrientation.LandscapeLeft;
+            else if (allowLandscapeRight)
+                Screen.orientation = ScreenOrientation.LandscapeRight;
+
             Screen.orientation = ScreenOrientation.AutoRotation;
         }
     }

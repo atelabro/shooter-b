@@ -24,4 +24,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4a46d11b33df4cf0afe58925be528cd1, type: 2}
   - {fileID: 11400000, guid: b9b928310f364d599487a9941cb3afd6, type: 2}
   - {fileID: 11400000, guid: 9ea29cd8ec284a258616a406f1811cac, type: 2}
-  starsRequiredToUnlock: 9
+  starsRequiredToUnlock: 8

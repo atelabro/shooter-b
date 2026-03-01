@@ -166,6 +166,17 @@ namespace ShooterB
             if (city.starsRequiredToUnlock == 0)
                 return true;
 
+            if (allCities != null)
+            {
+                int cityIndex = System.Array.IndexOf(allCities, city);
+                if (cityIndex > 0)
+                {
+                    CityConfig previousCity = allCities[cityIndex - 1];
+                    if (!IsCityCompleted(previousCity))
+                        return false;
+                }
+            }
+
             int totalStars = 0;
             foreach (CityConfig c in allCities)
             {
@@ -176,6 +187,20 @@ namespace ShooterB
             }
 
             return totalStars >= city.starsRequiredToUnlock;
+        }
+
+        private bool IsCityCompleted(CityConfig city)
+        {
+            if (city == null || city.stages == null || city.stages.Length == 0)
+                return false;
+
+            foreach (StageConfig stage in city.stages)
+            {
+                if (stage == null || GetStarsForStage(stage.stageIndex) <= 0)
+                    return false;
+            }
+
+            return true;
         }
 
         private string BuildKey(int stageIndex)
