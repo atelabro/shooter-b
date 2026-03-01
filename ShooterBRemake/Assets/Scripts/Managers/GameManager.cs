@@ -287,6 +287,7 @@ namespace ShooterB
                 case Constants.WeaponType.Cabirne:
                 case Constants.WeaponType.Beretta:
                 case Constants.WeaponType.MrSulko:
+                case Constants.WeaponType.LaserGun:
                 case Constants.WeaponType.TeslaGun:
                 case Constants.WeaponType.PiranhaGun:
                     return true;

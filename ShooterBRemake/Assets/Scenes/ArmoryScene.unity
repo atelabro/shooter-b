@@ -432,6 +432,7 @@ MonoBehaviour:
   teslaWeaponPrefab: {fileID: 883359885173164188, guid: f617f80965604f39b7ece7f232d19381, type: 3}
   mrSulkoWeaponPrefab: {fileID: 883359885173164188, guid: 4481cc70f80948b9bfc26b5bb7590792, type: 3}
   berettaWeaponPrefab: {fileID: 883359885173164188, guid: 9f4f06f927eb47f4ab15f146d83cba29, type: 3}
+  laserWeaponPrefab: {fileID: 883359885173164188, guid: f151a6b7e5ab4e05830de0c9aa519d81, type: 3}
   selectedButtonColor: {r: 0.2, g: 0.8, b: 0.2, a: 1}
   normalButtonColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &688693834

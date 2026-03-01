@@ -13,6 +13,7 @@ namespace ShooterB
         private TeslaGun teslaWeapon;
         private MrSulko mrSulkoWeapon;
         private Beretta berettaWeapon;
+        private LaserGun laserWeapon;
 
         [Header("Prefabs")]
         public GameObject rifleBulletPrefab;
@@ -21,11 +22,13 @@ namespace ShooterB
         public GameObject teslaBulletPrefab;
         public GameObject mrSulkoBulletPrefab;
         public GameObject berettaBulletPrefab;
+        public GameObject laserBulletPrefab;
         public Sprite defaultRifleIcon;
         public Sprite defaultPiranhaIcon;
         public Sprite defaultTeslaIcon;
         public Sprite defaultMrSulkoIcon;
         public Sprite defaultBerettaIcon;
+        public Sprite defaultLaserIcon;
 
         [Header("Weapon Prefabs")]
         public Weapon rifleWeaponPrefab;
@@ -34,6 +37,7 @@ namespace ShooterB
         public Weapon teslaWeaponPrefab;
         public Weapon mrSulkoWeaponPrefab;
         public Weapon berettaWeaponPrefab;
+        public Weapon laserWeaponPrefab;
 
         private bool isFireHeld;
         private Vector2 heldTargetPosition;
@@ -91,6 +95,11 @@ namespace ShooterB
             {
                 SetActiveWeaponByType(Constants.WeaponType.Beretta);
             }
+
+            if (Keyboard.current.digit7Key.wasPressedThisFrame || Keyboard.current.numpad7Key.wasPressedThisFrame)
+            {
+                SetActiveWeaponByType(Constants.WeaponType.LaserGun);
+            }
         }
 
         private void EnsureWeaponsCreated()
@@ -146,6 +155,17 @@ namespace ShooterB
                     berettaWeapon = CreateWeaponFromPrefab<Beretta>(berettaWeaponPrefab, "Beretta", Constants.WeaponType.Beretta, berettaBulletPrefab, resolvedBerettaIcon);
                 else
                     berettaWeapon = CreateWeaponInstance<Beretta>("Beretta", Constants.WeaponType.Beretta, berettaBulletPrefab, resolvedBerettaIcon);
+            }
+
+            if (laserWeapon == null)
+            {
+                GameObject resolvedLaserBulletPrefab = ResolveLaserBulletPrefab();
+                Sprite resolvedLaserIcon = defaultLaserIcon != null ? defaultLaserIcon : defaultRifleIcon;
+
+                if (laserWeaponPrefab != null)
+                    laserWeapon = CreateWeaponFromPrefab<LaserGun>(laserWeaponPrefab, "LaserGun", Constants.WeaponType.LaserGun, resolvedLaserBulletPrefab, resolvedLaserIcon);
+                else
+                    laserWeapon = CreateWeaponInstance<LaserGun>("LaserGun", Constants.WeaponType.LaserGun, resolvedLaserBulletPrefab, resolvedLaserIcon);
             }
 
             RegisterWeaponDeathSprites();
@@ -216,6 +236,11 @@ namespace ShooterB
                 {
                     activeWeapon.weaponIcon = defaultBerettaIcon;
                 }
+
+                if (activeWeapon.weaponType == Constants.WeaponType.LaserGun && activeWeapon.weaponIcon == null && defaultLaserIcon != null)
+                {
+                    activeWeapon.weaponIcon = defaultLaserIcon;
+                }
             }
         }
 
@@ -238,6 +263,9 @@ namespace ShooterB
 
             if (berettaWeapon != null)
                 berettaWeapon.RegisterConfiguredDeathSprite();
+
+            if (laserWeapon != null)
+                laserWeapon.RegisterConfiguredDeathSprite();
         }
 
         private System.Collections.IEnumerator LogInitialization()
@@ -342,6 +370,8 @@ namespace ShooterB
                     return mrSulkoWeapon;
                 case Constants.WeaponType.Beretta:
                     return berettaWeapon;
+                case Constants.WeaponType.LaserGun:
+                    return laserWeapon;
                 default:
                     return null;
             }
@@ -378,6 +408,27 @@ namespace ShooterB
             }
 
             Debug.LogWarning("[SHOOTER] mrSulkoBulletPrefab is not assigned and no fallback bullet prefab is available.");
+            return null;
+        }
+
+        private GameObject ResolveLaserBulletPrefab()
+        {
+            if (laserBulletPrefab != null)
+                return laserBulletPrefab;
+
+            if (teslaBulletPrefab != null)
+            {
+                Debug.LogWarning("[SHOOTER] laserBulletPrefab is not assigned. Falling back to Tesla bullet prefab.");
+                return teslaBulletPrefab;
+            }
+
+            if (rifleBulletPrefab != null)
+            {
+                Debug.LogWarning("[SHOOTER] laserBulletPrefab is not assigned. Falling back to Rifle bullet prefab.");
+                return rifleBulletPrefab;
+            }
+
+            Debug.LogWarning("[SHOOTER] laserBulletPrefab is not assigned and no fallback bullet prefab is available.");
             return null;
         }
 

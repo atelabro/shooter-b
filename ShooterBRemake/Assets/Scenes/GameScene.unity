@@ -1773,17 +1773,20 @@ MonoBehaviour:
   teslaBulletPrefab: {fileID: 4120011112331769632, guid: c7a12d32f01f48218de1f4cb8f01ab63, type: 3}
   mrSulkoBulletPrefab: {fileID: 4120011112331769632, guid: bedcf7f5e688473a9c0a3a7f6eb59265, type: 3}
   berettaBulletPrefab: {fileID: 4120011112331769632, guid: 2e61d410ed824f008dfe2050a20b14c3, type: 3}
+  laserBulletPrefab: {fileID: 4120011112331769632, guid: b1923d51ef754f46bdcdece3ff2d5e39, type: 3}
   defaultRifleIcon: {fileID: -9082628263308090024, guid: 17811d2656a5c47b29c9d1715b7e0f6f, type: 3}
   defaultPiranhaIcon: {fileID: 6041187374712783041, guid: 23dd8f2c5792046acac2a670eb968518, type: 3}
   defaultTeslaIcon: {fileID: 8161222508995843919, guid: 3e323d8db43744023b6b138942febbc9, type: 3}
   defaultMrSulkoIcon: {fileID: 7551311254184895628, guid: 778f083274ea64e909aa43c39284ad01, type: 3}
   defaultBerettaIcon: {fileID: -3600997729039249136, guid: 5f4bc1b1a33aa47f9a130530da2d4665, type: 3}
+  defaultLaserIcon: {fileID: -6775224865130320754, guid: 1447ea49f7c504b44afc3628f28642d1, type: 3}
   rifleWeaponPrefab: {fileID: 7312278767487371377, guid: 64b7ab8107b68491a93959d416d5ff22, type: 3}
   cabirneWeaponPrefab: {fileID: 883359885173164188, guid: 29a30b49e22474328bc2b6d6713bc5d4, type: 3}
   piranhaWeaponPrefab: {fileID: 883359885173164188, guid: 8ab1df6b4f02484bb7b77e2d9e178c45, type: 3}
   teslaWeaponPrefab: {fileID: 883359885173164188, guid: f617f80965604f39b7ece7f232d19381, type: 3}
   mrSulkoWeaponPrefab: {fileID: 883359885173164188, guid: 4481cc70f80948b9bfc26b5bb7590792, type: 3}
   berettaWeaponPrefab: {fileID: 883359885173164188, guid: 9f4f06f927eb47f4ab15f146d83cba29, type: 3}
+  laserWeaponPrefab: {fileID: 883359885173164188, guid: f151a6b7e5ab4e05830de0c9aa519d81, type: 3}
 --- !u!114 &439035276
 MonoBehaviour:
   m_ObjectHideFlags: 0

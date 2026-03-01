@@ -30,6 +30,7 @@ namespace ShooterB
             Constants.WeaponType.Rifle,
             Constants.WeaponType.Cabirne,
             Constants.WeaponType.Beretta,
+            Constants.WeaponType.LaserGun,
             Constants.WeaponType.PiranhaGun,
             Constants.WeaponType.TeslaGun,
             Constants.WeaponType.MrSulko
@@ -48,6 +49,7 @@ namespace ShooterB
         public Weapon teslaWeaponPrefab;
         public Weapon mrSulkoWeaponPrefab;
         public Weapon berettaWeaponPrefab;
+        public Weapon laserWeaponPrefab;
 
         [Header("Selection Colors")]
         public Color selectedButtonColor = new Color(0.2f, 0.8f, 0.2f, 1f);
@@ -518,6 +520,8 @@ namespace ShooterB
                     return mrSulkoWeaponPrefab;
                 case Constants.WeaponType.Beretta:
                     return berettaWeaponPrefab;
+                case Constants.WeaponType.LaserGun:
+                    return laserWeaponPrefab;
                 default:
                     return null;
             }
@@ -549,6 +553,8 @@ namespace ShooterB
                     return "CABIRNE";
                 case Constants.WeaponType.Beretta:
                     return "BERETTA";
+                case Constants.WeaponType.LaserGun:
+                    return "LASER";
                 case Constants.WeaponType.Rifle:
                 default:
                     return "RIFLE";
