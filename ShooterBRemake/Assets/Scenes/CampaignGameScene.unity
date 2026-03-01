@@ -4097,8 +4097,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.LivesContainerController
   overflowText: {fileID: 1368227299}
   lifeIcons: []
-  lifeOnSprite: {fileID: -6606474311021576347, guid: a542a20018f8843dcb10f8db7715d102, type: 3}
-  lifeOffSprite: {fileID: -6392066237531738276, guid: a542a20018f8843dcb10f8db7715d102, type: 3}
+  lifeOnSprite: {fileID: -2907675760489379006, guid: 40ca80686c6cb44bc8ab0a545d47ee3e, type: 3}
+  lifeOffSprite: {fileID: 2531360798634735006, guid: 0440bb2a5587a494babb01d911da240e, type: 3}
   maxDisplayedLives: 5
 --- !u!1 &1650351472
 GameObject:

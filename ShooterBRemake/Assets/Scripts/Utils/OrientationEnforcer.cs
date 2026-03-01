@@ -29,8 +29,6 @@ namespace ShooterB
                 Screen.orientation = ScreenOrientation.LandscapeLeft;
             else if (allowLandscapeRight)
                 Screen.orientation = ScreenOrientation.LandscapeRight;
-
-            Screen.orientation = ScreenOrientation.AutoRotation;
         }
     }
 }
