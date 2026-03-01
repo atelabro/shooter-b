@@ -83,3 +83,13 @@ MonoBehaviour:
     - {fileID: 8742591278687141173, guid: f3cb7737ccf4c4a1d8bbef0c63b3578e, type: 3}
     - {fileID: 2739785927368941132, guid: a5ea9d3efc3b14232b7f69b850c0d0cd, type: 3}
     - {fileID: -5786835777520467393, guid: be2e7bc87bc03492d91dc586ac137200, type: 3}
+  - duckType: 7
+    frames:
+    - {fileID: 5439200535418871352, guid: 0c788c4aee71640638b1ea15d1587f51, type: 3}
+    - {fileID: 8976311050711647161, guid: a003573a4842743898f47ef088be187c, type: 3}
+    - {fileID: -8894094926156499181, guid: ba44db39db1ee44a0bce08797550e991, type: 3}
+    - {fileID: -2867525631166380318, guid: 7679eff4c30f34039bc2442704f6a349, type: 3}
+    - {fileID: -2041875606490628714, guid: 72de1894429c94d5cba46e3e2e865ff6, type: 3}
+    - {fileID: 6903627236127240717, guid: 8d6d759b7a55f4592b635f2bf70afcf0, type: 3}
+    - {fileID: -1012546401812083102, guid: 7b9579c14117644e491e3137f5d1d60e, type: 3}
+    - {fileID: 4628064778486380386, guid: ac0d9935adfc543a7b9725503888ff21, type: 3}

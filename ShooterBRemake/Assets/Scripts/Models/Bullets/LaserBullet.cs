@@ -21,10 +21,6 @@ namespace ShooterB
         public override void Initialize(Vector2 target, Constants.WeaponType weaponType = Constants.WeaponType.LaserGun)
         {
             base.Initialize(target, weaponType);
-
-            // Laser v2 sprite is oriented bottom-to-top.
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
         }
 
         private float ComputeNormalizedLaserVisualScale()

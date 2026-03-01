@@ -179,6 +179,9 @@ MonoBehaviour:
   type2SizeMultiplier: 1.04
   type3SizeMultiplier: 0.87
   type4SizeMultiplier: 0.8
+  type5SizeMultiplier: 1
+  mkArcherSizeMultiplier: 1
+  mkVojvodaSizeMultiplier: 1
   targetHitRadiusWorld: 0.45
   deathSpriteScaleMultiplier: 0.6
 --- !u!95 &5044256694237563094

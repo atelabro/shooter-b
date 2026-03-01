@@ -56,11 +56,10 @@ namespace ShooterB
             float visualScale = Mathf.Max(0.01f, visualScaleMultiplier);
             transform.localScale = Vector3.one * startRadius * 2f * visualScale;
 
-            // Rotate sprite to face travel direction.
-            // The sprite points from bottom-right to top-left (135 degrees),
-            // so we subtract that offset to align with the actual direction.
+            // All bullet sprites are treated as bottom-to-top oriented.
+            // Align that up vector with the travel direction.
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, angle - 135f);
+            transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
 
             if (spriteRenderer != null)
             {

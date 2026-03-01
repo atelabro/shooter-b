@@ -25,10 +25,6 @@ namespace ShooterB
         {
             ApplyRandomVariantSprite();
             base.Initialize(target, weaponType);
-
-            // Piranha v2 sprite is oriented bottom-to-top, same alignment rule as Tesla.
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
         }
 
         private void ApplyRandomVariantSprite()

@@ -26,6 +26,7 @@ namespace ShooterB
         [SerializeField] private float type4SizeMultiplier = 1f;
         [SerializeField] private float type5SizeMultiplier = 1f;
         [SerializeField] private float mkArcherSizeMultiplier = 1f;
+        [SerializeField] private float mkVojvodaSizeMultiplier = 1f;
 
         [Header("Hitbox Normalization")]
         [SerializeField] private float targetHitRadiusWorld = 0.45f;
@@ -159,6 +160,7 @@ namespace ShooterB
                 case Constants.DuckType.Type4: return type4SizeMultiplier;
                 case Constants.DuckType.MK_PHALARX: return type5SizeMultiplier;
                 case Constants.DuckType.MK_ARCHER: return mkArcherSizeMultiplier;
+                case Constants.DuckType.MK_VOJVODA: return mkVojvodaSizeMultiplier;
                 default: return 1f;
             }
         }

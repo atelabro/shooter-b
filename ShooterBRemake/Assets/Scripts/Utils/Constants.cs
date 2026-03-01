@@ -58,7 +58,8 @@ namespace ShooterB
             Type3,
             Type4,
             MK_PHALARX,
-            MK_ARCHER
+            MK_ARCHER,
+            MK_VOJVODA
         }
 
         public enum MovementPattern
@@ -95,6 +96,7 @@ namespace ShooterB
             public const int TYPE_4 = 15;
             public const int MK_PHALARX = 1;
             public const int MK_ARCHER = 1;
+            public const int MK_VOJVODA = 2;
 
             public static int GetPoints(DuckType type)
             {
@@ -107,6 +109,7 @@ namespace ShooterB
                     case DuckType.Type4: return TYPE_4;
                     case DuckType.MK_PHALARX: return MK_PHALARX;
                     case DuckType.MK_ARCHER: return MK_ARCHER;
+                    case DuckType.MK_VOJVODA: return MK_VOJVODA;
                     default: return TYPE_0;
                 }
             }

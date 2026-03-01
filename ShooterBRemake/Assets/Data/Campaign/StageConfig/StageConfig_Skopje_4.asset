@@ -16,9 +16,9 @@ MonoBehaviour:
   mapName: Vodno / Millennium Cross
   briefingText: Final Skopje push. High ground, high speed, no mistakes.
   backgroundSprite: {fileID: 7715504672977574224, guid: 5191dde768dcd4d1b836c62a38a72582, type: 3}
-  starThreshold1: 23
-  starThreshold2: 35
-  starThreshold3: 45
+  starThreshold1: 13
+  starThreshold2: 20
+  starThreshold3: 25
   starsRequiredToUnlock: 11
   startingDifficulty: 8
   spawnConfig: {fileID: 11400000, guid: 29bece28bb3747bfa384f8efb4e27680, type: 2}

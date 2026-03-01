@@ -30,10 +30,6 @@ namespace ShooterB
             remainingChains = Mathf.Max(0, chainCount);
             hitDuckIds.Clear();
             base.Initialize(target, weaponType);
-
-            // Tesla v2 sprite is oriented bottom-to-top, so it needs a different offset.
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
         }
 
         public void ConfigureChain(int chainsRemaining, HashSet<int> alreadyHitDuckIds)

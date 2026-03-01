@@ -17,25 +17,25 @@ MonoBehaviour:
     delay: 1.2
   - duckType: 6
     delay: 1.1
-  - duckType: 2
+  - duckType: 7
     delay: 1.3
   - duckType: 5
     delay: 1.1
   - duckType: 6
     delay: 1.4
-  - duckType: 3
+  - duckType: 7
     delay: 1
   - duckType: 5
     delay: 1.2
   - duckType: 6
     delay: 1
-  - duckType: 3
+  - duckType: 7
     delay: 1.3
   - duckType: 5
     delay: 1.1
   - duckType: 6
     delay: 1
-  - duckType: 2
+  - duckType: 7
     delay: 1.2
   - duckType: 5
     delay: 1
