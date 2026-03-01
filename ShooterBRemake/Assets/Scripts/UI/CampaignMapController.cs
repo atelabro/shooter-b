@@ -42,7 +42,6 @@ namespace ShooterB
         public bool enableMapZoom = true;
         [Min(0.01f)] public float zoomStep = 0.15f;
         [Min(0.01f)] public float pinchZoomSensitivity = 0.005f;
-        [Min(0f)] public float doubleTapTimeWindow = 0.3f;
 
         private RectTransform canvasRect;
         private RectTransform backgroundRect;
@@ -56,7 +55,6 @@ namespace ShooterB
         private Vector2 pointerDownScreenPosition;
         private Vector2 lastPointerScreenPosition;
         private float currentMapScale = 1f;
-        private float lastTapTime = -10f;
         private bool suppressNextPanelHideReset;
 
         private void Start()
@@ -413,7 +411,6 @@ namespace ShooterB
                 if (cityPanel != null && cityPanel.gameObject.activeInHierarchy && IsPointerOverUI(pointerId))
                     return;
 
-                TryHandleDoubleTapZoom();
                 isPointerDown = true;
                 isDraggingMap = false;
                 activeTouchId = pointerId;
@@ -760,45 +757,6 @@ namespace ShooterB
                 return EventSystem.current.IsPointerOverGameObject();
 
             return EventSystem.current.IsPointerOverGameObject(pointerId);
-        }
-
-        private void TryHandleDoubleTapZoom()
-        {
-            if (!enableMapZoom)
-                return;
-
-            float now = Time.unscaledTime;
-            if (now - lastTapTime > Mathf.Max(0f, doubleTapTimeWindow))
-            {
-                lastTapTime = now;
-                return;
-            }
-
-            lastTapTime = -10f;
-
-            if (focusCoroutine != null)
-            {
-                StopCoroutine(focusCoroutine);
-                focusCoroutine = null;
-            }
-
-            if (delayedPanelOpenCoroutine != null)
-            {
-                StopCoroutine(delayedPanelOpenCoroutine);
-                delayedPanelOpenCoroutine = null;
-            }
-
-            float maxZoom = Mathf.Max(1f, focusZoomScale);
-            float targetScale = currentMapScale < (maxZoom - 0.01f) ? maxZoom : 1f;
-            currentMapScale = targetScale;
-
-            Vector3 zoomScale = Vector3.one * currentMapScale;
-            backgroundRect.localScale = zoomScale;
-            pinsContainerRect.localScale = zoomScale;
-
-            Vector2 clampedPosition = ClampMapAnchoredPositionToBounds(backgroundRect.anchoredPosition, currentMapScale);
-            backgroundRect.anchoredPosition = clampedPosition;
-            pinsContainerRect.anchoredPosition = clampedPosition;
         }
 
         private void OnCityPanelHidden()

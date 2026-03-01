@@ -815,7 +815,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 30, y: -30}
-  m_SizeDelta: {x: 300, y: 50}
+  m_SizeDelta: {x: 260, y: 42}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &208818958
 MonoBehaviour:
@@ -864,8 +864,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1772,10 +1772,10 @@ MonoBehaviour:
   piranhaBulletPrefab: {fileID: 4120011112331769632, guid: 6d8f4f8dc86f48c1a5d8c2f0b6e9a123, type: 3}
   teslaBulletPrefab: {fileID: 4120011112331769632, guid: c7a12d32f01f48218de1f4cb8f01ab63, type: 3}
   mrSulkoBulletPrefab: {fileID: 4120011112331769632, guid: bedcf7f5e688473a9c0a3a7f6eb59265, type: 3}
-  defaultRifleIcon: {fileID: 7475899495669246118, guid: 1aeeb6b2dc88a4272b34d4044e3d269a, type: 3}
+  defaultRifleIcon: {fileID: -9082628263308090024, guid: 17811d2656a5c47b29c9d1715b7e0f6f, type: 3}
   defaultPiranhaIcon: {fileID: 6041187374712783041, guid: 23dd8f2c5792046acac2a670eb968518, type: 3}
   defaultTeslaIcon: {fileID: 8161222508995843919, guid: 3e323d8db43744023b6b138942febbc9, type: 3}
-  defaultMrSulkoIcon: {fileID: 1504138971794400394, guid: 5dfec9032145145cb9dfa39b227d295f, type: 3}
+  defaultMrSulkoIcon: {fileID: 7551311254184895628, guid: 778f083274ea64e909aa43c39284ad01, type: 3}
   rifleWeaponPrefab: {fileID: 7312278767487371377, guid: 64b7ab8107b68491a93959d416d5ff22, type: 3}
   cabirneWeaponPrefab: {fileID: 883359885173164188, guid: 29a30b49e22474328bc2b6d6713bc5d4, type: 3}
   piranhaWeaponPrefab: {fileID: 883359885173164188, guid: 8ab1df6b4f02484bb7b77e2d9e178c45, type: 3}
@@ -2551,8 +2551,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -286, y: 24}
-  m_SizeDelta: {x: 600, y: 54}
+  m_AnchoredPosition: {x: -180, y: 8}
+  m_SizeDelta: {x: 460, y: 44}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &945027643
 CanvasRenderer:
@@ -3097,7 +3097,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 30, y: -80}
-  m_SizeDelta: {x: 300, y: 50}
+  m_SizeDelta: {x: 260, y: 42}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1275479485
 MonoBehaviour:
@@ -3735,7 +3735,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -4279,7 +4279,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -86, y: -14}
-  m_SizeDelta: {x: 600, y: 56}
+  m_SizeDelta: {x: 520, y: 48}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1620661369
 MonoBehaviour:
@@ -4565,9 +4565,9 @@ MonoBehaviour:
   selectedWeaponIconImage: {fileID: 1802862692}
   ammoContainer: {fileID: 945027642}
   ammoBulletIconPrefab: {fileID: 0}
-  ammoIconSize: 56
-  ammoIconSpacing: 10
-  ammoContainerWidth: 900
+  ammoIconSize: 42
+  ammoIconSpacing: 6
+  ammoContainerWidth: 460
   reloadGlowImage: {fileID: 1491685049}
   reloadingText: {fileID: 1290553727}
   reloadGlowMinAlpha: 0.2
@@ -4705,8 +4705,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -10, y: 24}
-  m_SizeDelta: {x: 256, y: 52}
+  m_AnchoredPosition: {x: -8, y: 8}
+  m_SizeDelta: {x: 180, y: 40}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1802862692
 MonoBehaviour:
@@ -4728,7 +4728,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7475899495669246118, guid: 1aeeb6b2dc88a4272b34d4044e3d269a, type: 3}
+  m_Sprite: {fileID: -9082628263308090024, guid: 17811d2656a5c47b29c9d1715b7e0f6f, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -5261,7 +5261,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -20, y: -12}
-  m_SizeDelta: {x: 64, y: 56}
+  m_SizeDelta: {x: 56, y: 48}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &2039079473
 CanvasRenderer:
