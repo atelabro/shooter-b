@@ -8,7 +8,6 @@ namespace ShooterB
     {
         [Header("UI Elements")]
         public Button campaignButton;
-        public Button arcadeButton;
         public Button armoryButton;
         public Button quitButton;
         public TextMeshProUGUI highScoreText;
@@ -18,9 +17,6 @@ namespace ShooterB
         {
             if (campaignButton != null)
                 campaignButton.onClick.AddListener(OnCampaignClicked);
-
-            if (arcadeButton != null)
-                arcadeButton.onClick.AddListener(OnArcadeClicked);
 
             if (armoryButton != null)
                 armoryButton.onClick.AddListener(OnArmoryClicked);
@@ -37,11 +33,6 @@ namespace ShooterB
         private void OnCampaignClicked()
         {
             SceneController.Instance.LoadCampaignMapScene();
-        }
-
-        private void OnArcadeClicked()
-        {
-            SceneController.Instance.LoadGameScene(Constants.GameMode.Arcade);
         }
 
         private void OnArmoryClicked()
