@@ -58,6 +58,13 @@ namespace ShooterB
             SceneManager.LoadScene(GetSceneName(Constants.SceneType.CampaignMap));
         }
 
+        public void LoadArmoryScene()
+        {
+            CurrentScene = Constants.SceneType.Armory;
+            Debug.Log("Loading armory scene");
+            SceneManager.LoadScene(GetSceneName(Constants.SceneType.Armory));
+        }
+
         public void LoadCampaignStage(StageConfig config)
         {
             CurrentScene = Constants.SceneType.CampaignGame;
@@ -109,6 +116,8 @@ namespace ShooterB
                     return "GameScene";
                 case Constants.SceneType.CampaignGame:
                     return "CampaignGameScene";
+                case Constants.SceneType.Armory:
+                    return "ArmoryScene";
                 case Constants.SceneType.Loading:
                     return "LoadingScene";
                 default:

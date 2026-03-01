@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 285540728}
   - component: {fileID: 285540727}
   m_Layer: 5
-  m_Name: AchievementsText
+  m_Name: ArmoryText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -407,7 +407,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ACHIEVEMENTS
+  m_text: ARMORY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
   m_sharedMaterial: {fileID: 5430614821553359432, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
@@ -434,8 +434,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 64
+  m_fontSizeBase: 64
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1036,6 +1036,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.MenuController
   campaignButton: {fileID: 2023815842}
   arcadeButton: {fileID: 617254462}
+  armoryButton: {fileID: 2005916475}
   quitButton: {fileID: 422015577}
   highScoreText: {fileID: 451682059}
   titleText: {fileID: 0}
@@ -1662,7 +1663,7 @@ GameObject:
   - component: {fileID: 2005916475}
   - component: {fileID: 2005916474}
   m_Layer: 5
-  m_Name: AchievementsButton
+  m_Name: ArmoryButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

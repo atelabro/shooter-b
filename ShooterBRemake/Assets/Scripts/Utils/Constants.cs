@@ -25,6 +25,7 @@ namespace ShooterB
         public const int SORTING_LAYER_UI = 20;
 
         public const string PREFS_HIGH_SCORE_ARCADE = "HighScore_Arcade";
+        public const string PREFS_SELECTED_WEAPON = "SelectedWeapon";
 
         public enum GameMode
         {
@@ -81,6 +82,7 @@ namespace ShooterB
             CampaignMap,
             Game,
             CampaignGame,
+            Armory,
             Loading
         }
 

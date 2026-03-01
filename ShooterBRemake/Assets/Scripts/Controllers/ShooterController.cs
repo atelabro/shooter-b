@@ -37,16 +37,14 @@ namespace ShooterB
         private void Awake()
         {
             EnsureWeaponsCreated();
-            if (activeWeapon == null)
-                activeWeapon = rifleWeapon;
+            ApplyConfiguredStartingWeapon();
         }
 
         private void Start()
         {
             EnsureWeaponsCreated();
             RegisterWeaponDeathSprites();
-            if (activeWeapon == null)
-                activeWeapon = rifleWeapon;
+            ApplyConfiguredStartingWeapon();
 
             EnsureActiveWeapon();
 
@@ -286,6 +284,51 @@ namespace ShooterB
         {
             activeWeapon = weapon;
             Debug.Log($"[SHOOTER] Switched weapon to {weaponName}");
+        }
+
+        public bool SetActiveWeaponByType(Constants.WeaponType weaponType)
+        {
+            Weapon weapon = GetWeaponByType(weaponType);
+            if (weapon == null)
+            {
+                Debug.LogWarning($"[SHOOTER] Requested weapon '{weaponType}' is unavailable in this scene setup.");
+                return false;
+            }
+
+            SetActiveWeapon(weapon, weapon.weaponName);
+            return true;
+        }
+
+        private Weapon GetWeaponByType(Constants.WeaponType weaponType)
+        {
+            switch (weaponType)
+            {
+                case Constants.WeaponType.Rifle:
+                    return rifleWeapon;
+                case Constants.WeaponType.Cabirne:
+                    return cabirneWeapon;
+                case Constants.WeaponType.PiranhaGun:
+                    return piranhaWeapon;
+                case Constants.WeaponType.TeslaGun:
+                    return teslaWeapon;
+                case Constants.WeaponType.MrSulko:
+                    return mrSulkoWeapon;
+                default:
+                    return null;
+            }
+        }
+
+        private void ApplyConfiguredStartingWeapon()
+        {
+            if (GameManager.Instance == null)
+            {
+                if (activeWeapon == null)
+                    activeWeapon = rifleWeapon;
+                return;
+            }
+
+            if (!SetActiveWeaponByType(GameManager.Instance.SelectedWeaponType))
+                activeWeapon = rifleWeapon;
         }
 
         private GameObject ResolveMrSulkoBulletPrefab()

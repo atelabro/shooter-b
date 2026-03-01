@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CampaignGameScene.unity
     guid: 3a9c237f2c7664d90afef98e5c6dd6fa
+  - enabled: 1
+    path: Assets/Scenes/ArmoryScene.unity
+    guid: 0b965a5acb5d46c4a5a2c3e487bb88ce
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

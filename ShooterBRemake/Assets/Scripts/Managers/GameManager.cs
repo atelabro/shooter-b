@@ -28,6 +28,7 @@ namespace ShooterB
         public long HighScore { get; private set; }
         public int Lives { get; private set; }
         public Constants.GameMode CurrentGameMode { get; private set; }
+        public Constants.WeaponType SelectedWeaponType { get; private set; }
         public bool IsPaused { get; private set; }
         public bool IsGameOver { get; private set; }
         public bool ArcadeVeryHardMode { get; private set; }
@@ -40,6 +41,7 @@ namespace ShooterB
         public event Action OnGameOver;
         public event Action<Constants.MultiKillType, int, Vector3> OnComboKill;
         public event Action<int> OnBirdsKilledChanged;
+        public event Action<Constants.WeaponType> OnSelectedWeaponChanged;
 
         private int birdsUntilNextDifficulty;
 
@@ -52,6 +54,7 @@ namespace ShooterB
             }
             instance = this;
             DontDestroyOnLoad(gameObject);
+            LoadSelectedWeapon();
         }
 
         public void InitializeGame(Constants.GameMode mode, int startingDifficulty = Constants.INITIAL_DIFFICULTY)
@@ -176,6 +179,21 @@ namespace ShooterB
             Debug.Log($"Arcade very hard mode set to: {ArcadeVeryHardMode}");
         }
 
+        public void SetSelectedWeapon(Constants.WeaponType weaponType)
+        {
+            if (!IsWeaponSupportedInCurrentBuild(weaponType))
+            {
+                Debug.LogWarning($"[GameManager] Unsupported armory weapon '{weaponType}'. Falling back to Rifle.");
+                weaponType = Constants.WeaponType.Rifle;
+            }
+
+            SelectedWeaponType = weaponType;
+            PlayerPrefs.SetInt(Constants.PREFS_SELECTED_WEAPON, (int)weaponType);
+            PlayerPrefs.Save();
+            OnSelectedWeaponChanged?.Invoke(SelectedWeaponType);
+            Debug.Log($"[GameManager] Selected weapon saved: {SelectedWeaponType}");
+        }
+
         public void PauseGame()
         {
             if (IsGameOver || IsPaused)
@@ -244,6 +262,36 @@ namespace ShooterB
         public bool IsNewHighScore()
         {
             return Score >= HighScore && Score > 0;
+        }
+
+        private void LoadSelectedWeapon()
+        {
+            int storedValue = PlayerPrefs.GetInt(Constants.PREFS_SELECTED_WEAPON, (int)Constants.WeaponType.Rifle);
+            if (!Enum.IsDefined(typeof(Constants.WeaponType), storedValue))
+            {
+                SelectedWeaponType = Constants.WeaponType.Rifle;
+                return;
+            }
+
+            Constants.WeaponType loadedType = (Constants.WeaponType)storedValue;
+            SelectedWeaponType = IsWeaponSupportedInCurrentBuild(loadedType)
+                ? loadedType
+                : Constants.WeaponType.Rifle;
+        }
+
+        private static bool IsWeaponSupportedInCurrentBuild(Constants.WeaponType type)
+        {
+            switch (type)
+            {
+                case Constants.WeaponType.Rifle:
+                case Constants.WeaponType.Cabirne:
+                case Constants.WeaponType.MrSulko:
+                case Constants.WeaponType.TeslaGun:
+                case Constants.WeaponType.PiranhaGun:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }
