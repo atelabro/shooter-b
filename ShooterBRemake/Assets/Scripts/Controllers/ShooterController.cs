@@ -12,6 +12,7 @@ namespace ShooterB
         private PiranhaGun piranhaWeapon;
         private TeslaGun teslaWeapon;
         private MrSulko mrSulkoWeapon;
+        private Beretta berettaWeapon;
 
         [Header("Prefabs")]
         public GameObject rifleBulletPrefab;
@@ -19,10 +20,12 @@ namespace ShooterB
         public GameObject piranhaBulletPrefab;
         public GameObject teslaBulletPrefab;
         public GameObject mrSulkoBulletPrefab;
+        public GameObject berettaBulletPrefab;
         public Sprite defaultRifleIcon;
         public Sprite defaultPiranhaIcon;
         public Sprite defaultTeslaIcon;
         public Sprite defaultMrSulkoIcon;
+        public Sprite defaultBerettaIcon;
 
         [Header("Weapon Prefabs")]
         public Weapon rifleWeaponPrefab;
@@ -30,6 +33,7 @@ namespace ShooterB
         public Weapon piranhaWeaponPrefab;
         public Weapon teslaWeaponPrefab;
         public Weapon mrSulkoWeaponPrefab;
+        public Weapon berettaWeaponPrefab;
 
         private bool isFireHeld;
         private Vector2 heldTargetPosition;
@@ -82,6 +86,11 @@ namespace ShooterB
             {
                 SetActiveWeapon(mrSulkoWeapon, "MrSulko");
             }
+
+            if (Keyboard.current.digit6Key.wasPressedThisFrame || Keyboard.current.numpad6Key.wasPressedThisFrame)
+            {
+                SetActiveWeaponByType(Constants.WeaponType.Beretta);
+            }
         }
 
         private void EnsureWeaponsCreated()
@@ -127,6 +136,16 @@ namespace ShooterB
                     mrSulkoWeapon = CreateWeaponFromPrefab<MrSulko>(mrSulkoWeaponPrefab, "MrSulko", Constants.WeaponType.MrSulko, resolvedMrSulkoBulletPrefab, resolvedMrSulkoIcon);
                 else
                     mrSulkoWeapon = CreateWeaponInstance<MrSulko>("MrSulko", Constants.WeaponType.MrSulko, resolvedMrSulkoBulletPrefab, resolvedMrSulkoIcon);
+            }
+
+            if (berettaWeapon == null)
+            {
+                Sprite resolvedBerettaIcon = defaultBerettaIcon != null ? defaultBerettaIcon : defaultRifleIcon;
+
+                if (berettaWeaponPrefab != null)
+                    berettaWeapon = CreateWeaponFromPrefab<Beretta>(berettaWeaponPrefab, "Beretta", Constants.WeaponType.Beretta, berettaBulletPrefab, resolvedBerettaIcon);
+                else
+                    berettaWeapon = CreateWeaponInstance<Beretta>("Beretta", Constants.WeaponType.Beretta, berettaBulletPrefab, resolvedBerettaIcon);
             }
 
             RegisterWeaponDeathSprites();
@@ -192,6 +211,11 @@ namespace ShooterB
                 {
                     activeWeapon.weaponIcon = defaultMrSulkoIcon;
                 }
+
+                if (activeWeapon.weaponType == Constants.WeaponType.Beretta && activeWeapon.weaponIcon == null && defaultBerettaIcon != null)
+                {
+                    activeWeapon.weaponIcon = defaultBerettaIcon;
+                }
             }
         }
 
@@ -211,6 +235,9 @@ namespace ShooterB
 
             if (mrSulkoWeapon != null)
                 mrSulkoWeapon.RegisterConfiguredDeathSprite();
+
+            if (berettaWeapon != null)
+                berettaWeapon.RegisterConfiguredDeathSprite();
         }
 
         private System.Collections.IEnumerator LogInitialization()
@@ -313,6 +340,8 @@ namespace ShooterB
                     return teslaWeapon;
                 case Constants.WeaponType.MrSulko:
                     return mrSulkoWeapon;
+                case Constants.WeaponType.Beretta:
+                    return berettaWeapon;
                 default:
                     return null;
             }

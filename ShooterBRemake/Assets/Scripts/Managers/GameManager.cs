@@ -285,6 +285,7 @@ namespace ShooterB
             {
                 case Constants.WeaponType.Rifle:
                 case Constants.WeaponType.Cabirne:
+                case Constants.WeaponType.Beretta:
                 case Constants.WeaponType.MrSulko:
                 case Constants.WeaponType.TeslaGun:
                 case Constants.WeaponType.PiranhaGun:

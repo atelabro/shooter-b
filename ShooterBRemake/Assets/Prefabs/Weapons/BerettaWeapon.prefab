@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7648946833376092360}
   - component: {fileID: 883359885173164188}
   m_Layer: 0
-  m_Name: MrSulkoWeapon
+  m_Name: BerettaWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,16 +41,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1760129795177388805}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7eeaa08245b846208252ab6387330fa0, type: 3}
+  m_Script: {fileID: 11500000, guid: e6804a7a01234626aafce9c2c0cb5e8f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.MrSulko
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.Beretta
   weaponName: 
-  weaponType: 3
+  weaponType: 2
   fireMode: 1
-  maxBullets: 0
-  fireDelay: 0
-  refillDelay: 0
-  weaponIcon: {fileID: 7551311254184895628, guid: 778f083274ea64e909aa43c39284ad01, type: 3}
-  ammoHudSprite: {fileID: -7829253711989005911, guid: 38acd43e78d7d44089e75006d1248cd6, type: 3}
-  bulletPrefab: {fileID: 4120011112331769632, guid: bedcf7f5e688473a9c0a3a7f6eb59265, type: 3}
-  deathSprite: {fileID: 4250473460580304466, guid: 2303dd53a2dff45199777f42fea13196, type: 3}
+  maxBullets: 14
+  fireDelay: 0.2
+  refillDelay: 2.4
+  weaponIcon: {fileID: -3600997729039249136, guid: 5f4bc1b1a33aa47f9a130530da2d4665, type: 3}
+  ammoHudSprite: {fileID: 1653537387157507656, guid: 5740f4596cd61439b959250ea8c62717, type: 3}
+  bulletPrefab: {fileID: 4120011112331769632, guid: 2e61d410ed824f008dfe2050a20b14c3, type: 3}
+  deathSprite: {fileID: -7580412431050931783, guid: 2303dd53a2dff45199777f42fea13196, type: 3}

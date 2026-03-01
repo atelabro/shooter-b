@@ -29,6 +29,7 @@ namespace ShooterB
         {
             Constants.WeaponType.Rifle,
             Constants.WeaponType.Cabirne,
+            Constants.WeaponType.Beretta,
             Constants.WeaponType.PiranhaGun,
             Constants.WeaponType.TeslaGun,
             Constants.WeaponType.MrSulko
@@ -46,6 +47,7 @@ namespace ShooterB
         public Weapon piranhaWeaponPrefab;
         public Weapon teslaWeaponPrefab;
         public Weapon mrSulkoWeaponPrefab;
+        public Weapon berettaWeaponPrefab;
 
         [Header("Selection Colors")]
         public Color selectedButtonColor = new Color(0.2f, 0.8f, 0.2f, 1f);
@@ -206,10 +208,13 @@ namespace ShooterB
                 }
             }
 
-            if (activeWeaponItems.Count > 0)
+            if (activeWeaponItems.Count == 0)
+            {
+                BuildWeaponListFromTemplate();
                 return;
+            }
 
-            BuildWeaponListFromTemplate();
+            EnsureAllSelectableWeaponsPresent();
         }
 
         private void BuildWeaponListFromTemplate()
@@ -237,24 +242,61 @@ namespace ShooterB
 
             for (int i = 0; i < SelectableWeapons.Length; i++)
             {
-                Button button = Instantiate(weaponRowTemplate, weaponListContent);
-                button.transform.SetParent(weaponListContent, false);
-                button.gameObject.SetActive(true);
-
                 Constants.WeaponType type = SelectableWeapons[i];
-                button.gameObject.name = $"{type}Item";
-
-                TextMeshProUGUI label = ResolveOrCreateLabel(button);
-                Image iconImage = ResolveOrCreateWeaponImage(button.gameObject);
-
-                RegisterWeaponItem(new WeaponListItem
-                {
-                    weaponType = type,
-                    button = button,
-                    weaponNameText = label,
-                    weaponImage = iconImage
-                });
+                CreateAndRegisterWeaponItem(type, weaponRowTemplate);
             }
+        }
+
+        private void EnsureAllSelectableWeaponsPresent()
+        {
+            HashSet<Constants.WeaponType> existingTypes = new HashSet<Constants.WeaponType>();
+            for (int i = 0; i < activeWeaponItems.Count; i++)
+            {
+                WeaponListItem item = activeWeaponItems[i];
+                if (item != null)
+                    existingTypes.Add(item.weaponType);
+            }
+
+            if (weaponRowTemplate == null)
+                weaponRowTemplate = FindTemplateButton();
+            if (weaponRowTemplate == null)
+                weaponRowTemplate = CreateFallbackTemplateButton();
+            if (weaponRowTemplate == null)
+                return;
+
+            if (weaponRowTemplate.transform.parent == weaponListContent)
+                weaponRowTemplate.gameObject.SetActive(false);
+
+            for (int i = 0; i < SelectableWeapons.Length; i++)
+            {
+                Constants.WeaponType type = SelectableWeapons[i];
+                if (existingTypes.Contains(type))
+                    continue;
+
+                CreateAndRegisterWeaponItem(type, weaponRowTemplate);
+            }
+        }
+
+        private void CreateAndRegisterWeaponItem(Constants.WeaponType type, Button template)
+        {
+            if (template == null || weaponListContent == null)
+                return;
+
+            Button button = Instantiate(template, weaponListContent);
+            button.transform.SetParent(weaponListContent, false);
+            button.gameObject.SetActive(true);
+            button.gameObject.name = $"{type}Item";
+
+            TextMeshProUGUI label = ResolveOrCreateLabel(button);
+            Image iconImage = ResolveOrCreateWeaponImage(button.gameObject);
+
+            RegisterWeaponItem(new WeaponListItem
+            {
+                weaponType = type,
+                button = button,
+                weaponNameText = label,
+                weaponImage = iconImage
+            });
         }
 
         private Button FindTemplateButton()
@@ -474,6 +516,8 @@ namespace ShooterB
                     return teslaWeaponPrefab;
                 case Constants.WeaponType.MrSulko:
                     return mrSulkoWeaponPrefab;
+                case Constants.WeaponType.Beretta:
+                    return berettaWeaponPrefab;
                 default:
                     return null;
             }
@@ -503,6 +547,8 @@ namespace ShooterB
                     return "MR SULKO";
                 case Constants.WeaponType.Cabirne:
                     return "CABIRNE";
+                case Constants.WeaponType.Beretta:
+                    return "BERETTA";
                 case Constants.WeaponType.Rifle:
                 default:
                     return "RIFLE";
