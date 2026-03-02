@@ -309,7 +309,7 @@ namespace ShooterB
             if (isDead) return;
 
             isDead = true;
-            GameManager.Instance.BirdKilled(duckType);
+            GameManager.Instance.BirdKilled(duckType, weaponType);
 
             // Store the alive sprite for reuse when this duck is recycled
             if (aliveSprite == null && spriteRenderer != null)

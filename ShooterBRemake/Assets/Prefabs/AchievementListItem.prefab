@@ -474,7 +474,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5973835634310740224
 RectTransform:
   m_ObjectHideFlags: 0
@@ -653,6 +653,7 @@ GameObject:
   - component: {fileID: 4666775769795286959}
   - component: {fileID: 8147446677202913098}
   - component: {fileID: 9158505605485703605}
+  - component: {fileID: 3364828046573147760}
   m_Layer: 5
   m_Name: AchievementListItem
   m_TagString: Untagged
@@ -738,6 +739,28 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &3364828046573147760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5810304268821675971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d173527fd742d8ac6eb5bc1ef5c667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.AchievementListItemUI
+  titleText: {fileID: 854411907807465141}
+  descriptionText: {fileID: 5585471373833598162}
+  progressText: {fileID: 5040856450270417080}
+  statusText: {fileID: 5882399520711879680}
+  backgroundImage: {fileID: 0}
+  progressFillImage: {fileID: 1515516557199280137}
+  progressSlider: {fileID: 264085501772519021}
+  achievedBadge: {fileID: 4030733485866665416}
+  unlockedBackgroundColor: {r: 0.18, g: 0.34, b: 0.2, a: 1}
+  lockedBackgroundColor: {r: 0.18, g: 0.18, b: 0.2, a: 1}
 --- !u!1 &6013192727290953961
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,8 +794,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7609241104183215001
 GameObject:

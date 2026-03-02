@@ -13,6 +13,7 @@ namespace ShooterB
         public TextMeshProUGUI statusText;
         public Image backgroundImage;
         public Image progressFillImage;
+        public Slider progressSlider;
         public GameObject achievedBadge;
 
         [Header("State Colors")]
@@ -39,11 +40,13 @@ namespace ShooterB
                 descriptionText.text = description;
 
             if (progressText != null)
-                progressText.text = $"Progress: {progress}/{target}";
+                progressText.text = $"{progress}/{target}";
 
             if (statusText != null)
             {
-                statusText.text = isUnlocked ? "UNLOCKED" : "LOCKED";
+                statusText.gameObject.SetActive(!isUnlocked);
+                if (!isUnlocked)
+                    statusText.text = "LOCKED";
             }
 
             if (backgroundImage != null)
@@ -51,10 +54,25 @@ namespace ShooterB
 
             if (progressFillImage != null)
             {
-                progressFillImage.type = Image.Type.Filled;
-                progressFillImage.fillMethod = Image.FillMethod.Horizontal;
-                progressFillImage.fillOrigin = (int)Image.OriginHorizontal.Left;
-                progressFillImage.fillAmount = Mathf.Clamp01(normalizedProgress);
+                if (progressFillImage.type == Image.Type.Filled)
+                {
+                    progressFillImage.fillAmount = Mathf.Clamp01(normalizedProgress);
+                }
+                else
+                {
+                    RectTransform fillRect = progressFillImage.rectTransform;
+                    fillRect.anchorMin = new Vector2(0f, fillRect.anchorMin.y);
+                    fillRect.anchorMax = new Vector2(Mathf.Clamp01(normalizedProgress), fillRect.anchorMax.y);
+                    fillRect.offsetMin = new Vector2(0f, fillRect.offsetMin.y);
+                    fillRect.offsetMax = new Vector2(0f, fillRect.offsetMax.y);
+                }
+            }
+
+            if (progressSlider != null)
+            {
+                progressSlider.minValue = 0f;
+                progressSlider.maxValue = 1f;
+                progressSlider.value = Mathf.Clamp01(normalizedProgress);
             }
 
             if (achievedBadge != null)

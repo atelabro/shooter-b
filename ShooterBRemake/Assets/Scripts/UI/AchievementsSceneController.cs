@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,13 +27,17 @@ namespace ShooterB
             }
 
             AchievementManager.Instance.OnAchievementUnlocked += HandleAchievementUnlocked;
+            AchievementManager.Instance.OnAchievementProgressChanged += HandleAchievementProgressChanged;
             BuildAchievementRows();
         }
 
         private void OnDestroy()
         {
             if (AchievementManager.Instance != null)
+            {
                 AchievementManager.Instance.OnAchievementUnlocked -= HandleAchievementUnlocked;
+                AchievementManager.Instance.OnAchievementProgressChanged -= HandleAchievementProgressChanged;
+            }
         }
 
         private void ResolveReferences()
@@ -70,8 +75,14 @@ namespace ShooterB
             rowPrefab.gameObject.SetActive(false);
 
             AchievementManager manager = AchievementManager.Instance;
-            Array ids = Enum.GetValues(typeof(AchievementManager.AchievementId));
-            foreach (AchievementManager.AchievementId id in ids)
+            List<AchievementManager.AchievementId> sortedIds =
+                Enum.GetValues(typeof(AchievementManager.AchievementId))
+                    .Cast<AchievementManager.AchievementId>()
+                    .OrderBy(id => manager.GetIsUnlocked(id) ? 1 : 0)
+                    .ThenBy(id => manager.GetTitle(id))
+                    .ToList();
+
+            foreach (AchievementManager.AchievementId id in sortedIds)
             {
                 AchievementListItemUI row = Instantiate(rowPrefab, contentRoot);
                 row.gameObject.name = $"Achievement_{id}";
@@ -89,6 +100,16 @@ namespace ShooterB
         }
 
         private void HandleAchievementUnlocked(AchievementManager.AchievementId id)
+        {
+            RefreshAchievementRow(id);
+        }
+
+        private void HandleAchievementProgressChanged(AchievementManager.AchievementId id)
+        {
+            RefreshAchievementRow(id);
+        }
+
+        private void RefreshAchievementRow(AchievementManager.AchievementId id)
         {
             if (rowsById.TryGetValue(id, out AchievementListItemUI row) && row != null)
             {

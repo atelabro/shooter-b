@@ -300,9 +300,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d865053b0f54f67a80e58e3c2c53123, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.AchievementsSceneController
-  contentRoot: {fileID: 0}
-  rowPrefab: {fileID: 0}
-  backButton: {fileID: 0}
+  contentRoot: {fileID: 1045188888}
+  rowPrefab: {fileID: 1796999289}
+  backButton: {fileID: 280817555}
 --- !u!1 &249902842
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,102 +644,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2405129350278080994, guid: f07d68f991d544b90be080b8eefc5bf2, type: 3}
   m_PrefabInstance: {fileID: 3152990188286298804}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1675894462
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1675894463}
-  - component: {fileID: 1675894466}
-  - component: {fileID: 1675894465}
-  - component: {fileID: 1675894464}
-  m_Layer: 5
-  m_Name: UnlockedStamp
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1675894463
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1675894462}
-  m_LocalRotation: {x: 0, y: 0, z: -0.30070576, w: 0.953717}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1796999285}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -35}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -80, y: -60}
-  m_SizeDelta: {x: 150, y: 150}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1675894464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1675894462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
-  m_IgnoreLayout: 1
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
---- !u!114 &1675894465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1675894462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: aa75fc98c5f9842b29c3ebccfb6fa031, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1675894466
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1675894462}
-  m_CullTransparentMesh: 1
 --- !u!1 &1678913168
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,10 +747,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 264085501772519021, guid: 97bfa9f53975e40c2b0b61ba99c4b08a, type: 3}
-      propertyPath: m_TargetGraphic
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 415357471456557946, guid: 97bfa9f53975e40c2b0b61ba99c4b08a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -869,6 +769,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2872187977079021623, guid: 97bfa9f53975e40c2b0b61ba99c4b08a, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3367797098564861047, guid: 97bfa9f53975e40c2b0b61ba99c4b08a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3367797098564861047, guid: 97bfa9f53975e40c2b0b61ba99c4b08a, type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5518291461558251311, guid: 97bfa9f53975e40c2b0b61ba99c4b08a, type: 3}
@@ -977,10 +885,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1682222980724147922, guid: 97bfa9f53975e40c2b0b61ba99c4b08a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1675894463}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97bfa9f53975e40c2b0b61ba99c4b08a, type: 3}
 --- !u!224 &1796999284 stripped
@@ -988,11 +893,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5518291461558251311, guid: 97bfa9f53975e40c2b0b61ba99c4b08a, type: 3}
   m_PrefabInstance: {fileID: 1796999283}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &1796999285 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1682222980724147922, guid: 97bfa9f53975e40c2b0b61ba99c4b08a, type: 3}
+--- !u!114 &1796999289 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3364828046573147760, guid: 97bfa9f53975e40c2b0b61ba99c4b08a, type: 3}
   m_PrefabInstance: {fileID: 1796999283}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d173527fd742d8ac6eb5bc1ef5c667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.AchievementListItemUI
 --- !u!1 &1925462410
 GameObject:
   m_ObjectHideFlags: 0

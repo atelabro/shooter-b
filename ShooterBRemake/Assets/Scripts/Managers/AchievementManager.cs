@@ -8,14 +8,23 @@ namespace ShooterB
     {
         public enum AchievementId
         {
+            DuckHunter10,
             PiranhaDoubleKill50
+        }
+
+        private enum ProgressSource
+        {
+            ComboKill,
+            BirdKill
         }
 
         private struct AchievementDefinition
         {
             public AchievementId id;
+            public ProgressSource progressSource;
             public Constants.MultiKillType comboType;
-            public Constants.WeaponType weaponType;
+            public Constants.DuckType? duckType;
+            public Constants.WeaponType? weaponType;
             public int targetCount;
             public string title;
             public string description;
@@ -42,6 +51,7 @@ namespace ShooterB
         private readonly HashSet<AchievementId> unlocked = new HashSet<AchievementId>();
 
         public event Action<AchievementId> OnAchievementUnlocked;
+        public event Action<AchievementId> OnAchievementProgressChanged;
 
         private void Awake()
         {
@@ -63,7 +73,10 @@ namespace ShooterB
         {
             GameManager gameManager = FindObjectOfType<GameManager>();
             if (gameManager != null)
+            {
                 gameManager.OnComboKillDetailed -= HandleComboKillDetailed;
+                gameManager.OnBirdKilled -= HandleBirdKilled;
+            }
         }
 
         public int GetProgress(AchievementId id)
@@ -112,15 +125,29 @@ namespace ShooterB
 
             GameManager.Instance.OnComboKillDetailed -= HandleComboKillDetailed;
             GameManager.Instance.OnComboKillDetailed += HandleComboKillDetailed;
+            GameManager.Instance.OnBirdKilled -= HandleBirdKilled;
+            GameManager.Instance.OnBirdKilled += HandleBirdKilled;
         }
 
         private void RegisterDefinitions()
         {
             definitions.Clear();
+            definitions[AchievementId.DuckHunter10] = new AchievementDefinition
+            {
+                id = AchievementId.DuckHunter10,
+                progressSource = ProgressSource.BirdKill,
+                duckType = null,
+                weaponType = null,
+                targetCount = 10,
+                title = "Duck Hunter I",
+                description = "Kill 10 ducks."
+            };
             definitions[AchievementId.PiranhaDoubleKill50] = new AchievementDefinition
             {
                 id = AchievementId.PiranhaDoubleKill50,
+                progressSource = ProgressSource.ComboKill,
                 comboType = Constants.MultiKillType.DoubleKill,
+                duckType = null,
                 weaponType = Constants.WeaponType.PiranhaGun,
                 targetCount = 50,
                 title = "Predator School",
@@ -150,7 +177,28 @@ namespace ShooterB
             foreach (KeyValuePair<AchievementId, AchievementDefinition> entry in definitions)
             {
                 AchievementDefinition definition = entry.Value;
+                if (definition.progressSource != ProgressSource.ComboKill)
+                    continue;
+
                 if (definition.comboType != comboType || definition.weaponType != weaponType)
+                    continue;
+
+                IncrementProgress(definition.id, 1);
+            }
+        }
+
+        private void HandleBirdKilled(Constants.DuckType duckType, Constants.WeaponType weaponType)
+        {
+            foreach (KeyValuePair<AchievementId, AchievementDefinition> entry in definitions)
+            {
+                AchievementDefinition definition = entry.Value;
+                if (definition.progressSource != ProgressSource.BirdKill)
+                    continue;
+
+                if (definition.duckType.HasValue && definition.duckType.Value != duckType)
+                    continue;
+
+                if (definition.weaponType.HasValue && definition.weaponType.Value != weaponType)
                     continue;
 
                 IncrementProgress(definition.id, 1);
@@ -167,8 +215,12 @@ namespace ShooterB
 
             int current = GetProgress(id);
             int next = Mathf.Min(definition.targetCount, current + Mathf.Max(0, amount));
+            if (next == current)
+                return;
+
             progress[id] = next;
             PlayerPrefs.SetInt(GetProgressKey(id), next);
+            OnAchievementProgressChanged?.Invoke(id);
 
             if (next >= definition.targetCount)
             {
