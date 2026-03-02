@@ -27,6 +27,7 @@ namespace ShooterB
 
         [Header("Buttons")]
         public Button backButton;
+        public Button armoryButton;
 
         [Header("Map Focus")]
         public float focusZoomScale = 1.25f;
@@ -63,6 +64,12 @@ namespace ShooterB
 
             if (backButton != null)
                 backButton.onClick.AddListener(OnBackClicked);
+
+            if (armoryButton == null)
+                armoryButton = ResolveArmoryButton();
+
+            if (armoryButton != null)
+                armoryButton.onClick.AddListener(OnArmoryClicked);
 
             if (cityPanel != null)
             {
@@ -128,6 +135,11 @@ namespace ShooterB
             SceneController.Instance.ReturnToMenu();
         }
 
+        private void OnArmoryClicked()
+        {
+            SceneController.Instance.LoadArmoryScene();
+        }
+
         private void OnDestroy()
         {
             if (delayedPanelOpenCoroutine != null)
@@ -135,6 +147,21 @@ namespace ShooterB
 
             if (cityPanel != null)
                 cityPanel.OnPanelHidden -= OnCityPanelHidden;
+
+            if (backButton != null)
+                backButton.onClick.RemoveListener(OnBackClicked);
+
+            if (armoryButton != null)
+                armoryButton.onClick.RemoveListener(OnArmoryClicked);
+        }
+
+        private static Button ResolveArmoryButton()
+        {
+            GameObject armoryButtonObject = GameObject.Find("ArmoryButton");
+            if (armoryButtonObject == null)
+                armoryButtonObject = GameObject.Find("BackpackButton");
+
+            return armoryButtonObject != null ? armoryButtonObject.GetComponent<Button>() : null;
         }
 
         private void FocusLatestOpenedCityOnEnter()

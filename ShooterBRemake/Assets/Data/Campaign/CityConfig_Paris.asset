@@ -16,7 +16,7 @@ MonoBehaviour:
   briefingText: Ducks have seized the Eiffel Tower. The city is in chaos. Liberate
     Paris, agent.
   pinSpriteResourcePath: Pins/ParisBadge
-  pinPosition: {x: -10, y: 170}
+  pinPosition: {x: -30, y: 140}
   stages:
   - {fileID: 11400000, guid: 0aedcc61e26a4668ad6d219fb935e9e3, type: 2}
   - {fileID: 11400000, guid: 219bb8b4221f486e9fb98de3503e1a6e, type: 2}

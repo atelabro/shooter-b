@@ -22,6 +22,7 @@ namespace ShooterB
         }
 
         public Constants.SceneType CurrentScene { get; private set; }
+        private Constants.SceneType armoryReturnScene = Constants.SceneType.Menu;
 
         private void Awake()
         {
@@ -32,6 +33,7 @@ namespace ShooterB
             }
             instance = this;
             DontDestroyOnLoad(gameObject);
+            CurrentScene = ResolveActiveSceneType();
         }
 
         public void LoadScene(Constants.SceneType sceneType)
@@ -60,9 +62,66 @@ namespace ShooterB
 
         public void LoadArmoryScene()
         {
+            Constants.SceneType requestedFrom = ResolveActiveSceneType();
+            if (requestedFrom == Constants.SceneType.Splash && CurrentScene != Constants.SceneType.Splash)
+                requestedFrom = CurrentScene;
+
+            if (requestedFrom == Constants.SceneType.CampaignMap ||
+                requestedFrom == Constants.SceneType.Menu ||
+                requestedFrom == Constants.SceneType.Achievements)
+            {
+                armoryReturnScene = requestedFrom;
+            }
+            else
+            {
+                armoryReturnScene = Constants.SceneType.Menu;
+            }
+
             CurrentScene = Constants.SceneType.Armory;
             Debug.Log("Loading armory scene");
             SceneManager.LoadScene(GetSceneName(Constants.SceneType.Armory));
+        }
+
+        public void ReturnFromArmory()
+        {
+            if (armoryReturnScene == Constants.SceneType.CampaignMap)
+            {
+                LoadCampaignMapScene();
+                return;
+            }
+
+            if (armoryReturnScene == Constants.SceneType.Achievements)
+            {
+                LoadAchievementsScene();
+                return;
+            }
+
+            ReturnToMenu();
+        }
+
+        private static Constants.SceneType ResolveActiveSceneType()
+        {
+            string sceneName = SceneManager.GetActiveScene().name;
+            switch (sceneName)
+            {
+                case "MenuScene":
+                    return Constants.SceneType.Menu;
+                case "CampaignMapScene":
+                    return Constants.SceneType.CampaignMap;
+                case "CampaignGameScene":
+                    return Constants.SceneType.CampaignGame;
+                case "ArmoryScene":
+                    return Constants.SceneType.Armory;
+                case "AchievementsScene":
+                    return Constants.SceneType.Achievements;
+                case "GameScene":
+                    return Constants.SceneType.Game;
+                case "LoadingScene":
+                    return Constants.SceneType.Loading;
+                case "SplashScene":
+                default:
+                    return Constants.SceneType.Splash;
+            }
         }
 
         public void LoadAchievementsScene()

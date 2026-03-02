@@ -8,8 +8,32 @@ namespace ShooterB
     {
         public enum AchievementId
         {
+            BirdBlenderI,
+            BirdBlenderII,
+            BossSlayer,
+            CommanderDown,
+            DuckHunterI,
+            DuckHunterII,
+            DuckHunterIII,
+            DuckHunterIV,
+            EliteControlI,
+            EliteControlII,
+            ArcherCleanup,
+            LaserSweep,
+            OverkillI,
+            OverkillII,
+            PhalarxBreaker,
             DuckHunter10,
-            PiranhaDoubleKill50
+            PiranhaDoubleTrouble,
+            PiranhaMassacre,
+            PiranhaDoubleKill50,
+            RifleVeteran,
+            SniperPrecision,
+            SulkoRampage,
+            TeslaChainLord,
+            TripleThreatI,
+            TripleThreatII,
+            BerettaSpray
         }
 
         private enum ProgressSource
@@ -18,12 +42,21 @@ namespace ShooterB
             BirdKill
         }
 
+        private enum DuckFilterMode
+        {
+            Any,
+            Exact,
+            EliteOnly
+        }
+
         private struct AchievementDefinition
         {
             public AchievementId id;
             public ProgressSource progressSource;
-            public Constants.MultiKillType comboType;
-            public Constants.DuckType? duckType;
+            public Constants.MultiKillType? comboType;
+            public Constants.MultiKillType? minimumComboType;
+            public DuckFilterMode duckFilterMode;
+            public Constants.DuckType duckType;
             public Constants.WeaponType? weaponType;
             public int targetCount;
             public string title;
@@ -132,26 +165,220 @@ namespace ShooterB
         private void RegisterDefinitions()
         {
             definitions.Clear();
-            definitions[AchievementId.DuckHunter10] = new AchievementDefinition
+            // Legacy id kept for save compatibility.
+            AddComboAchievement(
+                AchievementId.PiranhaDoubleKill50,
+                "Predator School",
+                "Get 50 Double Kills using Piranha Gun.",
+                50,
+                Constants.MultiKillType.DoubleKill,
+                Constants.WeaponType.PiranhaGun);
+
+            AddComboAchievement(
+                AchievementId.PiranhaDoubleTrouble,
+                "Piranha Double Trouble",
+                "Get 50 Double Kills with Piranha Gun.",
+                50,
+                Constants.MultiKillType.DoubleKill,
+                Constants.WeaponType.PiranhaGun);
+
+            AddComboAchievement(
+                AchievementId.PiranhaMassacre,
+                "Piranha Massacre",
+                "Get 10 Quadra Kills with Piranha Gun.",
+                10,
+                Constants.MultiKillType.QuadraKill,
+                Constants.WeaponType.PiranhaGun);
+
+            AddComboAchievement(
+                AchievementId.TeslaChainLord,
+                "Tesla Chain Lord",
+                "Get 30 Triple+ Kills with Tesla Gun.",
+                30,
+                null,
+                Constants.WeaponType.TeslaGun,
+                Constants.MultiKillType.TripleKill);
+
+            AddComboAchievement(
+                AchievementId.BerettaSpray,
+                "Beretta Spray",
+                "Get 100 Double Kills with Beretta.",
+                100,
+                Constants.MultiKillType.DoubleKill,
+                Constants.WeaponType.Beretta);
+
+            AddComboAchievement(
+                AchievementId.BirdBlenderI,
+                "Bird Blender I",
+                "Get 100 Double Kills.",
+                100,
+                Constants.MultiKillType.DoubleKill);
+
+            AddComboAchievement(
+                AchievementId.BirdBlenderII,
+                "Bird Blender II",
+                "Get 250 Double Kills.",
+                250,
+                Constants.MultiKillType.DoubleKill);
+
+            AddComboAchievement(
+                AchievementId.TripleThreatI,
+                "Triple Threat I",
+                "Get 50 Triple Kills.",
+                50,
+                Constants.MultiKillType.TripleKill);
+
+            AddComboAchievement(
+                AchievementId.TripleThreatII,
+                "Triple Threat II",
+                "Get 150 Triple Kills.",
+                150,
+                Constants.MultiKillType.TripleKill);
+
+            AddComboAchievement(
+                AchievementId.OverkillI,
+                "Overkill I",
+                "Get 25 Quadra Kills.",
+                25,
+                Constants.MultiKillType.QuadraKill);
+
+            AddComboAchievement(
+                AchievementId.OverkillII,
+                "Overkill II",
+                "Get 75 Quadra Kills.",
+                75,
+                Constants.MultiKillType.QuadraKill);
+
+            AddBirdAchievement(
+                AchievementId.DuckHunterI,
+                "Duck Hunter I",
+                "Kill 10 ducks.",
+                10);
+            AddBirdAchievement(
+                AchievementId.DuckHunterII,
+                "Duck Hunter II",
+                "Kill 100 ducks.",
+                100);
+            AddBirdAchievement(
+                AchievementId.DuckHunterIII,
+                "Duck Hunter III",
+                "Kill 1000 ducks.",
+                1000);
+            AddBirdAchievement(
+                AchievementId.DuckHunterIV,
+                "Duck Hunter IV",
+                "Kill 5000 ducks.",
+                5000);
+
+            AddBirdAchievement(
+                AchievementId.SniperPrecision,
+                "Sniper Precision",
+                "Kill 200 ducks with Cabirne.",
+                200,
+                weaponType: Constants.WeaponType.Cabirne);
+            AddBirdAchievement(
+                AchievementId.LaserSweep,
+                "Laser Sweep",
+                "Kill 500 ducks with Laser Gun.",
+                500,
+                weaponType: Constants.WeaponType.LaserGun);
+            AddBirdAchievement(
+                AchievementId.SulkoRampage,
+                "Sulko Rampage",
+                "Kill 300 ducks with MrSulko.",
+                300,
+                weaponType: Constants.WeaponType.MrSulko);
+            AddBirdAchievement(
+                AchievementId.RifleVeteran,
+                "Rifle Veteran",
+                "Kill 1000 ducks with Rifle.",
+                1000,
+                weaponType: Constants.WeaponType.Rifle);
+
+            AddBirdAchievement(
+                AchievementId.BossSlayer,
+                "Boss Slayer",
+                "Kill 50 MK_VOJVODA ducks.",
+                50,
+                duckType: Constants.DuckType.MK_VOJVODA);
+            AddBirdAchievement(
+                AchievementId.CommanderDown,
+                "Commander Down",
+                "Kill 150 MK_VOJVODA ducks.",
+                150,
+                duckType: Constants.DuckType.MK_VOJVODA);
+            AddBirdAchievement(
+                AchievementId.ArcherCleanup,
+                "Archer Cleanup",
+                "Kill 200 MK_ARCHER ducks.",
+                200,
+                duckType: Constants.DuckType.MK_ARCHER);
+            AddBirdAchievement(
+                AchievementId.PhalarxBreaker,
+                "Phalarx Breaker",
+                "Kill 200 MK_PHALARX ducks.",
+                200,
+                duckType: Constants.DuckType.MK_PHALARX);
+
+            AddBirdAchievement(
+                AchievementId.EliteControlI,
+                "Elite Control I",
+                "Kill 100 elite ducks.",
+                100,
+                duckFilterMode: DuckFilterMode.EliteOnly);
+            AddBirdAchievement(
+                AchievementId.EliteControlII,
+                "Elite Control II",
+                "Kill 300 elite ducks.",
+                300,
+                duckFilterMode: DuckFilterMode.EliteOnly);
+        }
+
+        private void AddBirdAchievement(
+            AchievementId id,
+            string title,
+            string description,
+            int targetCount,
+            Constants.DuckType? duckType = null,
+            Constants.WeaponType? weaponType = null,
+            DuckFilterMode duckFilterMode = DuckFilterMode.Any)
+        {
+            definitions[id] = new AchievementDefinition
             {
-                id = AchievementId.DuckHunter10,
+                id = id,
                 progressSource = ProgressSource.BirdKill,
-                duckType = null,
-                weaponType = null,
-                targetCount = 10,
-                title = "Duck Hunter I",
-                description = "Kill 10 ducks."
+                comboType = null,
+                minimumComboType = null,
+                duckFilterMode = duckType.HasValue ? DuckFilterMode.Exact : duckFilterMode,
+                duckType = duckType ?? default,
+                weaponType = weaponType,
+                targetCount = targetCount,
+                title = title,
+                description = description
             };
-            definitions[AchievementId.PiranhaDoubleKill50] = new AchievementDefinition
+        }
+
+        private void AddComboAchievement(
+            AchievementId id,
+            string title,
+            string description,
+            int targetCount,
+            Constants.MultiKillType? comboType,
+            Constants.WeaponType? weaponType = null,
+            Constants.MultiKillType? minimumComboType = null)
+        {
+            definitions[id] = new AchievementDefinition
             {
-                id = AchievementId.PiranhaDoubleKill50,
+                id = id,
                 progressSource = ProgressSource.ComboKill,
-                comboType = Constants.MultiKillType.DoubleKill,
-                duckType = null,
-                weaponType = Constants.WeaponType.PiranhaGun,
-                targetCount = 50,
-                title = "Predator School",
-                description = "Get 50 Double Kills using Piranha Gun."
+                comboType = comboType,
+                minimumComboType = minimumComboType,
+                duckFilterMode = DuckFilterMode.Any,
+                duckType = default,
+                weaponType = weaponType,
+                targetCount = targetCount,
+                title = title,
+                description = description
             };
         }
 
@@ -170,6 +397,33 @@ namespace ShooterB
                 if (isUnlocked)
                     unlocked.Add(id);
             }
+
+            MigrateLegacyAchievement(AchievementId.DuckHunter10, AchievementId.DuckHunterI);
+        }
+
+        private void MigrateLegacyAchievement(AchievementId oldId, AchievementId newId)
+        {
+            if (!definitions.ContainsKey(newId))
+                return;
+
+            int oldProgress = PlayerPrefs.GetInt(GetProgressKey(oldId), 0);
+            bool oldUnlocked = PlayerPrefs.GetInt(GetUnlockedKey(oldId), 0) == 1;
+
+            if (oldProgress <= 0 && !oldUnlocked)
+                return;
+
+            int target = GetTarget(newId);
+            int mergedProgress = Mathf.Clamp(Mathf.Max(GetProgress(newId), oldProgress), 0, target);
+            progress[newId] = mergedProgress;
+            PlayerPrefs.SetInt(GetProgressKey(newId), mergedProgress);
+
+            if (oldUnlocked || mergedProgress >= target)
+            {
+                unlocked.Add(newId);
+                PlayerPrefs.SetInt(GetUnlockedKey(newId), 1);
+            }
+
+            PlayerPrefs.Save();
         }
 
         private void HandleComboKillDetailed(Constants.MultiKillType comboType, Constants.WeaponType weaponType, int bonusPoints, Vector3 position)
@@ -180,7 +434,14 @@ namespace ShooterB
                 if (definition.progressSource != ProgressSource.ComboKill)
                     continue;
 
-                if (definition.comboType != comboType || definition.weaponType != weaponType)
+                if (definition.comboType.HasValue && definition.comboType.Value != comboType)
+                    continue;
+
+                if (definition.minimumComboType.HasValue &&
+                    GetComboRank(comboType) < GetComboRank(definition.minimumComboType.Value))
+                    continue;
+
+                if (definition.weaponType.HasValue && definition.weaponType.Value != weaponType)
                     continue;
 
                 IncrementProgress(definition.id, 1);
@@ -195,13 +456,36 @@ namespace ShooterB
                 if (definition.progressSource != ProgressSource.BirdKill)
                     continue;
 
-                if (definition.duckType.HasValue && definition.duckType.Value != duckType)
+                if (definition.duckFilterMode == DuckFilterMode.Exact && definition.duckType != duckType)
                     continue;
 
                 if (definition.weaponType.HasValue && definition.weaponType.Value != weaponType)
                     continue;
 
+                if (definition.duckFilterMode == DuckFilterMode.EliteOnly && !IsEliteDuck(duckType))
+                    continue;
+
                 IncrementProgress(definition.id, 1);
+            }
+        }
+
+        private static bool IsEliteDuck(Constants.DuckType duckType)
+        {
+            return duckType == Constants.DuckType.MK_PHALARX ||
+                   duckType == Constants.DuckType.MK_ARCHER ||
+                   duckType == Constants.DuckType.MK_VOJVODA;
+        }
+
+        private static int GetComboRank(Constants.MultiKillType comboType)
+        {
+            switch (comboType)
+            {
+                case Constants.MultiKillType.DoubleKill:
+                    return 2;
+                case Constants.MultiKillType.TripleKill:
+                    return 3;
+                default:
+                    return 4;
             }
         }
 

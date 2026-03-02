@@ -16,7 +16,7 @@ MonoBehaviour:
   briefingText: Duck forces have occupied Skopje landmarks. Push them out and secure
     the city.
   pinSpriteResourcePath: Pins/SkopjeBadge
-  pinPosition: {x: 30, y: 140}
+  pinPosition: {x: 60, y: 120}
   stages:
   - {fileID: 11400000, guid: 66e8da57083c470aa029e7e675465faa, type: 2}
   - {fileID: 11400000, guid: 56a2905d4c284496a78953dd06bd5742, type: 2}

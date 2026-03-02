@@ -563,7 +563,7 @@ namespace ShooterB
 
         private void OnBackClicked()
         {
-            SceneController.Instance.ReturnToMenu();
+            SceneController.Instance.ReturnFromArmory();
         }
     }
 }

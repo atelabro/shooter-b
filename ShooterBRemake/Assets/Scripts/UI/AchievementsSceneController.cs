@@ -84,6 +84,9 @@ namespace ShooterB
 
             foreach (AchievementManager.AchievementId id in sortedIds)
             {
+                if (manager.GetTarget(id) <= 0)
+                    continue;
+
                 AchievementListItemUI row = Instantiate(rowPrefab, contentRoot);
                 row.gameObject.name = $"Achievement_{id}";
                 row.gameObject.SetActive(true);
