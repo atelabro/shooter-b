@@ -9,40 +9,19 @@ namespace ShooterB
     public class ArmoryController : MonoBehaviour
     {
         [Serializable]
-        public class WeaponListItem
-        {
-            public Constants.WeaponType weaponType;
-            public Button button;
-            public TextMeshProUGUI weaponNameText;
-            public Image weaponImage;
-            public GameObject selectedCheckmark;
-        }
-
-        [Serializable]
         public class WeaponIconEntry
         {
             public Constants.WeaponType weaponType;
             public Sprite icon;
         }
 
-        private static readonly Constants.WeaponType[] SelectableWeapons =
-        {
-            Constants.WeaponType.Rifle,
-            Constants.WeaponType.Cabirne,
-            Constants.WeaponType.Beretta,
-            Constants.WeaponType.LaserGun,
-            Constants.WeaponType.PiranhaGun,
-            Constants.WeaponType.TeslaGun,
-            Constants.WeaponType.MrSulko
-        };
-
-        [Header("UI Elements")]
+        [Header("Scene References")]
         public Button quitButton;
         public ScrollRect weaponsScrollRect;
         public RectTransform weaponListContent;
-        public Button weaponRowTemplate;
-        public WeaponListItem[] weaponListItems;
         public WeaponIconEntry[] weaponIcons;
+
+        [Header("Weapon Prefabs")]
         public Weapon rifleWeaponPrefab;
         public Weapon cabirneWeaponPrefab;
         public Weapon piranhaWeaponPrefab;
@@ -51,19 +30,28 @@ namespace ShooterB
         public Weapon berettaWeaponPrefab;
         public Weapon laserWeaponPrefab;
 
-        [Header("Selection Colors")]
-        public Color selectedButtonColor = new Color(0.2f, 0.8f, 0.2f, 1f);
-        public Color normalButtonColor = Color.white;
+        [Header("UI-Only Economy Preview")]
+        public int mockCoins = 250;
 
-        private readonly List<WeaponListItem> activeWeaponItems = new List<WeaponListItem>();
+        private readonly Dictionary<Constants.WeaponType, WeaponCardItemUI> cardsByWeapon = new Dictionary<Constants.WeaponType, WeaponCardItemUI>();
+        private readonly Dictionary<Constants.WeaponType, WeaponCardViewModel> modelsByWeapon = new Dictionary<Constants.WeaponType, WeaponCardViewModel>();
+        private readonly HashSet<Constants.WeaponType> unlockedWeapons = new HashSet<Constants.WeaponType>();
         private readonly HashSet<Constants.WeaponType> missingIconWarnings = new HashSet<Constants.WeaponType>();
+
+        private RectTransform armoryHeaderRoot;
+        private TextMeshProUGUI coinsHeaderText;
+        private UnlockWeaponModalUI unlockModal;
+        private Constants.WeaponType pendingModalWeapon;
 
         private void Start()
         {
             ConfigureBackButton();
             EnsureScrollSetup();
-            BuildWeaponList();
-            RefreshSelectionUI();
+            BuildHeaderUI();
+            BuildUnlockModalUI();
+            BuildCards();
+            RefreshAllCardStates();
+            RefreshCoinsHeader();
         }
 
         private void ConfigureBackButton()
@@ -88,35 +76,10 @@ namespace ShooterB
                 return;
             }
 
-            RectTransform discoveredContent = ResolveExistingListContent();
-            if (discoveredContent != null)
-            {
-                weaponListContent = discoveredContent;
-                EnsureContentLayout(weaponListContent);
-                return;
-            }
-
-            CreateRuntimeScrollView();
-        }
-
-        private RectTransform ResolveExistingListContent()
-        {
-            GameObject contentObject = GameObject.Find("WeaponsListContent");
-            if (contentObject != null)
-                return contentObject.GetComponent<RectTransform>();
-
-            if (weaponsScrollRect != null && weaponsScrollRect.content != null)
-                return weaponsScrollRect.content;
-
-            return null;
-        }
-
-        private void CreateRuntimeScrollView()
-        {
             Canvas canvas = FindObjectOfType<Canvas>();
             if (canvas == null)
             {
-                Debug.LogWarning("[ARMORY] Canvas missing; cannot create runtime weapon list.");
+                Debug.LogWarning("[ARMORY] Canvas missing; cannot initialize weapon list.");
                 return;
             }
 
@@ -124,11 +87,10 @@ namespace ShooterB
             scrollObj.transform.SetParent(canvas.transform, false);
 
             RectTransform scrollRectTransform = scrollObj.GetComponent<RectTransform>();
-            scrollRectTransform.anchorMin = new Vector2(0.5f, 0.5f);
-            scrollRectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-            scrollRectTransform.pivot = new Vector2(0.5f, 0.5f);
-            scrollRectTransform.anchoredPosition = new Vector2(0f, 120f);
-            scrollRectTransform.sizeDelta = new Vector2(760f, 520f);
+            scrollRectTransform.anchorMin = new Vector2(0.08f, 0.14f);
+            scrollRectTransform.anchorMax = new Vector2(0.92f, 0.88f);
+            scrollRectTransform.offsetMin = Vector2.zero;
+            scrollRectTransform.offsetMax = Vector2.zero;
 
             Image scrollImage = scrollObj.GetComponent<Image>();
             scrollImage.color = new Color(0f, 0f, 0f, 0.25f);
@@ -143,7 +105,7 @@ namespace ShooterB
             viewportRect.offsetMax = Vector2.zero;
 
             Image viewportImage = viewportObj.GetComponent<Image>();
-            viewportImage.color = new Color(1f, 1f, 1f, 0.02f);
+            viewportImage.color = new Color(1f, 1f, 1f, 0.03f);
             Mask viewportMask = viewportObj.GetComponent<Mask>();
             viewportMask.showMaskGraphic = false;
 
@@ -154,8 +116,8 @@ namespace ShooterB
             contentRect.anchorMin = new Vector2(0f, 1f);
             contentRect.anchorMax = new Vector2(1f, 1f);
             contentRect.pivot = new Vector2(0.5f, 1f);
-            contentRect.offsetMin = new Vector2(16f, 0f);
-            contentRect.offsetMax = new Vector2(-16f, 0f);
+            contentRect.offsetMin = new Vector2(20f, 0f);
+            contentRect.offsetMax = new Vector2(-20f, 0f);
 
             EnsureContentLayout(contentRect);
 
@@ -180,7 +142,7 @@ namespace ShooterB
                 layout = content.gameObject.AddComponent<VerticalLayoutGroup>();
 
             layout.spacing = 18f;
-            layout.padding = new RectOffset(0, 0, 6, 6);
+            layout.padding = new RectOffset(0, 0, 8, 8);
             layout.childAlignment = TextAnchor.UpperCenter;
             layout.childControlWidth = true;
             layout.childControlHeight = false;
@@ -195,309 +157,374 @@ namespace ShooterB
             fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
         }
 
-        private void BuildWeaponList()
+        private void BuildHeaderUI()
         {
-            activeWeaponItems.Clear();
+            if (weaponListContent == null)
+                return;
 
-            if (weaponListItems != null && weaponListItems.Length > 0)
+            Canvas canvas = weaponListContent.GetComponentInParent<Canvas>();
+            if (canvas == null)
+                return;
+
+            GameObject headerObj = new GameObject("ArmoryHeader", typeof(RectTransform), typeof(Image));
+            headerObj.transform.SetParent(canvas.transform, false);
+            armoryHeaderRoot = headerObj.GetComponent<RectTransform>();
+            armoryHeaderRoot.anchorMin = new Vector2(0.62f, 0.9f);
+            armoryHeaderRoot.anchorMax = new Vector2(0.96f, 0.98f);
+            armoryHeaderRoot.offsetMin = Vector2.zero;
+            armoryHeaderRoot.offsetMax = Vector2.zero;
+
+            Image bg = headerObj.GetComponent<Image>();
+            bg.color = new Color(0f, 0f, 0f, 0.45f);
+
+            GameObject textObj = new GameObject("CoinsText", typeof(RectTransform), typeof(TextMeshProUGUI));
+            textObj.transform.SetParent(armoryHeaderRoot, false);
+            RectTransform textRect = textObj.GetComponent<RectTransform>();
+            textRect.anchorMin = Vector2.zero;
+            textRect.anchorMax = Vector2.one;
+            textRect.offsetMin = new Vector2(14f, 6f);
+            textRect.offsetMax = new Vector2(-14f, -6f);
+
+            coinsHeaderText = textObj.GetComponent<TextMeshProUGUI>();
+            coinsHeaderText.alignment = TextAlignmentOptions.MidlineRight;
+            coinsHeaderText.fontSize = 38f;
+            coinsHeaderText.text = "Coins: 0";
+            coinsHeaderText.color = new Color(1f, 0.88f, 0.35f, 1f);
+        }
+
+        private void BuildUnlockModalUI()
+        {
+            if (weaponListContent == null)
+                return;
+
+            Canvas canvas = weaponListContent.GetComponentInParent<Canvas>();
+            if (canvas == null)
+                return;
+
+            GameObject rootObj = new GameObject("UnlockWeaponModal", typeof(RectTransform), typeof(Image), typeof(UnlockWeaponModalUI));
+            rootObj.transform.SetParent(canvas.transform, false);
+
+            RectTransform rootRect = rootObj.GetComponent<RectTransform>();
+            rootRect.anchorMin = Vector2.zero;
+            rootRect.anchorMax = Vector2.one;
+            rootRect.offsetMin = Vector2.zero;
+            rootRect.offsetMax = Vector2.zero;
+
+            Image rootBg = rootObj.GetComponent<Image>();
+            rootBg.color = new Color(0f, 0f, 0f, 0.72f);
+
+            GameObject panelObj = new GameObject("Panel", typeof(RectTransform), typeof(Image));
+            panelObj.transform.SetParent(rootObj.transform, false);
+            RectTransform panelRect = panelObj.GetComponent<RectTransform>();
+            panelRect.anchorMin = new Vector2(0.2f, 0.2f);
+            panelRect.anchorMax = new Vector2(0.8f, 0.8f);
+            panelRect.offsetMin = Vector2.zero;
+            panelRect.offsetMax = Vector2.zero;
+
+            Image panelBg = panelObj.GetComponent<Image>();
+            panelBg.color = new Color(0.13f, 0.15f, 0.2f, 1f);
+
+            TextMeshProUGUI title = CreateTmpText(panelObj.transform, "Title", new Vector2(0.08f, 0.79f), new Vector2(0.7f, 0.95f), 56f, TextAlignmentOptions.Left);
+            TextMeshProUGUI desc = CreateTmpText(panelObj.transform, "Description", new Vector2(0.08f, 0.58f), new Vector2(0.92f, 0.77f), 33f, TextAlignmentOptions.TopLeft);
+            TextMeshProUGUI cost = CreateTmpText(panelObj.transform, "Cost", new Vector2(0.08f, 0.47f), new Vector2(0.92f, 0.57f), 38f, TextAlignmentOptions.Left);
+            TextMeshProUGUI status = CreateTmpText(panelObj.transform, "Status", new Vector2(0.08f, 0.36f), new Vector2(0.92f, 0.46f), 30f, TextAlignmentOptions.Left);
+
+            GameObject iconObj = new GameObject("Icon", typeof(RectTransform), typeof(Image));
+            iconObj.transform.SetParent(panelObj.transform, false);
+            RectTransform iconRect = iconObj.GetComponent<RectTransform>();
+            iconRect.anchorMin = new Vector2(0.74f, 0.78f);
+            iconRect.anchorMax = new Vector2(0.92f, 0.95f);
+            iconRect.offsetMin = Vector2.zero;
+            iconRect.offsetMax = Vector2.zero;
+            Image icon = iconObj.GetComponent<Image>();
+            icon.preserveAspect = true;
+
+            Button unlockButton = CreateModalButton(panelObj.transform, "UnlockButton", "Unlock", new Vector2(0.48f, 0.08f), new Vector2(0.86f, 0.24f));
+            Button closeButton = CreateModalButton(panelObj.transform, "CloseButton", "Close", new Vector2(0.1f, 0.08f), new Vector2(0.42f, 0.24f));
+
+            unlockModal = rootObj.GetComponent<UnlockWeaponModalUI>();
+            unlockModal.titleText = title;
+            unlockModal.descriptionText = desc;
+            unlockModal.costText = cost;
+            unlockModal.statusText = status;
+            unlockModal.iconImage = icon;
+            unlockModal.unlockButton = unlockButton;
+            unlockModal.closeButton = closeButton;
+            unlockModal.Hide();
+        }
+
+        private void BuildCards()
+        {
+            if (weaponListContent == null)
+                return;
+
+            for (int i = weaponListContent.childCount - 1; i >= 0; i--)
             {
-                foreach (WeaponListItem item in weaponListItems)
+                Destroy(weaponListContent.GetChild(i).gameObject);
+            }
+
+            cardsByWeapon.Clear();
+            modelsByWeapon.Clear();
+            unlockedWeapons.Clear();
+            unlockedWeapons.UnionWith(ArmoryUIDataSource.BuildDefaultUnlockedSet());
+
+            IReadOnlyList<Constants.WeaponType> ordered = ArmoryUIDataSource.GetOrderedWeapons();
+            for (int i = 0; i < ordered.Count; i++)
+            {
+                Constants.WeaponType type = ordered[i];
+                WeaponCardViewModel model = ArmoryUIDataSource.BuildCardModel(type, GetWeaponIcon(type));
+                modelsByWeapon[type] = model;
+
+                WeaponCardItemUI card = CreateCardUI(model);
+                cardsByWeapon[type] = card;
+            }
+        }
+
+        private WeaponCardItemUI CreateCardUI(WeaponCardViewModel model)
+        {
+            GameObject rowObj = new GameObject($"{model.weaponType}Card", typeof(RectTransform), typeof(Image), typeof(Button), typeof(LayoutElement), typeof(WeaponCardItemUI));
+            rowObj.transform.SetParent(weaponListContent, false);
+
+            RectTransform rowRect = rowObj.GetComponent<RectTransform>();
+            rowRect.sizeDelta = new Vector2(0f, 250f);
+
+            LayoutElement layout = rowObj.GetComponent<LayoutElement>();
+            layout.preferredHeight = 250f;
+
+            Image rowBg = rowObj.GetComponent<Image>();
+            rowBg.color = new Color(0.15f, 0.17f, 0.22f, 0.95f);
+
+            GameObject iconObj = new GameObject("WeaponImage", typeof(RectTransform), typeof(Image));
+            iconObj.transform.SetParent(rowObj.transform, false);
+            RectTransform iconRect = iconObj.GetComponent<RectTransform>();
+            iconRect.anchorMin = new Vector2(0f, 0.15f);
+            iconRect.anchorMax = new Vector2(0f, 0.85f);
+            iconRect.sizeDelta = new Vector2(120f, 120f);
+            iconRect.anchoredPosition = new Vector2(80f, 0f);
+            Image iconImage = iconObj.GetComponent<Image>();
+            iconImage.preserveAspect = true;
+
+            TextMeshProUGUI title = CreateTmpText(rowObj.transform, "Title", new Vector2(0f, 0.72f), new Vector2(1f, 0.95f), 44f, TextAlignmentOptions.Left);
+            title.rectTransform.offsetMin = new Vector2(170f, 0f);
+            title.rectTransform.offsetMax = new Vector2(-230f, 0f);
+
+            TextMeshProUGUI description = CreateTmpText(rowObj.transform, "Description", new Vector2(0f, 0.52f), new Vector2(1f, 0.73f), 28f, TextAlignmentOptions.TopLeft);
+            description.rectTransform.offsetMin = new Vector2(170f, 0f);
+            description.rectTransform.offsetMax = new Vector2(-24f, 0f);
+            description.enableWordWrapping = true;
+
+            TextMeshProUGUI cost = CreateTmpText(rowObj.transform, "Cost", new Vector2(1f, 0.74f), new Vector2(1f, 0.95f), 34f, TextAlignmentOptions.Right);
+            cost.rectTransform.offsetMin = new Vector2(-210f, 0f);
+            cost.rectTransform.offsetMax = new Vector2(-18f, 0f);
+
+            TextMeshProUGUI fireType = CreateStatText(rowObj.transform, "FireType", new Vector2(170f, 90f));
+            TextMeshProUGUI fireRate = CreateStatText(rowObj.transform, "FireRate", new Vector2(170f, 58f));
+            TextMeshProUGUI reload = CreateStatText(rowObj.transform, "Reload", new Vector2(170f, 26f));
+            TextMeshProUGUI travel = CreateStatText(rowObj.transform, "Travel", new Vector2(520f, 90f));
+            TextMeshProUGUI chain = CreateStatText(rowObj.transform, "Chain", new Vector2(520f, 58f));
+            TextMeshProUGUI aoe = CreateStatText(rowObj.transform, "AoE", new Vector2(520f, 26f));
+
+            GameObject selectedBadgeObj = new GameObject("SelectedBadge", typeof(RectTransform), typeof(Image));
+            selectedBadgeObj.transform.SetParent(rowObj.transform, false);
+            RectTransform selectedRect = selectedBadgeObj.GetComponent<RectTransform>();
+            selectedRect.anchorMin = new Vector2(1f, 1f);
+            selectedRect.anchorMax = new Vector2(1f, 1f);
+            selectedRect.pivot = new Vector2(1f, 1f);
+            selectedRect.sizeDelta = new Vector2(180f, 42f);
+            selectedRect.anchoredPosition = new Vector2(-16f, -10f);
+            Image selectedBg = selectedBadgeObj.GetComponent<Image>();
+            selectedBg.color = new Color(0.22f, 0.8f, 0.3f, 1f);
+            TextMeshProUGUI selectedText = CreateTmpText(selectedBadgeObj.transform, "Text", Vector2.zero, Vector2.one, 24f, TextAlignmentOptions.Center);
+            selectedText.text = "SELECTED";
+            selectedBadgeObj.SetActive(false);
+
+            GameObject lockedOverlayObj = new GameObject("LockedOverlay", typeof(RectTransform), typeof(Image));
+            lockedOverlayObj.transform.SetParent(rowObj.transform, false);
+            RectTransform lockedRect = lockedOverlayObj.GetComponent<RectTransform>();
+            lockedRect.anchorMin = Vector2.zero;
+            lockedRect.anchorMax = Vector2.one;
+            lockedRect.offsetMin = Vector2.zero;
+            lockedRect.offsetMax = Vector2.zero;
+            Image lockedBg = lockedOverlayObj.GetComponent<Image>();
+            lockedBg.color = new Color(0f, 0f, 0f, 0.5f);
+            TextMeshProUGUI lockedText = CreateTmpText(lockedOverlayObj.transform, "LockedText", new Vector2(0f, 0.42f), new Vector2(1f, 0.62f), 34f, TextAlignmentOptions.Center);
+            lockedText.text = "LOCKED";
+            Button unlockButton = CreateModalButton(lockedOverlayObj.transform, "UnlockButton", "View Unlock", new Vector2(0.68f, 0.1f), new Vector2(0.95f, 0.26f));
+
+            WeaponCardItemUI itemUI = rowObj.GetComponent<WeaponCardItemUI>();
+            itemUI.titleText = title;
+            itemUI.descriptionText = description;
+            itemUI.costText = cost;
+            itemUI.fireTypeText = fireType;
+            itemUI.fireRateText = fireRate;
+            itemUI.reloadText = reload;
+            itemUI.travelSpeedText = travel;
+            itemUI.chainLightningText = chain;
+            itemUI.aoeText = aoe;
+            itemUI.iconImage = iconImage;
+            itemUI.backgroundImage = rowBg;
+            itemUI.selectedBadge = selectedBadgeObj;
+            itemUI.lockedOverlay = lockedOverlayObj;
+            itemUI.unlockButton = unlockButton;
+
+            Button rowButton = rowObj.GetComponent<Button>();
+            rowButton.onClick.RemoveAllListeners();
+            rowButton.onClick.AddListener(() => OnCardPressed(model.weaponType));
+            unlockButton.onClick.RemoveAllListeners();
+            unlockButton.onClick.AddListener(() => OnCardPressed(model.weaponType));
+
+            return itemUI;
+        }
+
+        private static TextMeshProUGUI CreateStatText(Transform parent, string name, Vector2 anchoredPos)
+        {
+            GameObject textObj = new GameObject(name, typeof(RectTransform), typeof(TextMeshProUGUI));
+            textObj.transform.SetParent(parent, false);
+            RectTransform textRect = textObj.GetComponent<RectTransform>();
+            textRect.anchorMin = new Vector2(0f, 0f);
+            textRect.anchorMax = new Vector2(0f, 0f);
+            textRect.pivot = new Vector2(0f, 0f);
+            textRect.sizeDelta = new Vector2(320f, 28f);
+            textRect.anchoredPosition = anchoredPos;
+
+            TextMeshProUGUI text = textObj.GetComponent<TextMeshProUGUI>();
+            text.fontSize = 24f;
+            text.alignment = TextAlignmentOptions.Left;
+            text.color = new Color(0.83f, 0.88f, 1f, 1f);
+            text.text = name;
+            return text;
+        }
+
+        private static TextMeshProUGUI CreateTmpText(Transform parent, string name, Vector2 anchorMin, Vector2 anchorMax, float fontSize, TextAlignmentOptions align)
+        {
+            GameObject textObj = new GameObject(name, typeof(RectTransform), typeof(TextMeshProUGUI));
+            textObj.transform.SetParent(parent, false);
+
+            RectTransform textRect = textObj.GetComponent<RectTransform>();
+            textRect.anchorMin = anchorMin;
+            textRect.anchorMax = anchorMax;
+            textRect.offsetMin = Vector2.zero;
+            textRect.offsetMax = Vector2.zero;
+
+            TextMeshProUGUI text = textObj.GetComponent<TextMeshProUGUI>();
+            text.fontSize = fontSize;
+            text.alignment = align;
+            text.color = Color.white;
+            text.text = string.Empty;
+            return text;
+        }
+
+        private static Button CreateModalButton(Transform parent, string name, string label, Vector2 anchorMin, Vector2 anchorMax)
+        {
+            GameObject btnObj = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(Button));
+            btnObj.transform.SetParent(parent, false);
+
+            RectTransform rect = btnObj.GetComponent<RectTransform>();
+            rect.anchorMin = anchorMin;
+            rect.anchorMax = anchorMax;
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+
+            Image bg = btnObj.GetComponent<Image>();
+            bg.color = new Color(0.22f, 0.45f, 0.75f, 1f);
+
+            TextMeshProUGUI text = CreateTmpText(btnObj.transform, "Text", Vector2.zero, Vector2.one, 28f, TextAlignmentOptions.Center);
+            text.text = label;
+
+            return btnObj.GetComponent<Button>();
+        }
+
+        private void RefreshAllCardStates()
+        {
+            foreach (KeyValuePair<Constants.WeaponType, WeaponCardItemUI> pair in cardsByWeapon)
+            {
+                Constants.WeaponType type = pair.Key;
+                WeaponCardItemUI card = pair.Value;
+                if (card == null || !modelsByWeapon.ContainsKey(type))
+                    continue;
+
+                bool isLocked = !unlockedWeapons.Contains(type);
+                bool canAfford = !isLocked || mockCoins >= modelsByWeapon[type].cost;
+                WeaponCardVisualState visualState = new WeaponCardVisualState
                 {
-                    if (item == null || item.button == null)
-                        continue;
+                    isSelected = !isLocked && GameManager.Instance.SelectedWeaponType == type,
+                    isLocked = isLocked,
+                    canAfford = canAfford
+                };
 
-                    RegisterWeaponItem(item);
-                }
+                card.Bind(modelsByWeapon[type], visualState);
             }
+        }
 
-            if (activeWeaponItems.Count == 0)
+        private void RefreshCoinsHeader()
+        {
+            if (coinsHeaderText != null)
+                coinsHeaderText.text = $"Coins: {mockCoins}";
+        }
+
+        private void OnCardPressed(Constants.WeaponType weaponType)
+        {
+            bool isUnlocked = unlockedWeapons.Contains(weaponType);
+            if (!isUnlocked)
             {
-                BuildWeaponListFromTemplate();
+                OpenUnlockModal(weaponType);
                 return;
             }
 
-            EnsureAllSelectableWeaponsPresent();
-        }
-
-        private void BuildWeaponListFromTemplate()
-        {
-            if (weaponListContent == null)
-            {
-                Debug.LogWarning("[ARMORY] Weapon list content is missing; cannot build weapon cards.");
-                return;
-            }
-
-            if (weaponRowTemplate == null)
-                weaponRowTemplate = FindTemplateButton();
-
-            if (weaponRowTemplate == null)
-                weaponRowTemplate = CreateFallbackTemplateButton();
-
-            if (weaponRowTemplate == null)
-            {
-                Debug.LogWarning("[ARMORY] No weapon row template available.");
-                return;
-            }
-
-            if (weaponRowTemplate != null && weaponRowTemplate.transform.parent == weaponListContent)
-                weaponRowTemplate.gameObject.SetActive(false);
-
-            for (int i = 0; i < SelectableWeapons.Length; i++)
-            {
-                Constants.WeaponType type = SelectableWeapons[i];
-                CreateAndRegisterWeaponItem(type, weaponRowTemplate);
-            }
-        }
-
-        private void EnsureAllSelectableWeaponsPresent()
-        {
-            HashSet<Constants.WeaponType> existingTypes = new HashSet<Constants.WeaponType>();
-            for (int i = 0; i < activeWeaponItems.Count; i++)
-            {
-                WeaponListItem item = activeWeaponItems[i];
-                if (item != null)
-                    existingTypes.Add(item.weaponType);
-            }
-
-            if (weaponRowTemplate == null)
-                weaponRowTemplate = FindTemplateButton();
-            if (weaponRowTemplate == null)
-                weaponRowTemplate = CreateFallbackTemplateButton();
-            if (weaponRowTemplate == null)
-                return;
-
-            if (weaponRowTemplate.transform.parent == weaponListContent)
-                weaponRowTemplate.gameObject.SetActive(false);
-
-            for (int i = 0; i < SelectableWeapons.Length; i++)
-            {
-                Constants.WeaponType type = SelectableWeapons[i];
-                if (existingTypes.Contains(type))
-                    continue;
-
-                CreateAndRegisterWeaponItem(type, weaponRowTemplate);
-            }
-        }
-
-        private void CreateAndRegisterWeaponItem(Constants.WeaponType type, Button template)
-        {
-            if (template == null || weaponListContent == null)
-                return;
-
-            Button button = Instantiate(template, weaponListContent);
-            button.transform.SetParent(weaponListContent, false);
-            button.gameObject.SetActive(true);
-            button.gameObject.name = $"{type}Item";
-
-            TextMeshProUGUI label = ResolveOrCreateLabel(button);
-            Image iconImage = ResolveOrCreateWeaponImage(button.gameObject);
-
-            RegisterWeaponItem(new WeaponListItem
-            {
-                weaponType = type,
-                button = button,
-                weaponNameText = label,
-                weaponImage = iconImage
-            });
-        }
-
-        private Button FindTemplateButton()
-        {
-            if (weaponListContent == null)
-                return null;
-
-            Button[] buttons = weaponListContent.GetComponentsInChildren<Button>(true);
-            foreach (Button button in buttons)
-            {
-                if (button != null && button != quitButton)
-                    return button;
-            }
-
-            return null;
-        }
-
-        private Button CreateFallbackTemplateButton()
-        {
-            if (weaponListContent == null)
-                return null;
-
-            GameObject buttonObj = new GameObject("WeaponItemTemplate", typeof(RectTransform), typeof(Image), typeof(Button), typeof(LayoutElement));
-            buttonObj.transform.SetParent(weaponListContent, false);
-
-            RectTransform rect = buttonObj.GetComponent<RectTransform>();
-            rect.sizeDelta = new Vector2(0f, 96f);
-
-            LayoutElement layoutElement = buttonObj.GetComponent<LayoutElement>();
-            layoutElement.preferredHeight = 96f;
-
-            Image panelImage = buttonObj.GetComponent<Image>();
-            panelImage.color = new Color(0.08f, 0.12f, 0.18f, 0.9f);
-
-            ResolveOrCreateWeaponImage(buttonObj);
-            ResolveOrCreateLabel(buttonObj.GetComponent<Button>());
-            ResolveOrCreateCheckmark(buttonObj);
-
-            return buttonObj.GetComponent<Button>();
-        }
-
-        private void RegisterWeaponItem(WeaponListItem item)
-        {
-            if (item == null || item.button == null)
-                return;
-
-            if (weaponListContent != null && item.button.transform.parent != weaponListContent)
-                item.button.transform.SetParent(weaponListContent, false);
-
-            item.weaponNameText = item.weaponNameText != null ? item.weaponNameText : ResolveOrCreateLabel(item.button);
-            item.weaponImage = item.weaponImage != null ? item.weaponImage : ResolveOrCreateWeaponImage(item.button.gameObject);
-            item.selectedCheckmark = item.selectedCheckmark != null ? item.selectedCheckmark : ResolveOrCreateCheckmark(item.button.gameObject);
-
-            SetButtonLabel(item.button, GetWeaponDisplayName(item.weaponType), item.weaponNameText);
-            ApplyWeaponImage(item);
-
-            item.button.onClick.RemoveAllListeners();
-            Constants.WeaponType capturedType = item.weaponType;
-            item.button.onClick.AddListener(() => OnWeaponSelected(capturedType));
-
-            activeWeaponItems.Add(item);
-        }
-
-        private void OnWeaponSelected(Constants.WeaponType weaponType)
-        {
             GameManager.Instance.SetSelectedWeapon(weaponType);
-            RefreshSelectionUI();
+            RefreshAllCardStates();
         }
 
-        private void RefreshSelectionUI()
+        private void OpenUnlockModal(Constants.WeaponType weaponType)
         {
-            Constants.WeaponType selectedType = GameManager.Instance.SelectedWeaponType;
-
-            foreach (WeaponListItem item in activeWeaponItems)
-            {
-                if (item == null || item.button == null)
-                    continue;
-
-                bool isSelected = item.weaponType == selectedType;
-
-                if (item.button.targetGraphic != null)
-                    item.button.targetGraphic.color = isSelected ? selectedButtonColor : normalButtonColor;
-
-                if (item.selectedCheckmark != null)
-                    item.selectedCheckmark.SetActive(isSelected);
-            }
-        }
-
-        private TextMeshProUGUI ResolveOrCreateLabel(Button button)
-        {
-            if (button == null)
-                return null;
-
-            TextMeshProUGUI label = button.GetComponentInChildren<TextMeshProUGUI>(true);
-            if (label != null)
-                return label;
-
-            GameObject labelObj = new GameObject("Label", typeof(RectTransform), typeof(TextMeshProUGUI));
-            labelObj.transform.SetParent(button.transform, false);
-
-            RectTransform labelRect = labelObj.GetComponent<RectTransform>();
-            labelRect.anchorMin = new Vector2(0f, 0f);
-            labelRect.anchorMax = new Vector2(1f, 1f);
-            labelRect.offsetMin = new Vector2(110f, 0f);
-            labelRect.offsetMax = new Vector2(-90f, 0f);
-
-            TextMeshProUGUI createdLabel = labelObj.GetComponent<TextMeshProUGUI>();
-            createdLabel.alignment = TextAlignmentOptions.MidlineLeft;
-            createdLabel.fontSize = 42f;
-            createdLabel.text = "WEAPON";
-            return createdLabel;
-        }
-
-        private Image ResolveOrCreateWeaponImage(GameObject rowObject)
-        {
-            if (rowObject == null)
-                return null;
-
-            Transform existing = rowObject.transform.Find("WeaponImage");
-            if (existing != null)
-                return existing.GetComponent<Image>();
-
-            GameObject imageObj = new GameObject("WeaponImage", typeof(RectTransform), typeof(Image));
-            imageObj.transform.SetParent(rowObject.transform, false);
-
-            RectTransform imageRect = imageObj.GetComponent<RectTransform>();
-            imageRect.anchorMin = new Vector2(0f, 0.5f);
-            imageRect.anchorMax = new Vector2(0f, 0.5f);
-            imageRect.pivot = new Vector2(0f, 0.5f);
-            imageRect.sizeDelta = new Vector2(72f, 72f);
-            imageRect.anchoredPosition = new Vector2(18f, 0f);
-
-            Image image = imageObj.GetComponent<Image>();
-            image.preserveAspect = true;
-            image.color = new Color(1f, 1f, 1f, 0.35f);
-            return image;
-        }
-
-        private static GameObject ResolveOrCreateCheckmark(GameObject rowObject)
-        {
-            if (rowObject == null)
-                return null;
-
-            Transform existing = rowObject.transform.Find("Checkmark");
-            if (existing != null)
-                return existing.gameObject;
-
-            GameObject checkObj = new GameObject("Checkmark", typeof(RectTransform), typeof(TextMeshProUGUI));
-            checkObj.transform.SetParent(rowObject.transform, false);
-
-            RectTransform checkRect = checkObj.GetComponent<RectTransform>();
-            checkRect.anchorMin = new Vector2(1f, 0.5f);
-            checkRect.anchorMax = new Vector2(1f, 0.5f);
-            checkRect.pivot = new Vector2(1f, 0.5f);
-            checkRect.sizeDelta = new Vector2(64f, 64f);
-            checkRect.anchoredPosition = new Vector2(-16f, 0f);
-
-            TextMeshProUGUI checkText = checkObj.GetComponent<TextMeshProUGUI>();
-            checkText.text = "V";
-            checkText.alignment = TextAlignmentOptions.Center;
-            checkText.fontSize = 46f;
-            checkText.color = new Color(0.15f, 1f, 0.25f, 1f);
-
-            return checkObj;
-        }
-
-        private void ApplyWeaponImage(WeaponListItem item)
-        {
-            if (item == null || item.weaponImage == null)
+            if (unlockModal == null || !modelsByWeapon.ContainsKey(weaponType))
                 return;
 
-            Sprite icon = GetWeaponIcon(item.weaponType);
-            item.weaponImage.sprite = icon;
-            item.weaponImage.enabled = icon != null;
+            pendingModalWeapon = weaponType;
+            WeaponCardViewModel model = modelsByWeapon[weaponType];
+            UnlockWeaponModalUI.UnlockModalState state = mockCoins >= model.cost
+                ? UnlockWeaponModalUI.UnlockModalState.CanUnlock
+                : UnlockWeaponModalUI.UnlockModalState.InsufficientCoins;
+
+            unlockModal.Configure(model, state, mockCoins, OnUnlockConfirmedUiOnly, CloseUnlockModal);
+            unlockModal.Show();
+        }
+
+        private void OnUnlockConfirmedUiOnly()
+        {
+            if (!modelsByWeapon.ContainsKey(pendingModalWeapon))
+                return;
+
+            unlockedWeapons.Add(pendingModalWeapon);
+            GameManager.Instance.SetSelectedWeapon(pendingModalWeapon);
+            CloseUnlockModal();
+            RefreshAllCardStates();
+        }
+
+        private void CloseUnlockModal()
+        {
+            if (unlockModal != null)
+                unlockModal.Hide();
         }
 
         private Sprite GetWeaponIcon(Constants.WeaponType weaponType)
         {
-            if (weaponIcons == null)
-                return GetWeaponIconFromPrefabs(weaponType);
-
-            for (int i = 0; i < weaponIcons.Length; i++)
+            if (weaponIcons != null)
             {
-                if (weaponIcons[i] != null && weaponIcons[i].weaponType == weaponType)
-                    return weaponIcons[i].icon;
+                for (int i = 0; i < weaponIcons.Length; i++)
+                {
+                    if (weaponIcons[i] != null && weaponIcons[i].weaponType == weaponType && weaponIcons[i].icon != null)
+                        return weaponIcons[i].icon;
+                }
             }
 
-            return GetWeaponIconFromPrefabs(weaponType);
-        }
-
-        private Sprite GetWeaponIconFromPrefabs(Constants.WeaponType weaponType)
-        {
-            Weapon weaponPrefab = GetWeaponPrefabByType(weaponType);
-            if (weaponPrefab != null && weaponPrefab.weaponIcon != null)
-                return weaponPrefab.weaponIcon;
+            Weapon prefab = GetWeaponPrefabByType(weaponType);
+            if (prefab != null && prefab.weaponIcon != null)
+                return prefab.weaponIcon;
 
             if (!missingIconWarnings.Contains(weaponType))
             {
-                Debug.LogWarning($"[ARMORY] No icon found for {weaponType}. Assign via weaponIcons or weapon prefab icon.");
+                Debug.LogWarning($"[ARMORY] No icon found for {weaponType}.");
                 missingIconWarnings.Add(weaponType);
             }
 
@@ -527,38 +554,14 @@ namespace ShooterB
             }
         }
 
-        private static void SetButtonLabel(Button button, string text, TextMeshProUGUI label = null)
+        private static void SetButtonLabel(Button button, string text)
         {
             if (button == null)
                 return;
 
-            if (label == null)
-                label = button.GetComponentInChildren<TextMeshProUGUI>(true);
-
+            TextMeshProUGUI label = button.GetComponentInChildren<TextMeshProUGUI>(true);
             if (label != null)
                 label.text = text;
-        }
-
-        private static string GetWeaponDisplayName(Constants.WeaponType weaponType)
-        {
-            switch (weaponType)
-            {
-                case Constants.WeaponType.PiranhaGun:
-                    return "PIRANHA";
-                case Constants.WeaponType.TeslaGun:
-                    return "TESLA";
-                case Constants.WeaponType.MrSulko:
-                    return "MR SULKO";
-                case Constants.WeaponType.Cabirne:
-                    return "CABIRNE";
-                case Constants.WeaponType.Beretta:
-                    return "BERETTA";
-                case Constants.WeaponType.LaserGun:
-                    return "LASER";
-                case Constants.WeaponType.Rifle:
-                default:
-                    return "RIFLE";
-            }
         }
 
         private void OnBackClicked()
