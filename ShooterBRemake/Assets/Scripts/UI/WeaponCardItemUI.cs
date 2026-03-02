@@ -51,7 +51,7 @@ namespace ShooterB
             if (travelSpeedText != null)
                 travelSpeedText.text = $"Travel: {model.travelSpeedLabel}";
             if (chainLightningText != null)
-                chainLightningText.text = $"Chain: {model.chainLightningLabel}";
+                chainLightningText.text = $"Bullets: {model.bulletsLabel}";
             if (aoeText != null)
                 aoeText.text = $"AoE: {model.aoeLabel}";
 

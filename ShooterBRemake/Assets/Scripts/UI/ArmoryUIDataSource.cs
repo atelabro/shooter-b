@@ -10,6 +10,7 @@ namespace ShooterB
             public Constants.WeaponFireMode fireMode;
             public float fireDelay;
             public float reloadDelay;
+            public int maxBullets;
             public float travelSpeed;
             public float areaOfEffect;
             public int chainLightning;
@@ -26,6 +27,7 @@ namespace ShooterB
                         fireMode = Constants.WeaponFireMode.SingleTap,
                         fireDelay = 0.3f,
                         reloadDelay = 0.8f,
+                        maxBullets = 2,
                         travelSpeed = 50f,
                         areaOfEffect = 0.9f,
                         chainLightning = 0,
@@ -39,6 +41,7 @@ namespace ShooterB
                         fireMode = Constants.WeaponFireMode.SingleTap,
                         fireDelay = 0.2f,
                         reloadDelay = 0.6f,
+                        maxBullets = 7,
                         travelSpeed = 45f,
                         areaOfEffect = 0.4f,
                         chainLightning = 0,
@@ -52,6 +55,7 @@ namespace ShooterB
                         fireMode = Constants.WeaponFireMode.HoldAutomatic,
                         fireDelay = 0.2f,
                         reloadDelay = 2.4f,
+                        maxBullets = 14,
                         travelSpeed = 50f,
                         areaOfEffect = 0.24f,
                         chainLightning = 0,
@@ -65,6 +69,7 @@ namespace ShooterB
                         fireMode = Constants.WeaponFireMode.SingleTap,
                         fireDelay = 0.26f,
                         reloadDelay = 0.83f,
+                        maxBullets = 11,
                         travelSpeed = 50f,
                         areaOfEffect = 1.1f,
                         chainLightning = 0,
@@ -78,6 +83,7 @@ namespace ShooterB
                         fireMode = Constants.WeaponFireMode.SingleTap,
                         fireDelay = 0.9f,
                         reloadDelay = 1.4f,
+                        maxBullets = 3,
                         travelSpeed = 16.67f,
                         areaOfEffect = 1.1f,
                         chainLightning = 0,
@@ -91,10 +97,11 @@ namespace ShooterB
                         fireMode = Constants.WeaponFireMode.SingleTap,
                         fireDelay = 0.1f,
                         reloadDelay = 0.4f,
+                        maxBullets = 5,
                         travelSpeed = 60f,
                         areaOfEffect = 6.0f,
                         chainLightning = 2,
-                        description = "Tesla coils chain lightning across nearby targets."
+                        description = "Fires electric shots that chain lightning across nearby ducks."
                     }
                 },
                 {
@@ -104,6 +111,7 @@ namespace ShooterB
                         fireMode = Constants.WeaponFireMode.HoldAutomatic,
                         fireDelay = 0.1f,
                         reloadDelay = 0.72f,
+                        maxBullets = 14,
                         travelSpeed = 58f,
                         areaOfEffect = 0.4f,
                         chainLightning = 0,
@@ -132,7 +140,12 @@ namespace ShooterB
         {
             return new HashSet<Constants.WeaponType>
             {
-                Constants.WeaponType.PiranhaGun
+                Constants.WeaponType.PiranhaGun,
+                Constants.WeaponType.Rifle,
+                Constants.WeaponType.Cabirne,
+                Constants.WeaponType.Beretta,
+                Constants.WeaponType.MrSulko,
+                Constants.WeaponType.TeslaGun
             };
         }
 
@@ -149,7 +162,7 @@ namespace ShooterB
                 fireRateLabel = $"{(1f / Mathf.Max(0.01f, stats.fireDelay)):0.0} shots/sec",
                 reloadLabel = $"{stats.reloadDelay:0.00}s",
                 travelSpeedLabel = $"{stats.travelSpeed:0.##}",
-                chainLightningLabel = stats.chainLightning > 0 ? $"{stats.chainLightning} jumps" : "None",
+                bulletsLabel = stats.maxBullets.ToString(),
                 aoeLabel = $"{stats.areaOfEffect:0.##}",
                 icon = iconOverride
             };

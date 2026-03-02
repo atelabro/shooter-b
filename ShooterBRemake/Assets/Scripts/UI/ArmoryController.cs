@@ -19,6 +19,8 @@ namespace ShooterB
         public Button quitButton;
         public ScrollRect weaponsScrollRect;
         public RectTransform weaponListContent;
+        public TextMeshProUGUI coinsHeaderText;
+        public GameObject weaponCardPrefab;
         public WeaponIconEntry[] weaponIcons;
 
         [Header("Weapon Prefabs")]
@@ -38,8 +40,6 @@ namespace ShooterB
         private readonly HashSet<Constants.WeaponType> unlockedWeapons = new HashSet<Constants.WeaponType>();
         private readonly HashSet<Constants.WeaponType> missingIconWarnings = new HashSet<Constants.WeaponType>();
 
-        private RectTransform armoryHeaderRoot;
-        private TextMeshProUGUI coinsHeaderText;
         private UnlockWeaponModalUI unlockModal;
         private Constants.WeaponType pendingModalWeapon;
 
@@ -47,7 +47,6 @@ namespace ShooterB
         {
             ConfigureBackButton();
             EnsureScrollSetup();
-            BuildHeaderUI();
             BuildUnlockModalUI();
             BuildCards();
             RefreshAllCardStates();
@@ -157,41 +156,6 @@ namespace ShooterB
             fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
         }
 
-        private void BuildHeaderUI()
-        {
-            if (weaponListContent == null)
-                return;
-
-            Canvas canvas = weaponListContent.GetComponentInParent<Canvas>();
-            if (canvas == null)
-                return;
-
-            GameObject headerObj = new GameObject("ArmoryHeader", typeof(RectTransform), typeof(Image));
-            headerObj.transform.SetParent(canvas.transform, false);
-            armoryHeaderRoot = headerObj.GetComponent<RectTransform>();
-            armoryHeaderRoot.anchorMin = new Vector2(0.62f, 0.9f);
-            armoryHeaderRoot.anchorMax = new Vector2(0.96f, 0.98f);
-            armoryHeaderRoot.offsetMin = Vector2.zero;
-            armoryHeaderRoot.offsetMax = Vector2.zero;
-
-            Image bg = headerObj.GetComponent<Image>();
-            bg.color = new Color(0f, 0f, 0f, 0.45f);
-
-            GameObject textObj = new GameObject("CoinsText", typeof(RectTransform), typeof(TextMeshProUGUI));
-            textObj.transform.SetParent(armoryHeaderRoot, false);
-            RectTransform textRect = textObj.GetComponent<RectTransform>();
-            textRect.anchorMin = Vector2.zero;
-            textRect.anchorMax = Vector2.one;
-            textRect.offsetMin = new Vector2(14f, 6f);
-            textRect.offsetMax = new Vector2(-14f, -6f);
-
-            coinsHeaderText = textObj.GetComponent<TextMeshProUGUI>();
-            coinsHeaderText.alignment = TextAlignmentOptions.MidlineRight;
-            coinsHeaderText.fontSize = 38f;
-            coinsHeaderText.text = "Coins: 0";
-            coinsHeaderText.color = new Color(1f, 0.88f, 0.35f, 1f);
-        }
-
         private void BuildUnlockModalUI()
         {
             if (weaponListContent == null)
@@ -282,117 +246,45 @@ namespace ShooterB
 
         private WeaponCardItemUI CreateCardUI(WeaponCardViewModel model)
         {
-            GameObject rowObj = new GameObject($"{model.weaponType}Card", typeof(RectTransform), typeof(Image), typeof(Button), typeof(LayoutElement), typeof(WeaponCardItemUI));
-            rowObj.transform.SetParent(weaponListContent, false);
+            if (weaponCardPrefab == null)
+            {
+                Debug.LogError("[ARMORY] Weapon card prefab is not assigned.");
+                return null;
+            }
 
-            RectTransform rowRect = rowObj.GetComponent<RectTransform>();
-            rowRect.sizeDelta = new Vector2(0f, 250f);
-
-            LayoutElement layout = rowObj.GetComponent<LayoutElement>();
-            layout.preferredHeight = 250f;
-
-            Image rowBg = rowObj.GetComponent<Image>();
-            rowBg.color = new Color(0.15f, 0.17f, 0.22f, 0.95f);
-
-            GameObject iconObj = new GameObject("WeaponImage", typeof(RectTransform), typeof(Image));
-            iconObj.transform.SetParent(rowObj.transform, false);
-            RectTransform iconRect = iconObj.GetComponent<RectTransform>();
-            iconRect.anchorMin = new Vector2(0f, 0.15f);
-            iconRect.anchorMax = new Vector2(0f, 0.85f);
-            iconRect.sizeDelta = new Vector2(120f, 120f);
-            iconRect.anchoredPosition = new Vector2(80f, 0f);
-            Image iconImage = iconObj.GetComponent<Image>();
-            iconImage.preserveAspect = true;
-
-            TextMeshProUGUI title = CreateTmpText(rowObj.transform, "Title", new Vector2(0f, 0.72f), new Vector2(1f, 0.95f), 44f, TextAlignmentOptions.Left);
-            title.rectTransform.offsetMin = new Vector2(170f, 0f);
-            title.rectTransform.offsetMax = new Vector2(-230f, 0f);
-
-            TextMeshProUGUI description = CreateTmpText(rowObj.transform, "Description", new Vector2(0f, 0.52f), new Vector2(1f, 0.73f), 28f, TextAlignmentOptions.TopLeft);
-            description.rectTransform.offsetMin = new Vector2(170f, 0f);
-            description.rectTransform.offsetMax = new Vector2(-24f, 0f);
-            description.enableWordWrapping = true;
-
-            TextMeshProUGUI cost = CreateTmpText(rowObj.transform, "Cost", new Vector2(1f, 0.74f), new Vector2(1f, 0.95f), 34f, TextAlignmentOptions.Right);
-            cost.rectTransform.offsetMin = new Vector2(-210f, 0f);
-            cost.rectTransform.offsetMax = new Vector2(-18f, 0f);
-
-            TextMeshProUGUI fireType = CreateStatText(rowObj.transform, "FireType", new Vector2(170f, 90f));
-            TextMeshProUGUI fireRate = CreateStatText(rowObj.transform, "FireRate", new Vector2(170f, 58f));
-            TextMeshProUGUI reload = CreateStatText(rowObj.transform, "Reload", new Vector2(170f, 26f));
-            TextMeshProUGUI travel = CreateStatText(rowObj.transform, "Travel", new Vector2(520f, 90f));
-            TextMeshProUGUI chain = CreateStatText(rowObj.transform, "Chain", new Vector2(520f, 58f));
-            TextMeshProUGUI aoe = CreateStatText(rowObj.transform, "AoE", new Vector2(520f, 26f));
-
-            GameObject selectedBadgeObj = new GameObject("SelectedBadge", typeof(RectTransform), typeof(Image));
-            selectedBadgeObj.transform.SetParent(rowObj.transform, false);
-            RectTransform selectedRect = selectedBadgeObj.GetComponent<RectTransform>();
-            selectedRect.anchorMin = new Vector2(1f, 1f);
-            selectedRect.anchorMax = new Vector2(1f, 1f);
-            selectedRect.pivot = new Vector2(1f, 1f);
-            selectedRect.sizeDelta = new Vector2(180f, 42f);
-            selectedRect.anchoredPosition = new Vector2(-16f, -10f);
-            Image selectedBg = selectedBadgeObj.GetComponent<Image>();
-            selectedBg.color = new Color(0.22f, 0.8f, 0.3f, 1f);
-            TextMeshProUGUI selectedText = CreateTmpText(selectedBadgeObj.transform, "Text", Vector2.zero, Vector2.one, 24f, TextAlignmentOptions.Center);
-            selectedText.text = "SELECTED";
-            selectedBadgeObj.SetActive(false);
-
-            GameObject lockedOverlayObj = new GameObject("LockedOverlay", typeof(RectTransform), typeof(Image));
-            lockedOverlayObj.transform.SetParent(rowObj.transform, false);
-            RectTransform lockedRect = lockedOverlayObj.GetComponent<RectTransform>();
-            lockedRect.anchorMin = Vector2.zero;
-            lockedRect.anchorMax = Vector2.one;
-            lockedRect.offsetMin = Vector2.zero;
-            lockedRect.offsetMax = Vector2.zero;
-            Image lockedBg = lockedOverlayObj.GetComponent<Image>();
-            lockedBg.color = new Color(0f, 0f, 0f, 0.5f);
-            TextMeshProUGUI lockedText = CreateTmpText(lockedOverlayObj.transform, "LockedText", new Vector2(0f, 0.42f), new Vector2(1f, 0.62f), 34f, TextAlignmentOptions.Center);
-            lockedText.text = "LOCKED";
-            Button unlockButton = CreateModalButton(lockedOverlayObj.transform, "UnlockButton", "View Unlock", new Vector2(0.68f, 0.1f), new Vector2(0.95f, 0.26f));
+            GameObject rowObj = Instantiate(weaponCardPrefab, weaponListContent);
+            rowObj.name = $"{model.weaponType}Card";
 
             WeaponCardItemUI itemUI = rowObj.GetComponent<WeaponCardItemUI>();
-            itemUI.titleText = title;
-            itemUI.descriptionText = description;
-            itemUI.costText = cost;
-            itemUI.fireTypeText = fireType;
-            itemUI.fireRateText = fireRate;
-            itemUI.reloadText = reload;
-            itemUI.travelSpeedText = travel;
-            itemUI.chainLightningText = chain;
-            itemUI.aoeText = aoe;
-            itemUI.iconImage = iconImage;
-            itemUI.backgroundImage = rowBg;
-            itemUI.selectedBadge = selectedBadgeObj;
-            itemUI.lockedOverlay = lockedOverlayObj;
-            itemUI.unlockButton = unlockButton;
+            if (itemUI == null)
+            {
+                Debug.LogError("[ARMORY] Weapon card prefab is missing WeaponCardItemUI.");
+                Destroy(rowObj);
+                return null;
+            }
+
+            RectTransform rowRect = rowObj.GetComponent<RectTransform>();
+            if (rowRect != null)
+                rowRect.sizeDelta = new Vector2(0f, 250f);
+
+            LayoutElement layout = rowObj.GetComponent<LayoutElement>();
+            if (layout != null)
+                layout.preferredHeight = 250f;
 
             Button rowButton = rowObj.GetComponent<Button>();
-            rowButton.onClick.RemoveAllListeners();
-            rowButton.onClick.AddListener(() => OnCardPressed(model.weaponType));
-            unlockButton.onClick.RemoveAllListeners();
-            unlockButton.onClick.AddListener(() => OnCardPressed(model.weaponType));
+            if (rowButton != null)
+            {
+                rowButton.onClick.RemoveAllListeners();
+                rowButton.onClick.AddListener(() => OnCardPressed(model.weaponType));
+            }
+
+            if (itemUI.unlockButton != null)
+            {
+                itemUI.unlockButton.onClick.RemoveAllListeners();
+                itemUI.unlockButton.onClick.AddListener(() => OnCardPressed(model.weaponType));
+            }
 
             return itemUI;
-        }
-
-        private static TextMeshProUGUI CreateStatText(Transform parent, string name, Vector2 anchoredPos)
-        {
-            GameObject textObj = new GameObject(name, typeof(RectTransform), typeof(TextMeshProUGUI));
-            textObj.transform.SetParent(parent, false);
-            RectTransform textRect = textObj.GetComponent<RectTransform>();
-            textRect.anchorMin = new Vector2(0f, 0f);
-            textRect.anchorMax = new Vector2(0f, 0f);
-            textRect.pivot = new Vector2(0f, 0f);
-            textRect.sizeDelta = new Vector2(320f, 28f);
-            textRect.anchoredPosition = anchoredPos;
-
-            TextMeshProUGUI text = textObj.GetComponent<TextMeshProUGUI>();
-            text.fontSize = 24f;
-            text.alignment = TextAlignmentOptions.Left;
-            text.color = new Color(0.83f, 0.88f, 1f, 1f);
-            text.text = name;
-            return text;
         }
 
         private static TextMeshProUGUI CreateTmpText(Transform parent, string name, Vector2 anchorMin, Vector2 anchorMax, float fontSize, TextAlignmentOptions align)

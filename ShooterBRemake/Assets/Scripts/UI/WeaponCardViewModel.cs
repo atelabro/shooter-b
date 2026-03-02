@@ -12,7 +12,7 @@ namespace ShooterB
         public string fireRateLabel;
         public string reloadLabel;
         public string travelSpeedLabel;
-        public string chainLightningLabel;
+        public string bulletsLabel;
         public string aoeLabel;
         public Sprite icon;
     }
