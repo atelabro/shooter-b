@@ -1924,6 +1924,7 @@ MonoBehaviour:
   applyTop: 1
   applyBottom: 1
   extraPaddingPx: {x: 0, y: 0}
+  logSafeAreaChanges: 1
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:

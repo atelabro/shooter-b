@@ -11,10 +11,13 @@ namespace ShooterB
         public bool applyTop = true;
         public bool applyBottom = true;
         public Vector2 extraPaddingPx = Vector2.zero;
+        public bool showDebugOverlay = false;
+        public bool logSafeAreaChanges = false;
 
         private Rect lastSafeArea = new Rect(0f, 0f, -1f, -1f);
         private Vector2Int lastScreenSize = Vector2Int.zero;
         private ScreenOrientation lastOrientation = ScreenOrientation.AutoRotation;
+        private static Texture2D debugTexture;
 
         private void Reset()
         {
@@ -63,6 +66,9 @@ namespace ShooterB
             lastScreenSize = new Vector2Int(screenWidth, screenHeight);
             lastOrientation = orientation;
 
+            if (logSafeAreaChanges)
+                Debug.Log($"[SAFE AREA] {name} safeArea={safeArea} screen={screenWidth}x{screenHeight} orientation={orientation}");
+
             float left = (safeArea.xMin + (applyLeft ? extraPaddingPx.x : 0f)) / screenWidth;
             float right = (safeArea.xMax - (applyRight ? extraPaddingPx.x : 0f)) / screenWidth;
             float bottom = (safeArea.yMin + (applyBottom ? extraPaddingPx.y : 0f)) / screenHeight;
@@ -89,6 +95,55 @@ namespace ShooterB
             targetRect.anchorMax = anchorMax;
             targetRect.offsetMin = Vector2.zero;
             targetRect.offsetMax = Vector2.zero;
+        }
+
+        private void OnGUI()
+        {
+            if (!showDebugOverlay)
+                return;
+
+            int screenWidth = Screen.width;
+            int screenHeight = Screen.height;
+            if (screenWidth <= 0 || screenHeight <= 0)
+                return;
+
+            Rect safeArea = GetValidatedSafeArea(screenWidth, screenHeight);
+            Rect guiSafe = ToGuiRect(safeArea, screenHeight);
+
+            DrawRect(new Rect(0f, 0f, screenWidth, guiSafe.yMin), new Color(1f, 0f, 0f, 0.2f));
+            DrawRect(new Rect(0f, guiSafe.yMax, screenWidth, screenHeight - guiSafe.yMax), new Color(1f, 0f, 0f, 0.2f));
+            DrawRect(new Rect(0f, guiSafe.yMin, guiSafe.xMin, guiSafe.height), new Color(1f, 0f, 0f, 0.2f));
+            DrawRect(new Rect(guiSafe.xMax, guiSafe.yMin, screenWidth - guiSafe.xMax, guiSafe.height), new Color(1f, 0f, 0f, 0.2f));
+
+            const float border = 2f;
+            DrawRect(new Rect(guiSafe.xMin, guiSafe.yMin, guiSafe.width, border), Color.green);
+            DrawRect(new Rect(guiSafe.xMin, guiSafe.yMax - border, guiSafe.width, border), Color.green);
+            DrawRect(new Rect(guiSafe.xMin, guiSafe.yMin, border, guiSafe.height), Color.green);
+            DrawRect(new Rect(guiSafe.xMax - border, guiSafe.yMin, border, guiSafe.height), Color.green);
+        }
+
+        private static Rect ToGuiRect(Rect safeArea, int screenHeight)
+        {
+            float topY = screenHeight - safeArea.yMax;
+            return new Rect(safeArea.xMin, topY, safeArea.width, safeArea.height);
+        }
+
+        private static void DrawRect(Rect rect, Color color)
+        {
+            if (rect.width <= 0f || rect.height <= 0f)
+                return;
+
+            if (debugTexture == null)
+            {
+                debugTexture = new Texture2D(1, 1);
+                debugTexture.SetPixel(0, 0, Color.white);
+                debugTexture.Apply();
+            }
+
+            Color prev = GUI.color;
+            GUI.color = color;
+            GUI.DrawTexture(rect, debugTexture);
+            GUI.color = prev;
         }
 
         private static Rect GetValidatedSafeArea(int screenWidth, int screenHeight)

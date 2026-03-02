@@ -3817,6 +3817,7 @@ MonoBehaviour:
   applyTop: 1
   applyBottom: 1
   extraPaddingPx: {x: 0, y: 0}
+  logSafeAreaChanges: 1
 --- !u!1 &1463973700
 GameObject:
   m_ObjectHideFlags: 0
