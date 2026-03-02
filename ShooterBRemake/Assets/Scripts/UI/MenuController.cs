@@ -9,6 +9,7 @@ namespace ShooterB
         [Header("UI Elements")]
         public Button campaignButton;
         public Button armoryButton;
+        public Button achievementsButton;
         public Button quitButton;
         public TextMeshProUGUI highScoreText;
         public TextMeshProUGUI titleText;
@@ -20,6 +21,9 @@ namespace ShooterB
 
             if (armoryButton != null)
                 armoryButton.onClick.AddListener(OnArmoryClicked);
+
+            if (achievementsButton != null)
+                achievementsButton.onClick.AddListener(OnAchievementsClicked);
 
             if (quitButton != null)
                 quitButton.onClick.AddListener(OnQuitClicked);
@@ -38,6 +42,11 @@ namespace ShooterB
         private void OnArmoryClicked()
         {
             SceneController.Instance.LoadArmoryScene();
+        }
+
+        private void OnAchievementsClicked()
+        {
+            SceneController.Instance.LoadAchievementsScene();
         }
 
         private void OnQuitClicked()

@@ -170,15 +170,15 @@ namespace ShooterB
 
             if (killsFromSingleImpact == 2)
             {
-                GameManager.Instance.AddComboPoints(Constants.MultiKillType.DoubleKill, comboWorldPosition);
+                GameManager.Instance.AddComboPoints(Constants.MultiKillType.DoubleKill, firedByWeapon, comboWorldPosition);
             }
             else if (killsFromSingleImpact == 3)
             {
-                GameManager.Instance.AddComboPoints(Constants.MultiKillType.TripleKill, comboWorldPosition);
+                GameManager.Instance.AddComboPoints(Constants.MultiKillType.TripleKill, firedByWeapon, comboWorldPosition);
             }
             else
             {
-                GameManager.Instance.AddComboPoints(Constants.MultiKillType.QuadraKill, comboWorldPosition);
+                GameManager.Instance.AddComboPoints(Constants.MultiKillType.QuadraKill, firedByWeapon, comboWorldPosition);
             }
         }
 

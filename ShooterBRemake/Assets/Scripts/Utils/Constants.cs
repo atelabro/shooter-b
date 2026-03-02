@@ -84,6 +84,7 @@ namespace ShooterB
             Game,
             CampaignGame,
             Armory,
+            Achievements,
             Loading
         }
 

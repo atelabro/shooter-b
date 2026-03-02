@@ -40,7 +40,9 @@ namespace ShooterB
         public event Action<bool> OnPauseStateChanged;
         public event Action OnGameOver;
         public event Action<Constants.MultiKillType, int, Vector3> OnComboKill;
+        public event Action<Constants.MultiKillType, Constants.WeaponType, int, Vector3> OnComboKillDetailed;
         public event Action<int> OnBirdsKilledChanged;
+        public event Action<Constants.DuckType, Constants.WeaponType> OnBirdKilled;
         public event Action<Constants.WeaponType> OnSelectedWeaponChanged;
 
         private int birdsUntilNextDifficulty;
@@ -55,6 +57,7 @@ namespace ShooterB
             instance = this;
             DontDestroyOnLoad(gameObject);
             LoadSelectedWeapon();
+            _ = AchievementManager.Instance;
         }
 
         public void InitializeGame(Constants.GameMode mode, int startingDifficulty = Constants.INITIAL_DIFFICULTY)
@@ -104,6 +107,11 @@ namespace ShooterB
 
         public void BirdKilled(Constants.DuckType duckType)
         {
+            BirdKilled(duckType, SelectedWeaponType);
+        }
+
+        public void BirdKilled(Constants.DuckType duckType, Constants.WeaponType weaponType)
+        {
             int basePoints = Constants.DuckPoints.GetPoints(duckType);
             int pointsEarned = basePoints * Multiplier;
 
@@ -111,8 +119,9 @@ namespace ShooterB
 
             BirdsKilled++;
             OnBirdsKilledChanged?.Invoke(BirdsKilled);
+            OnBirdKilled?.Invoke(duckType, weaponType);
 
-            Debug.Log($"Duck killed - Type: {duckType}, Base: {basePoints}, Multiplier: {Multiplier}, Earned: {pointsEarned}");
+            Debug.Log($"Duck killed - Type: {duckType}, Weapon: {weaponType}, Base: {basePoints}, Multiplier: {Multiplier}, Earned: {pointsEarned}");
         }
 
         public void BirdPassed()
@@ -128,11 +137,17 @@ namespace ShooterB
 
         public void AddComboPoints(Constants.MultiKillType type, Vector3? worldPosition = null)
         {
+            AddComboPoints(type, SelectedWeaponType, worldPosition);
+        }
+
+        public void AddComboPoints(Constants.MultiKillType type, Constants.WeaponType weaponType, Vector3? worldPosition = null)
+        {
             int bonusPoints = Constants.ComboPoints.GetPoints(type);
             AddPoints(bonusPoints);
             Vector3 comboPosition = worldPosition ?? Vector3.zero;
             OnComboKill?.Invoke(type, bonusPoints, comboPosition);
-            Debug.Log($"Combo! {type} - Bonus points: {bonusPoints}");
+            OnComboKillDetailed?.Invoke(type, weaponType, bonusPoints, comboPosition);
+            Debug.Log($"Combo! {type} with {weaponType} - Bonus points: {bonusPoints}");
         }
 
         private void AddPoints(int points)

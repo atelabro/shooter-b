@@ -65,6 +65,13 @@ namespace ShooterB
             SceneManager.LoadScene(GetSceneName(Constants.SceneType.Armory));
         }
 
+        public void LoadAchievementsScene()
+        {
+            CurrentScene = Constants.SceneType.Achievements;
+            Debug.Log("Loading achievements scene");
+            SceneManager.LoadScene(GetSceneName(Constants.SceneType.Achievements));
+        }
+
         public void LoadCampaignStage(StageConfig config)
         {
             CurrentScene = Constants.SceneType.CampaignGame;
@@ -118,6 +125,8 @@ namespace ShooterB
                     return "CampaignGameScene";
                 case Constants.SceneType.Armory:
                     return "ArmoryScene";
+                case Constants.SceneType.Achievements:
+                    return "AchievementsScene";
                 case Constants.SceneType.Loading:
                     return "LoadingScene";
                 default:
