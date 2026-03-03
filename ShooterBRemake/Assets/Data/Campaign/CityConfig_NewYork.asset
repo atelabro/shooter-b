@@ -17,5 +17,11 @@ MonoBehaviour:
     it back.
   pinSpriteResourcePath: Pins/NewYorkBadge
   pinPosition: {x: -460, y: 100}
-  stages: []
+  stages:
+  - {fileID: 11400000, guid: c2b2f8b9a9c64c4c8f71a2e3d8f4b101, type: 2}
+  - {fileID: 11400000, guid: c2b2f8b9a9c64c4c8f71a2e3d8f4b102, type: 2}
+  - {fileID: 11400000, guid: c2b2f8b9a9c64c4c8f71a2e3d8f4b103, type: 2}
+  - {fileID: 11400000, guid: c2b2f8b9a9c64c4c8f71a2e3d8f4b104, type: 2}
+  - {fileID: 11400000, guid: c2b2f8b9a9c64c4c8f71a2e3d8f4b105, type: 2}
+  - {fileID: 11400000, guid: c2b2f8b9a9c64c4c8f71a2e3d8f4b106, type: 2}
   starsRequiredToUnlock: 9

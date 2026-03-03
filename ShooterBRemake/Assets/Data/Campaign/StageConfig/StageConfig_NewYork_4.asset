@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_NewYork_4
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 18
+  mapName: Times Square Crossfire
+  briefingText: Lights and chaos. Threats flood from every lane with minimal reaction time.
+  backgroundSprite: {fileID: 2435483641052818400, guid: 8d0913bbfb5b9444ba99b96857bf30d6, type: 3}
+  starThreshold1: 170
+  starThreshold2: 260
+  starThreshold3: 340
+  starsRequiredToUnlock: 14
+  startingDifficulty: 19
+  spawnConfig: {fileID: 11400000, guid: d2b2f8b9a9c64c4c8f71a2e3d8f4c205, type: 2}

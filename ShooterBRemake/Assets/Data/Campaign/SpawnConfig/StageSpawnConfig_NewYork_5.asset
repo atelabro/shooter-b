@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7d10ede515c4c36b362e617a940917, type: 3}
+  m_Name: StageSpawnConfig_NewYork_5
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageSpawnConfig
+  spawnSequence:
+  - duckType: 10
+    delay: 0.5
+  - duckType: 10
+    delay: 0.5
+  - duckType: 10
+    delay: 0.4
+  - duckType: 9
+    delay: 0.4
+  - duckType: 10
+    delay: 0.4
+  - duckType: 9
+    delay: 0.4
+  - duckType: 8
+    delay: 0.4
+  - duckType: 8
+    delay: 0.4
+  - duckType: 10
+    delay: 0.4
+  - duckType: 9
+    delay: 0.4
+  - duckType: 8
+    delay: 0.4
+  - duckType: 8
+    delay: 0.3
+  - duckType: 10
+    delay: 0.3
+  - duckType: 10
+    delay: 0.4
+  - duckType: 9
+    delay: 0.3
+  - duckType: 8
+    delay: 0.3
+  - duckType: 8
+    delay: 0.3
+  - duckType: 10
+    delay: 0.3
+  - duckType: 9
+    delay: 0.3
+  - duckType: 8
+    delay: 0.3
+  - duckType: 8
+    delay: 0.3
+  - duckType: 10
+    delay: 0.3
+  - duckType: 8
+    delay: 0.3
+  - duckType: 8
+    delay: 0.3
+  - duckType: 10
+    delay: 0.3
+  - duckType: 8
+    delay: 0.3
+  - duckType: 8
+    delay: 0.2
+  - duckType: 10
+    delay: 0.3
+  - duckType: 8
+    delay: 0.2
+  - duckType: 8
+    delay: 0.2
+  weightGoStraight: 0.16
+  weightGoTop: 0.5
+  weightGoBottom: 0.34
+  duckSpeedMultiplier: 1.8
