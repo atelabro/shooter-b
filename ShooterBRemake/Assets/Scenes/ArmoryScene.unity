@@ -534,7 +534,6 @@ MonoBehaviour:
   quitButton: {fileID: 406195786}
   weaponsScrollRect: {fileID: 1801166830}
   weaponListContent: {fileID: 498010962}
-  coinsHeaderText: {fileID: 2147483022}
   weaponCardPrefab: {fileID: 6600584767469381700, guid: c6c4ea60900484757896b33386f8c04b, type: 3}
   weaponIcons: []
   rifleWeaponPrefab: {fileID: 7312278767487371377, guid: 64b7ab8107b68491a93959d416d5ff22, type: 3}
@@ -1288,7 +1287,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Coins: 9999'
+  m_text: 9999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
   m_sharedMaterial: {fileID: 5430614821553359432, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
@@ -1378,6 +1377,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2147483031}
   - component: {fileID: 2147483004}
+  - component: {fileID: 665432198765432102}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -1426,6 +1426,20 @@ MonoBehaviour:
   applyBottom: 0
   extraPaddingPx: {x: 0, y: 0}
   logSafeAreaChanges: 1
+--- !u!114 &665432198765432102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147483030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a36f95a24c4f2fa76cb450139809cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CurrencyHeaderUI
+  coinsText: {fileID: 2147483022}
+  prefix: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

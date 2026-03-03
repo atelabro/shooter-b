@@ -19,7 +19,6 @@ namespace ShooterB
         public Button quitButton;
         public ScrollRect weaponsScrollRect;
         public RectTransform weaponListContent;
-        public TextMeshProUGUI coinsHeaderText;
         public GameObject weaponCardPrefab;
         public WeaponIconEntry[] weaponIcons;
 
@@ -60,7 +59,6 @@ namespace ShooterB
             BuildUnlockModalUI();
             BuildCards();
             RefreshAllCardStates();
-            RefreshCoinsHeader();
         }
 
         private void ConfigureBackButton()
@@ -358,12 +356,6 @@ namespace ShooterB
             }
         }
 
-        private void RefreshCoinsHeader()
-        {
-            if (coinsHeaderText != null)
-                coinsHeaderText.text = $"Coins: {CurrentCoins}";
-        }
-
         private void OnCardPressed(Constants.WeaponType weaponType)
         {
             bool isUnlocked = unlockedWeapons.Contains(weaponType);
@@ -409,12 +401,10 @@ namespace ShooterB
             GameManager.Instance.SetSelectedWeapon(pendingModalWeapon);
             CloseUnlockModal();
             RefreshAllCardStates();
-            RefreshCoinsHeader();
         }
 
         private void HandleCoinsChanged(int coins)
         {
-            RefreshCoinsHeader();
             RefreshAllCardStates();
         }
 
