@@ -419,31 +419,30 @@ namespace ShooterB
             if (canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay)
                 uiCamera = canvas.worldCamera != null ? canvas.worldCamera : cam;
 
-            Vector2 targetPosition;
-            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, screenPoint, uiCamera, out Vector2 localPoint))
-            {
-                targetPosition = localPoint;
-            }
-            else
+            if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, screenPoint, uiCamera, out Vector2 localPoint))
             {
                 // Fallback keeps popup away from the screen center when conversion fails.
-                targetPosition = new Vector2(0f, 120f);
+                localPoint = new Vector2(0f, 120f);
             }
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(popupRect);
 
             const float edgePadding = 8f;
-            Rect bounds = parentRect.rect;
-            Vector2 popupSize = popupRect.rect.size;
+            Vector2 popupPixelSize = popupRect.rect.size;
+            if (canvas != null && canvas.scaleFactor > 0f)
+                popupPixelSize *= canvas.scaleFactor;
 
-            float minX = bounds.xMin + edgePadding + (popupSize.x * popupRect.pivot.x);
-            float maxX = bounds.xMax - edgePadding - (popupSize.x * (1f - popupRect.pivot.x));
-            float minY = bounds.yMin + edgePadding + (popupSize.y * popupRect.pivot.y);
-            float maxY = bounds.yMax - edgePadding - (popupSize.y * (1f - popupRect.pivot.y));
+            float halfWidth = popupPixelSize.x * 0.5f;
+            float halfHeight = popupPixelSize.y * 0.5f;
 
-            popupRect.anchoredPosition = new Vector2(
-                Mathf.Clamp(targetPosition.x, minX, maxX),
-                Mathf.Clamp(targetPosition.y, minY, maxY));
+            Vector2 clampedScreenPoint = new Vector2(
+                Mathf.Clamp(screenPoint.x, halfWidth + edgePadding, Screen.width - halfWidth - edgePadding),
+                Mathf.Clamp(screenPoint.y, halfHeight + edgePadding, Screen.height - halfHeight - edgePadding));
+
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, clampedScreenPoint, uiCamera, out Vector2 clampedLocalPoint))
+                popupRect.anchoredPosition = clampedLocalPoint;
+            else
+                popupRect.anchoredPosition = localPoint;
         }
 
         private static string GetComboLabel(Constants.MultiKillType type)
