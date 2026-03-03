@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: StageSpawnConfig_Paris_3
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageSpawnConfig
   spawnSequence:
-  - duckType: 8
+  - duckType: 9
     delay: 0.9
-  - duckType: 8
+  - duckType: 9
     delay: 1
-  - duckType: 8
+  - duckType: 9
     delay: 0.8
-  - duckType: 8
+  - duckType: 9
     delay: 0.9
-  - duckType: 8
+  - duckType: 9
     delay: 0.8
-  - duckType: 8
+  - duckType: 9
     delay: 0.9
-  - duckType: 8
+  - duckType: 9
     delay: 0.8
   - duckType: 8
     delay: 0.8

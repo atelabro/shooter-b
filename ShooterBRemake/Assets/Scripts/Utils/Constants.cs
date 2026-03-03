@@ -61,7 +61,8 @@ namespace ShooterB
             MK_PHALARX,
             MK_ARCHER,
             MK_VOJVODA,
-            FRENCH_REVOLUTIONARY
+            FRENCH_REVOLUTIONARY,
+            FRENCH_NAPOLEON
         }
 
         public static string GetDuckDisplayName(DuckType type)
@@ -77,6 +78,7 @@ namespace ShooterB
                 case DuckType.MK_ARCHER: return "Macedonian Archer";
                 case DuckType.MK_VOJVODA: return "Macedonian Vojvoda";
                 case DuckType.FRENCH_REVOLUTIONARY: return "French Revolutionary";
+                case DuckType.FRENCH_NAPOLEON: return "French Napoleon";
                 // Reserve this switch for future region-specific duck additions (e.g. France).
                 default: return type.ToString();
             }
@@ -95,6 +97,7 @@ namespace ShooterB
                 case DuckType.MK_ARCHER: return "MK_ARCHER";
                 case DuckType.MK_VOJVODA: return "MK_VOJVODA";
                 case DuckType.FRENCH_REVOLUTIONARY: return "FRENCH_REVOLUTIONARY";
+                case DuckType.FRENCH_NAPOLEON: return "FRENCH_NAPOLEON";
                 default: return type.ToString();
             }
         }
@@ -136,6 +139,7 @@ namespace ShooterB
             public const int MK_ARCHER = 1;
             public const int MK_VOJVODA = 2;
             public const int FRENCH_REVOLUTIONARY = 2;
+            public const int FRENCH_NAPOLEON = 2;
 
             public static int GetPoints(DuckType type)
             {
@@ -150,6 +154,7 @@ namespace ShooterB
                     case DuckType.MK_ARCHER: return MK_ARCHER;
                     case DuckType.MK_VOJVODA: return MK_VOJVODA;
                     case DuckType.FRENCH_REVOLUTIONARY: return FRENCH_REVOLUTIONARY;
+                    case DuckType.FRENCH_NAPOLEON: return FRENCH_NAPOLEON;
                     default: return TYPE_0;
                 }
             }
