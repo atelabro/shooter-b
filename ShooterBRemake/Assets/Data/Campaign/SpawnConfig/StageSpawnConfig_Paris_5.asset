@@ -13,61 +13,61 @@ MonoBehaviour:
   m_Name: StageSpawnConfig_Paris_5
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageSpawnConfig
   spawnSequence:
-  - duckType: 4
+  - duckType: 8
     delay: 0.8
-  - duckType: 3
+  - duckType: 8
     delay: 0.7
-  - duckType: 4
+  - duckType: 8
     delay: 0.8
-  - duckType: 2
+  - duckType: 8
     delay: 0.6
-  - duckType: 4
+  - duckType: 8
     delay: 0.7
-  - duckType: 3
+  - duckType: 8
     delay: 0.6
-  - duckType: 4
+  - duckType: 8
     delay: 0.7
-  - duckType: 2
+  - duckType: 8
     delay: 0.6
-  - duckType: 3
+  - duckType: 8
     delay: 0.6
-  - duckType: 4
+  - duckType: 8
     delay: 0.7
-  - duckType: 2
+  - duckType: 8
     delay: 0.6
-  - duckType: 4
+  - duckType: 8
     delay: 0.7
-  - duckType: 3
+  - duckType: 8
     delay: 0.6
-  - duckType: 4
+  - duckType: 8
     delay: 0.7
-  - duckType: 2
+  - duckType: 8
     delay: 0.5
-  - duckType: 3
+  - duckType: 8
     delay: 0.6
-  - duckType: 4
+  - duckType: 8
     delay: 0.7
-  - duckType: 3
+  - duckType: 8
     delay: 0.6
-  - duckType: 4
+  - duckType: 8
     delay: 0.7
-  - duckType: 2
+  - duckType: 8
     delay: 0.5
-  - duckType: 4
+  - duckType: 8
     delay: 0.6
-  - duckType: 3
+  - duckType: 8
     delay: 0.5
-  - duckType: 4
+  - duckType: 8
     delay: 0.6
-  - duckType: 3
+  - duckType: 8
     delay: 0.5
-  - duckType: 4
+  - duckType: 8
     delay: 0.6
-  - duckType: 2
+  - duckType: 8
     delay: 0.5
-  - duckType: 4
+  - duckType: 8
     delay: 0.6
-  - duckType: 3
+  - duckType: 8
     delay: 0.5
   weightGoStraight: 0.22
   weightGoTop: 0.47

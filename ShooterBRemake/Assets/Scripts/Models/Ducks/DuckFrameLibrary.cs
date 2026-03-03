@@ -19,6 +19,7 @@ namespace ShooterB
         public Sprite[] GetFrames(Constants.DuckType type)
         {
             Sprite[] fallbackType0 = null;
+            int validVariantCount = 0;
 
             if (frameSets == null || frameSets.Length == 0)
             {
@@ -41,7 +42,28 @@ namespace ShooterB
                     frameSets[i].frames != null &&
                     frameSets[i].frames.Length > 0)
                 {
-                    return frameSets[i].frames;
+                    validVariantCount++;
+                }
+            }
+
+            if (validVariantCount > 0)
+            {
+                int selectedVariant = UnityEngine.Random.Range(0, validVariantCount);
+                int currentVariant = 0;
+
+                for (int i = 0; i < frameSets.Length; i++)
+                {
+                    if (frameSets[i].duckType != type ||
+                        frameSets[i].frames == null ||
+                        frameSets[i].frames.Length == 0)
+                    {
+                        continue;
+                    }
+
+                    if (currentVariant == selectedVariant)
+                        return frameSets[i].frames;
+
+                    currentVariant++;
                 }
             }
 

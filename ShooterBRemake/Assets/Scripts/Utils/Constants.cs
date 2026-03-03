@@ -60,7 +60,43 @@ namespace ShooterB
             Type4,
             MK_PHALARX,
             MK_ARCHER,
-            MK_VOJVODA
+            MK_VOJVODA,
+            FRENCH_REVOLUTIONARY
+        }
+
+        public static string GetDuckDisplayName(DuckType type)
+        {
+            switch (type)
+            {
+                case DuckType.Type0: return "Duck I";
+                case DuckType.Type1: return "Duck II";
+                case DuckType.Type2: return "Duck III";
+                case DuckType.Type3: return "Duck IV";
+                case DuckType.Type4: return "Duck V";
+                case DuckType.MK_PHALARX: return "Macedonian Phalanx";
+                case DuckType.MK_ARCHER: return "Macedonian Archer";
+                case DuckType.MK_VOJVODA: return "Macedonian Vojvoda";
+                case DuckType.FRENCH_REVOLUTIONARY: return "French Revolutionary";
+                // Reserve this switch for future region-specific duck additions (e.g. France).
+                default: return type.ToString();
+            }
+        }
+
+        public static string GetDuckDebugName(DuckType type)
+        {
+            switch (type)
+            {
+                case DuckType.Type0: return "TYPE_0";
+                case DuckType.Type1: return "TYPE_1";
+                case DuckType.Type2: return "TYPE_2";
+                case DuckType.Type3: return "TYPE_3";
+                case DuckType.Type4: return "TYPE_4";
+                case DuckType.MK_PHALARX: return "MK_PHALARX";
+                case DuckType.MK_ARCHER: return "MK_ARCHER";
+                case DuckType.MK_VOJVODA: return "MK_VOJVODA";
+                case DuckType.FRENCH_REVOLUTIONARY: return "FRENCH_REVOLUTIONARY";
+                default: return type.ToString();
+            }
         }
 
         public enum MovementPattern
@@ -99,6 +135,7 @@ namespace ShooterB
             public const int MK_PHALARX = 1;
             public const int MK_ARCHER = 1;
             public const int MK_VOJVODA = 2;
+            public const int FRENCH_REVOLUTIONARY = 2;
 
             public static int GetPoints(DuckType type)
             {
@@ -112,6 +149,7 @@ namespace ShooterB
                     case DuckType.MK_PHALARX: return MK_PHALARX;
                     case DuckType.MK_ARCHER: return MK_ARCHER;
                     case DuckType.MK_VOJVODA: return MK_VOJVODA;
+                    case DuckType.FRENCH_REVOLUTIONARY: return FRENCH_REVOLUTIONARY;
                     default: return TYPE_0;
                 }
             }

@@ -8,7 +8,7 @@ namespace ShooterB
         {
             startRadius = 0.2f;
             secondRadius = 0.7f;
-            effectiveRadius = 0.9f;
+            effectiveRadius = 1.215f;
             baseSpeed = 50f;
 
             base.Awake();

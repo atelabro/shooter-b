@@ -18,7 +18,7 @@ namespace ShooterB
         {
             startRadius = 1.2f;
             secondRadius = 0.6f;
-            effectiveRadius = 1.1f;
+            effectiveRadius = 1.485f;
             baseSpeed = 60f;
             visualScaleMultiplier = ComputeNormalizedTeslaVisualScale();
 

@@ -450,7 +450,8 @@ namespace ShooterB
         {
             return duckType == Constants.DuckType.MK_PHALARX ||
                    duckType == Constants.DuckType.MK_ARCHER ||
-                   duckType == Constants.DuckType.MK_VOJVODA;
+                   duckType == Constants.DuckType.MK_VOJVODA ||
+                   duckType == Constants.DuckType.FRENCH_REVOLUTIONARY;
         }
 
         private static string GetTodayToken()

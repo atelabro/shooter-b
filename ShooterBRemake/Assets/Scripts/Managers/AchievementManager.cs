@@ -323,28 +323,28 @@ namespace ShooterB
             AddBirdAchievement(
                 AchievementId.BossSlayer,
                 "Boss Slayer",
-                "Kill 50 MK_VOJVODA ducks.",
+                $"Kill 50 {Constants.GetDuckDisplayName(Constants.DuckType.MK_VOJVODA)} ducks.",
                 50,
                 duckType: Constants.DuckType.MK_VOJVODA,
                 coinReward: 7);
             AddBirdAchievement(
                 AchievementId.CommanderDown,
                 "Commander Down",
-                "Kill 150 MK_VOJVODA ducks.",
+                $"Kill 150 {Constants.GetDuckDisplayName(Constants.DuckType.MK_VOJVODA)} ducks.",
                 150,
                 duckType: Constants.DuckType.MK_VOJVODA,
                 coinReward: 20);
             AddBirdAchievement(
                 AchievementId.ArcherCleanup,
                 "Archer Cleanup",
-                "Kill 200 MK_ARCHER ducks.",
+                $"Kill 200 {Constants.GetDuckDisplayName(Constants.DuckType.MK_ARCHER)} ducks.",
                 200,
                 duckType: Constants.DuckType.MK_ARCHER,
                 coinReward: 10);
             AddBirdAchievement(
                 AchievementId.PhalarxBreaker,
                 "Phalarx Breaker",
-                "Kill 200 MK_PHALARX ducks.",
+                $"Kill 200 {Constants.GetDuckDisplayName(Constants.DuckType.MK_PHALARX)} ducks.",
                 200,
                 duckType: Constants.DuckType.MK_PHALARX,
                 coinReward: 30);
@@ -508,7 +508,8 @@ namespace ShooterB
         {
             return duckType == Constants.DuckType.MK_PHALARX ||
                    duckType == Constants.DuckType.MK_ARCHER ||
-                   duckType == Constants.DuckType.MK_VOJVODA;
+                   duckType == Constants.DuckType.MK_VOJVODA ||
+                   duckType == Constants.DuckType.FRENCH_REVOLUTIONARY;
         }
 
         private static int GetComboRank(Constants.MultiKillType comboType)

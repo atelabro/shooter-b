@@ -301,9 +301,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.AchievementsSceneController
   contentRoot: {fileID: 1045188888}
-  dailyListRoot: {fileID: 0}
-  achievementsListRoot: {fileID: 0}
-  generalTitleMarker: {fileID: 0}
+  dailyListRoot: {fileID: 1744520368}
+  achievementsListRoot: {fileID: 1045188888}
+  generalTitleMarker: {fileID: 1358032811}
   rowPrefab: {fileID: 1796999289}
   dailyRowPrefab: {fileID: 1478480882443857380, guid: f9368463e611c4ee89fb71df5a00620c, type: 3}
   dailyAwardsTitleText: {fileID: 1663473365}
@@ -2171,7 +2171,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2147483041}
   - component: {fileID: 2147483042}
-  - component: {fileID: 665432198765432101}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -2221,20 +2220,6 @@ MonoBehaviour:
   extraPaddingPx: {x: 0, y: 0}
   showDebugOverlay: 0
   logSafeAreaChanges: 1
---- !u!114 &665432198765432101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2147483040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1a36f95a24c4f2fa76cb450139809cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CurrencyHeaderUI
-  coinsText: {fileID: 1966241558}
-  prefix: 
 --- !u!1001 &2138203177882425718
 PrefabInstance:
   m_ObjectHideFlags: 0

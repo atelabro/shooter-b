@@ -6,7 +6,6 @@ namespace ShooterB
     public class CurrencyHeaderUI : MonoBehaviour
     {
         public TextMeshProUGUI coinsText;
-        public string prefix = string.Empty;
 
         private void Awake()
         {
@@ -22,9 +21,6 @@ namespace ShooterB
                     if (coinsTextTransform != null)
                         coinsText = coinsTextTransform.GetComponent<TextMeshProUGUI>();
                 }
-
-                if (coinsText == null)
-                    coinsText = GetComponentInChildren<TextMeshProUGUI>(true);
             }
         }
 
@@ -47,7 +43,7 @@ namespace ShooterB
             if (coinsText == null)
                 return;
 
-            coinsText.text = $"{prefix}{Mathf.Max(0, coins)}";
+            coinsText.text = Mathf.Max(0, coins).ToString();
         }
 
         private void Refresh()
@@ -55,7 +51,7 @@ namespace ShooterB
             if (coinsText == null || GameManager.Instance == null)
                 return;
 
-            coinsText.text = $"{prefix}{GameManager.Instance.Coins}";
+            coinsText.text = Mathf.Max(0, GameManager.Instance.Coins).ToString();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace ShooterB
                         reloadDelay = 0.8f,
                         maxBullets = 2,
                         travelSpeed = 50f,
-                        areaOfEffect = 0.9f,
+                        areaOfEffect = 1.22f,
                         chainLightning = 0,
                         description = "Hunters know this classic. Precise and dependable."
                     }
@@ -43,7 +43,7 @@ namespace ShooterB
                         reloadDelay = 0.6f,
                         maxBullets = 7,
                         travelSpeed = 45f,
-                        areaOfEffect = 0.4f,
+                        areaOfEffect = 0.54f,
                         chainLightning = 0,
                         description = "Sharper shots for cleaner picks in tight moments."
                     }
@@ -57,7 +57,7 @@ namespace ShooterB
                         reloadDelay = 2.4f,
                         maxBullets = 14,
                         travelSpeed = 50f,
-                        areaOfEffect = 0.24f,
+                        areaOfEffect = 0.32f,
                         chainLightning = 0,
                         description = "World-war steel turned into close-range spray control."
                     }
@@ -71,7 +71,7 @@ namespace ShooterB
                         reloadDelay = 0.83f,
                         maxBullets = 11,
                         travelSpeed = 50f,
-                        areaOfEffect = 1.1f,
+                        areaOfEffect = 1.49f,
                         chainLightning = 0,
                         description = "High-tech beam bursts with broad impact coverage."
                     }
@@ -85,7 +85,7 @@ namespace ShooterB
                         reloadDelay = 1.4f,
                         maxBullets = 3,
                         travelSpeed = 16.67f,
-                        areaOfEffect = 1.1f,
+                        areaOfEffect = 1.49f,
                         chainLightning = 0,
                         description = "Load piranhas into the launcher and cause pure chaos."
                     }
@@ -113,7 +113,7 @@ namespace ShooterB
                         reloadDelay = 0.72f,
                         maxBullets = 14,
                         travelSpeed = 58f,
-                        areaOfEffect = 0.4f,
+                        areaOfEffect = 0.54f,
                         chainLightning = 0,
                         description = "A biochemical monster made for relentless pressure."
                     }
