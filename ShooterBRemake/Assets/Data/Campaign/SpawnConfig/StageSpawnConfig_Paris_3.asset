@@ -27,11 +27,11 @@ MonoBehaviour:
     delay: 0.9
   - duckType: 9
     delay: 0.8
-  - duckType: 8
+  - duckType: 10
     delay: 0.8
-  - duckType: 8
+  - duckType: 10
     delay: 0.9
-  - duckType: 8
+  - duckType: 10
     delay: 0.8
   - duckType: 8
     delay: 0.9

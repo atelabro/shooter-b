@@ -35,15 +35,15 @@ MonoBehaviour:
     delay: 0.7
   - duckType: 9
     delay: 0.6
-  - duckType: 8
+  - duckType: 10
     delay: 0.7
-  - duckType: 8
+  - duckType: 10
     delay: 0.6
-  - duckType: 8
+  - duckType: 10
     delay: 0.7
-  - duckType: 8
+  - duckType: 10
     delay: 0.5
-  - duckType: 8
+  - duckType: 10
     delay: 0.6
   - duckType: 8
     delay: 0.7

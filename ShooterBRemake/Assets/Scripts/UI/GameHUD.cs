@@ -454,15 +454,31 @@ namespace ShooterB
             if (canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay)
                 uiCamera = canvas.worldCamera != null ? canvas.worldCamera : cam;
 
+            Vector2 targetPosition;
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, screenPoint, uiCamera, out Vector2 localPoint))
             {
-                popupRect.anchoredPosition = localPoint;
+                targetPosition = localPoint;
             }
             else
             {
                 // Fallback keeps popup away from the screen center when conversion fails.
-                popupRect.anchoredPosition = new Vector2(0f, 120f);
+                targetPosition = new Vector2(0f, 120f);
             }
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(popupRect);
+
+            const float edgePadding = 8f;
+            Rect bounds = parentRect.rect;
+            Vector2 popupSize = popupRect.rect.size;
+
+            float minX = bounds.xMin + edgePadding + (popupSize.x * popupRect.pivot.x);
+            float maxX = bounds.xMax - edgePadding - (popupSize.x * (1f - popupRect.pivot.x));
+            float minY = bounds.yMin + edgePadding + (popupSize.y * popupRect.pivot.y);
+            float maxY = bounds.yMax - edgePadding - (popupSize.y * (1f - popupRect.pivot.y));
+
+            popupRect.anchoredPosition = new Vector2(
+                Mathf.Clamp(targetPosition.x, minX, maxX),
+                Mathf.Clamp(targetPosition.y, minY, maxY));
         }
 
         private static string GetComboLabel(Constants.MultiKillType type)
