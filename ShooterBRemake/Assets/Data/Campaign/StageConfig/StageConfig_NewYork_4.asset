@@ -16,9 +16,9 @@ MonoBehaviour:
   mapName: Times Square Crossfire
   briefingText: Lights and chaos. Threats flood from every lane with minimal reaction time.
   backgroundSprite: {fileID: 2435483641052818400, guid: 8d0913bbfb5b9444ba99b96857bf30d6, type: 3}
-  starThreshold1: 170
-  starThreshold2: 260
-  starThreshold3: 340
-  starsRequiredToUnlock: 14
-  startingDifficulty: 19
+  starThreshold1: 136
+  starThreshold2: 208
+  starThreshold3: 272
+  starsRequiredToUnlock: 10
+  startingDifficulty: 17
   spawnConfig: {fileID: 11400000, guid: d2b2f8b9a9c64c4c8f71a2e3d8f4c205, type: 2}

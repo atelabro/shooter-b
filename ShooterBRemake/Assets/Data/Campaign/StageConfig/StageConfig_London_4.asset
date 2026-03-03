@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_London_4
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 24
+  mapName: Whitehall Final Push
+  briefingText: Final London holdout. Constant pressure from every lane, no downtime.
+  backgroundSprite: {fileID: 3900472106126663053, guid: 59763e1944dc541ffade968ca127eeea, type: 3}
+  starThreshold1: 122
+  starThreshold2: 182
+  starThreshold3: 244
+  starsRequiredToUnlock: 10
+  startingDifficulty: 16
+  spawnConfig: {fileID: 11400000, guid: e4c37ad3699b4b058e7f652fe11aa205, type: 2}

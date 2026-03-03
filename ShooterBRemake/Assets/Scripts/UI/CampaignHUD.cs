@@ -1,7 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 namespace ShooterB
 {
@@ -42,6 +46,11 @@ namespace ShooterB
         public GameObject comboPopupPrefab;
         public Transform comboPopupContainer;
         public float comboPopupLifetime = 1f;
+
+        [Header("Achievement Feedback")]
+        public GameObject achievementPopupPrefab;
+        public Transform achievementPopupContainer;
+        public float achievementPopupLifetime = 1.8f;
 
         private readonly List<Image> ammoBulletIcons = new List<Image>();
         private int lastKnownMaxAmmo = -1;
@@ -88,6 +97,9 @@ namespace ShooterB
             GameManager.Instance.OnMultiplierChanged += UpdateMultiplier;
             GameManager.Instance.OnLivesChanged += UpdateLives;
             GameManager.Instance.OnComboKill += HandleComboKill;
+            AchievementManager.Instance.OnAchievementUnlocked += HandleAchievementUnlocked;
+            DailyAwardsManager.Instance.OnDailyObjectiveCompleted += HandleDailyObjectiveCompleted;
+            DailyAwardsManager.Instance.OnDailySetCompleted += HandleDailySetCompleted;
         }
 
         private void UnsubscribeFromEvents()
@@ -98,6 +110,15 @@ namespace ShooterB
                 GameManager.Instance.OnMultiplierChanged -= UpdateMultiplier;
                 GameManager.Instance.OnLivesChanged -= UpdateLives;
                 GameManager.Instance.OnComboKill -= HandleComboKill;
+            }
+
+            if (AchievementManager.Instance != null)
+                AchievementManager.Instance.OnAchievementUnlocked -= HandleAchievementUnlocked;
+
+            if (DailyAwardsManager.Instance != null)
+            {
+                DailyAwardsManager.Instance.OnDailyObjectiveCompleted -= HandleDailyObjectiveCompleted;
+                DailyAwardsManager.Instance.OnDailySetCompleted -= HandleDailySetCompleted;
             }
         }
 
@@ -116,6 +137,8 @@ namespace ShooterB
             UpdateAmmoDisplay();
             UpdateSelectedWeaponIcon();
             UpdateReloadFeedback();
+            HandleDebugAchievementPopupTrigger();
+            HandleDebugDailyPopupTrigger();
         }
 
         private void UpdateScore(long score)
@@ -385,6 +408,137 @@ namespace ShooterB
             PositionPopupAtWorldPoint(popup, parent, comboWorldPosition);
 
             Destroy(popup, Mathf.Max(0.1f, comboPopupLifetime));
+        }
+
+        private void HandleAchievementUnlocked(AchievementManager.AchievementId id)
+        {
+            ShowAchievementPopup(id, false);
+        }
+
+        private void HandleDebugAchievementPopupTrigger()
+        {
+            if (!IsDebugTriggerPressed())
+                return;
+
+            AchievementManager.AchievementId[] ids =
+                (AchievementManager.AchievementId[])Enum.GetValues(typeof(AchievementManager.AchievementId));
+            if (ids == null || ids.Length == 0)
+                return;
+
+            AchievementManager.AchievementId randomId = ids[UnityEngine.Random.Range(0, ids.Length)];
+            ShowAchievementPopup(randomId, true);
+        }
+
+        private void HandleDebugDailyPopupTrigger()
+        {
+            if (!IsDebugDailyTriggerPressed())
+                return;
+
+            var objectives = DailyAwardsManager.Instance.GetTodayObjectives();
+            if (objectives == null || objectives.Count == 0)
+                return;
+
+            int index = UnityEngine.Random.Range(0, objectives.Count);
+            var state = objectives[index];
+            ShowRewardPopup("DAILY OBJECTIVE COMPLETE", state.title, state.coinReward, true, "DAILY_DEBUG");
+        }
+
+        private static bool IsDebugTriggerPressed()
+        {
+#if ENABLE_INPUT_SYSTEM
+            return Keyboard.current != null && Keyboard.current[Key.LeftBracket].wasPressedThisFrame;
+#else
+            return Input.GetKeyDown(KeyCode.LeftBracket);
+#endif
+        }
+
+        private static bool IsDebugDailyTriggerPressed()
+        {
+#if ENABLE_INPUT_SYSTEM
+            return Keyboard.current != null && Keyboard.current[Key.RightBracket].wasPressedThisFrame;
+#else
+            return Input.GetKeyDown(KeyCode.RightBracket);
+#endif
+        }
+
+        private void ShowAchievementPopup(AchievementManager.AchievementId id, bool isDebug)
+        {
+            if (achievementPopupPrefab == null)
+            {
+                Debug.LogWarning("[CampaignHUD] achievementPopupPrefab is missing.");
+                return;
+            }
+
+            Transform parent = achievementPopupContainer != null
+                ? achievementPopupContainer
+                : (comboPopupContainer != null ? comboPopupContainer : transform);
+
+            Canvas canvas = parent.GetComponentInParent<Canvas>();
+            if (canvas != null)
+                parent = canvas.transform;
+
+            string achievementTitle = AchievementManager.Instance.GetTitle(id);
+            int coinReward = AchievementManager.Instance.GetCoinReward(id);
+            ShowRewardPopup("ACHIEVEMENT UNLOCKED", achievementTitle, coinReward, isDebug, "ACHIEVEMENT");
+        }
+
+        private void HandleDailyObjectiveCompleted(int slotIndex)
+        {
+            var objectives = DailyAwardsManager.Instance.GetTodayObjectives();
+            for (int i = 0; i < objectives.Count; i++)
+            {
+                if (objectives[i].slotIndex != slotIndex)
+                    continue;
+
+                ShowRewardPopup("DAILY OBJECTIVE COMPLETE", objectives[i].title, objectives[i].coinReward, false, "DAILY_OBJECTIVE");
+                return;
+            }
+        }
+
+        private void HandleDailySetCompleted()
+        {
+            ShowRewardPopup("DAILY SET COMPLETE", "All daily objectives completed", DailyAwardsManager.Instance.GetDailySetBonusCoins(), false, "DAILY_SET");
+        }
+
+        private void ShowRewardPopup(string header, string title, int coins, bool isDebug, string source)
+        {
+            if (achievementPopupPrefab == null)
+            {
+                Debug.LogWarning("[CampaignHUD] achievementPopupPrefab is missing.");
+                return;
+            }
+
+            Transform parent = achievementPopupContainer != null
+                ? achievementPopupContainer
+                : (comboPopupContainer != null ? comboPopupContainer : transform);
+
+            Canvas canvas = parent.GetComponentInParent<Canvas>();
+            if (canvas != null)
+                parent = canvas.transform;
+
+            GameObject popup = Instantiate(achievementPopupPrefab, parent);
+            AchievementUnlockPopupController popupController = popup.GetComponent<AchievementUnlockPopupController>();
+            if (popupController != null)
+            {
+                popupController.ConfigureCustom(header, title, coins);
+            }
+            else
+            {
+                TextMeshProUGUI popupText = popup.GetComponent<TextMeshProUGUI>();
+                if (popupText != null)
+                    popupText.text = $"{header}\n{title}\n+{Mathf.Max(0, coins)} COINS";
+            }
+
+            RectTransform popupRect = popup.GetComponent<RectTransform>();
+            if (popupRect != null)
+            {
+                popupRect.anchoredPosition = new Vector2(0f, 220f);
+                popupRect.SetAsLastSibling();
+            }
+
+            Debug.Log($"[CampaignHUD] {source} popup shown ({(isDebug ? "DEBUG" : "LIVE")}): {title}, +{Mathf.Max(0, coins)} coins");
+
+            Destroy(popup, Mathf.Max(0.1f, achievementPopupLifetime));
         }
 
         private void PositionPopupAtWorldPoint(GameObject popup, Transform parent, Vector3 worldPosition)

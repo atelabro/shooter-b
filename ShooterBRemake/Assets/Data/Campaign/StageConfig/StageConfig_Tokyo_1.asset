@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_Tokyo_1
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 26
+  mapName: Torii Passage
+  briefingText: Movement is threading through the gates. Track crossing vectors and keep rhythm.
+  backgroundSprite: {fileID: 6427051974737286369, guid: 84ba987c9434d48ef87ae8bf6bfffabb, type: 3}
+  starThreshold1: 95
+  starThreshold2: 146
+  starThreshold3: 197
+  starsRequiredToUnlock: 2
+  startingDifficulty: 14
+  spawnConfig: {fileID: 11400000, guid: 9b2d5a1c4f7343ec8ef362e0a4fbb302, type: 2}

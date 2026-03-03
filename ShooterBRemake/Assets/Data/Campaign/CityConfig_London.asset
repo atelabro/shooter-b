@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f372f08ed27514277aa37c0253c2e049, type: 3}
+  m_Name: CityConfig_London
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CityConfig
+  cityName: London
+  briefingText: Duck cells are regrouping across London. Marking this city for the next campaign operation.
+  pinSpriteResourcePath: Pins/LondonBadge
+  pinPosition: {x: -85, y: 170}
+  stages:
+  - {fileID: 11400000, guid: e4c37ad3699b4b058e7f652fe11aa101, type: 2}
+  - {fileID: 11400000, guid: e4c37ad3699b4b058e7f652fe11aa102, type: 2}
+  - {fileID: 11400000, guid: e4c37ad3699b4b058e7f652fe11aa103, type: 2}
+  - {fileID: 11400000, guid: e4c37ad3699b4b058e7f652fe11aa104, type: 2}
+  - {fileID: 11400000, guid: e4c37ad3699b4b058e7f652fe11aa105, type: 2}
+  starsRequiredToUnlock: 9

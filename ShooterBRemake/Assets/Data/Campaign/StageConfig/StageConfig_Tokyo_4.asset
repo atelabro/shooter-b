@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_Tokyo_4
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 29
+  mapName: Shibuya Neon Siege
+  briefingText: Final Tokyo engagement under neon chaos. Maintain combo tempo to survive.
+  backgroundSprite: {fileID: -2626040343620404388, guid: 54e1d3a31ad6249d0b6483b04ae29e9b, type: 3}
+  starThreshold1: 129
+  starThreshold2: 192
+  starThreshold3: 257
+  starsRequiredToUnlock: 10
+  startingDifficulty: 17
+  spawnConfig: {fileID: 11400000, guid: 9b2d5a1c4f7343ec8ef362e0a4fbb305, type: 2}

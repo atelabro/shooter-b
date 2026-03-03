@@ -3847,7 +3847,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a77dcbf3463c742f88ba1c795f8fe43c, type: 2}
   - {fileID: 11400000, guid: 486f8fe9f6934d03bc8bb02229c84847, type: 2}
   - {fileID: 11400000, guid: 7df14a3b8781b4d8ea68104ea1b5c467, type: 2}
+  - {fileID: 11400000, guid: 3e7a7e67918e4df5a2f4f83ce9358f81, type: 2}
   - {fileID: 11400000, guid: a5815dc91f1ef444ca524cfa4186da61, type: 2}
+  - {fileID: 11400000, guid: ffe52f3393df4f0e8f85d55ecb3f2e4a, type: 2}
   cityPins:
   - {fileID: 615756157}
   - {fileID: 214424983}

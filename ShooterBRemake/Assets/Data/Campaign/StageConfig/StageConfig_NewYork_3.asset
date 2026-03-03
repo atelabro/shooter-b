@@ -16,9 +16,9 @@ MonoBehaviour:
   mapName: Manhattan Gridlock
   briefingText: Dense skyline lanes mean nonstop pressure. Keep combos alive or get overrun.
   backgroundSprite: {fileID: 6086781016941967579, guid: 250bc5a3025b743b9acb617b2bc769b3, type: 3}
-  starThreshold1: 155
-  starThreshold2: 235
-  starThreshold3: 310
-  starsRequiredToUnlock: 10
-  startingDifficulty: 18
+  starThreshold1: 124
+  starThreshold2: 188
+  starThreshold3: 248
+  starsRequiredToUnlock: 7
+  startingDifficulty: 16
   spawnConfig: {fileID: 11400000, guid: d2b2f8b9a9c64c4c8f71a2e3d8f4c204, type: 2}

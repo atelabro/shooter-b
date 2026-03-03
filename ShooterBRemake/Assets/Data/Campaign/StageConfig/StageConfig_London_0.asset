@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_London_0
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 20
+  mapName: Big Ben Watchline
+  briefingText: Contact around Big Ben is escalating. Hold angles and suppress fast dives.
+  backgroundSprite: {fileID: -9156046001429600761, guid: 43ff67944de1b4f45bcc89e044f84734, type: 3}
+  starThreshold1: 80
+  starThreshold2: 124
+  starThreshold3: 168
+  starsRequiredToUnlock: 0
+  startingDifficulty: 12
+  spawnConfig: {fileID: 11400000, guid: e4c37ad3699b4b058e7f652fe11aa201, type: 2}

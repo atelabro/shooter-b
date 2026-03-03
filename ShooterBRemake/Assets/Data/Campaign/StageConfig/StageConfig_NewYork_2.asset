@@ -16,9 +16,9 @@ MonoBehaviour:
   mapName: Liberty Harbor
   briefingText: Harbor airspace is crowded and unpredictable. Prioritize elite targets.
   backgroundSprite: {fileID: -3658742858688128993, guid: f5adb842d694446768a3a4273f717909, type: 3}
-  starThreshold1: 140
-  starThreshold2: 210
-  starThreshold3: 280
-  starsRequiredToUnlock: 6
-  startingDifficulty: 17
+  starThreshold1: 112
+  starThreshold2: 168
+  starThreshold3: 224
+  starsRequiredToUnlock: 4
+  startingDifficulty: 15
   spawnConfig: {fileID: 11400000, guid: d2b2f8b9a9c64c4c8f71a2e3d8f4c203, type: 2}

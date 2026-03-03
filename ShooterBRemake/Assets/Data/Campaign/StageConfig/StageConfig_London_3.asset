@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_London_3
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 23
+  mapName: Tower Bridge Ambush
+  briefingText: Bridge crossings are saturated. Prioritize high-speed entries first.
+  backgroundSprite: {fileID: 8070779983081810468, guid: 0e5a77fb10c294f9cb72f10efb8f890d, type: 3}
+  starThreshold1: 110
+  starThreshold2: 166
+  starThreshold3: 223
+  starsRequiredToUnlock: 7
+  startingDifficulty: 15
+  spawnConfig: {fileID: 11400000, guid: e4c37ad3699b4b058e7f652fe11aa204, type: 2}

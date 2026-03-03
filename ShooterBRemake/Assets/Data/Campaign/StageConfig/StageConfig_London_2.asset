@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_London_2
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 22
+  mapName: London Eye Circuit
+  briefingText: They are circling the Eye in waves. Keep combo pace and deny momentum.
+  backgroundSprite: {fileID: 4817820056433462531, guid: f4de1774e4d484595857f30d1e05be1b, type: 3}
+  starThreshold1: 100
+  starThreshold2: 151
+  starThreshold3: 203
+  starsRequiredToUnlock: 4
+  startingDifficulty: 14
+  spawnConfig: {fileID: 11400000, guid: e4c37ad3699b4b058e7f652fe11aa203, type: 2}

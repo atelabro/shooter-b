@@ -2589,6 +2589,9 @@ MonoBehaviour:
   comboPopupPrefab: {fileID: 5400745645520572176, guid: 93b3551bf101d4aa59cd5d848aa42070, type: 3}
   comboPopupContainer: {fileID: 0}
   comboPopupLifetime: 1
+  achievementPopupPrefab: {fileID: 5400745645520572176, guid: 2fb642ce6e5e4cf6bbf42b8ce4e827f9, type: 3}
+  achievementPopupContainer: {fileID: 0}
+  achievementPopupLifetime: 1.8
 --- !u!1 &1082344977
 GameObject:
   m_ObjectHideFlags: 0

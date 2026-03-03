@@ -16,9 +16,9 @@ MonoBehaviour:
   mapName: Brooklyn Bridge Run
   briefingText: Bridge crossings are under heavy pressure. Track fast entries and hold lanes.
   backgroundSprite: {fileID: -740964376350419543, guid: 1556d899e6d6d43a2ad1dfc80a3bd2dd, type: 3}
-  starThreshold1: 125
-  starThreshold2: 190
-  starThreshold3: 255
-  starsRequiredToUnlock: 3
-  startingDifficulty: 16
+  starThreshold1: 100
+  starThreshold2: 152
+  starThreshold3: 204
+  starsRequiredToUnlock: 2
+  startingDifficulty: 14
   spawnConfig: {fileID: 11400000, guid: d2b2f8b9a9c64c4c8f71a2e3d8f4c202, type: 2}

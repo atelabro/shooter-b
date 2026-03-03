@@ -16,9 +16,9 @@ MonoBehaviour:
   mapName: Central Park Sweep
   briefingText: Quiet paths are compromised. Sweep the park and stabilize the perimeter.
   backgroundSprite: {fileID: -4756892901711654480, guid: 175af37e927344b5b89ffcb108a0312d, type: 3}
-  starThreshold1: 110
-  starThreshold2: 170
-  starThreshold3: 230
+  starThreshold1: 88
+  starThreshold2: 136
+  starThreshold3: 184
   starsRequiredToUnlock: 0
-  startingDifficulty: 15
+  startingDifficulty: 13
   spawnConfig: {fileID: 11400000, guid: d2b2f8b9a9c64c4c8f71a2e3d8f4c201, type: 2}
