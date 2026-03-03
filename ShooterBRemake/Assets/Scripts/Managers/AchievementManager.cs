@@ -59,6 +59,7 @@ namespace ShooterB
             public Constants.DuckType duckType;
             public Constants.WeaponType? weaponType;
             public int targetCount;
+            public int coinReward;
             public string title;
             public string description;
         }
@@ -142,6 +143,11 @@ namespace ShooterB
             return definitions.TryGetValue(id, out AchievementDefinition definition) ? definition.description : string.Empty;
         }
 
+        public int GetCoinReward(AchievementId id)
+        {
+            return definitions.TryGetValue(id, out AchievementDefinition definition) ? definition.coinReward : 0;
+        }
+
         public float GetNormalizedProgress(AchievementId id)
         {
             int target = GetTarget(id);
@@ -172,7 +178,8 @@ namespace ShooterB
                 "Get 50 Double Kills using Piranha Gun.",
                 50,
                 Constants.MultiKillType.DoubleKill,
-                Constants.WeaponType.PiranhaGun);
+                Constants.WeaponType.PiranhaGun,
+                coinReward: 12);
 
             AddComboAchievement(
                 AchievementId.PiranhaDoubleTrouble,
@@ -180,7 +187,8 @@ namespace ShooterB
                 "Get 50 Double Kills with Piranha Gun.",
                 50,
                 Constants.MultiKillType.DoubleKill,
-                Constants.WeaponType.PiranhaGun);
+                Constants.WeaponType.PiranhaGun,
+                coinReward: 7);
 
             AddComboAchievement(
                 AchievementId.PiranhaMassacre,
@@ -188,7 +196,8 @@ namespace ShooterB
                 "Get 10 Quadra Kills with Piranha Gun.",
                 10,
                 Constants.MultiKillType.QuadraKill,
-                Constants.WeaponType.PiranhaGun);
+                Constants.WeaponType.PiranhaGun,
+                coinReward: 20);
 
             AddComboAchievement(
                 AchievementId.TeslaChainLord,
@@ -197,7 +206,8 @@ namespace ShooterB
                 30,
                 null,
                 Constants.WeaponType.TeslaGun,
-                Constants.MultiKillType.TripleKill);
+                Constants.MultiKillType.TripleKill,
+                coinReward: 30);
 
             AddComboAchievement(
                 AchievementId.BerettaSpray,
@@ -205,133 +215,154 @@ namespace ShooterB
                 "Get 100 Double Kills with Beretta.",
                 100,
                 Constants.MultiKillType.DoubleKill,
-                Constants.WeaponType.Beretta);
+                Constants.WeaponType.Beretta,
+                coinReward: 10);
 
             AddComboAchievement(
                 AchievementId.BirdBlenderI,
                 "Bird Blender I",
                 "Get 100 Double Kills.",
                 100,
-                Constants.MultiKillType.DoubleKill);
+                Constants.MultiKillType.DoubleKill,
+                coinReward: 3);
 
             AddComboAchievement(
                 AchievementId.BirdBlenderII,
                 "Bird Blender II",
                 "Get 250 Double Kills.",
                 250,
-                Constants.MultiKillType.DoubleKill);
+                Constants.MultiKillType.DoubleKill,
+                coinReward: 15);
 
             AddComboAchievement(
                 AchievementId.TripleThreatI,
                 "Triple Threat I",
                 "Get 50 Triple Kills.",
                 50,
-                Constants.MultiKillType.TripleKill);
+                Constants.MultiKillType.TripleKill,
+                coinReward: 5);
 
             AddComboAchievement(
                 AchievementId.TripleThreatII,
                 "Triple Threat II",
                 "Get 150 Triple Kills.",
                 150,
-                Constants.MultiKillType.TripleKill);
+                Constants.MultiKillType.TripleKill,
+                coinReward: 12);
 
             AddComboAchievement(
                 AchievementId.OverkillI,
                 "Overkill I",
                 "Get 25 Quadra Kills.",
                 25,
-                Constants.MultiKillType.QuadraKill);
+                Constants.MultiKillType.QuadraKill,
+                coinReward: 5);
 
             AddComboAchievement(
                 AchievementId.OverkillII,
                 "Overkill II",
                 "Get 75 Quadra Kills.",
                 75,
-                Constants.MultiKillType.QuadraKill);
+                Constants.MultiKillType.QuadraKill,
+                coinReward: 20);
 
             AddBirdAchievement(
                 AchievementId.DuckHunterI,
                 "Duck Hunter I",
                 "Kill 10 ducks.",
-                10);
+                10,
+                coinReward: 3);
             AddBirdAchievement(
                 AchievementId.DuckHunterII,
                 "Duck Hunter II",
                 "Kill 100 ducks.",
-                100);
+                100,
+                coinReward: 5);
             AddBirdAchievement(
                 AchievementId.DuckHunterIII,
                 "Duck Hunter III",
                 "Kill 1000 ducks.",
-                1000);
+                1000,
+                coinReward: 10);
             AddBirdAchievement(
                 AchievementId.DuckHunterIV,
                 "Duck Hunter IV",
                 "Kill 5000 ducks.",
-                5000);
+                5000,
+                coinReward: 50);
 
             AddBirdAchievement(
                 AchievementId.SniperPrecision,
                 "Sniper Precision",
                 "Kill 200 ducks with Cabirne.",
                 200,
-                weaponType: Constants.WeaponType.Cabirne);
+                weaponType: Constants.WeaponType.Cabirne,
+                coinReward: 7);
             AddBirdAchievement(
                 AchievementId.LaserSweep,
                 "Laser Sweep",
                 "Kill 500 ducks with Laser Gun.",
                 500,
-                weaponType: Constants.WeaponType.LaserGun);
+                weaponType: Constants.WeaponType.LaserGun,
+                coinReward: 10);
             AddBirdAchievement(
                 AchievementId.SulkoRampage,
                 "Sulko Rampage",
                 "Kill 300 ducks with MrSulko.",
                 300,
-                weaponType: Constants.WeaponType.MrSulko);
+                weaponType: Constants.WeaponType.MrSulko,
+                coinReward: 12);
             AddBirdAchievement(
                 AchievementId.RifleVeteran,
                 "Rifle Veteran",
                 "Kill 1000 ducks with Rifle.",
                 1000,
-                weaponType: Constants.WeaponType.Rifle);
+                weaponType: Constants.WeaponType.Rifle,
+                coinReward: 15);
 
             AddBirdAchievement(
                 AchievementId.BossSlayer,
                 "Boss Slayer",
                 "Kill 50 MK_VOJVODA ducks.",
                 50,
-                duckType: Constants.DuckType.MK_VOJVODA);
+                duckType: Constants.DuckType.MK_VOJVODA,
+                coinReward: 7);
             AddBirdAchievement(
                 AchievementId.CommanderDown,
                 "Commander Down",
                 "Kill 150 MK_VOJVODA ducks.",
                 150,
-                duckType: Constants.DuckType.MK_VOJVODA);
+                duckType: Constants.DuckType.MK_VOJVODA,
+                coinReward: 20);
             AddBirdAchievement(
                 AchievementId.ArcherCleanup,
                 "Archer Cleanup",
                 "Kill 200 MK_ARCHER ducks.",
                 200,
-                duckType: Constants.DuckType.MK_ARCHER);
+                duckType: Constants.DuckType.MK_ARCHER,
+                coinReward: 10);
             AddBirdAchievement(
                 AchievementId.PhalarxBreaker,
                 "Phalarx Breaker",
                 "Kill 200 MK_PHALARX ducks.",
                 200,
-                duckType: Constants.DuckType.MK_PHALARX);
+                duckType: Constants.DuckType.MK_PHALARX,
+                coinReward: 30);
 
             AddBirdAchievement(
                 AchievementId.EliteControlI,
                 "Elite Control I",
                 "Kill 100 elite ducks.",
                 100,
-                duckFilterMode: DuckFilterMode.EliteOnly);
+                duckFilterMode: DuckFilterMode.EliteOnly,
+                coinReward: 15);
             AddBirdAchievement(
                 AchievementId.EliteControlII,
                 "Elite Control II",
                 "Kill 300 elite ducks.",
                 300,
-                duckFilterMode: DuckFilterMode.EliteOnly);
+                duckFilterMode: DuckFilterMode.EliteOnly,
+                coinReward: 50);
         }
 
         private void AddBirdAchievement(
@@ -341,7 +372,8 @@ namespace ShooterB
             int targetCount,
             Constants.DuckType? duckType = null,
             Constants.WeaponType? weaponType = null,
-            DuckFilterMode duckFilterMode = DuckFilterMode.Any)
+            DuckFilterMode duckFilterMode = DuckFilterMode.Any,
+            int coinReward = 0)
         {
             definitions[id] = new AchievementDefinition
             {
@@ -353,6 +385,7 @@ namespace ShooterB
                 duckType = duckType ?? default,
                 weaponType = weaponType,
                 targetCount = targetCount,
+                coinReward = Mathf.Max(0, coinReward),
                 title = title,
                 description = description
             };
@@ -365,7 +398,8 @@ namespace ShooterB
             int targetCount,
             Constants.MultiKillType? comboType,
             Constants.WeaponType? weaponType = null,
-            Constants.MultiKillType? minimumComboType = null)
+            Constants.MultiKillType? minimumComboType = null,
+            int coinReward = 0)
         {
             definitions[id] = new AchievementDefinition
             {
@@ -377,6 +411,7 @@ namespace ShooterB
                 duckType = default,
                 weaponType = weaponType,
                 targetCount = targetCount,
+                coinReward = Mathf.Max(0, coinReward),
                 title = title,
                 description = description
             };
@@ -510,8 +545,10 @@ namespace ShooterB
             {
                 unlocked.Add(id);
                 PlayerPrefs.SetInt(GetUnlockedKey(id), 1);
+                if (definition.coinReward > 0)
+                    GameManager.Instance.AddCoins(definition.coinReward);
                 OnAchievementUnlocked?.Invoke(id);
-                Debug.Log($"[Achievement] Unlocked: {definition.title} ({id})");
+                Debug.Log($"[Achievement] Unlocked: {definition.title} ({id}) reward: {definition.coinReward} coins");
             }
 
             PlayerPrefs.Save();

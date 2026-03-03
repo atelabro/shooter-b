@@ -15,6 +15,9 @@ namespace ShooterB
         public Image progressFillImage;
         public Slider progressSlider;
         public GameObject achievedBadge;
+        public GameObject rewardPanel;
+        public Image rewardImage;
+        public TextMeshProUGUI rewardText;
 
         [Header("State Colors")]
         public Color unlockedBackgroundColor = new Color(0.18f, 0.34f, 0.2f, 1f);
@@ -29,10 +32,48 @@ namespace ShooterB
             int progress,
             int target,
             bool isUnlocked,
-            float normalizedProgress)
+            float normalizedProgress,
+            int coinReward)
         {
             AchievementId = id;
+            ApplyCommon(title, description, progress, target, isUnlocked, normalizedProgress, coinReward, "LOCKED");
+        }
 
+        public void Bind(
+            AchievementManager.AchievementId id,
+            string title,
+            string description,
+            int progress,
+            int target,
+            bool isUnlocked,
+            float normalizedProgress)
+        {
+            Bind(id, title, description, progress, target, isUnlocked, normalizedProgress, 0);
+        }
+
+        public void BindCustom(
+            string title,
+            string description,
+            int progress,
+            int target,
+            bool isUnlocked,
+            float normalizedProgress,
+            int coinReward,
+            string lockedStatusText = "LOCKED")
+        {
+            ApplyCommon(title, description, progress, target, isUnlocked, normalizedProgress, coinReward, lockedStatusText);
+        }
+
+        private void ApplyCommon(
+            string title,
+            string description,
+            int progress,
+            int target,
+            bool isUnlocked,
+            float normalizedProgress,
+            int coinReward,
+            string lockedStatusText)
+        {
             if (titleText != null)
                 titleText.text = title;
 
@@ -46,7 +87,7 @@ namespace ShooterB
             {
                 statusText.gameObject.SetActive(!isUnlocked);
                 if (!isUnlocked)
-                    statusText.text = "LOCKED";
+                    statusText.text = string.IsNullOrWhiteSpace(lockedStatusText) ? "LOCKED" : lockedStatusText;
             }
 
             if (backgroundImage != null)
@@ -77,6 +118,17 @@ namespace ShooterB
 
             if (achievedBadge != null)
                 achievedBadge.SetActive(isUnlocked);
+
+            bool hasReward = coinReward > 0;
+            if (rewardPanel != null)
+                rewardPanel.SetActive(hasReward);
+            if (rewardImage != null)
+                rewardImage.gameObject.SetActive(hasReward);
+            if (rewardText != null)
+            {
+                rewardText.gameObject.SetActive(hasReward);
+                rewardText.text = $"+{Mathf.Max(0, coinReward)}";
+            }
         }
     }
 }

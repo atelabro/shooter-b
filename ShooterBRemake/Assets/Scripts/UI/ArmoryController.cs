@@ -32,9 +32,6 @@ namespace ShooterB
         public Weapon berettaWeaponPrefab;
         public Weapon laserWeaponPrefab;
 
-        [Header("UI-Only Economy Preview")]
-        public int mockCoins = 250;
-
         private readonly Dictionary<Constants.WeaponType, WeaponCardItemUI> cardsByWeapon = new Dictionary<Constants.WeaponType, WeaponCardItemUI>();
         private readonly Dictionary<Constants.WeaponType, WeaponCardViewModel> modelsByWeapon = new Dictionary<Constants.WeaponType, WeaponCardViewModel>();
         private readonly HashSet<Constants.WeaponType> unlockedWeapons = new HashSet<Constants.WeaponType>();
@@ -42,6 +39,19 @@ namespace ShooterB
 
         private UnlockWeaponModalUI unlockModal;
         private Constants.WeaponType pendingModalWeapon;
+        private int CurrentCoins => GameManager.Instance.Coins;
+
+        private void OnEnable()
+        {
+            GameManager.Instance.OnCoinsChanged += HandleCoinsChanged;
+        }
+
+        private void OnDisable()
+        {
+            GameManager gameManager = FindObjectOfType<GameManager>();
+            if (gameManager != null)
+                gameManager.OnCoinsChanged -= HandleCoinsChanged;
+        }
 
         private void Start()
         {
@@ -336,7 +346,7 @@ namespace ShooterB
                     continue;
 
                 bool isLocked = !unlockedWeapons.Contains(type);
-                bool canAfford = !isLocked || mockCoins >= modelsByWeapon[type].cost;
+                bool canAfford = !isLocked || CurrentCoins >= modelsByWeapon[type].cost;
                 WeaponCardVisualState visualState = new WeaponCardVisualState
                 {
                     isSelected = !isLocked && GameManager.Instance.SelectedWeaponType == type,
@@ -351,7 +361,7 @@ namespace ShooterB
         private void RefreshCoinsHeader()
         {
             if (coinsHeaderText != null)
-                coinsHeaderText.text = $"Coins: {mockCoins}";
+                coinsHeaderText.text = $"Coins: {CurrentCoins}";
         }
 
         private void OnCardPressed(Constants.WeaponType weaponType)
@@ -374,11 +384,12 @@ namespace ShooterB
 
             pendingModalWeapon = weaponType;
             WeaponCardViewModel model = modelsByWeapon[weaponType];
-            UnlockWeaponModalUI.UnlockModalState state = mockCoins >= model.cost
+            int currentCoins = CurrentCoins;
+            UnlockWeaponModalUI.UnlockModalState state = currentCoins >= model.cost
                 ? UnlockWeaponModalUI.UnlockModalState.CanUnlock
                 : UnlockWeaponModalUI.UnlockModalState.InsufficientCoins;
 
-            unlockModal.Configure(model, state, mockCoins, OnUnlockConfirmedUiOnly, CloseUnlockModal);
+            unlockModal.Configure(model, state, currentCoins, OnUnlockConfirmedUiOnly, CloseUnlockModal);
             unlockModal.Show();
         }
 
@@ -387,9 +398,23 @@ namespace ShooterB
             if (!modelsByWeapon.ContainsKey(pendingModalWeapon))
                 return;
 
+            WeaponCardViewModel model = modelsByWeapon[pendingModalWeapon];
+            if (!GameManager.Instance.TrySpendCoins(model.cost))
+            {
+                OpenUnlockModal(pendingModalWeapon);
+                return;
+            }
+
             unlockedWeapons.Add(pendingModalWeapon);
             GameManager.Instance.SetSelectedWeapon(pendingModalWeapon);
             CloseUnlockModal();
+            RefreshAllCardStates();
+            RefreshCoinsHeader();
+        }
+
+        private void HandleCoinsChanged(int coins)
+        {
+            RefreshCoinsHeader();
             RefreshAllCardStates();
         }
 

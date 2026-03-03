@@ -27,6 +27,7 @@ namespace ShooterB
         public int Difficulty { get; private set; }
         public long HighScore { get; private set; }
         public int Lives { get; private set; }
+        public int Coins { get; private set; }
         public Constants.GameMode CurrentGameMode { get; private set; }
         public Constants.WeaponType SelectedWeaponType { get; private set; }
         public bool IsPaused { get; private set; }
@@ -37,6 +38,7 @@ namespace ShooterB
         public event Action<int> OnMultiplierChanged;
         public event Action<int> OnLivesChanged;
         public event Action<int> OnDifficultyChanged;
+        public event Action<int> OnCoinsChanged;
         public event Action<bool> OnPauseStateChanged;
         public event Action OnGameOver;
         public event Action<Constants.MultiKillType, int, Vector3> OnComboKill;
@@ -56,8 +58,10 @@ namespace ShooterB
             }
             instance = this;
             DontDestroyOnLoad(gameObject);
+            LoadCoins();
             LoadSelectedWeapon();
             _ = AchievementManager.Instance;
+            _ = DailyAwardsManager.Instance;
         }
 
         public void InitializeGame(Constants.GameMode mode, int startingDifficulty = Constants.INITIAL_DIFFICULTY)
@@ -209,6 +213,37 @@ namespace ShooterB
             Debug.Log($"[GameManager] Selected weapon saved: {SelectedWeaponType}");
         }
 
+        public void AddCoins(int amount)
+        {
+            if (amount <= 0)
+                return;
+
+            Coins += amount;
+            PlayerPrefs.SetInt(Constants.PREFS_COINS, Coins);
+            PlayerPrefs.Save();
+            OnCoinsChanged?.Invoke(Coins);
+            Debug.Log($"[GameManager] Coins added: +{amount}. Total: {Coins}");
+        }
+
+        public bool TrySpendCoins(int amount)
+        {
+            if (amount < 0)
+                return false;
+
+            if (amount == 0)
+                return true;
+
+            if (Coins < amount)
+                return false;
+
+            Coins -= amount;
+            PlayerPrefs.SetInt(Constants.PREFS_COINS, Coins);
+            PlayerPrefs.Save();
+            OnCoinsChanged?.Invoke(Coins);
+            Debug.Log($"[GameManager] Coins spent: -{amount}. Total: {Coins}");
+            return true;
+        }
+
         public void PauseGame()
         {
             if (IsGameOver || IsPaused)
@@ -277,6 +312,11 @@ namespace ShooterB
         public bool IsNewHighScore()
         {
             return Score >= HighScore && Score > 0;
+        }
+
+        private void LoadCoins()
+        {
+            Coins = Mathf.Max(0, PlayerPrefs.GetInt(Constants.PREFS_COINS, 0));
         }
 
         private void LoadSelectedWeapon()
