@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CityConfig
   cityName: Tokyo
   briefingText: Duck formations are appearing across Tokyo districts. Flagging this city for upcoming operations.
-  pinSpriteResourcePath: Pins/TokyoBadge
+  pinSpriteResourcePath: Pins/TokyoBadge 1
   pinPosition: {x: 660, y: 90}
   stages:
   - {fileID: 11400000, guid: 9b2d5a1c4f7343ec8ef362e0a4fbb201, type: 2}

@@ -19,17 +19,42 @@ namespace ShooterB
 
         [Header("Buttons")]
         public Button restartButton;
+        public Button backButton;
+        public Button continueButton;
         public Button menuButton;
+        private Button legacyBackFallbackButton;
 
         private void Start()
         {
             EnsureModalRoot();
+            ResolveButtons();
 
             if (restartButton != null)
                 restartButton.onClick.AddListener(OnRestartClicked);
 
-            if (menuButton != null)
-                menuButton.onClick.AddListener(OnMenuClicked);
+            if (backButton != null)
+                backButton.onClick.AddListener(OnBackClicked);
+
+            if (continueButton != null)
+                continueButton.onClick.AddListener(OnContinueClicked);
+
+            if (legacyBackFallbackButton != null && legacyBackFallbackButton != backButton)
+                legacyBackFallbackButton.onClick.AddListener(OnBackClicked);
+        }
+
+        private void OnDestroy()
+        {
+            if (restartButton != null)
+                restartButton.onClick.RemoveListener(OnRestartClicked);
+
+            if (backButton != null)
+                backButton.onClick.RemoveListener(OnBackClicked);
+
+            if (continueButton != null)
+                continueButton.onClick.RemoveListener(OnContinueClicked);
+
+            if (legacyBackFallbackButton != null && legacyBackFallbackButton != backButton)
+                legacyBackFallbackButton.onClick.RemoveListener(OnBackClicked);
         }
 
         public void Show(StageConfig config, long score)
@@ -78,16 +103,80 @@ namespace ShooterB
             SceneController.Instance.ReloadCurrentGameScene();
         }
 
-        public void OnMenuClicked()
+        public void OnBackClicked()
         {
             Time.timeScale = 1f;
             SceneController.Instance.LoadCampaignMapScene();
+        }
+
+        public void OnContinueClicked()
+        {
+            Time.timeScale = 1f;
+
+            StageConfig nextStage = CampaignProgressManager.Instance.GetNextStageInActiveCityRow();
+            CityConfig activeCity = CampaignProgressManager.Instance.ActiveCityConfig;
+            CityConfig[] allCities = CampaignProgressManager.Instance.CampaignCities;
+
+            if (nextStage == null || activeCity == null || allCities == null)
+            {
+                SceneController.Instance.LoadCampaignMapScene();
+                return;
+            }
+
+            if (!CampaignProgressManager.Instance.IsStageUnlocked(nextStage, activeCity, allCities))
+            {
+                SceneController.Instance.LoadCampaignMapScene();
+                return;
+            }
+
+            CampaignProgressManager.Instance.SetActiveCampaignLocation(activeCity, nextStage);
+            SceneController.Instance.LoadCampaignStage(nextStage);
+        }
+
+        public void OnMenuClicked()
+        {
+            OnBackClicked();
         }
 
         private void EnsureModalRoot()
         {
             if (modalRoot == null)
                 modalRoot = gameObject;
+        }
+
+        private void ResolveButtons()
+        {
+            if (continueButton == null && menuButton != null && menuButton.gameObject.name.Contains("Continue"))
+            {
+                continueButton = menuButton;
+                menuButton = null;
+            }
+
+            if (backButton == null)
+                backButton = FindButtonByName("BackButton");
+
+            if (continueButton == null)
+                continueButton = FindButtonByName("ContinueButton");
+
+            legacyBackFallbackButton = menuButton;
+        }
+
+        private Button FindButtonByName(string buttonName)
+        {
+            if (string.IsNullOrEmpty(buttonName))
+                return null;
+
+            if (modalRoot == null)
+                return null;
+
+            Button[] buttons = modalRoot.GetComponentsInChildren<Button>(true);
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                if (buttons[i] != null && buttons[i].gameObject.name == buttonName)
+                    return buttons[i];
+            }
+
+            return null;
         }
     }
 }

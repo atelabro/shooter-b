@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CityConfig
   cityName: London
   briefingText: Duck cells are regrouping across London. Marking this city for the next campaign operation.
-  pinSpriteResourcePath: Pins/LondonBadge
+  pinSpriteResourcePath: Pins/LondonBadge 1
   pinPosition: {x: -85, y: 170}
   stages:
   - {fileID: 11400000, guid: e4c37ad3699b4b058e7f652fe11aa101, type: 2}

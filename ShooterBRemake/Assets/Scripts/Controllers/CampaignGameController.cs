@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 namespace ShooterB
 {
@@ -18,7 +19,13 @@ namespace ShooterB
         public GameOverModalController gameOverModalController;
         public StageCompleteModalController stageCompleteModalController;
 
+        [Header("Game Start Modal")]
+        public GameObject gameStartingModalPrefab;
+        public float gameStartingCountdownSeconds = 4f;
+
         private bool isStageComplete = false;
+        private CampaignDuckSpawner campaignDuckSpawner;
+        private GameObject gameStartingModalInstance;
 
         private void Start()
         {
@@ -30,11 +37,11 @@ namespace ShooterB
 
             GameManager.Instance.OnGameOver += HandleGameOver;
 
-            CampaignDuckSpawner spawner = FindObjectOfType<CampaignDuckSpawner>();
-            if (spawner != null)
+            campaignDuckSpawner = FindObjectOfType<CampaignDuckSpawner>();
+            if (campaignDuckSpawner != null)
             {
-                spawner.OnAllDucksResolved += HandleStageComplete;
-                spawner.StartSpawning();
+                campaignDuckSpawner.OnAllDucksResolved += HandleStageComplete;
+                StartCoroutine(BeginStageAfterCountdown());
             }
             else
             {
@@ -46,6 +53,9 @@ namespace ShooterB
         {
             if (GameManager.Instance != null)
                 GameManager.Instance.OnGameOver -= HandleGameOver;
+
+            if (campaignDuckSpawner != null)
+                campaignDuckSpawner.OnAllDucksResolved -= HandleStageComplete;
         }
 
         private void EnsureActiveStage()
@@ -195,6 +205,42 @@ namespace ShooterB
             }
 
             stageCompleteModalController.Show(stage, GameManager.Instance.Score);
+        }
+
+        private IEnumerator BeginStageAfterCountdown()
+        {
+            ShowGameStartingModal();
+
+            float delay = Mathf.Max(0f, gameStartingCountdownSeconds);
+            if (delay > 0f)
+                yield return new WaitForSeconds(delay);
+
+            HideGameStartingModal();
+
+            if (campaignDuckSpawner != null)
+                campaignDuckSpawner.StartSpawning();
+        }
+
+        private void ShowGameStartingModal()
+        {
+            if (gameStartingModalPrefab == null)
+                return;
+
+            Canvas rootCanvas = FindObjectOfType<Canvas>();
+            Transform parent = rootCanvas != null ? rootCanvas.transform : null;
+
+            gameStartingModalInstance = Instantiate(gameStartingModalPrefab, parent);
+            gameStartingModalInstance.name = gameStartingModalPrefab.name;
+            gameStartingModalInstance.SetActive(true);
+        }
+
+        private void HideGameStartingModal()
+        {
+            if (gameStartingModalInstance == null)
+                return;
+
+            Destroy(gameStartingModalInstance);
+            gameStartingModalInstance = null;
         }
 
         private void HandleGameOver()

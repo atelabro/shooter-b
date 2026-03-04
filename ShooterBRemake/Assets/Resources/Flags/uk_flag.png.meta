@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 40d1e9e4a3e0f4f1a9808eb3781b7a54
+guid: f1ea92a84e49447bd98ccbc3faced195
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1922046641520721865
-    second: barn_pin_0
+      213: -3668630084509576707
+    second: uk_flag_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,7 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
+    buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: barn_pin_0
+      name: uk_flag_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 1024
-        height: 1024
+        y: 87
+        width: 512
+        height: 338
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 730cc6253c48355e0800000000000000
-      internalID: -1922046641520721865
+      spriteID: df1de781068661dc0800000000000000
+      internalID: -3668630084509576707
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      barn_pin_0: -1922046641520721865
+      uk_flag_0: -3668630084509576707
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

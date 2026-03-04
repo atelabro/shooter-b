@@ -85,13 +85,14 @@ namespace ShooterB
 
                 CampaignStageEntryController entry = Instantiate(stageEntryPrefab, stageListContainer);
                 StageConfig capturedStage = stage;
-                entry.Initialize(stage, isUnlocked, stars, () => OnStageSelected(capturedStage));
+                CityConfig capturedCity = city;
+                entry.Initialize(stage, isUnlocked, stars, () => OnStageSelected(capturedCity, capturedStage));
             }
         }
 
-        private void OnStageSelected(StageConfig stage)
+        private void OnStageSelected(CityConfig city, StageConfig stage)
         {
-            CampaignProgressManager.Instance.SetActiveStage(stage);
+            CampaignProgressManager.Instance.SetActiveCampaignLocation(city, stage);
             SceneController.Instance.LoadCampaignStage(stage);
         }
 

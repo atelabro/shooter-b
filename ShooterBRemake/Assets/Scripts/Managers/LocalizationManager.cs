@@ -115,7 +115,7 @@ namespace ShooterB
             {
                 ["menu.title"] = "ДУКОФ",
                 ["menu.campaign"] = "КАМПАЊА",
-                ["menu.armory"] = "ОРУЖАРНИЦА",
+                ["menu.armory"] = "ОРУЖЈЕ",
                 ["menu.achievements"] = "ДОСТИГНУВАЊА",
                 ["menu.quit"] = "ИЗЛЕЗ",
                 ["menu.high_score"] = "Најдобар резултат"

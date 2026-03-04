@@ -23,6 +23,8 @@ namespace ShooterB
         private const string PREFS_KEY_SUFFIX = "_Stars";
 
         public StageConfig ActiveStageConfig { get; private set; }
+        public CityConfig ActiveCityConfig { get; private set; }
+        public CityConfig[] CampaignCities { get; private set; }
 
         private void Awake()
         {
@@ -38,6 +40,40 @@ namespace ShooterB
         public void SetActiveStage(StageConfig config)
         {
             ActiveStageConfig = config;
+            if (ActiveCityConfig == null || config == null)
+                return;
+
+            if (System.Array.IndexOf(ActiveCityConfig.stages, config) < 0)
+                ActiveCityConfig = FindCityForStage(config);
+        }
+
+        public void SetCampaignCities(CityConfig[] cities)
+        {
+            CampaignCities = cities;
+            if (ActiveStageConfig != null)
+                ActiveCityConfig = FindCityForStage(ActiveStageConfig);
+        }
+
+        public void SetActiveCampaignLocation(CityConfig city, StageConfig stage)
+        {
+            ActiveCityConfig = city;
+            ActiveStageConfig = stage;
+        }
+
+        public StageConfig GetNextStageInActiveCityRow()
+        {
+            if (ActiveCityConfig == null || ActiveCityConfig.stages == null || ActiveStageConfig == null)
+                return null;
+
+            int currentIndex = System.Array.IndexOf(ActiveCityConfig.stages, ActiveStageConfig);
+            if (currentIndex < 0)
+                return null;
+
+            int nextIndex = currentIndex + 1;
+            if (nextIndex >= ActiveCityConfig.stages.Length)
+                return null;
+
+            return ActiveCityConfig.stages[nextIndex];
         }
 
         // --- Stage stars ---
@@ -75,15 +111,12 @@ namespace ShooterB
             if (stage == city.stages[0])
                 return IsCityUnlocked(city);
 
-            int starsInCity = 0;
-            foreach (StageConfig s in city.stages)
-            {
-                if (s == stage)
-                    break;
-                starsInCity += GetStarsForStage(s.stageIndex);
-            }
+            int stagePosition = System.Array.IndexOf(city.stages, stage);
+            if (stagePosition <= 0)
+                return false;
 
-            return starsInCity >= stage.starsRequiredToUnlock;
+            StageConfig previousStage = city.stages[stagePosition - 1];
+            return previousStage != null && GetStarsForStage(previousStage.stageIndex) >= 1;
         }
 
         public bool IsStageUnlocked(StageConfig stage, CityConfig city, CityConfig[] allCities)
@@ -94,15 +127,12 @@ namespace ShooterB
             if (stage == city.stages[0])
                 return IsCityUnlocked(city, allCities);
 
-            int starsInCity = 0;
-            foreach (StageConfig s in city.stages)
-            {
-                if (s == stage)
-                    break;
-                starsInCity += GetStarsForStage(s.stageIndex);
-            }
+            int stagePosition = System.Array.IndexOf(city.stages, stage);
+            if (stagePosition <= 0)
+                return false;
 
-            return starsInCity >= stage.starsRequiredToUnlock;
+            StageConfig previousStage = city.stages[stagePosition - 1];
+            return previousStage != null && GetStarsForStage(previousStage.stageIndex) >= 1;
         }
 
         // --- City unlocking ---
@@ -206,6 +236,23 @@ namespace ShooterB
         private string BuildKey(int stageIndex)
         {
             return $"{PREFS_KEY_PREFIX}{stageIndex}{PREFS_KEY_SUFFIX}";
+        }
+
+        private CityConfig FindCityForStage(StageConfig stage)
+        {
+            if (stage == null || CampaignCities == null)
+                return null;
+
+            foreach (CityConfig city in CampaignCities)
+            {
+                if (city == null || city.stages == null)
+                    continue;
+
+                if (System.Array.IndexOf(city.stages, stage) >= 0)
+                    return city;
+            }
+
+            return null;
         }
     }
 }

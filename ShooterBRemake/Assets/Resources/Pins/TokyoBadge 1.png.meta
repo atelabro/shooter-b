@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b31a56a7d4e347f3a22b47c89c1fa2de
+guid: 369692c037cd0409c9708d6ebea8e83d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2681599736145637297
-    second: LondonBadge_0
+      213: -4530219415202468330
+    second: TokyoBadge 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,7 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
+    buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LondonBadge_0
+      name: TokyoBadge 1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 512
-        height: 512
+        x: 19
+        y: 19
+        width: 474
+        height: 474
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1bfedb690c4f63520800000000000000
-      internalID: 2681599736145637297
+      spriteID: 61e674aa17d6121c0800000000000000
+      internalID: -4530219415202468330
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      LondonBadge_0: 2681599736145637297
+      TokyoBadge 1_0: -4530219415202468330
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

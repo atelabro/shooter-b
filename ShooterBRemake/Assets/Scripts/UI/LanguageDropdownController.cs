@@ -6,6 +6,9 @@ namespace ShooterB
 {
     public class LanguageDropdownController : MonoBehaviour
     {
+        private const string EnglishFlagResourcePath = "Flags/uk_flag";
+        private const string MacedonianFlagResourcePath = "Flags/mk_flag";
+
         [Header("Controls")]
         public Button currentButton;
         public GameObject optionsRoot;
@@ -35,6 +38,7 @@ namespace ShooterB
                 return;
 
             AutoWireIfNeeded();
+            LoadFlagSpritesFromResources();
 
             if (currentButton != null)
                 currentButton.onClick.AddListener(ToggleOptions);
@@ -173,6 +177,17 @@ namespace ShooterB
                 currentFlagImage.sprite = language == LocalizationManager.Language.Macedonian ? macedonianFlagSprite : englishFlagSprite;
 
             UpdateArrowState();
+        }
+
+        private void LoadFlagSpritesFromResources()
+        {
+            Sprite loadedEnglish = Resources.Load<Sprite>(EnglishFlagResourcePath);
+            if (loadedEnglish != null)
+                englishFlagSprite = loadedEnglish;
+
+            Sprite loadedMacedonian = Resources.Load<Sprite>(MacedonianFlagResourcePath);
+            if (loadedMacedonian != null)
+                macedonianFlagSprite = loadedMacedonian;
         }
 
         private void UpdateArrowState()

@@ -61,6 +61,7 @@ namespace ShooterB
 
         private void Start()
         {
+            CampaignProgressManager.Instance.SetCampaignCities(cities);
             ResolveMapReferences();
 
             if (backButton != null)
@@ -211,7 +212,7 @@ namespace ShooterB
 
                     if (CampaignProgressManager.Instance.IsStageUnlocked(stage, city, cities))
                     {
-                        CampaignProgressManager.Instance.SetActiveStage(stage);
+                        CampaignProgressManager.Instance.SetActiveCampaignLocation(city, stage);
                         return;
                     }
                 }
