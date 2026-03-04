@@ -64,7 +64,9 @@ namespace ShooterB
             FRENCH_REVOLUTIONARY,
             FRENCH_NAPOLEON,
             FRENCH_ARTIST,
-            BRITISH_REDCOAT
+            BRITISH_REDCOAT,
+            BRITISH_POLICE,
+            BRITISH_PUNK
         }
 
         public static string GetDuckDisplayName(DuckType type)
@@ -83,6 +85,8 @@ namespace ShooterB
                 case DuckType.FRENCH_NAPOLEON: return "French Napoleon";
                 case DuckType.FRENCH_ARTIST: return "French Artist";
                 case DuckType.BRITISH_REDCOAT: return "British Redcoat";
+                case DuckType.BRITISH_POLICE: return "British Police";
+                case DuckType.BRITISH_PUNK: return "British Punk";
                 // Reserve this switch for future region-specific duck additions (e.g. France).
                 default: return type.ToString();
             }
@@ -104,6 +108,8 @@ namespace ShooterB
                 case DuckType.FRENCH_NAPOLEON: return "FRENCH_NAPOLEON";
                 case DuckType.FRENCH_ARTIST: return "FRENCH_ARTIST";
                 case DuckType.BRITISH_REDCOAT: return "BRITISH_REDCOAT";
+                case DuckType.BRITISH_POLICE: return "BRITISH_POLICE";
+                case DuckType.BRITISH_PUNK: return "BRITISH_PUNK";
                 default: return type.ToString();
             }
         }
@@ -148,6 +154,8 @@ namespace ShooterB
             public const int FRENCH_NAPOLEON = 2;
             public const int FRENCH_ARTIST = 2;
             public const int BRITISH_REDCOAT = 2;
+            public const int BRITISH_POLICE = 3;
+            public const int BRITISH_PUNK = 4;
 
             public static int GetPoints(DuckType type)
             {
@@ -165,6 +173,8 @@ namespace ShooterB
                     case DuckType.FRENCH_NAPOLEON: return FRENCH_NAPOLEON;
                     case DuckType.FRENCH_ARTIST: return FRENCH_ARTIST;
                     case DuckType.BRITISH_REDCOAT: return BRITISH_REDCOAT;
+                    case DuckType.BRITISH_POLICE: return BRITISH_POLICE;
+                    case DuckType.BRITISH_PUNK: return BRITISH_PUNK;
                     default: return TYPE_0;
                 }
             }
@@ -172,7 +182,7 @@ namespace ShooterB
 
         public static class DuckSpawnProbability
         {
-            public const float TYPE_0 = 0.64f;
+            public const float TYPE_0 = 0.60f;
             public const float TYPE_1 = 0.13f;
             public const float TYPE_2 = 0.07f;
             public const float TYPE_3 = 0.06f;
@@ -180,6 +190,8 @@ namespace ShooterB
             public const float MK_PHALARX = 0.02f;
             public const float MK_ARCHER = 0.02f;
             public const float BRITISH_REDCOAT = 0.02f;
+            public const float BRITISH_POLICE = 0.02f;
+            public const float BRITISH_PUNK = 0.02f;
 
             public const float SINGLE_DUCK = 0.60f;
             public const float DOUBLE_DUCK = 0.20f;

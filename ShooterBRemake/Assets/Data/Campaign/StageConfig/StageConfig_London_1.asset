@@ -16,9 +16,9 @@ MonoBehaviour:
   mapName: Buckingham Perimeter
   briefingText: Palace perimeter is under pressure. Clear lanes before elites stack.
   backgroundSprite: {fileID: -2783098818843675142, guid: 7645cd8aae8144558a99fccb910d93ff, type: 3}
-  starThreshold1: 90
-  starThreshold2: 138
-  starThreshold3: 186
+  starThreshold1: 126
+  starThreshold2: 193
+  starThreshold3: 260
   starsRequiredToUnlock: 2
   startingDifficulty: 13
   spawnConfig: {fileID: 11400000, guid: e4c37ad3699b4b058e7f652fe11aa202, type: 2}

@@ -3856,6 +3856,7 @@ MonoBehaviour:
   - {fileID: 628820977}
   - {fileID: 111266545}
   cityPinPrefab: {fileID: 114000003, guid: d61c837a25374d8286a45ebfb0563052, type: 3}
+  cityPinScale: 0.7
   cityPanel: {fileID: 1715746404}
   totalStarsText: {fileID: 1684687962}
   backButton: {fileID: 1548620736}

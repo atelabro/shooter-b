@@ -13,57 +13,57 @@ MonoBehaviour:
   m_Name: StageSpawnConfig_London_2
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageSpawnConfig
   spawnSequence:
-  - duckType: 10
+  - duckType: 13
     delay: 0.82
-  - duckType: 9
+  - duckType: 12
     delay: 0.82
-  - duckType: 10
+  - duckType: 13
     delay: 0.72
-  - duckType: 9
+  - duckType: 12
     delay: 0.82
-  - duckType: 10
+  - duckType: 13
     delay: 0.72
-  - duckType: 8
+  - duckType: 11
     delay: 0.72
-  - duckType: 8
+  - duckType: 11
     delay: 0.72
-  - duckType: 9
+  - duckType: 12
     delay: 0.72
-  - duckType: 10
+  - duckType: 13
     delay: 0.72
-  - duckType: 8
+  - duckType: 11
     delay: 0.72
-  - duckType: 8
+  - duckType: 11
     delay: 0.62
-  - duckType: 9
+  - duckType: 12
     delay: 0.72
-  - duckType: 10
+  - duckType: 13
     delay: 0.62
-  - duckType: 8
+  - duckType: 11
     delay: 0.62
-  - duckType: 8
+  - duckType: 11
     delay: 0.62
-  - duckType: 9
+  - duckType: 12
     delay: 0.62
-  - duckType: 10
+  - duckType: 13
     delay: 0.62
-  - duckType: 8
+  - duckType: 11
     delay: 0.62
-  - duckType: 8
+  - duckType: 11
     delay: 0.62
-  - duckType: 9
+  - duckType: 12
     delay: 0.62
-  - duckType: 10
+  - duckType: 13
     delay: 0.62
-  - duckType: 8
+  - duckType: 11
     delay: 0.62
-  - duckType: 8
+  - duckType: 11
     delay: 0.52
-  - duckType: 10
+  - duckType: 13
     delay: 0.62
-  - duckType: 8
+  - duckType: 11
     delay: 0.52
-  - duckType: 8
+  - duckType: 11
     delay: 0.52
   weightGoStraight: 0.19
   weightGoTop: 0.49

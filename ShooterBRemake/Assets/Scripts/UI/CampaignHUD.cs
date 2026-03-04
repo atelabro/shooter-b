@@ -57,6 +57,7 @@ namespace ShooterB
         private Constants.WeaponType? lastWeaponType = null;
         private Sprite lastAmmoSprite = null;
         private bool hasLoggedMissingReloadReferences = false;
+        private RewardPopupQueueController rewardPopupQueue;
 
         private void Start()
         {
@@ -502,43 +503,36 @@ namespace ShooterB
 
         private void ShowRewardPopup(string header, string title, int coins, bool isDebug, string source)
         {
-            if (achievementPopupPrefab == null)
-            {
-                Debug.LogWarning("[CampaignHUD] achievementPopupPrefab is missing.");
-                return;
-            }
+            EnsureRewardPopupQueue();
 
             Transform parent = achievementPopupContainer != null
                 ? achievementPopupContainer
                 : (comboPopupContainer != null ? comboPopupContainer : transform);
 
-            Canvas canvas = parent.GetComponentInParent<Canvas>();
-            if (canvas != null)
-                parent = canvas.transform;
-
-            GameObject popup = Instantiate(achievementPopupPrefab, parent);
-            AchievementUnlockPopupController popupController = popup.GetComponent<AchievementUnlockPopupController>();
-            if (popupController != null)
+            RewardPopupQueueController.RewardPopupRequest request = new RewardPopupQueueController.RewardPopupRequest
             {
-                popupController.ConfigureCustom(header, title, coins);
-            }
-            else
-            {
-                TextMeshProUGUI popupText = popup.GetComponent<TextMeshProUGUI>();
-                if (popupText != null)
-                    popupText.text = $"{header}\n{title}\n+{Mathf.Max(0, coins)} COINS";
-            }
+                header = header,
+                title = title,
+                coins = coins,
+                isDebug = isDebug,
+                source = source,
+                logPrefix = "[CampaignHUD]",
+                prefab = achievementPopupPrefab,
+                container = parent,
+                lifetime = achievementPopupLifetime
+            };
 
-            RectTransform popupRect = popup.GetComponent<RectTransform>();
-            if (popupRect != null)
-            {
-                popupRect.anchoredPosition = new Vector2(0f, 220f);
-                popupRect.SetAsLastSibling();
-            }
+            rewardPopupQueue.Enqueue(request);
+        }
 
-            Debug.Log($"[CampaignHUD] {source} popup shown ({(isDebug ? "DEBUG" : "LIVE")}): {title}, +{Mathf.Max(0, coins)} coins");
+        private void EnsureRewardPopupQueue()
+        {
+            if (rewardPopupQueue != null)
+                return;
 
-            Destroy(popup, Mathf.Max(0.1f, achievementPopupLifetime));
+            rewardPopupQueue = GetComponent<RewardPopupQueueController>();
+            if (rewardPopupQueue == null)
+                rewardPopupQueue = gameObject.AddComponent<RewardPopupQueueController>();
         }
 
         private void PositionPopupAtWorldPoint(GameObject popup, Transform parent, Vector3 worldPosition)

@@ -18,6 +18,7 @@ namespace ShooterB
         [Header("City Pins")]
         public CityPinController[] cityPins;
         public CityPinController cityPinPrefab;
+        [Range(0.1f, 2f)] public float cityPinScale = 0.7f;
 
         [Header("City Panel")]
         public CityPanelController cityPanel;
@@ -99,6 +100,9 @@ namespace ShooterB
             {
                 if (i >= cities.Length)
                     break;
+
+                if (cityPins[i] != null)
+                    cityPins[i].transform.localScale = Vector3.one * cityPinScale;
 
                 CityConfig city = cities[i];
                 bool isUnlocked = CampaignProgressManager.Instance.IsCityUnlocked(city, cities);
@@ -296,6 +300,7 @@ namespace ShooterB
             {
                 CityPinController pin = Instantiate(cityPinPrefab, pinsContainerRect);
                 pin.name = $"Pin_{cities[i].cityName}";
+                pin.transform.localScale = Vector3.one * cityPinScale;
                 cityPins[i] = pin;
                 runtimePins.Add(pin);
             }

@@ -31,6 +31,8 @@ namespace ShooterB
         [SerializeField] private float frenchNapoleonSizeMultiplier = 1f;
         [SerializeField] private float frenchArtistSizeMultiplier = 0.88f;
         [SerializeField] private float britishRedcoatSizeMultiplier = 1f;
+        [SerializeField] private float britishPoliceSizeMultiplier = 1f;
+        [SerializeField] private float britishPunkSizeMultiplier = 1f;
 
         [Header("Hitbox Normalization")]
         [SerializeField] private float targetHitRadiusWorld = 0.45f;
@@ -169,6 +171,8 @@ namespace ShooterB
                 case Constants.DuckType.FRENCH_NAPOLEON: return frenchNapoleonSizeMultiplier;
                 case Constants.DuckType.FRENCH_ARTIST: return frenchArtistSizeMultiplier;
                 case Constants.DuckType.BRITISH_REDCOAT: return britishRedcoatSizeMultiplier;
+                case Constants.DuckType.BRITISH_POLICE: return britishPoliceSizeMultiplier;
+                case Constants.DuckType.BRITISH_PUNK: return britishPunkSizeMultiplier;
                 default: return 1f;
             }
         }
