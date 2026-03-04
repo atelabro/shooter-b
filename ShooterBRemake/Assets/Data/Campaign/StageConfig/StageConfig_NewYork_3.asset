@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 17
   mapName: Manhattan Gridlock
+  mapNameMk: Менхетен Застој
   briefingText: Dense skyline lanes mean nonstop pressure. Keep combos alive or get overrun.
+  briefingTextMk: Густите линии меѓу облакодерите носат постојан притисок. Одржувај комбо или ќе те прегазат.
   backgroundSprite: {fileID: 6086781016941967579, guid: 250bc5a3025b743b9acb617b2bc769b3, type: 3}
   starThreshold1: 124
   starThreshold2: 188

@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 27
   mapName: Fuji Skyline
+  mapNameMk: Фуџи Хоризонт
   briefingText: High-altitude lanes open up here. Prioritize long arcs before they stack.
+  briefingTextMk: Тука се отвораат висински линии. Прво неутрализирај ги долгите лакови пред да се насоберат.
   backgroundSprite: {fileID: -2055535976081845140, guid: 2c2b32e5084424f42ad8263ccdf7d16c, type: 3}
   starThreshold1: 106
   starThreshold2: 160

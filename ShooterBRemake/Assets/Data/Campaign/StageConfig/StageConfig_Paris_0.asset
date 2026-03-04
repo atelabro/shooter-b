@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 8
   mapName: Eiffel District
+  mapNameMk: Ајфел Реон
   briefingText: Reclaim the Eiffel district. Stay mobile and keep pressure high.
+  briefingTextMk: Врати го Ајфеловиот реон. Остани подвижен и одржувај висок притисок.
   backgroundSprite: {fileID: -2759326041986059713, guid: 3aa0cf779816e4903b4d4b9ae95c2d9e, type: 3}
   starThreshold1: 45
   starThreshold2: 75

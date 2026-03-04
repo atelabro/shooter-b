@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 25
   mapName: Sensoji Frontline
+  mapNameMk: Сенсоџи Фронт
   briefingText: First Tokyo push at Sensoji. Hold center lanes and clear quick flankers.
+  briefingTextMk: Прв напад во Токио кај Сенсоџи. Држи ги централните линии и исчисти ги брзите фланкери.
   backgroundSprite: {fileID: 1974481596497989000, guid: 4b5728e7f6a914ce08c115a99649b136, type: 3}
   starThreshold1: 85
   starThreshold2: 132

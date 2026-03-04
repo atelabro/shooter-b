@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 1
   mapName: Countryside - Day 2
+  mapNameMk: Почеток - Ден 2
   briefingText: "First contact. They are disorganized but numerous.\n  Take them
     down."
+  briefingTextMk: Прв контакт. Непријателите се неорганизирани но бројни. Елиминирај ги.
   backgroundSprite: {fileID: -4733943478823697903, guid: 4edc43d3cf22b44abbae19dc3868a298, type: 3}
   starThreshold1: 20
   starThreshold2: 28

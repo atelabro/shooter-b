@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 26
   mapName: Torii Passage
+  mapNameMk: Тории Премин
   briefingText: Movement is threading through the gates. Track crossing vectors and keep rhythm.
+  briefingTextMk: Движењето се провлекува низ портите. Следи ги вкрстените вектори и задржи ритам.
   backgroundSprite: {fileID: 6427051974737286369, guid: 84ba987c9434d48ef87ae8bf6bfffabb, type: 3}
   starThreshold1: 95
   starThreshold2: 146

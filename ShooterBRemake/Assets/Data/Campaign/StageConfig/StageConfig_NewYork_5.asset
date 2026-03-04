@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 19
   mapName: Empire State Finale
+  mapNameMk: Емпајр Стејт Финале
   briefingText: Final New York push. Continuous elite waves and relentless entry speed.
+  briefingTextMk: Финален пробив во Њујорк. Континуирани елитни бранови и немилосрдна брзина на влез.
   backgroundSprite: {fileID: -5569311537959265139, guid: 6f9fc4dea27b549209fb75d5010d25ae, type: 3}
   starThreshold1: 152
   starThreshold2: 228

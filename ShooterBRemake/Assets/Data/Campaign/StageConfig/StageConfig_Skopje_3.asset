@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 6
   mapName: Kale Fortress
+  mapNameMk: Кале Тврдина
   briefingText: Elevated routes and long shots. Control tempo to survive.
+  briefingTextMk: Покачени рути и далечни истрели. Контролирај го темпото за да преживееш.
   backgroundSprite: {fileID: -4767486021674482408, guid: bb99289c8c7b44e7aab4367c6b7b72b6, type: 3}
   starThreshold1: 12
   starThreshold2: 18

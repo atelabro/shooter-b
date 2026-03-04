@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 9
   mapName: Louvre Front
+  mapNameMk: Лувр Фронт
   briefingText: Louvre approaches are crowded. Prioritize fast targets first.
+  briefingTextMk: Приодите кон Лувр се пренатрупани. Прво елиминирај ги брзите цели.
   backgroundSprite: {fileID: -2980691944179823259, guid: f26d23d2bfee346dbaed78915cdfed60, type: 3}
   starThreshold1: 55
   starThreshold2: 90

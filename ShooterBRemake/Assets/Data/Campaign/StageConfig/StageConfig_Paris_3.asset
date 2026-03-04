@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 11
   mapName: Notre Dame Perimeter
+  mapNameMk: Нотр Дам Периметар
   briefingText: Long lines and surprise dives. Control angles before they swarm.
+  briefingTextMk: Долги линии и изненадни нурнувања. Контролирај ги аглите пред да те опколат.
   backgroundSprite: {fileID: -7666902988477780871, guid: b0560c40ae9ed4d9bac0d14f75ae892e, type: 3}
   starThreshold1: 75
   starThreshold2: 120

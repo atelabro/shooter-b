@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 7
   mapName: Vodno / Millennium Cross
+  mapNameMk: Водно / Милениумски Крст
   briefingText: Final Skopje push. High ground, high speed, no mistakes.
+  briefingTextMk: Финален пробив во Скопје. Висока позиција висока брзина без грешки.
   backgroundSprite: {fileID: 7715504672977574224, guid: 5191dde768dcd4d1b836c62a38a72582, type: 3}
   starThreshold1: 13
   starThreshold2: 20

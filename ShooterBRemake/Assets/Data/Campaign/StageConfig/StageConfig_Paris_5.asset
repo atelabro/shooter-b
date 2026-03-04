@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 13
   mapName: Arc de Triomphe Ring
+  mapNameMk: Арк де Триомф Круг
   briefingText: Final Paris circle. High-speed entries from every angle.
+  briefingTextMk: Финален круг во Париз. Високобрзински влезови од секој агол.
   backgroundSprite: {fileID: 8428991020104788348, guid: dc9554484211e430695f93bdb35e4c89, type: 3}
   starThreshold1: 95
   starThreshold2: 150

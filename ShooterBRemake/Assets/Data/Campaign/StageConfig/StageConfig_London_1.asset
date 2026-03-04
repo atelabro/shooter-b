@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 21
   mapName: Buckingham Perimeter
+  mapNameMk: Бакингем Периметар
   briefingText: Palace perimeter is under pressure. Clear lanes before elites stack.
+  briefingTextMk: Периметарот на палатата е под притисок. Исчисти ги линиите пред елитите да се насоберат.
   backgroundSprite: {fileID: -2783098818843675142, guid: 7645cd8aae8144558a99fccb910d93ff, type: 3}
   starThreshold1: 126
   starThreshold2: 193

@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 15
   mapName: Brooklyn Bridge Run
+  mapNameMk: Бруклин Бриџ Трка
   briefingText: Bridge crossings are under heavy pressure. Track fast entries and hold lanes.
+  briefingTextMk: Премините на мостот се под силен притисок. Следи ги брзите влезови и држи ги линиите.
   backgroundSprite: {fileID: -740964376350419543, guid: 1556d899e6d6d43a2ad1dfc80a3bd2dd, type: 3}
   starThreshold1: 100
   starThreshold2: 152

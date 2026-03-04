@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 12
   mapName: Sacre-Coeur Heights
+  mapNameMk: Сакре-Кер Височини
   briefingText: Final Paris push at altitude. Zero hesitation.
+  briefingTextMk: Финален напад во Париз на височина. Без двоумење.
   backgroundSprite: {fileID: 2225196649216103463, guid: 23fae774f981e429094988ae3bdbbed1, type: 3}
   starThreshold1: 85
   starThreshold2: 135

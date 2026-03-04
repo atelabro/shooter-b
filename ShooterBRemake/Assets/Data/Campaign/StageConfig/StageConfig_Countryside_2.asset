@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 2
   mapName: Countryside - Day 3
+  mapNameMk: Почеток - Ден 3
   briefingText: They are adapting. Move faster, aim better.
+  briefingTextMk: Се прилагодуваат. Движи се побрзо и нишани попрецизно.
   backgroundSprite: {fileID: 808548114997151697, guid: f9563fc123b9a49b986102e7fc471528, type: 3}
   starThreshold1: 40
   starThreshold2: 60

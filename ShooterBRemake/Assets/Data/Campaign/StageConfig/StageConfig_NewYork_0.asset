@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 14
   mapName: Central Park Sweep
+  mapNameMk: Сентрал Парк Чистење
   briefingText: Quiet paths are compromised. Sweep the park and stabilize the perimeter.
+  briefingTextMk: Тивките патеки се компромитирани. Исчисти го паркот и стабилизирај го периметарот.
   backgroundSprite: {fileID: -4756892901711654480, guid: 175af37e927344b5b89ffcb108a0312d, type: 3}
   starThreshold1: 88
   starThreshold2: 136

@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 22
   mapName: London Eye Circuit
+  mapNameMk: Лондон Ај Круг
   briefingText: They are circling the Eye in waves. Keep combo pace and deny momentum.
+  briefingTextMk: Кружат околу Лондон Ај во бранови. Одржи го темпото на комбо и не им дозволувај замав.
   backgroundSprite: {fileID: 4817820056433462531, guid: f4de1774e4d484595857f30d1e05be1b, type: 3}
   starThreshold1: 142
   starThreshold2: 215

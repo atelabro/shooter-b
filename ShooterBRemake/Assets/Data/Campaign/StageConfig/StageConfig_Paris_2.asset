@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 10
   mapName: Moulin Quarter
+  mapNameMk: Мулен Кварт
   briefingText: Neon and shadows reduce visibility. Commit to clean bursts.
+  briefingTextMk: Неонот и сенките ја намалуваат видливоста. Дејствувај со чисти и прецизни серии.
   backgroundSprite: {fileID: -7018427665677564695, guid: f207bf13b7d6344fd8b763e49a0d1402, type: 3}
   starThreshold1: 65
   starThreshold2: 105

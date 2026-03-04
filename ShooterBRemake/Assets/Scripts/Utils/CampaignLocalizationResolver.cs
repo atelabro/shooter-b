@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace ShooterB
 {
     public static class CampaignLocalizationResolver
@@ -48,7 +50,15 @@ namespace ShooterB
 
         private static bool IsMacedonian()
         {
-            return LocalizationManager.Instance.CurrentLanguage == LocalizationManager.Language.Macedonian;
+            int savedLanguage = PlayerPrefs.GetInt(
+                Constants.PREFS_LANGUAGE,
+                (int)LocalizationManager.Language.English);
+            bool prefsMacedonian = savedLanguage == (int)LocalizationManager.Language.Macedonian;
+
+            bool managerMacedonian = LocalizationManager.HasInstance &&
+                LocalizationManager.Instance.CurrentLanguage == LocalizationManager.Language.Macedonian;
+
+            return prefsMacedonian || managerMacedonian;
         }
     }
 }

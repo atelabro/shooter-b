@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 3
   mapName: Macedonia Square
+  mapNameMk: Плоштад Македонија
   briefingText: First urban push in Skopje. Wide sightlines, fast reactions.
+  briefingTextMk: Прв урбан пробив во Скопје. Широки линии на видливост и брзи реакции.
   backgroundSprite: {fileID: 4934435490208857515, guid: ffa1e0eb27ca14f0589c2cc28e809d41, type: 3}
   starThreshold1: 9
   starThreshold2: 14

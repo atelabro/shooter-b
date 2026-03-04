@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 5
   mapName: Old Bazaar (Carsija)
+  mapNameMk: Стара Чаршија
   briefingText: Tight lanes and fast angle changes. Precision over panic.
+  briefingTextMk: Тесни линии и брзи промени на агол. Прецизност пред паника.
   backgroundSprite: {fileID: 5461148535016659524, guid: dd1d131ecc9034273b186391b87da1a0, type: 3}
   starThreshold1: 11
   starThreshold2: 17
