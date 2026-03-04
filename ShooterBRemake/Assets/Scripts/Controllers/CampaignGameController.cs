@@ -29,6 +29,7 @@ namespace ShooterB
 
         private void Start()
         {
+            Time.timeScale = 1f;
             EnsureActiveStage();
             SetupCamera();
             ApplyCampaignBackground();
@@ -213,12 +214,15 @@ namespace ShooterB
 
             float delay = Mathf.Max(0f, gameStartingCountdownSeconds);
             if (delay > 0f)
-                yield return new WaitForSeconds(delay);
+                yield return new WaitForSecondsRealtime(delay);
 
             HideGameStartingModal();
 
             if (campaignDuckSpawner != null)
+            {
+                Debug.Log("[CampaignGameController] Countdown finished, starting campaign spawner.");
                 campaignDuckSpawner.StartSpawning();
+            }
         }
 
         private void ShowGameStartingModal()
