@@ -24,6 +24,7 @@ namespace ShooterB
 
         private Coroutine briefingTypingCoroutine;
         private CityConfig[] allCities;
+        private CityConfig currentCity;
 
         private void Awake()
         {
@@ -43,11 +44,12 @@ namespace ShooterB
             if (city == null)
                 return;
 
+            currentCity = city;
             ClearStageList();
             PopulateStageList(city);
 
             if (cityNameText != null)
-                cityNameText.text = city.cityName;
+                cityNameText.text = CampaignLocalizationResolver.GetCityName(city);
 
             gameObject.SetActive(true);
             transform.SetAsLastSibling();
@@ -57,7 +59,7 @@ namespace ShooterB
                 if (briefingTypingCoroutine != null)
                     StopCoroutine(briefingTypingCoroutine);
 
-                briefingTypingCoroutine = StartCoroutine(TypeBriefing(city.briefingText ?? string.Empty));
+                briefingTypingCoroutine = StartCoroutine(TypeBriefing(CampaignLocalizationResolver.GetCityBriefing(city)));
             }
         }
 
@@ -73,9 +75,17 @@ namespace ShooterB
             OnPanelHidden?.Invoke();
         }
 
+        public void RefreshLocalizationIfVisible()
+        {
+            if (!gameObject.activeInHierarchy || currentCity == null)
+                return;
+
+            Show(currentCity);
+        }
+
         private void PopulateStageList(CityConfig city)
         {
-            if (stageListContainer == null || stageEntryPrefab == null)
+            if (stageListContainer == null || stageEntryPrefab == null || city == null || city.stages == null)
                 return;
 
             foreach (StageConfig stage in city.stages)

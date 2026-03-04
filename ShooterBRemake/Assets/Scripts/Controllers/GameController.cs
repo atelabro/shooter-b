@@ -16,14 +16,20 @@ namespace ShooterB
         public PauseModalController pauseModalController;
         public GameOverModalController gameOverModalController;
 
+        [Header("Game Start Modal")]
+        public GameObject gameStartingModalPanel;
+        public GameStartingModalController gameStartingModalController;
+
         private void Start()
         {
             SetupCamera();
 
             ApplyBackground();
             ResolveModalReferences();
+            ConfigureGameStartingModal();
             HideModals();
             GameManager.Instance.OnGameOver += HandleGameOver;
+            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
 
             Debug.Log($"GameController started - Score: {GameManager.Instance.Score}, Lives: {GameManager.Instance.Lives}, Difficulty: {GameManager.Instance.Difficulty}");
         }
@@ -34,6 +40,9 @@ namespace ShooterB
             {
                 GameManager.Instance.OnGameOver -= HandleGameOver;
             }
+
+            if (LocalizationManager.HasInstance)
+                LocalizationManager.Instance.OnLanguageChanged -= HandleLanguageChanged;
         }
 
         private void SetupCamera()
@@ -137,11 +146,39 @@ namespace ShooterB
             if (gameOverModalController == null)
                 gameOverModalController = FindObjectOfType<GameOverModalController>(true);
 
+            if (gameStartingModalController == null && gameStartingModalPanel != null)
+                gameStartingModalController = gameStartingModalPanel.GetComponent<GameStartingModalController>();
+
+            if (gameStartingModalController == null)
+                gameStartingModalController = FindObjectOfType<GameStartingModalController>(true);
+
             if (pauseModalController == null)
                 Debug.LogWarning("[GameController] PauseModalController not found in scene.");
 
             if (gameOverModalController == null)
                 Debug.LogWarning("[GameController] GameOverModalController not found in scene.");
+
+            if (gameStartingModalController == null)
+                Debug.LogWarning("[GameController] GameStartingModalController not found in scene.");
+        }
+
+        private void ConfigureGameStartingModal()
+        {
+            if (gameStartingModalController == null)
+                return;
+
+            StageConfig activeStage = CampaignProgressManager.Instance.ActiveStageConfig;
+            if (activeStage == null)
+                return;
+
+            gameStartingModalController.Configure(
+                CampaignLocalizationResolver.GetStageName(activeStage),
+                CampaignLocalizationResolver.GetStageBriefing(activeStage));
+        }
+
+        private void HandleLanguageChanged(LocalizationManager.Language language)
+        {
+            ConfigureGameStartingModal();
         }
 
         private void HideModals()
@@ -151,6 +188,11 @@ namespace ShooterB
 
             if (gameOverModalController != null)
                 gameOverModalController.Hide();
+
+            if (gameStartingModalPanel != null)
+                gameStartingModalPanel.SetActive(false);
+            else if (gameStartingModalController != null && gameStartingModalController.modalRoot != null)
+                gameStartingModalController.modalRoot.SetActive(false);
         }
 
         private void HandleGameOver()

@@ -24,11 +24,14 @@ namespace ShooterB
         public CityPanelController cityPanel;
 
         [Header("Top Bar")]
+        public TextMeshProUGUI mapTitleText;
         public TextMeshProUGUI totalStarsText;
 
         [Header("Buttons")]
         public Button backButton;
         public Button armoryButton;
+        public TextMeshProUGUI backButtonText;
+        public TextMeshProUGUI armoryButtonText;
 
         [Header("Map Focus")]
         public float focusZoomScale = 1.25f;
@@ -63,6 +66,7 @@ namespace ShooterB
         {
             CampaignProgressManager.Instance.SetCampaignCities(cities);
             ResolveMapReferences();
+            ResolveTextReferences();
 
             if (backButton != null)
                 backButton.onClick.AddListener(OnBackClicked);
@@ -79,10 +83,13 @@ namespace ShooterB
                 cityPanel.OnPanelHidden += OnCityPanelHidden;
             }
 
+            RefreshLocalizedTexts();
             RefreshPins();
             RefreshTotalStars();
             EnsureActiveStageOnEnter();
             FocusLatestOpenedCityOnEnter();
+
+            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
         }
 
         private void Update()
@@ -158,6 +165,9 @@ namespace ShooterB
 
             if (armoryButton != null)
                 armoryButton.onClick.RemoveListener(OnArmoryClicked);
+
+            if (LocalizationManager.HasInstance)
+                LocalizationManager.Instance.OnLanguageChanged -= HandleLanguageChanged;
         }
 
         private static Button ResolveArmoryButton()
@@ -264,6 +274,54 @@ namespace ShooterB
                 }
             }
 
+        }
+
+        private void ResolveTextReferences()
+        {
+            if (mapTitleText == null)
+                mapTitleText = FindTextInSceneByName("TitleText");
+
+            if (backButtonText == null && backButton != null)
+                backButtonText = backButton.GetComponentInChildren<TextMeshProUGUI>(true);
+
+            if (armoryButtonText == null && armoryButton != null)
+                armoryButtonText = armoryButton.GetComponentInChildren<TextMeshProUGUI>(true);
+        }
+
+        private TextMeshProUGUI FindTextInSceneByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return null;
+
+            TextMeshProUGUI[] texts = FindObjectsOfType<TextMeshProUGUI>(true);
+            for (int i = 0; i < texts.Length; i++)
+            {
+                if (texts[i] != null && texts[i].gameObject.name == name)
+                    return texts[i];
+            }
+
+            return null;
+        }
+
+        private void RefreshLocalizedTexts()
+        {
+            if (mapTitleText != null)
+                mapTitleText.text = LocalizationManager.Instance.Get("campaign.map.title", "D.U.C.K. OPERATIONS");
+
+            if (backButtonText != null)
+                backButtonText.text = LocalizationManager.Instance.Get("common.back", "Back");
+
+            if (armoryButtonText != null)
+                armoryButtonText.text = LocalizationManager.Instance.Get("common.armory", "Armory");
+        }
+
+        private void HandleLanguageChanged(LocalizationManager.Language language)
+        {
+            RefreshLocalizedTexts();
+            RefreshPins();
+
+            if (cityPanel != null)
+                cityPanel.RefreshLocalizationIfVisible();
         }
 
         private void EnsurePinInstances()

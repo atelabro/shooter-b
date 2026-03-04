@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace ShooterB
 {
@@ -12,10 +13,16 @@ namespace ShooterB
         public Button resumeButton;
         public Button restartButton;
         public Button menuButton;
+        public TextMeshProUGUI pauseTitleText;
+        public TextMeshProUGUI resumeButtonText;
+        public TextMeshProUGUI restartButtonText;
+        public TextMeshProUGUI menuButtonText;
 
         private void Start()
         {
             EnsureModalRoot();
+            ResolveTextReferences();
+            RefreshLocalizedTexts();
 
             if (resumeButton != null)
                 resumeButton.onClick.AddListener(OnResumeClicked);
@@ -25,6 +32,23 @@ namespace ShooterB
 
             if (menuButton != null)
                 menuButton.onClick.AddListener(OnMenuClicked);
+
+            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
+        }
+
+        private void OnDestroy()
+        {
+            if (resumeButton != null)
+                resumeButton.onClick.RemoveListener(OnResumeClicked);
+
+            if (restartButton != null)
+                restartButton.onClick.RemoveListener(OnRestartClicked);
+
+            if (menuButton != null)
+                menuButton.onClick.RemoveListener(OnMenuClicked);
+
+            if (LocalizationManager.HasInstance)
+                LocalizationManager.Instance.OnLanguageChanged -= HandleLanguageChanged;
         }
 
         public void Show()
@@ -83,6 +107,56 @@ namespace ShooterB
         {
             if (modalRoot == null)
                 modalRoot = gameObject;
+        }
+
+        private void ResolveTextReferences()
+        {
+            if (pauseTitleText == null)
+                pauseTitleText = FindTextByContent("Game Paused");
+
+            if (resumeButtonText == null && resumeButton != null)
+                resumeButtonText = resumeButton.GetComponentInChildren<TextMeshProUGUI>(true);
+
+            if (restartButtonText == null && restartButton != null)
+                restartButtonText = restartButton.GetComponentInChildren<TextMeshProUGUI>(true);
+
+            if (menuButtonText == null && menuButton != null)
+                menuButtonText = menuButton.GetComponentInChildren<TextMeshProUGUI>(true);
+        }
+
+        private void RefreshLocalizedTexts()
+        {
+            if (pauseTitleText != null)
+                pauseTitleText.text = LocalizationManager.Instance.Get("campaign.pause.title", "Game Paused");
+
+            if (resumeButtonText != null)
+                resumeButtonText.text = LocalizationManager.Instance.Get("common.resume", "Resume");
+
+            if (restartButtonText != null)
+                restartButtonText.text = LocalizationManager.Instance.Get("common.restart", "Restart");
+
+            if (menuButtonText != null)
+                menuButtonText.text = LocalizationManager.Instance.Get("common.back", "Back");
+        }
+
+        private void HandleLanguageChanged(LocalizationManager.Language language)
+        {
+            RefreshLocalizedTexts();
+        }
+
+        private TextMeshProUGUI FindTextByContent(string content)
+        {
+            if (modalRoot == null || string.IsNullOrWhiteSpace(content))
+                return null;
+
+            TextMeshProUGUI[] texts = modalRoot.GetComponentsInChildren<TextMeshProUGUI>(true);
+            for (int i = 0; i < texts.Length; i++)
+            {
+                if (texts[i] != null && texts[i].text == content)
+                    return texts[i];
+            }
+
+            return null;
         }
     }
 }

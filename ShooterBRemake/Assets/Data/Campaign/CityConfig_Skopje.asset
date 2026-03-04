@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: CityConfig_Skopje
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CityConfig
   cityName: Skopje
+  cityNameMk: Скопје
   briefingText: Duck forces have occupied Skopje landmarks. Push them out and secure
     the city.
+  briefingTextMk: Силите на патките ги окупираа знаменитостите на Скопје. Истерај
+    ги и обезбеди го градот.
   pinSpriteResourcePath: Pins/SkopjeBadge
   pinPosition: {x: 60, y: 120}
   stages:

@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: CityConfig_NewYork
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CityConfig
   cityName: New York
+  cityNameMk: Њујорк
   briefingText: Duck gridlock on Manhattan. The streets belong to them now. Take
     it back.
+  briefingTextMk: Паткин метеж на Менхетен. Улиците сега им припаѓаат ним. Освои
+    ги назад.
   pinSpriteResourcePath: Pins/NewYorkBadge
   pinPosition: {x: -460, y: 100}
   stages:

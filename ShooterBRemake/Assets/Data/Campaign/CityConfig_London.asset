@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: CityConfig_London
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CityConfig
   cityName: London
+  cityNameMk: Лондон
   briefingText: Duck cells are regrouping across London. Marking this city for the next campaign operation.
+  briefingTextMk: Паткините јата се прегрупираат низ Лондон. Го обележуваме овој
+    град за следната кампањска операција.
   pinSpriteResourcePath: Pins/LondonBadge 1
   pinPosition: {x: -85, y: 170}
   stages:

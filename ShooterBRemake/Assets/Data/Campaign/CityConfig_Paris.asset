@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: CityConfig_Paris
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CityConfig
   cityName: Paris
+  cityNameMk: Париз
   briefingText: Ducks have seized the Eiffel Tower. The city is in chaos. Liberate
     Paris, agent.
+  briefingTextMk: Патките ја презедоа Ајфеловата кула. Градот е во хаос. Ослободи
+    го Париз, агенте.
   pinSpriteResourcePath: Pins/ParisBadge
   pinPosition: {x: -30, y: 140}
   stages:

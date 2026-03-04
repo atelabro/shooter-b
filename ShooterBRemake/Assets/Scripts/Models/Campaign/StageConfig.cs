@@ -7,7 +7,9 @@ namespace ShooterB
     {
         public int stageIndex;
         public string mapName;
+        public string mapNameMk;
         [TextArea] public string briefingText;
+        [TextArea] public string briefingTextMk;
         public Sprite backgroundSprite;
         public int starThreshold1;
         public int starThreshold2;

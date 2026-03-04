@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: CityConfig_Tokyo
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CityConfig
   cityName: Tokyo
+  cityNameMk: Токио
   briefingText: Duck formations are appearing across Tokyo districts. Flagging this city for upcoming operations.
+  briefingTextMk: Паткини формации се појавуваат низ реоните на Токио. Го означуваме
+    овој град за претстојни операции.
   pinSpriteResourcePath: Pins/TokyoBadge 1
   pinPosition: {x: 660, y: 90}
   stages:

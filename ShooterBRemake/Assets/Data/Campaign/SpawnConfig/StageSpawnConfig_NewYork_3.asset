@@ -13,61 +13,61 @@ MonoBehaviour:
   m_Name: StageSpawnConfig_NewYork_3
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageSpawnConfig
   spawnSequence:
-  - duckType: 10
+  - duckType: 16
     delay: 0.72
-  - duckType: 10
+  - duckType: 16
     delay: 0.72
-  - duckType: 9
+  - duckType: 15
     delay: 0.72
-  - duckType: 10
+  - duckType: 16
     delay: 0.62
-  - duckType: 9
+  - duckType: 15
     delay: 0.72
-  - duckType: 8
+  - duckType: 14
     delay: 0.62
-  - duckType: 8
+  - duckType: 14
     delay: 0.62
-  - duckType: 10
+  - duckType: 16
     delay: 0.62
-  - duckType: 9
+  - duckType: 15
     delay: 0.62
-  - duckType: 8
+  - duckType: 14
     delay: 0.62
-  - duckType: 8
+  - duckType: 14
     delay: 0.62
-  - duckType: 10
+  - duckType: 16
     delay: 0.62
-  - duckType: 9
+  - duckType: 15
     delay: 0.62
-  - duckType: 8
+  - duckType: 14
     delay: 0.52
-  - duckType: 8
+  - duckType: 14
     delay: 0.62
-  - duckType: 10
+  - duckType: 16
     delay: 0.62
-  - duckType: 9
+  - duckType: 15
     delay: 0.52
-  - duckType: 8
+  - duckType: 14
     delay: 0.52
-  - duckType: 8
+  - duckType: 14
     delay: 0.52
-  - duckType: 10
+  - duckType: 16
     delay: 0.52
-  - duckType: 9
+  - duckType: 15
     delay: 0.52
-  - duckType: 8
+  - duckType: 14
     delay: 0.52
-  - duckType: 8
+  - duckType: 14
     delay: 0.52
-  - duckType: 10
+  - duckType: 16
     delay: 0.52
-  - duckType: 8
+  - duckType: 14
     delay: 0.52
-  - duckType: 8
+  - duckType: 14
     delay: 0.52
-  - duckType: 10
+  - duckType: 16
     delay: 0.52
-  - duckType: 8
+  - duckType: 14
     delay: 0.52
   weightGoStraight: 0.18
   weightGoTop: 0.5

@@ -27,7 +27,7 @@ namespace ShooterB
                 backgroundImage.sprite = stage.backgroundSprite;
 
             if (mapNameText != null)
-                mapNameText.text = stage.mapName;
+                mapNameText.text = CampaignLocalizationResolver.GetStageName(stage);
 
             if (lockOverlay != null)
                 lockOverlay.SetActive(!isUnlocked);

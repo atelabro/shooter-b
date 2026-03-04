@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: CityConfig_Countryside
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CityConfig
   cityName: Countryside
+  cityNameMk: Село
   briefingText: The uprising began here. Scattered duck forces, low organization.
     Good place to start agent.
+  briefingTextMk: Востанието започна тука. Расфрлани сили на патките, со ниска организација.
+    Добро место за почеток, агенте.
   pinSpriteResourcePath: Pins/FarmBadge
   pinPosition: {x: 40, y: 240}
   stages:

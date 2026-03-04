@@ -67,7 +67,10 @@ namespace ShooterB
             FRENCH_ARTIST,
             BRITISH_REDCOAT,
             BRITISH_POLICE,
-            BRITISH_PUNK
+            BRITISH_PUNK,
+            USA_POLICE,
+            USA_WORKER,
+            USA_BUSINESS
         }
 
         public static string GetDuckDisplayName(DuckType type)
@@ -88,6 +91,9 @@ namespace ShooterB
                 case DuckType.BRITISH_REDCOAT: return "British Redcoat";
                 case DuckType.BRITISH_POLICE: return "British Police";
                 case DuckType.BRITISH_PUNK: return "British Punk";
+                case DuckType.USA_POLICE: return "USA Police";
+                case DuckType.USA_WORKER: return "USA Worker";
+                case DuckType.USA_BUSINESS: return "USA Business";
                 // Reserve this switch for future region-specific duck additions (e.g. France).
                 default: return type.ToString();
             }
@@ -111,6 +117,9 @@ namespace ShooterB
                 case DuckType.BRITISH_REDCOAT: return "BRITISH_REDCOAT";
                 case DuckType.BRITISH_POLICE: return "BRITISH_POLICE";
                 case DuckType.BRITISH_PUNK: return "BRITISH_PUNK";
+                case DuckType.USA_POLICE: return "USA_POLICE";
+                case DuckType.USA_WORKER: return "USA_WORKER";
+                case DuckType.USA_BUSINESS: return "USA_BUSINESS";
                 default: return type.ToString();
             }
         }
@@ -157,6 +166,9 @@ namespace ShooterB
             public const int BRITISH_REDCOAT = 2;
             public const int BRITISH_POLICE = 3;
             public const int BRITISH_PUNK = 4;
+            public const int USA_POLICE = 3;
+            public const int USA_WORKER = 3;
+            public const int USA_BUSINESS = 3;
 
             public static int GetPoints(DuckType type)
             {
@@ -176,6 +188,9 @@ namespace ShooterB
                     case DuckType.BRITISH_REDCOAT: return BRITISH_REDCOAT;
                     case DuckType.BRITISH_POLICE: return BRITISH_POLICE;
                     case DuckType.BRITISH_PUNK: return BRITISH_PUNK;
+                    case DuckType.USA_POLICE: return USA_POLICE;
+                    case DuckType.USA_WORKER: return USA_WORKER;
+                    case DuckType.USA_BUSINESS: return USA_BUSINESS;
                     default: return TYPE_0;
                 }
             }

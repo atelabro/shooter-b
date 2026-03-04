@@ -25,9 +25,10 @@ namespace ShooterB
         public void Initialize(CityConfig config, bool isUnlocked, Action onClick)
         {
             onClickCallback = onClick;
+            string cityName = CampaignLocalizationResolver.GetCityName(config);
 
             if (cityNameText != null)
-                cityNameText.text = config.cityName;
+                cityNameText.text = cityName;
 
             if (pinImage != null)
             {
@@ -42,7 +43,7 @@ namespace ShooterB
                 }
                 else
                 {
-                    Debug.LogWarning($"[CityPinController] Missing pin sprite for city '{config.cityName}'. Path: '{config.pinSpriteResourcePath}'");
+                    Debug.LogWarning($"[CityPinController] Missing pin sprite for city '{cityName}'. Path: '{config.pinSpriteResourcePath}'");
                 }
             }
 

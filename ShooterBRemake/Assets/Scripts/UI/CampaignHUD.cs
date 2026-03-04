@@ -85,6 +85,7 @@ namespace ShooterB
             BuildAmmoIcons();
             SubscribeToEvents();
             UpdateAllUI();
+            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
         }
 
         private void OnDestroy()
@@ -121,6 +122,9 @@ namespace ShooterB
                 DailyAwardsManager.Instance.OnDailyObjectiveCompleted -= HandleDailyObjectiveCompleted;
                 DailyAwardsManager.Instance.OnDailySetCompleted -= HandleDailySetCompleted;
             }
+
+            if (LocalizationManager.HasInstance)
+                LocalizationManager.Instance.OnLanguageChanged -= HandleLanguageChanged;
         }
 
         private void UpdateAllUI()
@@ -145,7 +149,9 @@ namespace ShooterB
         private void UpdateScore(long score)
         {
             if (scoreText != null)
-                scoreText.text = $"Score: {score}";
+                scoreText.text = string.Format(
+                    LocalizationManager.Instance.Get("campaign.hud.score_format", "Score: {0}"),
+                    score);
         }
 
         private void UpdateMultiplier(int multiplier)
@@ -167,7 +173,9 @@ namespace ShooterB
             }
 
             if (livesText != null)
-                livesText.text = $"Lives: {lives}";
+                livesText.text = string.Format(
+                    LocalizationManager.Instance.Get("campaign.hud.lives_format", "Lives: {0}"),
+                    lives);
         }
 
         private void BuildAmmoIcons()
@@ -274,7 +282,7 @@ namespace ShooterB
 
             if (reloadingText != null)
             {
-                reloadingText.text = "reloading";
+                reloadingText.text = LocalizationManager.Instance.Get("campaign.hud.reloading", "Reloading");
                 reloadingText.gameObject.SetActive(false);
             }
 
@@ -441,7 +449,12 @@ namespace ShooterB
 
             int index = UnityEngine.Random.Range(0, objectives.Count);
             var state = objectives[index];
-            ShowRewardPopup("DAILY OBJECTIVE COMPLETE", state.title, state.coinReward, true, "DAILY_DEBUG");
+            ShowRewardPopup(
+                LocalizationManager.Instance.Get("campaign.hud.popup.daily_objective_complete", "DAILY OBJECTIVE COMPLETE"),
+                state.title,
+                state.coinReward,
+                true,
+                "DAILY_DEBUG");
         }
 
         private static bool IsDebugTriggerPressed()
@@ -480,7 +493,12 @@ namespace ShooterB
 
             string achievementTitle = AchievementManager.Instance.GetTitle(id);
             int coinReward = AchievementManager.Instance.GetCoinReward(id);
-            ShowRewardPopup("ACHIEVEMENT UNLOCKED", achievementTitle, coinReward, isDebug, "ACHIEVEMENT");
+            ShowRewardPopup(
+                LocalizationManager.Instance.Get("campaign.hud.popup.achievement_unlocked", "ACHIEVEMENT UNLOCKED"),
+                achievementTitle,
+                coinReward,
+                isDebug,
+                "ACHIEVEMENT");
         }
 
         private void HandleDailyObjectiveCompleted(int slotIndex)
@@ -491,14 +509,24 @@ namespace ShooterB
                 if (objectives[i].slotIndex != slotIndex)
                     continue;
 
-                ShowRewardPopup("DAILY OBJECTIVE COMPLETE", objectives[i].title, objectives[i].coinReward, false, "DAILY_OBJECTIVE");
+                ShowRewardPopup(
+                    LocalizationManager.Instance.Get("campaign.hud.popup.daily_objective_complete", "DAILY OBJECTIVE COMPLETE"),
+                    objectives[i].title,
+                    objectives[i].coinReward,
+                    false,
+                    "DAILY_OBJECTIVE");
                 return;
             }
         }
 
         private void HandleDailySetCompleted()
         {
-            ShowRewardPopup("DAILY SET COMPLETE", "All daily objectives completed", DailyAwardsManager.Instance.GetDailySetBonusCoins(), false, "DAILY_SET");
+            ShowRewardPopup(
+                LocalizationManager.Instance.Get("campaign.hud.popup.daily_set_complete", "DAILY SET COMPLETE"),
+                LocalizationManager.Instance.Get("campaign.hud.popup.daily_set_body", "All daily objectives completed"),
+                DailyAwardsManager.Instance.GetDailySetBonusCoins(),
+                false,
+                "DAILY_SET");
         }
 
         private void ShowRewardPopup(string header, string title, int coins, bool isDebug, string source)
@@ -598,14 +626,23 @@ namespace ShooterB
             switch (type)
             {
                 case Constants.MultiKillType.DoubleKill:
-                    return "DOUBLE KILL";
+                    return LocalizationManager.Instance.Get("campaign.hud.combo.double", "DOUBLE KILL");
                 case Constants.MultiKillType.TripleKill:
-                    return "TRIPLE KILL";
+                    return LocalizationManager.Instance.Get("campaign.hud.combo.triple", "TRIPLE KILL");
                 case Constants.MultiKillType.QuadraKill:
-                    return "QUADRA KILL";
+                    return LocalizationManager.Instance.Get("campaign.hud.combo.quadra", "QUADRA KILL");
                 default:
-                    return "COMBO";
+                    return LocalizationManager.Instance.Get("campaign.hud.combo.default", "COMBO");
             }
+        }
+
+        private void HandleLanguageChanged(LocalizationManager.Language language)
+        {
+            if (reloadingText != null)
+                reloadingText.text = LocalizationManager.Instance.Get("campaign.hud.reloading", "Reloading");
+
+            UpdateScore(GameManager.Instance.Score);
+            UpdateLives(GameManager.Instance.Lives);
         }
 
         private static Color GetComboColor(Constants.MultiKillType type)

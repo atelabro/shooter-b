@@ -10,7 +10,11 @@ namespace ShooterB
         public GameObject modalRoot;
 
         [Header("Text")]
+        public TextMeshProUGUI titleText;
         public TextMeshProUGUI stageNameText;
+        public TextMeshProUGUI restartButtonText;
+        public TextMeshProUGUI backButtonText;
+        public TextMeshProUGUI continueButtonText;
 
         [Header("Star Icons")]
         public Image[] starIcons;
@@ -23,11 +27,14 @@ namespace ShooterB
         public Button continueButton;
         public Button menuButton;
         private Button legacyBackFallbackButton;
+        private StageConfig lastShownStage;
 
         private void Start()
         {
             EnsureModalRoot();
             ResolveButtons();
+            ResolveTextReferences();
+            RefreshLocalizedTexts();
 
             if (restartButton != null)
                 restartButton.onClick.AddListener(OnRestartClicked);
@@ -40,6 +47,8 @@ namespace ShooterB
 
             if (legacyBackFallbackButton != null && legacyBackFallbackButton != backButton)
                 legacyBackFallbackButton.onClick.AddListener(OnBackClicked);
+
+            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
         }
 
         private void OnDestroy()
@@ -55,18 +64,22 @@ namespace ShooterB
 
             if (legacyBackFallbackButton != null && legacyBackFallbackButton != backButton)
                 legacyBackFallbackButton.onClick.RemoveListener(OnBackClicked);
+
+            if (LocalizationManager.HasInstance)
+                LocalizationManager.Instance.OnLanguageChanged -= HandleLanguageChanged;
         }
 
         public void Show(StageConfig config, long score)
         {
             EnsureModalRoot();
+            lastShownStage = config;
 
             int stars = CampaignProgressManager.Instance.CalculateStars(config, score);
 
             CampaignProgressManager.Instance.SaveStageStars(config.stageIndex, stars);
 
             if (stageNameText != null)
-                stageNameText.text = config.mapName;
+                stageNameText.text = CampaignLocalizationResolver.GetStageName(config);
 
             ApplyStarIcons(stars);
 
@@ -159,6 +172,59 @@ namespace ShooterB
                 continueButton = FindButtonByName("ContinueButton");
 
             legacyBackFallbackButton = menuButton;
+        }
+
+        private void ResolveTextReferences()
+        {
+            if (titleText == null)
+                titleText = FindTextByContent("Stage Complete");
+
+            if (restartButtonText == null && restartButton != null)
+                restartButtonText = restartButton.GetComponentInChildren<TextMeshProUGUI>(true);
+
+            if (backButtonText == null && backButton != null)
+                backButtonText = backButton.GetComponentInChildren<TextMeshProUGUI>(true);
+
+            if (continueButtonText == null && continueButton != null)
+                continueButtonText = continueButton.GetComponentInChildren<TextMeshProUGUI>(true);
+        }
+
+        private void RefreshLocalizedTexts()
+        {
+            if (titleText != null)
+                titleText.text = LocalizationManager.Instance.Get("campaign.stage_complete.title", "Stage Complete");
+
+            if (restartButtonText != null)
+                restartButtonText.text = LocalizationManager.Instance.Get("common.restart", "Restart");
+
+            if (backButtonText != null)
+                backButtonText.text = LocalizationManager.Instance.Get("common.back", "Back");
+
+            if (continueButtonText != null)
+                continueButtonText.text = LocalizationManager.Instance.Get("common.continue", "Continue");
+        }
+
+        private void HandleLanguageChanged(LocalizationManager.Language language)
+        {
+            RefreshLocalizedTexts();
+
+            if (stageNameText != null && lastShownStage != null)
+                stageNameText.text = CampaignLocalizationResolver.GetStageName(lastShownStage);
+        }
+
+        private TextMeshProUGUI FindTextByContent(string content)
+        {
+            if (modalRoot == null || string.IsNullOrWhiteSpace(content))
+                return null;
+
+            TextMeshProUGUI[] texts = modalRoot.GetComponentsInChildren<TextMeshProUGUI>(true);
+            for (int i = 0; i < texts.Length; i++)
+            {
+                if (texts[i] != null && texts[i].text == content)
+                    return texts[i];
+            }
+
+            return null;
         }
 
         private Button FindButtonByName(string buttonName)

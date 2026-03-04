@@ -6,6 +6,7 @@ namespace ShooterB
     public class CampaignGameController : MonoBehaviour
     {
         [Header("Editor Testing")]
+        public CityConfig editorFallbackCity;
         public StageConfig editorFallbackStage;
 
         [Header("Camera")]
@@ -20,12 +21,11 @@ namespace ShooterB
         public StageCompleteModalController stageCompleteModalController;
 
         [Header("Game Start Modal")]
-        public GameObject gameStartingModalPrefab;
-        public float gameStartingCountdownSeconds = 4f;
+        public GameObject gameStartingModalPanel;
+        public GameStartingModalController gameStartingModalController;
 
         private bool isStageComplete = false;
         private CampaignDuckSpawner campaignDuckSpawner;
-        private GameObject gameStartingModalInstance;
 
         private void Start()
         {
@@ -34,9 +34,11 @@ namespace ShooterB
             SetupCamera();
             ApplyCampaignBackground();
             ResolveModalReferences();
+            ConfigureGameStartingModal();
             HideModals();
 
             GameManager.Instance.OnGameOver += HandleGameOver;
+            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
 
             campaignDuckSpawner = FindObjectOfType<CampaignDuckSpawner>();
             if (campaignDuckSpawner != null)
@@ -57,6 +59,9 @@ namespace ShooterB
 
             if (campaignDuckSpawner != null)
                 campaignDuckSpawner.OnAllDucksResolved -= HandleStageComplete;
+
+            if (LocalizationManager.HasInstance)
+                LocalizationManager.Instance.OnLanguageChanged -= HandleLanguageChanged;
         }
 
         private void EnsureActiveStage()
@@ -71,7 +76,10 @@ namespace ShooterB
             }
 
             Debug.Log("[CampaignGameController] No ActiveStageConfig found - using editorFallbackStage for testing.");
-            CampaignProgressManager.Instance.SetActiveStage(editorFallbackStage);
+            if (editorFallbackCity != null)
+                CampaignProgressManager.Instance.SetActiveCampaignLocation(editorFallbackCity, editorFallbackStage);
+            else
+                CampaignProgressManager.Instance.SetActiveStage(editorFallbackStage);
             GameManager.Instance.InitializeGame(Constants.GameMode.Campaign, editorFallbackStage.startingDifficulty);
         }
 
@@ -175,6 +183,18 @@ namespace ShooterB
 
             if (stageCompleteModalController == null)
                 Debug.LogWarning("[CampaignGameController] StageCompleteModalController not found in scene.");
+
+            if (gameStartingModalPanel == null)
+                Debug.LogWarning("[CampaignGameController] gameStartingModalPanel is not assigned.");
+
+            if (gameStartingModalController == null && gameStartingModalPanel != null)
+                gameStartingModalController = gameStartingModalPanel.GetComponent<GameStartingModalController>();
+
+            if (gameStartingModalController == null && gameStartingModalPanel != null)
+                gameStartingModalController = gameStartingModalPanel.AddComponent<GameStartingModalController>();
+
+            if (gameStartingModalController == null)
+                Debug.LogWarning("[CampaignGameController] gameStartingModalController is not assigned.");
         }
 
         private void HideModals()
@@ -187,6 +207,28 @@ namespace ShooterB
 
             if (stageCompleteModalController != null)
                 stageCompleteModalController.Hide();
+        }
+
+        private void ConfigureGameStartingModal()
+        {
+            if (gameStartingModalController == null)
+                return;
+
+            StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
+            if (stage == null)
+                stage = editorFallbackStage;
+
+            if (stage == null)
+                return;
+
+            gameStartingModalController.Configure(
+                CampaignLocalizationResolver.GetStageName(stage),
+                CampaignLocalizationResolver.GetStageBriefing(stage));
+        }
+
+        private void HandleLanguageChanged(LocalizationManager.Language language)
+        {
+            ConfigureGameStartingModal();
         }
 
         private void HandleStageComplete()
@@ -210,41 +252,14 @@ namespace ShooterB
 
         private IEnumerator BeginStageAfterCountdown()
         {
-            ShowGameStartingModal();
-
-            float delay = Mathf.Max(0f, gameStartingCountdownSeconds);
-            if (delay > 0f)
-                yield return new WaitForSecondsRealtime(delay);
-
-            HideGameStartingModal();
+            if (gameStartingModalController != null)
+                yield return StartCoroutine(gameStartingModalController.PlayCountdown());
 
             if (campaignDuckSpawner != null)
             {
                 Debug.Log("[CampaignGameController] Countdown finished, starting campaign spawner.");
                 campaignDuckSpawner.StartSpawning();
             }
-        }
-
-        private void ShowGameStartingModal()
-        {
-            if (gameStartingModalPrefab == null)
-                return;
-
-            Canvas rootCanvas = FindObjectOfType<Canvas>();
-            Transform parent = rootCanvas != null ? rootCanvas.transform : null;
-
-            gameStartingModalInstance = Instantiate(gameStartingModalPrefab, parent);
-            gameStartingModalInstance.name = gameStartingModalPrefab.name;
-            gameStartingModalInstance.SetActive(true);
-        }
-
-        private void HideGameStartingModal()
-        {
-            if (gameStartingModalInstance == null)
-                return;
-
-            Destroy(gameStartingModalInstance);
-            gameStartingModalInstance = null;
         }
 
         private void HandleGameOver()
