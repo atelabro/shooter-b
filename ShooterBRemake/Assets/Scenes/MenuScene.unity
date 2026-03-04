@@ -409,8 +409,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ARMORY
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
-  m_sharedMaterial: {fileID: 5430614821553359432, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bdae4ea5783cf4a67b04254a1e3ee789, type: 2}
+  m_sharedMaterial: {fileID: -5021517457759182431, guid: bdae4ea5783cf4a67b04254a1e3ee789, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -864,8 +864,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ACHIEVEMENTS
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
-  m_sharedMaterial: {fileID: 5430614821553359432, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bdae4ea5783cf4a67b04254a1e3ee789, type: 2}
+  m_sharedMaterial: {fileID: -5021517457759182431, guid: bdae4ea5783cf4a67b04254a1e3ee789, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -977,6 +977,11 @@ MonoBehaviour:
   quitButton: {fileID: 422015577}
   highScoreText: {fileID: 0}
   titleText: {fileID: 0}
+  campaignButtonText: {fileID: 0}
+  armoryButtonText: {fileID: 0}
+  achievementsButtonText: {fileID: 0}
+  quitButtonText: {fileID: 0}
+  languageDropdown: {fileID: 2099000102}
 --- !u!4 &688693834
 Transform:
   m_ObjectHideFlags: 0
@@ -1263,8 +1268,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: QUIT
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
-  m_sharedMaterial: {fileID: 5430614821553359432, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bdae4ea5783cf4a67b04254a1e3ee789, type: 2}
+  m_sharedMaterial: {fileID: -5021517457759182431, guid: bdae4ea5783cf4a67b04254a1e3ee789, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1400,8 +1405,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: CAMPAIN
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
-  m_sharedMaterial: {fileID: 5430614821553359432, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bdae4ea5783cf4a67b04254a1e3ee789, type: 2}
+  m_sharedMaterial: {fileID: -5021517457759182431, guid: bdae4ea5783cf4a67b04254a1e3ee789, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1576,6 +1581,7 @@ RectTransform:
   - {fileID: 193683734}
   - {fileID: 167389548}
   - {fileID: 88565661}
+  - {fileID: 2099000101}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1905,7 +1911,111 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!1660057539 &9223372036854775807
+--- !u!1001 &2099000100
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1590253296}
+    m_Modifications:
+    - target: {fileID: 100000, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_Name
+      value: LanguageDropdown
+      objectReference: {fileID: 0}
+    - target: {fileID: 100001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 100001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 130001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 130001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 130001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 130001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 130001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 140001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 140001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 140001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 140001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 140001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+--- !u!224 &2099000101 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 100001, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+  m_PrefabInstance: {fileID: 2099000100}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2099000102 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: ee280b614b4549e8b721543071bc8b1d, type: 3}
+  m_PrefabInstance: {fileID: 2099000100}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 571d55e2cd0c40eab25bb3bf906849fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.LanguageDropdownController
 --- !u!114 &2147483002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1924,7 +2034,9 @@ MonoBehaviour:
   applyTop: 1
   applyBottom: 1
   extraPaddingPx: {x: 0, y: 0}
+  showDebugOverlay: 0
   logSafeAreaChanges: 1
+--- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:

@@ -27,6 +27,7 @@ namespace ShooterB
         public const string PREFS_HIGH_SCORE_ARCADE = "HighScore_Arcade";
         public const string PREFS_SELECTED_WEAPON = "SelectedWeapon";
         public const string PREFS_COINS = "Coins";
+        public const string PREFS_LANGUAGE = "Language";
 
         public enum GameMode
         {
