@@ -112,10 +112,14 @@ namespace ShooterB
 
         private Transform ResolveParent(Transform requestedParent)
         {
-            Transform parent = requestedParent != null ? requestedParent : transform;
+            if (requestedParent != null)
+                return requestedParent;
+
+            Transform parent = transform;
             Canvas canvas = parent.GetComponentInParent<Canvas>();
             if (canvas != null)
-                parent = canvas.transform;
+                return canvas.transform;
+
             return parent;
         }
 

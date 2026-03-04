@@ -2262,9 +2262,49 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 450001, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450001, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450001, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450001, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450001, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3015698958354006501, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
       propertyPath: m_Padding.m_Top
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313992409835122885, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313992409835122885, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313992409835122885, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313992409835122885, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313992409835122885, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3319458271810994808, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2303,6 +2343,26 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5079378722992161961, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054311168216560319, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054311168216560319, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054311168216560319, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054311168216560319, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054311168216560319, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -2762,10 +2822,10 @@ MonoBehaviour:
   reloadGlowPulseSpeed: 8
   reloadTextFlashSpeed: 12
   comboPopupPrefab: {fileID: 5400745645520572176, guid: 93b3551bf101d4aa59cd5d848aa42070, type: 3}
-  comboPopupContainer: {fileID: 0}
+  comboPopupContainer: {fileID: 1719876501}
   comboPopupLifetime: 1
-  achievementPopupPrefab: {fileID: 5400745645520572176, guid: 2fb642ce6e5e4cf6bbf42b8ce4e827f9, type: 3}
-  achievementPopupContainer: {fileID: 0}
+  achievementPopupPrefab: {fileID: 100000, guid: 2fb642ce6e5e4cf6bbf42b8ce4e827f9, type: 3}
+  achievementPopupContainer: {fileID: 1719876501}
   achievementPopupLifetime: 1.8
 --- !u!1 &1082344977
 GameObject:
@@ -3835,6 +3895,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 977337767}
+  - {fileID: 1719876501}
   - {fileID: 208818957}
   - {fileID: 2039079471}
   - {fileID: 615861443}
@@ -4313,12 +4374,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.GameOverModalController
   modalRoot: {fileID: 1650351472}
+  titleText: {fileID: 0}
+  finalScoreHeaderText: {fileID: 0}
   finalScoreText: {fileID: 195766290}
   highScoreText: {fileID: 1211913449}
   modeText: {fileID: 238845039}
   newHighScoreBadge: {fileID: 0}
   retryButton: {fileID: 46093121}
   menuButton: {fileID: 423362468}
+  retryButtonText: {fileID: 0}
+  menuButtonText: {fileID: 0}
 --- !u!114 &1650351474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4457,6 +4522,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1719876500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1719876501}
+  - component: {fileID: 1719876503}
+  - component: {fileID: 1719876502}
+  m_Layer: 5
+  m_Name: AchievementPopupContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1719876501
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719876500}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1427143557}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1719876502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719876500}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1719876503
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719876500}
+  m_CullTransparentMesh: 1
 --- !u!1 &1781780505
 GameObject:
   m_ObjectHideFlags: 0
@@ -5406,6 +5546,10 @@ MonoBehaviour:
   resumeButton: {fileID: 1875396541}
   restartButton: {fileID: 551821951}
   menuButton: {fileID: 1270565256}
+  pauseTitleText: {fileID: 0}
+  resumeButtonText: {fileID: 0}
+  restartButtonText: {fileID: 0}
+  menuButtonText: {fileID: 0}
 --- !u!114 &2041902083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5593,7 +5737,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageCompleteModalController
   modalRoot: {fileID: 2136250306}
+  titleText: {fileID: 0}
   stageNameText: {fileID: 1468677140}
+  restartButtonText: {fileID: 0}
+  backButtonText: {fileID: 0}
+  continueButtonText: {fileID: 0}
   starIcons:
   - {fileID: 1517089768}
   - {fileID: 1989801548}

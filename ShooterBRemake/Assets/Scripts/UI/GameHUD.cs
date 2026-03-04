@@ -482,18 +482,28 @@ namespace ShooterB
         private static bool IsDebugTriggerPressed()
         {
 #if ENABLE_INPUT_SYSTEM
-            return Keyboard.current != null && Keyboard.current[Key.LeftBracket].wasPressedThisFrame;
+            return Keyboard.current != null &&
+                (Keyboard.current[Key.LeftBracket].wasPressedThisFrame ||
+                 Keyboard.current.oKey.wasPressedThisFrame ||
+                 Keyboard.current.f9Key.wasPressedThisFrame);
+#elif ENABLE_LEGACY_INPUT_MANAGER
+            return Input.GetKeyDown(KeyCode.LeftBracket) || Input.GetKeyDown(KeyCode.O) || Input.GetKeyDown(KeyCode.F9);
 #else
-            return Input.GetKeyDown(KeyCode.LeftBracket);
+            return false;
 #endif
         }
 
         private static bool IsDebugDailyTriggerPressed()
         {
 #if ENABLE_INPUT_SYSTEM
-            return Keyboard.current != null && Keyboard.current[Key.RightBracket].wasPressedThisFrame;
+            return Keyboard.current != null &&
+                (Keyboard.current[Key.RightBracket].wasPressedThisFrame ||
+                 Keyboard.current.pKey.wasPressedThisFrame ||
+                 Keyboard.current.f10Key.wasPressedThisFrame);
+#elif ENABLE_LEGACY_INPUT_MANAGER
+            return Input.GetKeyDown(KeyCode.RightBracket) || Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.F10);
 #else
-            return Input.GetKeyDown(KeyCode.RightBracket);
+            return false;
 #endif
         }
 
