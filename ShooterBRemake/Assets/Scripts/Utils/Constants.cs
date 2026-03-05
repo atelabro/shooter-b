@@ -28,6 +28,7 @@ namespace ShooterB
         public const string PREFS_SELECTED_WEAPON = "SelectedWeapon";
         public const string PREFS_COINS = "Coins";
         public const string PREFS_LANGUAGE = "Language";
+        public const string FONT_COLOR_HEX = "FFB02A";
 
         public enum GameMode
         {
@@ -70,7 +71,8 @@ namespace ShooterB
             BRITISH_PUNK,
             USA_POLICE,
             USA_WORKER,
-            USA_BUSINESS
+            USA_BUSINESS,
+            JAPANESE_SAMURAI
         }
 
         public static string GetDuckDisplayName(DuckType type)
@@ -94,6 +96,7 @@ namespace ShooterB
                 case DuckType.USA_POLICE: return "USA Police";
                 case DuckType.USA_WORKER: return "USA Worker";
                 case DuckType.USA_BUSINESS: return "USA Business";
+                case DuckType.JAPANESE_SAMURAI: return "Japanese Samurai";
                 // Reserve this switch for future region-specific duck additions (e.g. France).
                 default: return type.ToString();
             }
@@ -120,6 +123,7 @@ namespace ShooterB
                 case DuckType.USA_POLICE: return "USA_POLICE";
                 case DuckType.USA_WORKER: return "USA_WORKER";
                 case DuckType.USA_BUSINESS: return "USA_BUSINESS";
+                case DuckType.JAPANESE_SAMURAI: return "JAPANESE_SAMURAI";
                 default: return type.ToString();
             }
         }
@@ -169,6 +173,7 @@ namespace ShooterB
             public const int USA_POLICE = 3;
             public const int USA_WORKER = 3;
             public const int USA_BUSINESS = 3;
+            public const int JAPANESE_SAMURAI = 4;
 
             public static int GetPoints(DuckType type)
             {
@@ -191,6 +196,7 @@ namespace ShooterB
                     case DuckType.USA_POLICE: return USA_POLICE;
                     case DuckType.USA_WORKER: return USA_WORKER;
                     case DuckType.USA_BUSINESS: return USA_BUSINESS;
+                    case DuckType.JAPANESE_SAMURAI: return JAPANESE_SAMURAI;
                     default: return TYPE_0;
                 }
             }
@@ -198,7 +204,7 @@ namespace ShooterB
 
         public static class DuckSpawnProbability
         {
-            public const float TYPE_0 = 0.60f;
+            public const float TYPE_0 = 0.58f;
             public const float TYPE_1 = 0.13f;
             public const float TYPE_2 = 0.07f;
             public const float TYPE_3 = 0.06f;
@@ -208,6 +214,7 @@ namespace ShooterB
             public const float BRITISH_REDCOAT = 0.02f;
             public const float BRITISH_POLICE = 0.02f;
             public const float BRITISH_PUNK = 0.02f;
+            public const float JAPANESE_SAMURAI = 0.02f;
 
             public const float SINGLE_DUCK = 0.60f;
             public const float DOUBLE_DUCK = 0.20f;

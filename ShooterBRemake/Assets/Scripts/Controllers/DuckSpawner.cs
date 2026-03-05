@@ -74,6 +74,7 @@ namespace ShooterB
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_POLICE), Constants.DuckType.USA_POLICE, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_WORKER), Constants.DuckType.USA_WORKER, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_BUSINESS), Constants.DuckType.USA_BUSINESS, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.JAPANESE_SAMURAI), Constants.DuckType.JAPANESE_SAMURAI, nameof(duckFrameLibrary));
         }
 
         private void ValidateTypeFrames(Sprite[] frames, Constants.DuckType type, string fieldName)
@@ -280,6 +281,7 @@ namespace ShooterB
             float t6 = t5 + Constants.DuckSpawnProbability.MK_ARCHER;
             float t7 = t6 + Constants.DuckSpawnProbability.BRITISH_REDCOAT;
             float t8 = t7 + Constants.DuckSpawnProbability.BRITISH_POLICE;
+            float t9 = t8 + Constants.DuckSpawnProbability.BRITISH_PUNK;
 
             if (r < t0) return Constants.DuckType.Type0;
             if (r < t1) return Constants.DuckType.Type1;
@@ -290,7 +292,8 @@ namespace ShooterB
             if (r < t6) return Constants.DuckType.MK_ARCHER;
             if (r < t7) return Constants.DuckType.BRITISH_REDCOAT;
             if (r < t8) return Constants.DuckType.BRITISH_POLICE;
-            return Constants.DuckType.BRITISH_PUNK;
+            if (r < t9) return Constants.DuckType.BRITISH_PUNK;
+            return Constants.DuckType.JAPANESE_SAMURAI;
         }
 
         private void ResetSpawnDistributionCounters()
@@ -349,7 +352,8 @@ namespace ShooterB
                 $"{Constants.GetDuckDebugName(Constants.DuckType.MK_ARCHER)}: {GetActualPercent(Constants.DuckType.MK_ARCHER):F1}% (exp {Constants.DuckSpawnProbability.MK_ARCHER * 100f:F1}%) | " +
                 $"{Constants.GetDuckDebugName(Constants.DuckType.BRITISH_REDCOAT)}: {GetActualPercent(Constants.DuckType.BRITISH_REDCOAT):F1}% (exp {Constants.DuckSpawnProbability.BRITISH_REDCOAT * 100f:F1}%) | " +
                 $"{Constants.GetDuckDebugName(Constants.DuckType.BRITISH_POLICE)}: {GetActualPercent(Constants.DuckType.BRITISH_POLICE):F1}% (exp {Constants.DuckSpawnProbability.BRITISH_POLICE * 100f:F1}%) | " +
-                $"{Constants.GetDuckDebugName(Constants.DuckType.BRITISH_PUNK)}: {GetActualPercent(Constants.DuckType.BRITISH_PUNK):F1}% (exp {Constants.DuckSpawnProbability.BRITISH_PUNK * 100f:F1}%)"
+                $"{Constants.GetDuckDebugName(Constants.DuckType.BRITISH_PUNK)}: {GetActualPercent(Constants.DuckType.BRITISH_PUNK):F1}% (exp {Constants.DuckSpawnProbability.BRITISH_PUNK * 100f:F1}%) | " +
+                $"{Constants.GetDuckDebugName(Constants.DuckType.JAPANESE_SAMURAI)}: {GetActualPercent(Constants.DuckType.JAPANESE_SAMURAI):F1}% (exp {Constants.DuckSpawnProbability.JAPANESE_SAMURAI * 100f:F1}%)"
             );
         }
 

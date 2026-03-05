@@ -176,6 +176,7 @@ namespace ShooterB
                 case Constants.DuckType.USA_POLICE: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.USA_WORKER: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.USA_BUSINESS: return britishPoliceSizeMultiplier;
+                case Constants.DuckType.JAPANESE_SAMURAI: return britishPunkSizeMultiplier;
                 default: return 1f;
             }
         }
