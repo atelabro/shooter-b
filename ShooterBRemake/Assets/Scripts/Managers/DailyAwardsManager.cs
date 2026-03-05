@@ -179,6 +179,19 @@ namespace ShooterB
             return completedCount;
         }
 
+        public int GetUnfinishedTodayCount()
+        {
+            IReadOnlyList<DailyObjectiveState> objectives = GetTodayObjectives();
+            int unfinishedCount = 0;
+            for (int i = 0; i < objectives.Count; i++)
+            {
+                if (!objectives[i].isCompleted)
+                    unfinishedCount++;
+            }
+
+            return unfinishedCount;
+        }
+
         public bool IsTodaySetComplete()
         {
             return GetCompletedTodayCount() >= DailyObjectiveCount;

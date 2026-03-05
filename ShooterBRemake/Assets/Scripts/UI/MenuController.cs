@@ -18,6 +18,13 @@ namespace ShooterB
         public TextMeshProUGUI achievementsButtonText;
         public TextMeshProUGUI quitButtonText;
 
+        [Header("Achievements Badge")]
+        public RectTransform achievementsBadgeRoot;
+        public TextMeshProUGUI achievementsBadgeText;
+        public Vector2 achievementsBadgeOffset = new Vector2(-16f, 0f);
+        public Vector2 achievementsBadgeSize = new Vector2(28f, 28f);
+        public Color achievementsBadgeColor = new Color32(220, 45, 45, 255);
+
         [Header("Localization")]
         public LanguageDropdownController languageDropdown;
 
@@ -42,12 +49,18 @@ namespace ShooterB
             InitializeLanguageDropdown();
             UpdateHighScore();
             RefreshLocalizedTexts();
+            RefreshAchievementsBadge();
         }
 
         private void OnDestroy()
         {
             if (LocalizationManager.HasInstance)
                 LocalizationManager.Instance.OnLanguageChanged -= HandleLanguageChanged;
+        }
+
+        private void OnEnable()
+        {
+            RefreshAchievementsBadge();
         }
 
         private void OnCampaignClicked()
@@ -134,6 +147,84 @@ namespace ShooterB
 
             if (quitButtonText == null && quitButton != null)
                 quitButtonText = FindText(quitButton.transform, "QuitButton");
+        }
+
+        private void RefreshAchievementsBadge()
+        {
+            if (achievementsButton == null)
+                return;
+
+            EnsureAchievementsBadgeReferences();
+            if (achievementsBadgeRoot == null || achievementsBadgeText == null)
+                return;
+
+            int unfinishedCount = DailyAwardsManager.Instance.GetUnfinishedTodayCount();
+            bool shouldShow = unfinishedCount > 0;
+
+            achievementsBadgeRoot.gameObject.SetActive(shouldShow);
+            if (shouldShow)
+                achievementsBadgeText.text = unfinishedCount > 99 ? "99+" : unfinishedCount.ToString();
+        }
+
+        private void EnsureAchievementsBadgeReferences()
+        {
+            if (achievementsBadgeRoot == null && achievementsButton != null)
+            {
+                Transform existing = achievementsButton.transform.Find("AchievementsDailyBadge");
+                if (existing != null)
+                    achievementsBadgeRoot = existing as RectTransform;
+            }
+
+            if (achievementsBadgeText == null && achievementsBadgeRoot != null)
+                achievementsBadgeText = achievementsBadgeRoot.GetComponentInChildren<TextMeshProUGUI>(true);
+
+            if (achievementsBadgeRoot != null && achievementsBadgeText != null)
+                return;
+
+            CreateAchievementsBadgeRuntime();
+        }
+
+        private void CreateAchievementsBadgeRuntime()
+        {
+            if (achievementsButton == null)
+                return;
+
+            GameObject badgeObject = new GameObject("AchievementsDailyBadge", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            RectTransform badgeRect = badgeObject.GetComponent<RectTransform>();
+            badgeRect.SetParent(achievementsButton.transform, false);
+            badgeRect.anchorMin = new Vector2(0f, 0.5f);
+            badgeRect.anchorMax = new Vector2(0f, 0.5f);
+            badgeRect.pivot = new Vector2(0.5f, 0.5f);
+            badgeRect.sizeDelta = achievementsBadgeSize;
+            badgeRect.anchoredPosition = achievementsBadgeOffset;
+
+            Image badgeImage = badgeObject.GetComponent<Image>();
+            badgeImage.color = achievementsBadgeColor;
+            badgeImage.raycastTarget = false;
+            Sprite circleSprite = Resources.GetBuiltinResource<Sprite>("UI/Skin/Knob.psd");
+            if (circleSprite != null)
+                badgeImage.sprite = circleSprite;
+
+            GameObject textObject = new GameObject("CountText", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+            RectTransform textRect = textObject.GetComponent<RectTransform>();
+            textRect.SetParent(badgeRect, false);
+            textRect.anchorMin = Vector2.zero;
+            textRect.anchorMax = Vector2.one;
+            textRect.offsetMin = Vector2.zero;
+            textRect.offsetMax = Vector2.zero;
+
+            TextMeshProUGUI text = textObject.GetComponent<TextMeshProUGUI>();
+            text.text = "0";
+            text.color = Color.white;
+            text.fontSize = 16f;
+            text.alignment = TextAlignmentOptions.Center;
+            text.enableAutoSizing = true;
+            text.fontSizeMin = 10f;
+            text.fontSizeMax = 18f;
+            text.raycastTarget = false;
+
+            achievementsBadgeRoot = badgeRect;
+            achievementsBadgeText = text;
         }
 
         private static TextMeshProUGUI FindText(Transform root, string preferredChildName)

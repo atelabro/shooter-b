@@ -13,49 +13,49 @@ MonoBehaviour:
   m_Name: StageSpawnConfig_Tokyo_0
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageSpawnConfig
   spawnSequence:
-  - duckType: 9
+  - duckType: 17
     delay: 0.92
-  - duckType: 9
+  - duckType: 17
     delay: 1.02
-  - duckType: 9
+  - duckType: 17
     delay: 0.92
-  - duckType: 10
+  - duckType: 17
     delay: 0.92
-  - duckType: 8
+  - duckType: 17
     delay: 0.92
-  - duckType: 8
+  - duckType: 17
     delay: 0.82
-  - duckType: 8
+  - duckType: 17
     delay: 0.92
-  - duckType: 9
+  - duckType: 17
     delay: 0.92
-  - duckType: 9
+  - duckType: 17
     delay: 0.82
-  - duckType: 10
+  - duckType: 17
     delay: 0.92
-  - duckType: 8
+  - duckType: 17
     delay: 0.82
-  - duckType: 8
+  - duckType: 17
     delay: 0.82
-  - duckType: 8
+  - duckType: 17
     delay: 0.92
-  - duckType: 9
+  - duckType: 17
     delay: 0.82
-  - duckType: 9
+  - duckType: 17
     delay: 0.92
-  - duckType: 10
+  - duckType: 17
     delay: 0.82
-  - duckType: 8
+  - duckType: 17
     delay: 0.82
-  - duckType: 8
+  - duckType: 17
     delay: 0.72
-  - duckType: 8
+  - duckType: 17
     delay: 0.82
-  - duckType: 9
+  - duckType: 17
     delay: 0.82
-  - duckType: 10
+  - duckType: 17
     delay: 0.82
-  - duckType: 8
+  - duckType: 17
     delay: 0.72
   weightGoStraight: 0.21
   weightGoTop: 0.48
