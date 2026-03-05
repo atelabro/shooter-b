@@ -36,7 +36,15 @@ namespace ShooterB
             int coinReward)
         {
             AchievementId = id;
-            ApplyCommon(title, description, progress, target, isUnlocked, normalizedProgress, coinReward, "LOCKED");
+            ApplyCommon(
+                title,
+                description,
+                progress,
+                target,
+                isUnlocked,
+                normalizedProgress,
+                coinReward,
+                LocalizationManager.Instance.Get("achievements.status.locked", "LOCKED"));
         }
 
         public void Bind(
@@ -59,7 +67,7 @@ namespace ShooterB
             bool isUnlocked,
             float normalizedProgress,
             int coinReward,
-            string lockedStatusText = "LOCKED")
+            string lockedStatusText = null)
         {
             ApplyCommon(title, description, progress, target, isUnlocked, normalizedProgress, coinReward, lockedStatusText);
         }
@@ -87,7 +95,9 @@ namespace ShooterB
             {
                 statusText.gameObject.SetActive(!isUnlocked);
                 if (!isUnlocked)
-                    statusText.text = string.IsNullOrWhiteSpace(lockedStatusText) ? "LOCKED" : lockedStatusText;
+                    statusText.text = string.IsNullOrWhiteSpace(lockedStatusText)
+                        ? LocalizationManager.Instance.Get("achievements.status.locked", "LOCKED")
+                        : lockedStatusText;
             }
 
             if (backgroundImage != null)

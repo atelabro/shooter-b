@@ -17,6 +17,7 @@ namespace ShooterB
 
         [Header("Scene References")]
         public Button quitButton;
+        public TextMeshProUGUI sceneTitleText;
         public ScrollRect weaponsScrollRect;
         public RectTransform weaponListContent;
         public GameObject weaponCardPrefab;
@@ -54,11 +55,22 @@ namespace ShooterB
 
         private void Start()
         {
+            _ = LocalizationManager.Instance;
+
+            ResolveTextReferences();
             ConfigureBackButton();
             EnsureScrollSetup();
             BuildUnlockModalUI();
             BuildCards();
+            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
+            RefreshLocalizedStaticTexts();
             RefreshAllCardStates();
+        }
+
+        private void OnDestroy()
+        {
+            if (LocalizationManager.HasInstance)
+                LocalizationManager.Instance.OnLanguageChanged -= HandleLanguageChanged;
         }
 
         private void ConfigureBackButton()
@@ -68,7 +80,30 @@ namespace ShooterB
 
             quitButton.onClick.RemoveAllListeners();
             quitButton.onClick.AddListener(OnBackClicked);
-            SetButtonLabel(quitButton, "BACK");
+            SetButtonLabel(quitButton, LocalizationManager.Instance.Get("common.back", "Back"));
+        }
+
+        private void ResolveTextReferences()
+        {
+            if (sceneTitleText == null && quitButton != null)
+            {
+                Transform container = quitButton.transform.parent;
+                if (container != null)
+                {
+                    Transform titleTransform = container.Find("Title");
+                    if (titleTransform != null)
+                        sceneTitleText = titleTransform.GetComponent<TextMeshProUGUI>();
+                }
+            }
+
+            if (sceneTitleText == null)
+                sceneTitleText = FindTextInSceneByName("Title");
+
+            if (sceneTitleText == null)
+                sceneTitleText = FindTextInSceneByName("SceneTitle");
+
+            if (sceneTitleText == null)
+                sceneTitleText = FindTextByCurrentValue("ARMORY");
         }
 
         private void EnsureScrollSetup()
@@ -211,8 +246,18 @@ namespace ShooterB
             Image icon = iconObj.GetComponent<Image>();
             icon.preserveAspect = true;
 
-            Button unlockButton = CreateModalButton(panelObj.transform, "UnlockButton", "Unlock", new Vector2(0.48f, 0.08f), new Vector2(0.86f, 0.24f));
-            Button closeButton = CreateModalButton(panelObj.transform, "CloseButton", "Close", new Vector2(0.1f, 0.08f), new Vector2(0.42f, 0.24f));
+            Button unlockButton = CreateModalButton(
+                panelObj.transform,
+                "UnlockButton",
+                LocalizationManager.Instance.Get("armory.modal.button.unlock", "Unlock"),
+                new Vector2(0.48f, 0.08f),
+                new Vector2(0.86f, 0.24f));
+            Button closeButton = CreateModalButton(
+                panelObj.transform,
+                "CloseButton",
+                LocalizationManager.Instance.Get("armory.modal.button.close", "Close"),
+                new Vector2(0.1f, 0.08f),
+                new Vector2(0.42f, 0.24f));
 
             unlockModal = rootObj.GetComponent<UnlockWeaponModalUI>();
             unlockModal.titleText = title;
@@ -408,6 +453,51 @@ namespace ShooterB
             RefreshAllCardStates();
         }
 
+        private void HandleLanguageChanged(LocalizationManager.Language language)
+        {
+            RefreshLocalizedStaticTexts();
+            RefreshLocalizedModels();
+            RefreshAllCardStates();
+            RefreshModalIfVisible();
+        }
+
+        private void RefreshLocalizedStaticTexts()
+        {
+            if (sceneTitleText == null)
+                ResolveTextReferences();
+
+            if (sceneTitleText != null)
+                sceneTitleText.text = LocalizationManager.Instance.Get("armory.scene.title", "ARMORY");
+
+            SetButtonLabel(quitButton, LocalizationManager.Instance.Get("common.back", "Back"));
+        }
+
+        private void RefreshLocalizedModels()
+        {
+            IReadOnlyList<Constants.WeaponType> ordered = ArmoryUIDataSource.GetOrderedWeapons();
+            for (int i = 0; i < ordered.Count; i++)
+            {
+                Constants.WeaponType weaponType = ordered[i];
+                modelsByWeapon[weaponType] = ArmoryUIDataSource.BuildCardModel(weaponType, GetWeaponIcon(weaponType));
+            }
+        }
+
+        private void RefreshModalIfVisible()
+        {
+            if (unlockModal == null || !unlockModal.gameObject.activeSelf)
+                return;
+
+            if (!modelsByWeapon.ContainsKey(pendingModalWeapon))
+                return;
+
+            WeaponCardViewModel model = modelsByWeapon[pendingModalWeapon];
+            int currentCoins = CurrentCoins;
+            UnlockWeaponModalUI.UnlockModalState state = currentCoins >= model.cost
+                ? UnlockWeaponModalUI.UnlockModalState.CanUnlock
+                : UnlockWeaponModalUI.UnlockModalState.InsufficientCoins;
+            unlockModal.Configure(model, state, currentCoins, OnUnlockConfirmedUiOnly, CloseUnlockModal);
+        }
+
         private void CloseUnlockModal()
         {
             if (unlockModal != null)
@@ -469,6 +559,36 @@ namespace ShooterB
             TextMeshProUGUI label = button.GetComponentInChildren<TextMeshProUGUI>(true);
             if (label != null)
                 label.text = text;
+        }
+
+        private TextMeshProUGUI FindTextInSceneByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return null;
+
+            TextMeshProUGUI[] texts = FindObjectsOfType<TextMeshProUGUI>(true);
+            for (int i = 0; i < texts.Length; i++)
+            {
+                if (texts[i] != null && texts[i].gameObject.name == name)
+                    return texts[i];
+            }
+
+            return null;
+        }
+
+        private TextMeshProUGUI FindTextByCurrentValue(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return null;
+
+            TextMeshProUGUI[] texts = FindObjectsOfType<TextMeshProUGUI>(true);
+            for (int i = 0; i < texts.Length; i++)
+            {
+                if (texts[i] != null && string.Equals(texts[i].text, value, StringComparison.OrdinalIgnoreCase))
+                    return texts[i];
+            }
+
+            return null;
         }
 
         private void OnBackClicked()

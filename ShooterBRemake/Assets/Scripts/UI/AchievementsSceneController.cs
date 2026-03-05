@@ -16,8 +16,11 @@ namespace ShooterB
         public Transform generalTitleMarker;
         public AchievementListItemUI rowPrefab;
         public AchievementListItemUI dailyRowPrefab;
+        public TextMeshProUGUI sceneTitleText;
+        public TextMeshProUGUI generalTitleText;
         public TextMeshProUGUI dailyAwardsTitleText;
         public Button backButton;
+        public TextMeshProUGUI backButtonText;
 
         private readonly Dictionary<AchievementManager.AchievementId, AchievementListItemUI> rowsById =
             new Dictionary<AchievementManager.AchievementId, AchievementListItemUI>();
@@ -25,8 +28,6 @@ namespace ShooterB
         private DailyAwardsManager dailyAwardsManager;
         private const string DailyGeneratedPrefix = "DailyAchievement_";
         private const string AchievementGeneratedPrefix = "Achievement_";
-        private const string DailyAwardsHeaderBase = "DAILY AWARDS";
-        private const string DailyAwardsHeaderClaimed = "DAILY AWARDS (CLAIMED)";
 
         private void Start()
         {
@@ -45,6 +46,8 @@ namespace ShooterB
             dailyAwardsManager.OnDailyObjectiveProgressChanged += HandleDailyObjectiveProgressChanged;
             dailyAwardsManager.OnDailyObjectiveCompleted += HandleDailyObjectiveCompleted;
             dailyAwardsManager.OnDailySetCompleted += HandleDailySetCompleted;
+            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
+            RefreshLocalizedStaticTexts();
             BuildAchievementRows();
         }
 
@@ -62,6 +65,9 @@ namespace ShooterB
                 dailyAwardsManager.OnDailyObjectiveCompleted -= HandleDailyObjectiveCompleted;
                 dailyAwardsManager.OnDailySetCompleted -= HandleDailySetCompleted;
             }
+
+            if (LocalizationManager.HasInstance)
+                LocalizationManager.Instance.OnLanguageChanged -= HandleLanguageChanged;
         }
 
         private void ResolveReferences()
@@ -87,6 +93,16 @@ namespace ShooterB
                 Transform foundGeneral = achievementsListRoot.Find("GeneralTitle");
                 if (foundGeneral != null)
                     generalTitleMarker = foundGeneral;
+            }
+
+            if (generalTitleText == null && generalTitleMarker != null)
+                generalTitleText = generalTitleMarker.GetComponent<TextMeshProUGUI>();
+
+            if (sceneTitleText == null)
+            {
+                GameObject titleObject = GameObject.Find("SceneTitle");
+                if (titleObject != null)
+                    sceneTitleText = titleObject.GetComponent<TextMeshProUGUI>();
             }
 
             if (dailyRowPrefab == null)
@@ -131,6 +147,9 @@ namespace ShooterB
                 if (titleTransform != null)
                     dailyAwardsTitleText = titleTransform.GetComponent<TextMeshProUGUI>();
             }
+
+            if (backButtonText == null && backButton != null)
+                backButtonText = backButton.GetComponentInChildren<TextMeshProUGUI>(true);
 
             Debug.Log($"[AchievementsSceneController] contentRoot={(contentRoot != null ? contentRoot.name : "null")} achievementsListRoot={(achievementsListRoot != null ? achievementsListRoot.name : "null")} dailyListRoot={(dailyListRoot != null ? dailyListRoot.name : "null")} rowPrefab={(rowPrefab != null ? rowPrefab.name : "null")} dailyRowPrefab={(dailyRowPrefab != null ? dailyRowPrefab.name : "null")} generalTitleMarker={(generalTitleMarker != null ? generalTitleMarker.name : "null")}");
         }
@@ -216,7 +235,7 @@ namespace ShooterB
                     state.isCompleted,
                     state.NormalizedProgress,
                     state.coinReward,
-                    "LOCKED");
+                    GetLockedStatusText());
                 PlaceDailyAfterHeader(row.transform, i);
                 dailyRows.Add(row);
             }
@@ -290,7 +309,7 @@ namespace ShooterB
                 state.isCompleted,
                 state.NormalizedProgress,
                 state.coinReward,
-                "LOCKED");
+                GetLockedStatusText());
         }
 
         private void ClearGeneratedRows(Transform root, string namePrefix)
@@ -340,21 +359,47 @@ namespace ShooterB
             SceneController.Instance.ReturnToMenu();
         }
 
+        private void HandleLanguageChanged(LocalizationManager.Language language)
+        {
+            RefreshLocalizedStaticTexts();
+            BuildAchievementRows();
+        }
+
+        private void RefreshLocalizedStaticTexts()
+        {
+            if (sceneTitleText != null)
+                sceneTitleText.text = LocalizationManager.Instance.Get("achievements.scene.title", "ACHIEVEMENTS");
+
+            if (generalTitleText != null)
+                generalTitleText.text = LocalizationManager.Instance.Get("achievements.scene.general", "GENERAL");
+
+            if (backButtonText != null)
+                backButtonText.text = LocalizationManager.Instance.Get("common.back", "Back");
+        }
+
+        private static string GetLockedStatusText()
+        {
+            return LocalizationManager.Instance.Get("achievements.status.locked", "LOCKED");
+        }
+
         private void RefreshDailyAwardsHeader()
         {
             if (dailyAwardsTitleText == null || dailyAwardsManager == null)
                 return;
 
+            string claimedText = LocalizationManager.Instance.Get("achievements.scene.daily_header_claimed", "DAILY AWARDS (CLAIMED)");
+            string baseText = LocalizationManager.Instance.Get("achievements.scene.daily_header_base", "DAILY AWARDS");
+
             if (dailyAwardsManager.IsDailySetBonusGranted())
             {
-                dailyAwardsTitleText.text = DailyAwardsHeaderClaimed;
+                dailyAwardsTitleText.text = claimedText;
                 return;
             }
 
             int completedCount = dailyAwardsManager.GetCompletedTodayCount();
             int objectiveCount = dailyAwardsManager.GetTodayObjectives().Count;
             objectiveCount = Mathf.Max(1, objectiveCount);
-            dailyAwardsTitleText.text = $"{DailyAwardsHeaderBase} ({completedCount}/{objectiveCount})";
+            dailyAwardsTitleText.text = $"{baseText} ({completedCount}/{objectiveCount})";
         }
     }
 }

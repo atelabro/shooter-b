@@ -43,28 +43,44 @@ namespace ShooterB
             if (descriptionText != null)
                 descriptionText.text = model.description;
             if (fireTypeText != null)
-                fireTypeText.text = $"Fire: {model.fireTypeLabel}";
+                fireTypeText.text = string.Format(
+                    LocalizationManager.Instance.Get("armory.card.fire_format", "Fire: {0}"),
+                    model.fireTypeLabel);
             if (fireRateText != null)
-                fireRateText.text = $"Rate: {model.fireRateLabel}";
+                fireRateText.text = string.Format(
+                    LocalizationManager.Instance.Get("armory.card.rate_format", "Rate: {0}"),
+                    model.fireRateLabel);
             if (reloadText != null)
-                reloadText.text = $"Reload: {model.reloadLabel}";
+                reloadText.text = string.Format(
+                    LocalizationManager.Instance.Get("armory.card.reload_format", "Reload: {0}"),
+                    model.reloadLabel);
             if (travelSpeedText != null)
-                travelSpeedText.text = $"Travel: {model.travelSpeedLabel}";
+                travelSpeedText.text = string.Format(
+                    LocalizationManager.Instance.Get("armory.card.travel_format", "Travel: {0}"),
+                    model.travelSpeedLabel);
             if (chainLightningText != null)
-                chainLightningText.text = $"Bullets: {model.bulletsLabel}";
+                chainLightningText.text = string.Format(
+                    LocalizationManager.Instance.Get("armory.card.bullets_format", "Bullets: {0}"),
+                    model.bulletsLabel);
             if (aoeText != null)
-                aoeText.text = $"AoE: {model.aoeLabel}";
+                aoeText.text = string.Format(
+                    LocalizationManager.Instance.Get("armory.card.aoe_format", "AoE: {0}"),
+                    model.aoeLabel);
 
             if (costText != null)
             {
                 if (state.isLocked)
                 {
-                    costText.text = $"{model.cost} coins";
+                    string coinsSuffix = LocalizationManager.Instance.Get("common.coins_suffix", "COINS");
+                    string costFormat = LocalizationManager.Instance.Get("armory.card.locked_cost_format", "{0} {1}");
+                    costText.text = string.Format(costFormat, model.cost, coinsSuffix);
                     costText.color = state.canAfford ? canAffordCostColor : cannotAffordCostColor;
                 }
                 else
                 {
-                    costText.text = model.weaponType == Constants.WeaponType.PiranhaGun ? "Starter" : "Unlocked";
+                    costText.text = model.weaponType == Constants.WeaponType.PiranhaGun
+                        ? LocalizationManager.Instance.Get("armory.card.state.starter", "Starter")
+                        : LocalizationManager.Instance.Get("armory.card.state.unlocked", "Unlocked");
                     costText.color = new Color(0.5f, 1f, 0.5f, 1f);
                 }
             }
@@ -89,6 +105,40 @@ namespace ShooterB
                 lockedOverlay.SetActive(state.isLocked);
             if (unlockButton != null)
                 unlockButton.gameObject.SetActive(state.isLocked);
+
+            SetOptionalLocalizedChildText(
+                selectedBadge,
+                "armory.card.selected",
+                "SELECTED");
+            SetOptionalLocalizedChildText(
+                lockedOverlay,
+                "achievements.status.locked",
+                "LOCKED");
+            SetButtonLabel(
+                unlockButton,
+                LocalizationManager.Instance.Get("armory.card.unlock_action", "View Unlock"));
+        }
+
+        private static void SetOptionalLocalizedChildText(GameObject root, string key, string fallback)
+        {
+            if (root == null)
+                return;
+
+            TextMeshProUGUI text = root.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (text == null)
+                return;
+
+            text.text = LocalizationManager.Instance.Get(key, fallback);
+        }
+
+        private static void SetButtonLabel(Button button, string value)
+        {
+            if (button == null)
+                return;
+
+            TextMeshProUGUI text = button.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (text != null)
+                text.text = value;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace ShooterB
             public float travelSpeed;
             public float areaOfEffect;
             public int chainLightning;
-            public string description;
+            public string descriptionKey;
         }
 
         private static readonly Dictionary<Constants.WeaponType, WeaponStats> StatsByWeapon =
@@ -31,7 +31,7 @@ namespace ShooterB
                         travelSpeed = 50f,
                         areaOfEffect = 1.22f,
                         chainLightning = 0,
-                        description = "Hunters know this classic. Precise and dependable."
+                        descriptionKey = "armory.weapon.description.rifle"
                     }
                 },
                 {
@@ -45,7 +45,7 @@ namespace ShooterB
                         travelSpeed = 45f,
                         areaOfEffect = 0.54f,
                         chainLightning = 0,
-                        description = "Sharper shots for cleaner picks in tight moments."
+                        descriptionKey = "armory.weapon.description.cabirne"
                     }
                 },
                 {
@@ -59,7 +59,7 @@ namespace ShooterB
                         travelSpeed = 50f,
                         areaOfEffect = 0.32f,
                         chainLightning = 0,
-                        description = "World-war steel turned into close-range spray control."
+                        descriptionKey = "armory.weapon.description.beretta"
                     }
                 },
                 {
@@ -73,7 +73,7 @@ namespace ShooterB
                         travelSpeed = 50f,
                         areaOfEffect = 1.49f,
                         chainLightning = 0,
-                        description = "High-tech beam bursts with broad impact coverage."
+                        descriptionKey = "armory.weapon.description.laser"
                     }
                 },
                 {
@@ -87,7 +87,7 @@ namespace ShooterB
                         travelSpeed = 16.67f,
                         areaOfEffect = 1.49f,
                         chainLightning = 0,
-                        description = "Load piranhas into the launcher and cause pure chaos."
+                        descriptionKey = "armory.weapon.description.piranha"
                     }
                 },
                 {
@@ -101,7 +101,7 @@ namespace ShooterB
                         travelSpeed = 60f,
                         areaOfEffect = 6.0f,
                         chainLightning = 2,
-                        description = "Fires electric shots that chain lightning across nearby ducks."
+                        descriptionKey = "armory.weapon.description.tesla"
                     }
                 },
                 {
@@ -115,7 +115,7 @@ namespace ShooterB
                         travelSpeed = 58f,
                         areaOfEffect = 0.54f,
                         chainLightning = 0,
-                        description = "A biochemical monster made for relentless pressure."
+                        descriptionKey = "armory.weapon.description.mrsulko"
                     }
                 }
             };
@@ -152,13 +152,22 @@ namespace ShooterB
         public static WeaponCardViewModel BuildCardModel(Constants.WeaponType type, Sprite iconOverride = null)
         {
             WeaponStats stats = GetStats(type);
+            string weaponNameKey = GetWeaponNameKey(type);
+            string fireModeKey = stats.fireMode == Constants.WeaponFireMode.HoldAutomatic
+                ? "armory.fire_mode.automatic"
+                : "armory.fire_mode.single_tap";
+
             WeaponCardViewModel model = new WeaponCardViewModel
             {
                 weaponType = type,
-                displayName = GetDisplayName(type),
-                description = stats.description,
+                displayName = weaponNameKey == null
+                    ? GetDefaultDisplayName(type)
+                    : LocalizationManager.Instance.Get(weaponNameKey, GetDefaultDisplayName(type)),
+                description = LocalizationManager.Instance.Get(stats.descriptionKey, GetDefaultDescription(type)),
                 cost = type == Constants.WeaponType.PiranhaGun ? 0 : GenerateCost(stats),
-                fireTypeLabel = stats.fireMode == Constants.WeaponFireMode.HoldAutomatic ? "Automatic" : "Single Tap",
+                fireTypeLabel = LocalizationManager.Instance.Get(
+                    fireModeKey,
+                    stats.fireMode == Constants.WeaponFireMode.HoldAutomatic ? "Automatic" : "Single Tap"),
                 fireRateLabel = $"{(1f / Mathf.Max(0.01f, stats.fireDelay)):0.0} shots/sec",
                 reloadLabel = $"{stats.reloadDelay:0.00}s",
                 travelSpeedLabel = $"{stats.travelSpeed:0.##}",
@@ -193,7 +202,7 @@ namespace ShooterB
             return Mathf.Clamp(roundedCost, 80, 900);
         }
 
-        private static string GetDisplayName(Constants.WeaponType type)
+        private static string GetDefaultDisplayName(Constants.WeaponType type)
         {
             switch (type)
             {
@@ -205,6 +214,52 @@ namespace ShooterB
                     return "Laser Gun";
                 default:
                     return type.ToString();
+            }
+        }
+
+        private static string GetDefaultDescription(Constants.WeaponType type)
+        {
+            switch (type)
+            {
+                case Constants.WeaponType.Rifle:
+                    return "Hunters know this classic. Precise and dependable.";
+                case Constants.WeaponType.Cabirne:
+                    return "Sharper shots for cleaner picks in tight moments.";
+                case Constants.WeaponType.Beretta:
+                    return "World-war steel turned into close-range spray control.";
+                case Constants.WeaponType.LaserGun:
+                    return "High-tech beam bursts with broad impact coverage.";
+                case Constants.WeaponType.PiranhaGun:
+                    return "Load piranhas into the launcher and cause pure chaos.";
+                case Constants.WeaponType.TeslaGun:
+                    return "Fires electric shots that chain lightning across nearby ducks.";
+                case Constants.WeaponType.MrSulko:
+                    return "A biochemical monster made for relentless pressure.";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        private static string GetWeaponNameKey(Constants.WeaponType weaponType)
+        {
+            switch (weaponType)
+            {
+                case Constants.WeaponType.Rifle:
+                    return "weapon.name.rifle";
+                case Constants.WeaponType.Cabirne:
+                    return "weapon.name.cabirne";
+                case Constants.WeaponType.Beretta:
+                    return "weapon.name.beretta";
+                case Constants.WeaponType.MrSulko:
+                    return "weapon.name.mrsulko";
+                case Constants.WeaponType.LaserGun:
+                    return "weapon.name.laser";
+                case Constants.WeaponType.TeslaGun:
+                    return "weapon.name.tesla";
+                case Constants.WeaponType.PiranhaGun:
+                    return "weapon.name.piranha";
+                default:
+                    return null;
             }
         }
     }

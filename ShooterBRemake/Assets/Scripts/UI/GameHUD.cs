@@ -476,7 +476,12 @@ namespace ShooterB
 
             int index = UnityEngine.Random.Range(0, objectives.Count);
             var state = objectives[index];
-            ShowRewardPopup("DAILY OBJECTIVE COMPLETE", state.title, state.coinReward, true, "DAILY_DEBUG");
+            ShowRewardPopup(
+                LocalizationManager.Instance.Get("campaign.hud.popup.daily_objective_complete", "DAILY OBJECTIVE COMPLETE"),
+                state.title,
+                state.coinReward,
+                true,
+                "DAILY_DEBUG");
         }
 
         private static bool IsDebugTriggerPressed()
@@ -525,7 +530,12 @@ namespace ShooterB
 
             string achievementTitle = AchievementManager.Instance.GetTitle(id);
             int coinReward = AchievementManager.Instance.GetCoinReward(id);
-            ShowRewardPopup("ACHIEVEMENT UNLOCKED", achievementTitle, coinReward, isDebug, "ACHIEVEMENT");
+            ShowRewardPopup(
+                LocalizationManager.Instance.Get("campaign.hud.popup.achievement_unlocked", "ACHIEVEMENT UNLOCKED"),
+                achievementTitle,
+                coinReward,
+                isDebug,
+                "ACHIEVEMENT");
         }
 
         private void HandleDailyObjectiveCompleted(int slotIndex)
@@ -536,14 +546,24 @@ namespace ShooterB
                 if (objectives[i].slotIndex != slotIndex)
                     continue;
 
-                ShowRewardPopup("DAILY OBJECTIVE COMPLETE", objectives[i].title, objectives[i].coinReward, false, "DAILY_OBJECTIVE");
+                ShowRewardPopup(
+                    LocalizationManager.Instance.Get("campaign.hud.popup.daily_objective_complete", "DAILY OBJECTIVE COMPLETE"),
+                    objectives[i].title,
+                    objectives[i].coinReward,
+                    false,
+                    "DAILY_OBJECTIVE");
                 return;
             }
         }
 
         private void HandleDailySetCompleted()
         {
-            ShowRewardPopup("DAILY SET COMPLETE", "All daily objectives completed", DailyAwardsManager.Instance.GetDailySetBonusCoins(), false, "DAILY_SET");
+            ShowRewardPopup(
+                LocalizationManager.Instance.Get("campaign.hud.popup.daily_set_complete", "DAILY SET COMPLETE"),
+                LocalizationManager.Instance.Get("campaign.hud.popup.daily_set_body", "All daily objectives completed"),
+                DailyAwardsManager.Instance.GetDailySetBonusCoins(),
+                false,
+                "DAILY_SET");
         }
 
         private void ShowRewardPopup(string header, string title, int coins, bool isDebug, string source)

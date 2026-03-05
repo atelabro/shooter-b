@@ -51,8 +51,7 @@ namespace ShooterB
             public DailyObjectiveId id;
             public ObjectiveType type;
             public int target;
-            public string title;
-            public string description;
+            public string titleKey;
             public int coinReward;
         }
 
@@ -155,8 +154,8 @@ namespace ShooterB
                 {
                     slotIndex = slot,
                     objectiveId = id,
-                    title = def.title,
-                    description = def.description,
+                    title = LocalizationManager.Instance.Get(def.titleKey, id.ToString()),
+                    description = GetLocalizedDescription(def),
                     progress = progressBySlot[slot],
                     target = def.target,
                     isCompleted = completedBySlot[slot],
@@ -211,29 +210,67 @@ namespace ShooterB
         private void RegisterDefinitions()
         {
             definitions.Clear();
-            AddDefinition(DailyObjectiveId.Kill15, ObjectiveType.BirdKills, 15, "Daily Hunter", "Kill 15 ducks.");
-            AddDefinition(DailyObjectiveId.Kill30, ObjectiveType.BirdKills, 30, "Feather Collector", "Kill 30 ducks.");
-            AddDefinition(DailyObjectiveId.Kill50, ObjectiveType.BirdKills, 50, "Bird Purge", "Kill 50 ducks.");
-            AddDefinition(DailyObjectiveId.Combo3, ObjectiveType.ComboAny, 3, "Combo Starter", "Trigger 3 combos.");
-            AddDefinition(DailyObjectiveId.Combo6, ObjectiveType.ComboAny, 6, "Combo Builder", "Trigger 6 combos.");
-            AddDefinition(DailyObjectiveId.TripleOrBetter2, ObjectiveType.ComboTripleOrBetter, 2, "Triple Pressure", "Get 2 triple-or-better combos.");
-            AddDefinition(DailyObjectiveId.Elite3, ObjectiveType.EliteKills, 3, "Elite Patrol", "Kill 3 elite ducks.");
-            AddDefinition(DailyObjectiveId.Elite6, ObjectiveType.EliteKills, 6, "Elite Sweep", "Kill 6 elite ducks.");
-            AddDefinition(DailyObjectiveId.Finish1, ObjectiveType.GameCompleted, 1, "One More Round", "Finish 1 game.");
-            AddDefinition(DailyObjectiveId.Finish2, ObjectiveType.GameCompleted, 2, "Persistent Hunter", "Finish 2 games.");
+            AddDefinition(DailyObjectiveId.Kill15, ObjectiveType.BirdKills, 15);
+            AddDefinition(DailyObjectiveId.Kill30, ObjectiveType.BirdKills, 30);
+            AddDefinition(DailyObjectiveId.Kill50, ObjectiveType.BirdKills, 50);
+            AddDefinition(DailyObjectiveId.Combo3, ObjectiveType.ComboAny, 3);
+            AddDefinition(DailyObjectiveId.Combo6, ObjectiveType.ComboAny, 6);
+            AddDefinition(DailyObjectiveId.TripleOrBetter2, ObjectiveType.ComboTripleOrBetter, 2);
+            AddDefinition(DailyObjectiveId.Elite3, ObjectiveType.EliteKills, 3);
+            AddDefinition(DailyObjectiveId.Elite6, ObjectiveType.EliteKills, 6);
+            AddDefinition(DailyObjectiveId.Finish1, ObjectiveType.GameCompleted, 1);
+            AddDefinition(DailyObjectiveId.Finish2, ObjectiveType.GameCompleted, 2);
         }
 
-        private void AddDefinition(DailyObjectiveId id, ObjectiveType type, int target, string title, string description)
+        private void AddDefinition(DailyObjectiveId id, ObjectiveType type, int target)
         {
             definitions[id] = new DailyObjectiveDefinition
             {
                 id = id,
                 type = type,
                 target = Mathf.Max(1, target),
-                title = title,
-                description = description,
+                titleKey = $"daily.{id}.title",
                 coinReward = DailyObjectiveRewardCoins
             };
+        }
+
+        private static string GetLocalizedDescription(DailyObjectiveDefinition definition)
+        {
+            string formatKey;
+            string fallbackFormat;
+
+            switch (definition.type)
+            {
+                case ObjectiveType.BirdKills:
+                    formatKey = "daily.description.bird_kills";
+                    fallbackFormat = "Kill {0} ducks.";
+                    break;
+                case ObjectiveType.ComboAny:
+                    formatKey = "daily.description.combo_any";
+                    fallbackFormat = "Trigger {0} combos.";
+                    break;
+                case ObjectiveType.ComboTripleOrBetter:
+                    formatKey = "daily.description.combo_triple_or_better";
+                    fallbackFormat = "Get {0} triple-or-better combos.";
+                    break;
+                case ObjectiveType.EliteKills:
+                    formatKey = "daily.description.elite_kills";
+                    fallbackFormat = "Kill {0} elite ducks.";
+                    break;
+                case ObjectiveType.GameCompleted:
+                    formatKey = definition.target == 1
+                        ? "daily.description.game_completed_singular"
+                        : "daily.description.game_completed";
+                    fallbackFormat = definition.target == 1 ? "Finish {0} game." : "Finish {0} games.";
+                    break;
+                default:
+                    formatKey = "daily.description.bird_kills";
+                    fallbackFormat = "Kill {0} ducks.";
+                    break;
+            }
+
+            string format = LocalizationManager.Instance.Get(formatKey, fallbackFormat);
+            return string.Format(format, definition.target);
         }
 
         private void HandleBirdKilled(Constants.DuckType duckType, Constants.WeaponType weaponType)

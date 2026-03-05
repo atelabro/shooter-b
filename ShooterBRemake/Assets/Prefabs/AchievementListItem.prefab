@@ -404,8 +404,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SKULL CRUSHER 101
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
-  m_sharedMaterial: {fileID: 5430614821553359432, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bdae4ea5783cf4a67b04254a1e3ee789, type: 2}
+  m_sharedMaterial: {fileID: -5021517457759182431, guid: bdae4ea5783cf4a67b04254a1e3ee789, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1141,7 +1141,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 8, y: 240}
+  m_SizeDelta: {x: 800, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4666775769795286959
 CanvasRenderer:
@@ -1396,7 +1396,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 140, y: 38}
+  m_SizeDelta: {x: 340, y: 38}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &686246243968215174
 CanvasRenderer:

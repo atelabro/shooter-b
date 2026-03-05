@@ -532,6 +532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.ArmoryController
   quitButton: {fileID: 406195786}
+  sceneTitleText: {fileID: 0}
   weaponsScrollRect: {fileID: 1801166830}
   weaponListContent: {fileID: 498010962}
   weaponCardPrefab: {fileID: 6600584767469381700, guid: c6c4ea60900484757896b33386f8c04b, type: 3}
@@ -1305,8 +1306,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ARMORY
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
-  m_sharedMaterial: {fileID: 5430614821553359432, guid: a8a17d8309280484dbca398d1c164ca7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bdae4ea5783cf4a67b04254a1e3ee789, type: 2}
+  m_sharedMaterial: {fileID: -5021517457759182431, guid: bdae4ea5783cf4a67b04254a1e3ee789, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1330,7 +1331,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60.15
+  m_fontSize: 53.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1340,7 +1341,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 30
+  m_characterSpacing: 0
   m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0

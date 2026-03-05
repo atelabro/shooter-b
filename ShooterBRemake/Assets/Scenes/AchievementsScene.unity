@@ -306,8 +306,11 @@ MonoBehaviour:
   generalTitleMarker: {fileID: 1358032811}
   rowPrefab: {fileID: 1796999289}
   dailyRowPrefab: {fileID: 1478480882443857380, guid: f9368463e611c4ee89fb71df5a00620c, type: 3}
+  sceneTitleText: {fileID: 0}
+  generalTitleText: {fileID: 0}
   dailyAwardsTitleText: {fileID: 1663473365}
   backButton: {fileID: 280817555}
+  backButtonText: {fileID: 0}
 --- !u!1 &97179508
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,7 +1039,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 30
+  m_characterSpacing: 0
   m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0

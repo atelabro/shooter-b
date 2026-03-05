@@ -88,7 +88,10 @@ namespace ShooterB
             {
                 TextMeshProUGUI popupText = activePopup.GetComponent<TextMeshProUGUI>();
                 if (popupText != null)
-                    popupText.text = $"{request.header}\n{request.title}\n+{Mathf.Max(0, request.coins)} COINS";
+                {
+                    string coinsSuffix = LocalizationManager.Instance.Get("reward.coins_suffix", "COINS");
+                    popupText.text = $"{request.header}\n{request.title}\n+{Mathf.Max(0, request.coins)} {coinsSuffix}";
+                }
             }
 
             RectTransform popupRect = activePopup.GetComponent<RectTransform>();

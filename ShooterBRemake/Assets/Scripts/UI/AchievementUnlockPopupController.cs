@@ -43,13 +43,21 @@ namespace ShooterB
 
         public void Configure(string achievementTitle, int coinReward)
         {
-            ConfigureCustom("ACHIEVEMENT UNLOCKED", achievementTitle, coinReward);
+            ConfigureCustom(
+                LocalizationManager.Instance.Get("campaign.hud.popup.achievement_unlocked", "ACHIEVEMENT UNLOCKED"),
+                achievementTitle,
+                coinReward);
         }
 
         public void ConfigureCustom(string header, string title, int coinReward)
         {
-            string safeHeader = string.IsNullOrWhiteSpace(header) ? "REWARD" : header;
-            string safeTitle = string.IsNullOrWhiteSpace(title) ? "Objective" : title;
+            string safeHeader = string.IsNullOrWhiteSpace(header)
+                ? LocalizationManager.Instance.Get("reward.header.default", "REWARD")
+                : header;
+            string safeTitle = string.IsNullOrWhiteSpace(title)
+                ? LocalizationManager.Instance.Get("reward.title.default", "Objective")
+                : title;
+            string coinsSuffix = LocalizationManager.Instance.Get("reward.coins_suffix", "COINS");
             int safeCoins = Mathf.Max(0, coinReward);
 
             if (headerText != null || titleText != null || rewardText != null)
@@ -68,7 +76,7 @@ namespace ShooterB
 
                 if (rewardText != null)
                 {
-                    rewardText.text = $"+{safeCoins} COINS";
+                    rewardText.text = $"+{safeCoins} {coinsSuffix}";
                     rewardText.color = bodyColor;
                 }
 
@@ -78,7 +86,7 @@ namespace ShooterB
             if (popupText == null)
                 return;
 
-            popupText.text = $"{safeHeader}\n{safeTitle}\n+{safeCoins} COINS";
+            popupText.text = $"{safeHeader}\n{safeTitle}\n+{safeCoins} {coinsSuffix}";
             popupText.color = headerColor;
         }
     }
