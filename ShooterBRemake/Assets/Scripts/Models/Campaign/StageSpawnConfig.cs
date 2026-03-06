@@ -9,6 +9,10 @@ namespace ShooterB
         public Constants.DuckType duckType;
         [Tooltip("Seconds to wait after the previous spawn before spawning this duck")]
         public float delay;
+        [Tooltip("Movement path for this duck. Random uses weight-based pattern switching.")]
+        public Constants.DuckPathType pathType;
+        [Tooltip("Per-duck speed multiplier. <= 0 defaults to 1.")]
+        public float speedMultiplier;
     }
 
     [CreateAssetMenu(fileName = "StageSpawnConfig", menuName = "ShooterB/Stage Spawn Config")]

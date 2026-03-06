@@ -116,10 +116,10 @@ TextureImporter:
       name: uk_bob2_05_0
       rect:
         serializedVersion: 2
-        x: 40
-        y: 10
-        width: 459
-        height: 460
+        x: 0
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

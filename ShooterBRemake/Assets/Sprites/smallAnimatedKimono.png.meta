@@ -137,10 +137,10 @@ TextureImporter:
       name: smallAnimatedKimono_0
       rect:
         serializedVersion: 2
-        x: 26
-        y: 23
-        width: 209
-        height: 214
+        x: 0
+        y: 0
+        width: 2043
+        height: 244
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

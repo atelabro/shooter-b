@@ -144,6 +144,7 @@ namespace ShooterB
             UpdateReloadFeedback();
             HandleDebugAchievementPopupTrigger();
             HandleDebugDailyPopupTrigger();
+            HandleDebugDailyResetTrigger();
         }
 
         private void UpdateScore(long score)
@@ -457,6 +458,14 @@ namespace ShooterB
                 "DAILY_DEBUG");
         }
 
+        private void HandleDebugDailyResetTrigger()
+        {
+            if (!IsDebugDailyResetTriggerPressed())
+                return;
+
+            DailyAwardsManager.Instance.DebugResetTodayProgress();
+        }
+
         private static bool IsDebugTriggerPressed()
         {
 #if ENABLE_INPUT_SYSTEM
@@ -480,6 +489,17 @@ namespace ShooterB
                  Keyboard.current.f10Key.wasPressedThisFrame);
 #elif ENABLE_LEGACY_INPUT_MANAGER
             return Input.GetKeyDown(KeyCode.RightBracket) || Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.F10);
+#else
+            return false;
+#endif
+        }
+
+        private static bool IsDebugDailyResetTriggerPressed()
+        {
+#if ENABLE_INPUT_SYSTEM
+            return Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame;
+#elif ENABLE_LEGACY_INPUT_MANAGER
+            return Input.GetKeyDown(KeyCode.R);
 #else
             return false;
 #endif

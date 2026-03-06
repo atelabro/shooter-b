@@ -207,6 +207,27 @@ namespace ShooterB
             return setBonusGranted;
         }
 
+        public void DebugResetTodayProgress()
+        {
+            EnsureTodayInitialized();
+
+            for (int slot = 0; slot < selectedObjectiveIds.Count; slot++)
+            {
+                progressBySlot[slot] = 0;
+                completedBySlot[slot] = false;
+                rewardGrantedBySlot[slot] = false;
+                PlayerPrefs.SetInt(GetProgressKey(slot), 0);
+                PlayerPrefs.SetInt(GetCompletedKey(slot), 0);
+                PlayerPrefs.SetInt(GetRewardGrantedKey(slot), 0);
+                OnDailyObjectiveProgressChanged?.Invoke(slot);
+            }
+
+            setBonusGranted = false;
+            PlayerPrefs.SetInt(SetBonusGrantedKey, 0);
+            PlayerPrefs.Save();
+            Debug.Log("[DailyAwards] Debug reset: today's objectives progress set to 0.");
+        }
+
         private void SubscribeToGameManager()
         {
             if (GameManager.Instance == null)

@@ -135,6 +135,21 @@ namespace ShooterB
             GoBottom
         }
 
+        public enum DuckPathType
+        {
+            Random,         // existing weight-based behavior (default, value = 0)
+            Straight_1,     // horizontal lane 1 (lowest, near bottom)
+            Straight_2,
+            Straight_3,
+            Straight_4,
+            Straight_5,
+            Straight_6,
+            Straight_7,
+            Straight_8,     // lane 8 (highest, near top)
+            BezierMountain, // enters bottom-left, peaks center-top, exits bottom-right
+            BezierValley,   // enters top-left, dips center-bottom, exits top-right
+        }
+
         public enum MultiKillType
         {
             DoubleKill,

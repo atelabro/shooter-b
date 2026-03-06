@@ -1119,8 +1119,8 @@ MonoBehaviour:
   armoryButtonText: {fileID: 0}
   achievementsButtonText: {fileID: 0}
   quitButtonText: {fileID: 0}
-  achievementsBadgeRoot: {fileID: 0}
-  achievementsBadgeText: {fileID: 0}
+  achievementsBadgeRoot: {fileID: 820255629}
+  achievementsBadgeText: {fileID: 651686770}
   achievementsBadgeOffset: {x: -16, y: 0}
   achievementsBadgeSize: {x: 28, y: 28}
   achievementsBadgeColor: {r: 0.8627451, g: 0.1764706, b: 0.1764706, a: 1}
@@ -1225,7 +1225,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 3233371537703248253, guid: 86afc5ef8c1ea4048bd4534499270a49, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

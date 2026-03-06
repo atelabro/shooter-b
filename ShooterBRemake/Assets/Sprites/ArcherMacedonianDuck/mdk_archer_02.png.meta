@@ -116,10 +116,10 @@ TextureImporter:
       name: mdk_archer_02_0
       rect:
         serializedVersion: 2
-        x: 50
-        y: 57
-        width: 409
-        height: 405
+        x: 0
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

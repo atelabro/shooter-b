@@ -33,6 +33,9 @@ namespace ShooterB
 
         private bool isSpawning = false;
         private int activeDuckCount = 0;
+        private int stageSpawnDifficulty;
+        private float stageBaseSpeed;
+        private int nextSpawnSortingOrder;
 
         private void Awake()
         {
@@ -95,6 +98,10 @@ namespace ShooterB
                 Debug.LogWarning("[CampaignDuckSpawner] No spawn sequence configured for active stage.");
                 return;
             }
+
+            stageSpawnDifficulty = GameManager.Instance.Difficulty;
+            stageBaseSpeed = Constants.DuckSpeed.GetSpeed(stageSpawnDifficulty);
+            nextSpawnSortingOrder = 1000;
 
             StartCoroutine(SpawnSequenceCoroutine(spawnConfig));
             Debug.Log($"[CampaignDuckSpawner] Starting sequence with {spawnConfig.spawnSequence.Length} entries.");
@@ -159,21 +166,29 @@ namespace ShooterB
                 return;
 
             Sprite[] frames = GetFramesForType(entry.duckType);
-            Vector2 spawnPosition = GetRandomSpawnPosition();
+            Vector2 spawnPosition = GetSpawnPosition(entry.pathType);
 
             duck.Initialize(
                 entry.duckType,
-                GameManager.Instance.Difficulty,
+                stageSpawnDifficulty,
                 spawnPosition,
                 boundTop, boundBottom, boundRight, boundLeft,
                 frames,
+                entry.pathType,
                 config.weightGoStraight,
                 config.weightGoTop,
                 config.weightGoBottom
             );
 
-            if (config.duckSpeedMultiplier != 1f)
-                duck.speed *= config.duckSpeedMultiplier;
+            float entrySpeedMultiplier = entry.speedMultiplier > 0f ? entry.speedMultiplier : 1f;
+            duck.speed = stageBaseSpeed * config.duckSpeedMultiplier * entrySpeedMultiplier;
+
+            SpriteRenderer spriteRenderer = duck.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.sortingOrder = nextSpawnSortingOrder;
+                nextSpawnSortingOrder--;
+            }
 
             GameManager.Instance.BirdCreated();
             activeDuckCount++;
@@ -214,11 +229,17 @@ namespace ShooterB
             return duck;
         }
 
-        private Vector2 GetRandomSpawnPosition()
+        private Vector2 GetSpawnPosition(Constants.DuckPathType pathType)
         {
             float randomY = UnityEngine.Random.Range(minY, maxY);
-            float randomXOffset = UnityEngine.Random.Range(0f, 1f);
-            return new Vector2(spawnX - randomXOffset, randomY);
+
+            if (pathType == Constants.DuckPathType.Random)
+            {
+                float randomXOffset = UnityEngine.Random.Range(0f, 1f);
+                return new Vector2(spawnX - randomXOffset, randomY);
+            }
+
+            return new Vector2(spawnX, randomY);
         }
 
         private Sprite[] GetFramesForType(Constants.DuckType type)

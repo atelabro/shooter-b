@@ -104,34 +104,30 @@ open -a "Unity Hub" .
 
 ## Unity Architecture for This Game
 
-### Managers (Singleton Pattern)
-- **GameManager**: Core game state, score, lives, difficulty
-- **SceneManager**: Scene transitions (Unity has built-in SceneManager, wrap it)
-- **ResourceManager**: Asset loading/unloading, object pooling
-- **AudioManager**: Sound effects and music playback
-- **AdManager**: AdMob integration for monetization
+### Managers (Singleton Pattern, DontDestroyOnLoad)
+- **GameManager**: Core game state, score, lives, difficulty, coins, weapon selection, events
+- **SceneController**: Scene transitions, wraps Unity's built-in SceneManager
+- **CampaignProgressManager**: Active stage config, star tracking, stage unlock logic
+- **AchievementManager**: 26 achievements, coin rewards, persistent progress
+- **DailyAwardsManager**: 3 daily objectives per day, coin rewards, set bonus
+- **LocalizationManager**: Key-based string lookup, English + Macedonian
 
 ### Game Flow
-1. SplashScene - Initial loading
-2. MenuScene - Mode selection (Arcade/Normal)
-3. GameScene - Main gameplay
-4. GameOverScene - Results and restart
+1. MenuScene - Entry point: Campaign, Armory, Achievements, Quit
+2. CampaignMapScene - World map with city pins and stage selection
+3. CampaignGameScene - Campaign gameplay (fixed duck sequence per stage)
+4. ArmoryScene - Weapon unlock and selection
+5. AchievementsScene - Achievement list and daily objectives
+6. GameScene - Arcade gameplay (infinite random spawning)
 
 ### Physics
-- Use Unity's built-in 2D Physics (Rigidbody2D, Collider2D)
+- Unity's built-in 2D Physics (Rigidbody2D, Collider2D)
 - Duck spawning with physics bodies
 - Bullet collision detection
 
 ### Mobile Controls
-- Touch input for shooting (Input.GetTouch or new Input System)
-- UI buttons for weapon switching
-- Pause button
-
-### Monetization Setup
-- AdMob SDK integration
-- Banner ads in menu
-- Interstitial ads on game over
-- Rewarded video for extra lives
+- Touch input for shooting via InputController
+- Pause button in HUD
 
 ## Key Unity Concepts for This Project
 
@@ -152,26 +148,26 @@ open -a "Unity Hub" .
 
 ## Current Status
 
-### Completed (Phase 1 - Core Foundation)
-- ✅ Constants.cs - All game configuration and enums
-- ✅ GameManager.cs - Singleton with state management, events, difficulty progression
-- ✅ SceneController.cs - Scene loading wrapper
-- ✅ ObjectPool.cs - Generic pooling system for performance
-- ✅ MenuController.cs - Menu UI with Play/Quit buttons
-- ✅ GameController.cs - Game scene controller with camera setup
-- ✅ GameHUD.cs - In-game HUD (score, lives, multiplier, buttons)
+### Completed
+- Constants.cs - All game configuration and enums
+- GameManager.cs - Score, lives, difficulty, coins, weapon selection, events
+- SceneController.cs - Scene loading wrapper with armory return tracking
+- ObjectPool.cs / BulletPool.cs - Generic pooling for performance
+- Duck system - Duck.cs, DuckFrameLibrary.cs, DuckSpawner (arcade), CampaignDuckSpawner (campaign)
+- Shooting - InputController, ShooterController, all 7 weapons and bullet types
+- Campaign system - CampaignGameController, CampaignDuckSpawner, CampaignProgressManager, CampaignMapController, StageConfig, StageSpawnConfig, CityConfig ScriptableObjects
+- HUD - GameHUD (arcade) and CampaignHUD (campaign): score, lives, ammo display, reload feedback, combo popups
+- Achievement system - AchievementManager (26 achievements), AchievementsSceneController, AchievementListItemUI, AchievementUnlockPopupController
+- Daily awards system - DailyAwardsManager (3 daily objectives, 10 objective types, coin rewards)
+- Localization - LocalizationManager (English + Macedonian), LanguageDropdownController
+- Armory - ArmoryController, ArmoryUIDataSource, WeaponCardItemUI, UnlockWeaponModalUI
+- Economy - Coin system in GameManager, CurrencyHeaderUI
+- UI utilities - RewardPopupQueueController, ComboPopupController, LivesContainerController, SafeAreaLayoutFitter, OrientationEnforcer
+- BackgroundManager - Static class with background path mapping
+- MenuController - Campaign, Armory, Achievements, Quit; daily badge on Achievements button
 
-### Setup Required
-See `ShooterBRemake/SETUP_INSTRUCTIONS.md` for detailed Unity Editor setup steps.
-You need to manually create MenuScene and GameScene in Unity Editor and link UI elements.
-
-### Next Steps
-
-1. Test basic game flow (Menu → Game → Menu)
-2. Implement duck system (spawning, movement, AI)
-3. Add shooting mechanics and input handling
-4. Create weapon system (7 weapons)
-5. Build bullet physics and collision
-6. Add sound effects and visual effects
-7. Integrate AdMob for monetization
-8. Polish and optimize for mobile
+### Known Issues / TODO
+- Spawn configs missing for campaign stages 1 and 2
+- Stage unlock bug: Countryside stages 1 and 2 may all appear unlocked (check starsRequiredToUnlock)
+- Campaign scoring revisit: accuracy % or kill count may suit fixed stages better than points
+- GameManager.OnBirdsKilledChanged is fired but never subscribed to - dead code to remove

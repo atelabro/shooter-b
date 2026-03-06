@@ -137,10 +137,10 @@ TextureImporter:
       name: smallAnimatedPrivate_0
       rect:
         serializedVersion: 2
-        x: 32
-        y: 36
-        width: 190
-        height: 181
+        x: 0
+        y: 0
+        width: 2048
+        height: 252
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

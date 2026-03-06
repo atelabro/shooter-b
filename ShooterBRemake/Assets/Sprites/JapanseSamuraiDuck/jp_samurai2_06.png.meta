@@ -116,10 +116,10 @@ TextureImporter:
       name: jp_samurai2_06_0
       rect:
         serializedVersion: 2
-        x: 18
-        y: 15
-        width: 465
-        height: 484
+        x: 0
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

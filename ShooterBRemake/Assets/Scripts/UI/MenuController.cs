@@ -6,6 +6,8 @@ namespace ShooterB
 {
     public class MenuController : MonoBehaviour
     {
+        private static Sprite runtimeBadgeCircleSprite;
+
         [Header("UI Elements")]
         public Button campaignButton;
         public Button armoryButton;
@@ -201,9 +203,7 @@ namespace ShooterB
             Image badgeImage = badgeObject.GetComponent<Image>();
             badgeImage.color = achievementsBadgeColor;
             badgeImage.raycastTarget = false;
-            Sprite circleSprite = Resources.GetBuiltinResource<Sprite>("UI/Skin/Knob.psd");
-            if (circleSprite != null)
-                badgeImage.sprite = circleSprite;
+            badgeImage.sprite = GetOrCreateRuntimeCircleSprite();
 
             GameObject textObject = new GameObject("CountText", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
             RectTransform textRect = textObject.GetComponent<RectTransform>();
@@ -225,6 +225,45 @@ namespace ShooterB
 
             achievementsBadgeRoot = badgeRect;
             achievementsBadgeText = text;
+        }
+
+        private static Sprite GetOrCreateRuntimeCircleSprite()
+        {
+            if (runtimeBadgeCircleSprite != null)
+                return runtimeBadgeCircleSprite;
+
+            const int size = 64;
+            Texture2D texture = new Texture2D(size, size, TextureFormat.ARGB32, false)
+            {
+                name = "AchievementsDailyBadgeCircle"
+            };
+
+            Color32[] pixels = new Color32[size * size];
+            float radius = (size - 1) * 0.5f;
+            float center = radius;
+            float radiusSquared = radius * radius;
+
+            for (int y = 0; y < size; y++)
+            {
+                for (int x = 0; x < size; x++)
+                {
+                    float dx = x - center;
+                    float dy = y - center;
+                    bool inside = (dx * dx) + (dy * dy) <= radiusSquared;
+                    pixels[(y * size) + x] = inside ? new Color32(255, 255, 255, 255) : new Color32(255, 255, 255, 0);
+                }
+            }
+
+            texture.SetPixels32(pixels);
+            texture.Apply(false, true);
+
+            runtimeBadgeCircleSprite = Sprite.Create(
+                texture,
+                new Rect(0f, 0f, size, size),
+                new Vector2(0.5f, 0.5f),
+                100f);
+            runtimeBadgeCircleSprite.name = "AchievementsDailyBadgeCircleSprite";
+            return runtimeBadgeCircleSprite;
         }
 
         private static TextMeshProUGUI FindText(Transform root, string preferredChildName)

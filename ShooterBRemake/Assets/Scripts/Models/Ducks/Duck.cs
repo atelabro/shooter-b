@@ -14,6 +14,9 @@ namespace ShooterB
         public float speed = 10f;
         private Vector2 velocity;
         private Constants.MovementPattern currentPattern;
+        private Constants.DuckPathType currentPathType;
+        private Vector2 bezierP0, bezierP1, bezierP2, bezierP3;
+        private float pathProgress;
         private int patternChangeCounter = 0;
         private const int PATTERN_CHANGE_FRAMES = 20;
 
@@ -75,7 +78,12 @@ namespace ShooterB
             rb.bodyType = RigidbodyType2D.Kinematic;
         }
 
-        public void Initialize(Constants.DuckType type, int difficulty, Vector2 startPosition, float boundTop, float boundBottom, float boundRight, float boundLeft, Sprite[] typeAliveFrames, float goStraightWeight = 0.4f, float goTopWeight = 0.3f, float goBottomWeight = 0.3f)
+        public void Initialize(
+            Constants.DuckType type, int difficulty, Vector2 startPosition,
+            float boundTop, float boundBottom, float boundRight, float boundLeft,
+            Sprite[] typeAliveFrames,
+            Constants.DuckPathType pathType = Constants.DuckPathType.Random,
+            float goStraightWeight = 0.4f, float goTopWeight = 0.3f, float goBottomWeight = 0.3f)
         {
             duckType = type;
             pointValue = Constants.DuckPoints.GetPoints(type);
@@ -88,9 +96,6 @@ namespace ShooterB
             aliveFrames = typeAliveFrames;
             aliveFrameIndex = 0;
             aliveFrameTimer = 0f;
-
-            transform.position = new Vector3(startPosition.x, startPosition.y, -5);
-            velocity = new Vector2(speed, 0);
 
             if (spriteRenderer != null)
             {
@@ -116,6 +121,25 @@ namespace ShooterB
             screenBottom = boundBottom;
             screenRight = boundRight;
             screenLeft = boundLeft;
+            currentPathType = pathType;
+            pathProgress = 0f;
+            patternChangeCounter = 0;
+
+            if (IsStraightPath(currentPathType))
+            {
+                float safeHeight = screenTop - screenBottom;
+                float laneHeight = safeHeight / 8f;
+                int laneIndex = (int)currentPathType - (int)Constants.DuckPathType.Straight_1;
+                startPosition.y = screenBottom + laneHeight * (laneIndex + 0.5f);
+            }
+            else if (IsBezierPath(currentPathType))
+            {
+                ConfigureBezierControlPoints(currentPathType);
+                startPosition = bezierP0;
+            }
+
+            transform.position = new Vector3(startPosition.x, startPosition.y, -5);
+            velocity = new Vector2(speed, 0f);
 
             rb.gravityScale = 0;
             rb.bodyType = RigidbodyType2D.Kinematic;
@@ -131,7 +155,10 @@ namespace ShooterB
                 animator.enabled = false;
             }
 
-            SelectRandomPattern();
+            if (currentPathType == Constants.DuckPathType.Random)
+            {
+                SelectRandomPattern();
+            }
             isDead = false;
             gameObject.SetActive(true);
         }
@@ -212,17 +239,88 @@ namespace ShooterB
 
             AnimateAliveSprite();
 
-            patternChangeCounter++;
-            if (patternChangeCounter >= PATTERN_CHANGE_FRAMES)
+            if (currentPathType == Constants.DuckPathType.Random)
             {
-                patternChangeCounter = 0;
-                SelectRandomPattern();
+                patternChangeCounter++;
+                if (patternChangeCounter >= PATTERN_CHANGE_FRAMES)
+                {
+                    patternChangeCounter = 0;
+                    SelectRandomPattern();
+                }
+
+                ApplyMovement();
+                EnforceBoundaries();
+
+                rb.linearVelocity = velocity;
+            }
+            else if (IsStraightPath(currentPathType))
+            {
+                velocity.x = speed;
+                velocity.y = 0f;
+                rb.linearVelocity = velocity;
+
+                if (transform.position.x > screenRight)
+                    DuckPassedScreen();
+            }
+            else
+            {
+                AdvanceBezierPath();
+            }
+        }
+
+        private bool IsStraightPath(Constants.DuckPathType p)
+            => p >= Constants.DuckPathType.Straight_1 && p <= Constants.DuckPathType.Straight_8;
+
+        private bool IsBezierPath(Constants.DuckPathType p)
+            => p == Constants.DuckPathType.BezierMountain || p == Constants.DuckPathType.BezierValley;
+
+        private void ConfigureBezierControlPoints(Constants.DuckPathType pathType)
+        {
+            float w = screenRight - screenLeft;
+            float safeHeight = screenTop - screenBottom;
+            float margin = safeHeight * 0.05f;
+            float topMargin = safeHeight * 0.02f;
+
+            if (pathType == Constants.DuckPathType.BezierMountain)
+            {
+                bezierP0 = new Vector2(screenLeft, screenBottom + margin);
+                bezierP1 = new Vector2(screenLeft + w * 0.35f, screenTop - topMargin);
+                bezierP2 = new Vector2(screenRight - w * 0.35f, screenTop - topMargin);
+                bezierP3 = new Vector2(screenRight, screenBottom + margin);
+            }
+            else
+            {
+                bezierP0 = new Vector2(screenLeft, screenTop - margin);
+                bezierP1 = new Vector2(screenLeft + w * 0.35f, screenBottom + margin);
+                bezierP2 = new Vector2(screenRight - w * 0.35f, screenBottom + margin);
+                bezierP3 = new Vector2(screenRight, screenTop - margin);
+            }
+        }
+
+        private void AdvanceBezierPath()
+        {
+            float screenWidth = screenRight - screenLeft;
+            if (screenWidth <= 0f)
+            {
+                DuckPassedScreen();
+                return;
             }
 
-            ApplyMovement();
-            EnforceBoundaries();
+            pathProgress += (speed * Time.fixedDeltaTime) / screenWidth;
+            if (pathProgress >= 1f)
+            {
+                DuckPassedScreen();
+                return;
+            }
 
-            rb.linearVelocity = velocity;
+            Vector2 pos = CubicBezier(bezierP0, bezierP1, bezierP2, bezierP3, pathProgress);
+            rb.MovePosition(new Vector2(pos.x, pos.y));
+        }
+
+        private Vector2 CubicBezier(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, float t)
+        {
+            float u = 1f - t;
+            return u * u * u * p0 + 3f * u * u * t * p1 + 3f * u * t * t * p2 + t * t * t * p3;
         }
 
         private void AnimateAliveSprite()

@@ -137,10 +137,10 @@ TextureImporter:
       name: smallAnimatedRambo_0
       rect:
         serializedVersion: 2
-        x: 38
-        y: 15
-        width: 198
-        height: 205
+        x: 0
+        y: 0
+        width: 2048
+        height: 233
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

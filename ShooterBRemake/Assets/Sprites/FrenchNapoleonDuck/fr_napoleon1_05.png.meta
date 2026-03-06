@@ -116,10 +116,10 @@ TextureImporter:
       name: fr_napoleon1_05_0
       rect:
         serializedVersion: 2
-        x: 43
-        y: 4
-        width: 412
-        height: 503
+        x: 0
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
