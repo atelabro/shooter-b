@@ -24,6 +24,9 @@ namespace ShooterB
         public GameObject gameStartingModalPanel;
         public GameStartingModalController gameStartingModalController;
 
+        [Header("Wave Announcement")]
+        public WaveAnnouncementController waveAnnouncementController;
+
         private bool isStageComplete = false;
         private CampaignDuckSpawner campaignDuckSpawner;
 
@@ -44,6 +47,7 @@ namespace ShooterB
             if (campaignDuckSpawner != null)
             {
                 campaignDuckSpawner.OnAllDucksResolved += HandleStageComplete;
+                campaignDuckSpawner.OnWaveStarting += HandleWaveStarting;
                 StartCoroutine(BeginStageAfterCountdown());
             }
             else
@@ -58,7 +62,10 @@ namespace ShooterB
                 GameManager.Instance.OnGameOver -= HandleGameOver;
 
             if (campaignDuckSpawner != null)
+            {
                 campaignDuckSpawner.OnAllDucksResolved -= HandleStageComplete;
+                campaignDuckSpawner.OnWaveStarting -= HandleWaveStarting;
+            }
 
             if (LocalizationManager.HasInstance)
                 LocalizationManager.Instance.OnLanguageChanged -= HandleLanguageChanged;
@@ -248,6 +255,12 @@ namespace ShooterB
             }
 
             stageCompleteModalController.Show(stage, GameManager.Instance.Score);
+        }
+
+        private void HandleWaveStarting(int waveNumber, float duration)
+        {
+            if (waveAnnouncementController != null)
+                waveAnnouncementController.ShowWave(waveNumber, duration);
         }
 
         private IEnumerator BeginStageAfterCountdown()

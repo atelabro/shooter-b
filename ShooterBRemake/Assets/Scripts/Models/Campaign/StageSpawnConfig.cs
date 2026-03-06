@@ -15,11 +15,22 @@ namespace ShooterB
         public float speedMultiplier;
     }
 
+    [Serializable]
+    public class WaveConfig
+    {
+        public bool showAnnouncement = true;
+        public float announcementDuration = 3f;
+        public SpawnEntry[] spawnSequence;
+    }
+
     [CreateAssetMenu(fileName = "StageSpawnConfig", menuName = "ShooterB/Stage Spawn Config")]
     public class StageSpawnConfig : ScriptableObject
     {
         [Header("Spawn Sequence")]
         public SpawnEntry[] spawnSequence;
+
+        [Header("Waves (overrides spawnSequence if non-empty)")]
+        public WaveConfig[] waves;
 
         [Header("Movement Pattern Weights")]
         public float weightGoStraight = 0.4f;

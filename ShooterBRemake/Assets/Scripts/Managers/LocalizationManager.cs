@@ -130,6 +130,7 @@ namespace ShooterB
                 ["campaign.gameover.mode_format"] = "Mode: {0}",
                 ["campaign.mode.campaign"] = "Campaign",
                 ["campaign.stage_complete.title"] = "Stage Complete",
+                ["campaign.wave.label"] = "Wave {0}",
 
                 ["campaign.hud.score_format"] = "Score: {0}",
                 ["campaign.hud.lives_format"] = "Lives: {0}",
@@ -284,6 +285,7 @@ namespace ShooterB
                 ["campaign.gameover.mode_format"] = "Режим: {0}",
                 ["campaign.mode.campaign"] = "Кампања",
                 ["campaign.stage_complete.title"] = "Ниво завршено",
+                ["campaign.wave.label"] = "Бран {0}",
 
                 ["campaign.hud.score_format"] = "Резултат: {0}",
                 ["campaign.hud.lives_format"] = "Животи: {0}",

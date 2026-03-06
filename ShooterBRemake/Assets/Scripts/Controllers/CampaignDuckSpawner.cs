@@ -30,6 +30,7 @@ namespace ShooterB
         private float boundLeft;
 
         public event Action OnAllDucksResolved;
+        public event Action<int, float> OnWaveStarting; // waveNumber (1-based), displayDuration
 
         private bool isSpawning = false;
         private int activeDuckCount = 0;
@@ -93,9 +94,18 @@ namespace ShooterB
             StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
             StageSpawnConfig spawnConfig = stage != null ? stage.spawnConfig : null;
 
-            if (spawnConfig == null || spawnConfig.spawnSequence == null || spawnConfig.spawnSequence.Length == 0)
+            if (spawnConfig == null)
             {
-                Debug.LogWarning("[CampaignDuckSpawner] No spawn sequence configured for active stage.");
+                Debug.LogWarning("[CampaignDuckSpawner] No spawn config configured for active stage.");
+                return;
+            }
+
+            bool hasWaves = spawnConfig.waves != null && spawnConfig.waves.Length > 0;
+            bool hasSequence = spawnConfig.spawnSequence != null && spawnConfig.spawnSequence.Length > 0;
+
+            if (!hasWaves && !hasSequence)
+            {
+                Debug.LogWarning("[CampaignDuckSpawner] No spawn sequence or waves configured for active stage.");
                 return;
             }
 
@@ -103,8 +113,16 @@ namespace ShooterB
             stageBaseSpeed = Constants.DuckSpeed.GetSpeed(stageSpawnDifficulty);
             nextSpawnSortingOrder = 1000;
 
-            StartCoroutine(SpawnSequenceCoroutine(spawnConfig));
-            Debug.Log($"[CampaignDuckSpawner] Starting sequence with {spawnConfig.spawnSequence.Length} entries.");
+            if (hasWaves)
+            {
+                StartCoroutine(SpawnWavesCoroutine(spawnConfig));
+                Debug.Log($"[CampaignDuckSpawner] Starting wave mode with {spawnConfig.waves.Length} waves.");
+            }
+            else
+            {
+                StartCoroutine(SpawnSequenceCoroutine(spawnConfig));
+                Debug.Log($"[CampaignDuckSpawner] Starting sequence with {spawnConfig.spawnSequence.Length} entries.");
+            }
         }
 
         public void StopSpawning()
@@ -129,6 +147,62 @@ namespace ShooterB
             }
 
             StartCoroutine(WaitForAllDucksResolved());
+        }
+
+        private IEnumerator SpawnWavesCoroutine(StageSpawnConfig config)
+        {
+            for (int i = 0; i < config.waves.Length; i++)
+            {
+                if (!isSpawning || GameManager.Instance.IsGameOver)
+                    yield break;
+
+                WaveConfig wave = config.waves[i];
+                int waveNumber = i + 1;
+
+                if (wave.showAnnouncement)
+                {
+                    OnWaveStarting?.Invoke(waveNumber, wave.announcementDuration);
+                    yield return new WaitForSeconds(wave.announcementDuration);
+                }
+
+                if (wave.spawnSequence != null)
+                {
+                    foreach (SpawnEntry entry in wave.spawnSequence)
+                    {
+                        if (!isSpawning || GameManager.Instance.IsGameOver)
+                            yield break;
+
+                        yield return new WaitForSeconds(entry.delay);
+
+                        if (!isSpawning || GameManager.Instance.IsGameOver)
+                            yield break;
+
+                        SpawnDuck(entry, config);
+                    }
+                }
+
+                yield return StartCoroutine(WaitForWaveDucksResolved(waveNumber));
+            }
+
+            StartCoroutine(WaitForAllDucksResolved());
+        }
+
+        private IEnumerator WaitForWaveDucksResolved(int waveNumber)
+        {
+            float timeout = 15f;
+            float elapsed = 0f;
+
+            while (activeDuckCount > 0 && isSpawning && !GameManager.Instance.IsGameOver)
+            {
+                yield return new WaitForSeconds(0.2f);
+                elapsed += 0.2f;
+
+                if (elapsed >= timeout)
+                {
+                    Debug.LogWarning($"[CampaignDuckSpawner] Timed out waiting for wave {waveNumber} ducks to resolve.");
+                    yield break;
+                }
+            }
         }
 
         private IEnumerator WaitForAllDucksResolved()
