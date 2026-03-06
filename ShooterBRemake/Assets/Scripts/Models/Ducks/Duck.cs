@@ -137,6 +137,23 @@ namespace ShooterB
                 ConfigureBezierControlPoints(currentPathType);
                 startPosition = bezierP0;
             }
+            else if (IsDiagonalPath(currentPathType))
+            {
+                float safeHeight = screenTop - screenBottom;
+                float margin = safeHeight * 0.05f;
+                if (currentPathType == Constants.DuckPathType.DiagonalRise)
+                    startPosition = new Vector2(screenLeft, screenBottom + margin);
+                else
+                    startPosition = new Vector2(screenLeft, screenTop - margin);
+            }
+            else if (IsSinWavePath(currentPathType))
+            {
+                startPosition = new Vector2(screenLeft, GetSinWaveCenterY());
+            }
+            else if (IsZigZagPath(currentPathType))
+            {
+                startPosition = new Vector2(screenLeft, GetZigZagStartY());
+            }
 
             transform.position = new Vector3(startPosition.x, startPosition.y, -5);
             velocity = new Vector2(speed, 0f);
@@ -262,6 +279,18 @@ namespace ShooterB
                 if (transform.position.x > screenRight)
                     DuckPassedScreen();
             }
+            else if (IsDiagonalPath(currentPathType))
+            {
+                AdvanceDiagonalPath();
+            }
+            else if (IsSinWavePath(currentPathType))
+            {
+                AdvanceSinWavePath();
+            }
+            else if (IsZigZagPath(currentPathType))
+            {
+                AdvanceZigZagPath();
+            }
             else
             {
                 AdvanceBezierPath();
@@ -273,6 +302,59 @@ namespace ShooterB
 
         private bool IsBezierPath(Constants.DuckPathType p)
             => p == Constants.DuckPathType.BezierMountain || p == Constants.DuckPathType.BezierValley;
+
+        private bool IsDiagonalPath(Constants.DuckPathType p)
+            => p == Constants.DuckPathType.DiagonalRise || p == Constants.DuckPathType.DiagonalFall;
+
+        private bool IsSinWavePath(Constants.DuckPathType p)
+            => p == Constants.DuckPathType.SinWave ||
+               p == Constants.DuckPathType.SinWaveLow ||
+               p == Constants.DuckPathType.SinWaveMid ||
+               p == Constants.DuckPathType.SinWaveHigh ||
+               p == Constants.DuckPathType.SinWaveBigMid;
+
+        private bool IsZigZagPath(Constants.DuckPathType p)
+            => p == Constants.DuckPathType.ZigZagTopFirstLow ||
+               p == Constants.DuckPathType.ZigZagTopFirstMid ||
+               p == Constants.DuckPathType.ZigZagTopFirstHigh ||
+               p == Constants.DuckPathType.ZigZagBottomFirstLow ||
+               p == Constants.DuckPathType.ZigZagBottomFirstMid ||
+               p == Constants.DuckPathType.ZigZagBottomFirstHigh;
+
+        private float GetSinWaveCenterY()
+        {
+            float safeHeight = screenTop - screenBottom;
+            switch (currentPathType)
+            {
+                case Constants.DuckPathType.SinWaveLow:
+                    return screenBottom + safeHeight * 0.35f;
+                case Constants.DuckPathType.SinWaveHigh:
+                    return screenBottom + safeHeight * 0.65f;
+                case Constants.DuckPathType.SinWaveBigMid:
+                case Constants.DuckPathType.SinWaveMid:
+                default:
+                    return (screenTop + screenBottom) * 0.5f;
+            }
+        }
+
+        private float GetZigZagStartY()
+        {
+            float safeHeight = screenTop - screenBottom;
+            if (currentPathType == Constants.DuckPathType.ZigZagTopFirstLow ||
+                currentPathType == Constants.DuckPathType.ZigZagBottomFirstLow)
+                return screenBottom + safeHeight * 0.30f;
+
+            if (currentPathType == Constants.DuckPathType.ZigZagTopFirstHigh ||
+                currentPathType == Constants.DuckPathType.ZigZagBottomFirstHigh)
+                return screenBottom + safeHeight * 0.70f;
+
+            return (screenTop + screenBottom) * 0.5f;
+        }
+
+        private bool IsZigZagTopFirst()
+            => currentPathType == Constants.DuckPathType.ZigZagTopFirstLow ||
+               currentPathType == Constants.DuckPathType.ZigZagTopFirstMid ||
+               currentPathType == Constants.DuckPathType.ZigZagTopFirstHigh;
 
         private void ConfigureBezierControlPoints(Constants.DuckPathType pathType)
         {
@@ -315,6 +397,105 @@ namespace ShooterB
 
             Vector2 pos = CubicBezier(bezierP0, bezierP1, bezierP2, bezierP3, pathProgress);
             rb.MovePosition(new Vector2(pos.x, pos.y));
+        }
+
+        private void AdvanceDiagonalPath()
+        {
+            float screenWidth = screenRight - screenLeft;
+            if (screenWidth <= 0f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            pathProgress += (speed * Time.fixedDeltaTime) / screenWidth;
+            if (pathProgress >= 1f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            float safeHeight = screenTop - screenBottom;
+            float margin = safeHeight * 0.05f;
+            float x = Mathf.Lerp(screenLeft, screenRight, pathProgress);
+            float y = currentPathType == Constants.DuckPathType.DiagonalRise
+                ? Mathf.Lerp(screenBottom + margin, screenTop - margin, pathProgress)
+                : Mathf.Lerp(screenTop - margin, screenBottom + margin, pathProgress);
+
+            rb.MovePosition(new Vector2(x, y));
+        }
+
+        private void AdvanceSinWavePath()
+        {
+            float screenWidth = screenRight - screenLeft;
+            if (screenWidth <= 0f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            pathProgress += (speed * Time.fixedDeltaTime) / screenWidth;
+            if (pathProgress >= 1f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            float safeHeight = screenTop - screenBottom;
+            float margin = safeHeight * 0.05f;
+            float midY = GetSinWaveCenterY();
+            float amplitude = currentPathType == Constants.DuckPathType.SinWaveBigMid
+                ? (safeHeight * 0.5f) - margin
+                : safeHeight * 0.18f;
+            float maxAmplitude = Mathf.Max(0f, (safeHeight * 0.5f) - margin);
+            amplitude = Mathf.Min(amplitude, maxAmplitude);
+            float waves = 1.5f;
+
+            float x = Mathf.Lerp(screenLeft, screenRight, pathProgress);
+            float y = midY + Mathf.Sin(pathProgress * Mathf.PI * 2f * waves) * amplitude;
+            rb.MovePosition(new Vector2(x, y));
+        }
+
+        private void AdvanceZigZagPath()
+        {
+            float screenWidth = screenRight - screenLeft;
+            if (screenWidth <= 0f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            pathProgress += (speed * Time.fixedDeltaTime) / screenWidth;
+            if (pathProgress >= 1f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            float safeHeight = screenTop - screenBottom;
+            float margin = safeHeight * 0.05f;
+            float topY = screenTop - margin;
+            float bottomY = screenBottom + margin;
+            float startY = GetZigZagStartY();
+            bool topFirst = IsZigZagTopFirst();
+
+            float y1 = topFirst ? topY : bottomY;
+            float y2 = topFirst ? bottomY : topY;
+            float y3 = y1;
+            float y4 = y2;
+
+            float y;
+            if (pathProgress < 0.25f)
+                y = Mathf.Lerp(startY, y1, pathProgress / 0.25f);
+            else if (pathProgress < 0.50f)
+                y = Mathf.Lerp(y1, y2, (pathProgress - 0.25f) / 0.25f);
+            else if (pathProgress < 0.75f)
+                y = Mathf.Lerp(y2, y3, (pathProgress - 0.50f) / 0.25f);
+            else
+                y = Mathf.Lerp(y3, y4, (pathProgress - 0.75f) / 0.25f);
+
+            float x = Mathf.Lerp(screenLeft, screenRight, pathProgress);
+            rb.MovePosition(new Vector2(x, y));
         }
 
         private Vector2 CubicBezier(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, float t)

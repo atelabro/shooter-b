@@ -137,17 +137,30 @@ namespace ShooterB
 
         public enum DuckPathType
         {
-            Random,         // existing weight-based behavior (default, value = 0)
-            Straight_1,     // horizontal lane 1 (lowest, near bottom)
-            Straight_2,
-            Straight_3,
-            Straight_4,
-            Straight_5,
-            Straight_6,
-            Straight_7,
-            Straight_8,     // lane 8 (highest, near top)
-            BezierMountain, // enters bottom-left, peaks center-top, exits bottom-right
-            BezierValley,   // enters top-left, dips center-bottom, exits top-right
+            Random = 0,            // existing weight-based behavior (default)
+            Straight_1 = 1,        // horizontal lane 1 (lowest, near bottom)
+            Straight_2 = 2,
+            Straight_3 = 3,
+            Straight_4 = 4,
+            Straight_5 = 5,
+            Straight_6 = 6,
+            Straight_7 = 7,
+            Straight_8 = 8,        // lane 8 (highest, near top)
+            BezierMountain = 9,    // enters bottom-left, peaks center-top, exits bottom-right
+            BezierValley = 10,     // enters top-left, dips center-bottom, exits top-right
+            DiagonalRise = 11,     // enters bottom-left, exits top-right
+            DiagonalFall = 12,     // enters top-left, exits bottom-right
+            SinWaveMid = 13,       // centered sine wave
+            SinWaveLow = 14,       // lower-band sine wave
+            SinWaveHigh = 15,      // upper-band sine wave
+            SinWaveBigMid = 16,    // centered, near end-to-end vertical amplitude
+            ZigZagTopFirstLow = 17,      // start low, then top->bottom->top->bottom
+            ZigZagTopFirstMid = 18,      // start mid, then top->bottom->top->bottom
+            ZigZagTopFirstHigh = 19,     // start high, then top->bottom->top->bottom
+            ZigZagBottomFirstLow = 20,   // start low, then bottom->top->bottom->top
+            ZigZagBottomFirstMid = 21,   // start mid, then bottom->top->bottom->top
+            ZigZagBottomFirstHigh = 22,  // start high, then bottom->top->bottom->top
+            SinWave = SinWaveMid,        // legacy alias
         }
 
         public enum MultiKillType

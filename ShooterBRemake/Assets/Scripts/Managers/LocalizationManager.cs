@@ -287,7 +287,7 @@ namespace ShooterB
 
                 ["campaign.hud.score_format"] = "Резултат: {0}",
                 ["campaign.hud.lives_format"] = "Животи: {0}",
-                ["campaign.hud.reloading"] = "Се полни",
+                ["campaign.hud.reloading"] = "Репетирам",
                 ["campaign.hud.combo.double"] = "ДВОЈНО УБИСТВО",
                 ["campaign.hud.combo.triple"] = "ТРОЈНО УБИСТВО",
                 ["campaign.hud.combo.quadra"] = "ЧЕТВОРНО УБИСТВО",
