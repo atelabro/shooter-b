@@ -45,6 +45,7 @@ namespace ShooterB
         public event Action<Constants.MultiKillType, Constants.WeaponType, int, Vector3> OnComboKillDetailed;
         public event Action<int> OnBirdsKilledChanged;
         public event Action<Constants.DuckType, Constants.WeaponType> OnBirdKilled;
+        public event Action OnBirdPassed;
         public event Action<Constants.WeaponType> OnSelectedWeaponChanged;
 
         private int birdsUntilNextDifficulty;
@@ -131,6 +132,7 @@ namespace ShooterB
         public void BirdPassed()
         {
             MinusLife();
+            OnBirdPassed?.Invoke();
             Debug.Log($"Duck passed - Lives remaining: {Lives}");
 
             if (Lives <= 0)
