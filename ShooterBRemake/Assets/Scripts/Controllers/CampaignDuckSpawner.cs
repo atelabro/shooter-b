@@ -177,7 +177,7 @@ namespace ShooterB
 
                 if (entry.patternRef != null && entry.patternRef.entries != null)
                 {
-                    foreach (SpawnEntry patternEntry in entry.patternRef.entries)
+                    foreach (PatternEntry patternEntry in entry.patternRef.entries)
                     {
                         if (!isSpawning || GameManager.Instance.IsGameOver)
                             yield break;
@@ -187,9 +187,14 @@ namespace ShooterB
                         if (!isSpawning || GameManager.Instance.IsGameOver)
                             yield break;
 
-                        SpawnEntry overridden = patternEntry;
-                        overridden.duckType = entry.duckType;
-                        SpawnDuck(overridden, config);
+                        SpawnEntry resolved = new SpawnEntry
+                        {
+                            duckType = entry.duckType,
+                            pathType = patternEntry.pathType,
+                            speedMultiplier = patternEntry.speedMultiplier,
+                            delay = patternEntry.delay
+                        };
+                        SpawnDuck(resolved, config);
                     }
                 }
                 else

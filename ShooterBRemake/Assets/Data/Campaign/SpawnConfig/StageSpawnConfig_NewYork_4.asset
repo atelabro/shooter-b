@@ -65,6 +65,11 @@ MonoBehaviour:
       delay: 0
       pathType: 5
       speedMultiplier: 1
+    - duckType: 16
+      delay: 2
+      pathType: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: f7a91e162400f49519a969748570e081, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
     spawnSequence:
@@ -112,6 +117,11 @@ MonoBehaviour:
       delay: 0
       pathType: 10
       speedMultiplier: 1
+    - duckType: 15
+      delay: 2
+      pathType: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: ec794f1a2210c40359e01dc4d1b6d10a, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
     spawnSequence:
@@ -179,6 +189,11 @@ MonoBehaviour:
       delay: 0
       pathType: 5
       speedMultiplier: 1
+    - duckType: 14
+      delay: 2
+      pathType: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: 16803afcbc0a046e999a0d9de306ed56, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
     spawnSequence:
@@ -254,6 +269,11 @@ MonoBehaviour:
       delay: 1.2
       pathType: 11
       speedMultiplier: 1.35
+    - duckType: 18
+      delay: 2
+      pathType: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: b5ad9f0c401ae4ba496f1a7448c3515a, type: 2}
   weightGoStraight: 0.38
   weightGoTop: 0.35
   weightGoBottom: 0.27

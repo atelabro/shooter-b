@@ -14,39 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.DuckPatternConfig
   patternName: InverseV
   entries:
-  - duckType: 0
-    delay: 0
+  - delay: 0
     pathType: 1
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.2
+  - delay: 0.2
     pathType: 2
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.2
+  - delay: 0.2
     pathType: 3
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.2
+  - delay: 0.2
     pathType: 4
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.2
+  - delay: 0.2
     pathType: 5
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.2
+  - delay: 0.2
     pathType: 4
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.2
+  - delay: 0.2
     pathType: 3
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.2
+  - delay: 0.2
     pathType: 2
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.2
+  - delay: 0.2
     pathType: 1
     speedMultiplier: 0

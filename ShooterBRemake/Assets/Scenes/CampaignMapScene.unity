@@ -3731,11 +3731,12 @@ MonoBehaviour:
   focusedPinViewportY: 0.5
   autoOpenLatestCityPanel: 1
   enableMapDrag: 1
-  dragThresholdPixels: 12
+  dragThresholdPixels: 4
   dragSensitivity: 1
   enableMapZoom: 1
   zoomStep: 0.15
   pinchZoomSensitivity: 0.005
+  continueTransitionMinDelay: 0.7
 --- !u!1 &1985967780
 GameObject:
   m_ObjectHideFlags: 0

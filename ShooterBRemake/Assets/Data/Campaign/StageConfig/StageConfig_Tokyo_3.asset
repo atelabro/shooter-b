@@ -14,9 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 28
   mapName: Tokyo Tower Control
-  mapNameMk: Контрола на Токио Кула
-  briefingText: Vertical pressure spikes around the tower. Control top lanes before they collapse.
-  briefingTextMk: Вертикалниот притисок расте околу кулата. Контролирај ги горните линии пред да паднат.
+  mapNameMk: "\u041A\u043E\u043D\u0442\u0440\u043E\u043B\u0430 \u0437\u0430 \u041A\u0443\u043B\u0430\u0442\u0430
+    \u0432\u043E \u0422\u043E\u043A\u0438\u043E"
+  briefingText: Vertical pressure spikes around the tower. Control top lanes before
+    they collapse.
+  briefingTextMk: "\u0412\u0435\u0440\u0442\u0438\u043A\u0430\u043B\u043D\u0438\u043E\u0442
+    \u043F\u0440\u0438\u0442\u0438\u0441\u043E\u043A \u0440\u0430\u0441\u0442\u0435
+    \u043E\u043A\u043E\u043B\u0443 \u043A\u0443\u043B\u0430\u0442\u0430. \u041A\u043E\u043D\u0442\u0440\u043E\u043B\u0438\u0440\u0430\u0458
+    \u0433\u0438 \u0433\u043E\u0440\u043D\u0438\u0442\u0435 \u043B\u0438\u043D\u0438\u0438
+    \u043F\u0440\u0435\u0434 \u0434\u0430 \u043F\u0430\u0434\u043D\u0430\u0442."
   backgroundSprite: {fileID: 3703677286581057638, guid: 84dea0f7259bc4bed97a25f16149ed71, type: 3}
   starThreshold1: 117
   starThreshold2: 176

@@ -25,6 +25,13 @@ namespace ShooterB
         public StageConfig ActiveStageConfig { get; private set; }
         public CityConfig ActiveCityConfig { get; private set; }
         public CityConfig[] CampaignCities { get; private set; }
+        public bool HasPendingMapFocusTransition { get; private set; }
+
+        private CityConfig pendingMapFocusFromCity;
+        private StageConfig pendingMapFocusFromStage;
+        private CityConfig pendingMapFocusToCity;
+        private StageConfig pendingMapFocusToStage;
+        private float pendingMapFocusMinDelay;
 
         private void Awake()
         {
@@ -58,6 +65,64 @@ namespace ShooterB
         {
             ActiveCityConfig = city;
             ActiveStageConfig = stage;
+        }
+
+        public void SetPendingMapFocusTransition(
+            CityConfig fromCity,
+            StageConfig fromStage,
+            CityConfig toCity,
+            StageConfig toStage,
+            float minDelaySeconds)
+        {
+            if (fromCity == null || fromStage == null || toCity == null || toStage == null)
+            {
+                ClearPendingMapFocusTransition();
+                return;
+            }
+
+            pendingMapFocusFromCity = fromCity;
+            pendingMapFocusFromStage = fromStage;
+            pendingMapFocusToCity = toCity;
+            pendingMapFocusToStage = toStage;
+            pendingMapFocusMinDelay = Mathf.Max(0f, minDelaySeconds);
+            HasPendingMapFocusTransition = true;
+        }
+
+        public bool TryConsumePendingMapFocusTransition(
+            out CityConfig fromCity,
+            out StageConfig fromStage,
+            out CityConfig toCity,
+            out StageConfig toStage,
+            out float minDelaySeconds)
+        {
+            if (!HasPendingMapFocusTransition)
+            {
+                fromCity = null;
+                fromStage = null;
+                toCity = null;
+                toStage = null;
+                minDelaySeconds = 0f;
+                return false;
+            }
+
+            fromCity = pendingMapFocusFromCity;
+            fromStage = pendingMapFocusFromStage;
+            toCity = pendingMapFocusToCity;
+            toStage = pendingMapFocusToStage;
+            minDelaySeconds = pendingMapFocusMinDelay;
+
+            ClearPendingMapFocusTransition();
+            return true;
+        }
+
+        public void ClearPendingMapFocusTransition()
+        {
+            HasPendingMapFocusTransition = false;
+            pendingMapFocusFromCity = null;
+            pendingMapFocusFromStage = null;
+            pendingMapFocusToCity = null;
+            pendingMapFocusToStage = null;
+            pendingMapFocusMinDelay = 0f;
         }
 
         public StageConfig GetNextStageInActiveCityRow()

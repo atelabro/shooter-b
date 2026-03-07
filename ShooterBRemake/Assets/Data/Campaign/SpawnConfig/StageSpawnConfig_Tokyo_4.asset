@@ -17,54 +17,76 @@ MonoBehaviour:
   - showAnnouncement: 0
     announcementDuration: 3
     spawnSequence:
-    - duckType: 17
+    - duckType: 20
       delay: 0
       pathType: 2
       speedMultiplier: 1
+      patternRef: {fileID: 0}
+    - duckType: 17
+      delay: 0.5
+      pathType: 2
+      speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 4
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 6
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 8
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 1
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 3
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 5
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 7
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 11
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 12
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 4
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 5
       speedMultiplier: 1
+      patternRef: {fileID: 0}
+    - duckType: 20
+      delay: 2
+      pathType: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: ec794f1a2210c40359e01dc4d1b6d10a, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
     spawnSequence:
@@ -72,46 +94,62 @@ MonoBehaviour:
       delay: 0
       pathType: 8
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0.55
       pathType: 6
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0.55
       pathType: 4
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0.55
       pathType: 2
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 13
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0.3
       pathType: 15
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 14
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 17
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 21
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 9
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 10
       speedMultiplier: 1
+      patternRef: {fileID: 0}
+    - duckType: 17
+      delay: 2
+      pathType: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: f7a91e162400f49519a969748570e081, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
     spawnSequence:
@@ -119,66 +157,87 @@ MonoBehaviour:
       delay: 0
       pathType: 2
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 4
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 6
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 8
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 1
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0.55
       pathType: 3
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0.55
       pathType: 5
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0.55
       pathType: 7
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 1
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 3
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 5
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 7
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 17
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 21
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1.1
       pathType: 4
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 5
       speedMultiplier: 1
+      patternRef: {fileID: 0}
+    - duckType: 19
+      delay: 2
+      pathType: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: b5ad9f0c401ae4ba496f1a7448c3515a, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
     spawnSequence:
@@ -186,82 +245,107 @@ MonoBehaviour:
       delay: 0
       pathType: 1
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 3
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 5
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 7
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 2
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 4
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 6
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 8
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 8
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0.55
       pathType: 6
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0.55
       pathType: 4
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0.55
       pathType: 2
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 13
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0.3
       pathType: 15
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 14
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 11
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 12
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 9
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 0
       pathType: 10
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 17
       delay: 1
       pathType: 11
       speedMultiplier: 1.4
+      patternRef: {fileID: 0}
+    - duckType: 20
+      delay: 2
+      pathType: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: bea3f299f3d084fc1a1167bd3b12d420, type: 2}
   weightGoStraight: 0.25
   weightGoTop: 0.45
   weightGoBottom: 0.3

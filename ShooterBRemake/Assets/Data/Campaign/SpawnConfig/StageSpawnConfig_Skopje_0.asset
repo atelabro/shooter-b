@@ -105,6 +105,16 @@ MonoBehaviour:
       delay: 1.5
       pathType: 11
       speedMultiplier: 1.4
+    - duckType: 5
+      delay: 2
+      pathType: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: f7a91e162400f49519a969748570e081, type: 2}
+    - duckType: 6
+      delay: 2
+      pathType: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: b5ad9f0c401ae4ba496f1a7448c3515a, type: 2}
   weightGoStraight: 0.5
   weightGoTop: 0.28
   weightGoBottom: 0.22

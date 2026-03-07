@@ -14,67 +14,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.DuckPatternConfig
   patternName: U
   entries:
-  - duckType: 0
-    delay: 0
+  - delay: 0
     pathType: 8
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 7
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 6
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 5
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 4
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 3
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 2
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 1
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 1
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 2
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 3
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 4
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 5
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 6
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 7
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 8
     speedMultiplier: 0

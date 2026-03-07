@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 10
   mapName: Moulin Quarter
-  mapNameMk: Мулен Кварт
+  mapNameMk: "\u0426\u0440\u0432\u0435\u043D \u041A\u0432\u0430\u0440\u0442"
   briefingText: Neon and shadows reduce visibility. Commit to clean bursts.
-  briefingTextMk: Неонот и сенките ја намалуваат видливоста. Дејствувај со чисти и прецизни серии.
+  briefingTextMk: "\u041D\u0435\u043E\u043D\u043E\u0442 \u0438 \u0441\u0435\u043D\u043A\u0438\u0442\u0435
+    \u0458\u0430 \u043D\u0430\u043C\u0430\u043B\u0443\u0432\u0430\u0430\u0442 \u0432\u0438\u0434\u043B\u0438\u0432\u043E\u0441\u0442\u0430.
+    \u0414\u0435\u0458\u0441\u0442\u0432\u0443\u0432\u0430\u0458 \u0441\u043E \u0447\u0438\u0441\u0442\u0438
+    \u0438 \u043F\u0440\u0435\u0446\u0438\u0437\u043D\u0438 \u0441\u0435\u0440\u0438\u0438."
   backgroundSprite: {fileID: -7018427665677564695, guid: f207bf13b7d6344fd8b763e49a0d1402, type: 3}
   starThreshold1: 65
   starThreshold2: 105

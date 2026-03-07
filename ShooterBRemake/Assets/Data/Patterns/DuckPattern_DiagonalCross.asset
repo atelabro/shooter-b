@@ -14,27 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.DuckPatternConfig
   patternName: DiagonalCross
   entries:
-  - duckType: 0
-    delay: 0
+  - delay: 0
     pathType: 11
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0
+  - delay: 0
     pathType: 12
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.5
+  - delay: 0.5
     pathType: 11
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0
+  - delay: 0
     pathType: 12
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.5
+  - delay: 0.5
     pathType: 11
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0
+  - delay: 0
     pathType: 12
     speedMultiplier: 0

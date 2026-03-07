@@ -57,6 +57,11 @@ MonoBehaviour:
       delay: 0
       pathType: 12
       speedMultiplier: 1
+    - duckType: 11
+      delay: 2
+      pathType: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: f7a91e162400f49519a969748570e081, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
     spawnSequence:
@@ -112,6 +117,11 @@ MonoBehaviour:
       delay: 0
       pathType: 5
       speedMultiplier: 1
+    - duckType: 13
+      delay: 2
+      pathType: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: ec794f1a2210c40359e01dc4d1b6d10a, type: 2}
   weightGoStraight: 0.42
   weightGoTop: 0.32
   weightGoBottom: 0.26

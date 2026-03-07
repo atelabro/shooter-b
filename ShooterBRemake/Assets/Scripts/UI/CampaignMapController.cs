@@ -41,12 +41,14 @@ namespace ShooterB
         public bool autoOpenLatestCityPanel = true;
         [Header("Map Drag")]
         public bool enableMapDrag = true;
-        [Min(0f)] public float dragThresholdPixels = 12f;
+        [Min(0f)] public float dragThresholdPixels = 4f;
         [Min(0f)] public float dragSensitivity = 1f;
         [Header("Map Zoom")]
         public bool enableMapZoom = true;
         [Min(0.01f)] public float zoomStep = 0.15f;
         [Min(0.01f)] public float pinchZoomSensitivity = 0.005f;
+        [Header("Continue Transition")]
+        [Min(0f)] public float continueTransitionMinDelay = 1f;
 
         private RectTransform canvasRect;
         private RectTransform backgroundRect;
@@ -54,6 +56,7 @@ namespace ShooterB
         private Coroutine focusCoroutine;
         private readonly List<CityPinController> runtimePins = new List<CityPinController>();
         private Coroutine delayedPanelOpenCoroutine;
+        private Coroutine continueTransitionCoroutine;
         private bool isPointerDown;
         private bool isDraggingMap;
         private int activeTouchId = -1;
@@ -87,7 +90,8 @@ namespace ShooterB
             RefreshPins();
             RefreshTotalStars();
             EnsureActiveStageOnEnter();
-            FocusLatestOpenedCityOnEnter();
+            if (!TryStartPendingContinueTransitionOnEnter())
+                FocusLatestOpenedCityOnEnter();
 
             LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
         }
@@ -157,6 +161,9 @@ namespace ShooterB
             if (delayedPanelOpenCoroutine != null)
                 StopCoroutine(delayedPanelOpenCoroutine);
 
+            if (continueTransitionCoroutine != null)
+                StopCoroutine(continueTransitionCoroutine);
+
             if (cityPanel != null)
                 cityPanel.OnPanelHidden -= OnCityPanelHidden;
 
@@ -198,6 +205,32 @@ namespace ShooterB
 
                 delayedPanelOpenCoroutine = StartCoroutine(ShowCityPanelAfterFocus(latestCity));
             }
+        }
+
+        private bool TryStartPendingContinueTransitionOnEnter()
+        {
+            if (!CampaignProgressManager.Instance.TryConsumePendingMapFocusTransition(
+                    out CityConfig fromCity,
+                    out StageConfig fromStage,
+                    out CityConfig toCity,
+                    out StageConfig toStage,
+                    out float minDelaySeconds))
+            {
+                return false;
+            }
+
+            if (fromCity == null || fromStage == null || toCity == null || toStage == null)
+                return false;
+
+            CampaignProgressManager.Instance.SetActiveCampaignLocation(fromCity, fromStage);
+            FocusMapOnCity(fromCity);
+
+            if (continueTransitionCoroutine != null)
+                StopCoroutine(continueTransitionCoroutine);
+
+            float delay = Mathf.Max(minDelaySeconds, continueTransitionMinDelay);
+            continueTransitionCoroutine = StartCoroutine(AnimateContinueTransition(toCity, toStage, delay));
+            return true;
         }
 
         private void EnsureActiveStageOnEnter()
@@ -492,10 +525,43 @@ namespace ShooterB
             delayedPanelOpenCoroutine = null;
         }
 
+        private IEnumerator AnimateContinueTransition(CityConfig toCity, StageConfig toStage, float delaySeconds)
+        {
+            if (delaySeconds > 0f)
+                yield return new WaitForSecondsRealtime(delaySeconds);
+
+            if (toCity == null || toStage == null)
+            {
+                continueTransitionCoroutine = null;
+                yield break;
+            }
+
+            CampaignProgressManager.Instance.SetActiveCampaignLocation(toCity, toStage);
+            FocusMapOnCity(toCity);
+
+            if (autoOpenLatestCityPanel && cityPanel != null)
+            {
+                if (delayedPanelOpenCoroutine != null)
+                    StopCoroutine(delayedPanelOpenCoroutine);
+
+                delayedPanelOpenCoroutine = StartCoroutine(ShowCityPanelAfterFocus(toCity));
+            }
+
+            continueTransitionCoroutine = null;
+        }
+
         private void HandleMapDragInput()
         {
             if (!enableMapDrag || canvasRect == null || backgroundRect == null || pinsContainerRect == null)
                 return;
+
+            if (GetActiveTouchCount() > 1)
+            {
+                if (isPointerDown)
+                    ResetDragState();
+
+                return;
+            }
 
             if (TryGetPointerDown(out Vector2 downPos, out int pointerId))
             {
@@ -848,6 +914,27 @@ namespace ShooterB
                 return EventSystem.current.IsPointerOverGameObject();
 
             return EventSystem.current.IsPointerOverGameObject(pointerId);
+        }
+
+        private static int GetActiveTouchCount()
+        {
+#if ENABLE_INPUT_SYSTEM
+            if (Touchscreen.current != null)
+            {
+                int activeTouches = 0;
+                foreach (var touch in Touchscreen.current.touches)
+                {
+                    if (touch.press.isPressed)
+                        activeTouches++;
+                }
+
+                return activeTouches;
+            }
+#endif
+#if ENABLE_LEGACY_INPUT_MANAGER
+            return Input.touchCount;
+#endif
+            return 0;
         }
 
         private void OnCityPanelHidden()

@@ -14,9 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 15
   mapName: Brooklyn Bridge Run
-  mapNameMk: Бруклин Бриџ Трка
-  briefingText: Bridge crossings are under heavy pressure. Track fast entries and hold lanes.
-  briefingTextMk: Премините на мостот се под силен притисок. Следи ги брзите влезови и држи ги линиите.
+  mapNameMk: "\u041C\u043E\u0441\u0442\u043E\u0442 \u043D\u0430 \u0411\u0440\u0443\u043A\u043B\u0438\u043D"
+  briefingText: Bridge crossings are under heavy pressure. Track fast entries and
+    hold lanes.
+  briefingTextMk: "\u041F\u0440\u0435\u043C\u0438\u043D\u0438\u0442\u0435 \u043D\u0430
+    \u043C\u043E\u0441\u0442\u043E\u0442 \u0441\u0435 \u043F\u043E\u0434 \u0441\u0438\u043B\u0435\u043D
+    \u043F\u0440\u0438\u0442\u0438\u0441\u043E\u043A. \u0421\u043B\u0435\u0434\u0438
+    \u0433\u0438 \u0431\u0440\u0437\u0438\u0442\u0435 \u0432\u043B\u0435\u0437\u043E\u0432\u0438
+    \u0438 \u0434\u0440\u0436\u0438 \u0433\u0438 \u043B\u0438\u043D\u0438\u0438\u0442\u0435."
   backgroundSprite: {fileID: -740964376350419543, guid: 1556d899e6d6d43a2ad1dfc80a3bd2dd, type: 3}
   starThreshold1: 100
   starThreshold2: 152

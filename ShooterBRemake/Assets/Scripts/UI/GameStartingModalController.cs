@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ShooterB
 {
@@ -36,7 +37,10 @@ namespace ShooterB
             EnsureReferences();
 
             if (modalRoot != null)
+            {
+                modalRoot.transform.SetAsLastSibling();
                 modalRoot.SetActive(true);
+            }
 
             float stepDelay = Mathf.Max(0.05f, countdownStepSeconds);
             float startDelay = Mathf.Max(0.05f, startMessageSeconds);
@@ -67,6 +71,13 @@ namespace ShooterB
         {
             if (modalRoot == null)
                 modalRoot = gameObject;
+
+            Image rootImage = modalRoot.GetComponent<Image>();
+            if (rootImage != null)
+            {
+                rootImage.enabled = true;
+                rootImage.raycastTarget = true;
+            }
 
             if (titleText == null)
             {

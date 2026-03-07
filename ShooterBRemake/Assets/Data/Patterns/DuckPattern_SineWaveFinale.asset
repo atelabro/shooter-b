@@ -14,31 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.DuckPatternConfig
   patternName: SineWaveFinale
   entries:
-  - duckType: 0
-    delay: 0
+  - delay: 0
     pathType: 14
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0
+  - delay: 0
     pathType: 15
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 14
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0
+  - delay: 0
     pathType: 15
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 14
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0
+  - delay: 0
     pathType: 15
     speedMultiplier: 0
-  - duckType: 0
-    delay: 0.3
+  - delay: 0.3
     pathType: 13
     speedMultiplier: 2.5

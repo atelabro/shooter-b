@@ -6,6 +6,8 @@ namespace ShooterB
 {
     public class StageCompleteModalController : MonoBehaviour
     {
+        private const float ContinueMapTransitionMinDelaySeconds = 1f;
+
         [Header("Modal Root")]
         public GameObject modalRoot;
 
@@ -126,22 +128,47 @@ namespace ShooterB
         {
             Time.timeScale = 1f;
 
+            StageConfig activeStage = CampaignProgressManager.Instance.ActiveStageConfig;
             StageConfig nextStage = CampaignProgressManager.Instance.GetNextStageInActiveCityRow();
             CityConfig activeCity = CampaignProgressManager.Instance.ActiveCityConfig;
             CityConfig[] allCities = CampaignProgressManager.Instance.CampaignCities;
 
-            if (nextStage == null || activeCity == null || allCities == null)
+            if (activeCity == null || allCities == null)
             {
+                CampaignProgressManager.Instance.ClearPendingMapFocusTransition();
+                SceneController.Instance.LoadCampaignMapScene();
+                return;
+            }
+
+            if (nextStage == null)
+            {
+                CityConfig nextCity = FindNextUnlockedCity(activeCity, allCities);
+                if (nextCity != null && nextCity.stages != null && nextCity.stages.Length > 0 && nextCity.stages[0] != null && activeStage != null)
+                {
+                    CampaignProgressManager.Instance.SetPendingMapFocusTransition(
+                        activeCity,
+                        activeStage,
+                        nextCity,
+                        nextCity.stages[0],
+                        ContinueMapTransitionMinDelaySeconds);
+                }
+                else
+                {
+                    CampaignProgressManager.Instance.ClearPendingMapFocusTransition();
+                }
+
                 SceneController.Instance.LoadCampaignMapScene();
                 return;
             }
 
             if (!CampaignProgressManager.Instance.IsStageUnlocked(nextStage, activeCity, allCities))
             {
+                CampaignProgressManager.Instance.ClearPendingMapFocusTransition();
                 SceneController.Instance.LoadCampaignMapScene();
                 return;
             }
 
+            CampaignProgressManager.Instance.ClearPendingMapFocusTransition();
             CampaignProgressManager.Instance.SetActiveCampaignLocation(activeCity, nextStage);
             SceneController.Instance.LoadCampaignStage(nextStage);
         }
@@ -240,6 +267,33 @@ namespace ShooterB
             {
                 if (buttons[i] != null && buttons[i].gameObject.name == buttonName)
                     return buttons[i];
+            }
+
+            return null;
+        }
+
+        private static CityConfig FindNextUnlockedCity(CityConfig activeCity, CityConfig[] allCities)
+        {
+            if (activeCity == null || allCities == null)
+                return null;
+
+            int activeCityIndex = System.Array.IndexOf(allCities, activeCity);
+            if (activeCityIndex < 0)
+                return null;
+
+            for (int i = activeCityIndex + 1; i < allCities.Length; i++)
+            {
+                CityConfig candidateCity = allCities[i];
+                if (candidateCity == null || candidateCity.stages == null || candidateCity.stages.Length == 0 || candidateCity.stages[0] == null)
+                    continue;
+
+                if (!CampaignProgressManager.Instance.IsCityUnlocked(candidateCity, allCities))
+                    continue;
+
+                if (!CampaignProgressManager.Instance.IsStageUnlocked(candidateCity.stages[0], candidateCity, allCities))
+                    continue;
+
+                return candidateCity;
             }
 
             return null;

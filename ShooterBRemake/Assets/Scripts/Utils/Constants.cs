@@ -74,7 +74,8 @@ namespace ShooterB
             USA_BUSINESS,
             JAPANESE_SAMURAI,
             USA_BOSS_DUCK,
-            JAPANESE_STRAW_DUCK
+            JAPANESE_STRAW_DUCK,
+            JAPANESE_KIMONO_DUCK
         }
 
         public static string GetDuckDisplayName(DuckType type)
@@ -101,6 +102,7 @@ namespace ShooterB
                 case DuckType.JAPANESE_SAMURAI: return "Japanese Samurai";
                 case DuckType.USA_BOSS_DUCK: return "USA Boss Duck";
                 case DuckType.JAPANESE_STRAW_DUCK: return "Japanese Straw Duck";
+                case DuckType.JAPANESE_KIMONO_DUCK: return "Japanese Kimono Duck";
                 // Reserve this switch for future region-specific duck additions (e.g. France).
                 default: return type.ToString();
             }
@@ -130,6 +132,7 @@ namespace ShooterB
                 case DuckType.JAPANESE_SAMURAI: return "JAPANESE_SAMURAI";
                 case DuckType.USA_BOSS_DUCK: return "USA_BOSS_DUCK";
                 case DuckType.JAPANESE_STRAW_DUCK: return "JAPANESE_STRAW_DUCK";
+                case DuckType.JAPANESE_KIMONO_DUCK: return "JAPANESE_KIMONO_DUCK";
                 default: return type.ToString();
             }
         }
@@ -210,6 +213,7 @@ namespace ShooterB
             public const int JAPANESE_SAMURAI = 4;
             public const int USA_BOSS_DUCK = 5;
             public const int JAPANESE_STRAW_DUCK = 4;
+            public const int JAPANESE_KIMONO_DUCK = 4;
 
             public static int GetPoints(DuckType type)
             {
@@ -235,6 +239,7 @@ namespace ShooterB
                     case DuckType.JAPANESE_SAMURAI: return JAPANESE_SAMURAI;
                     case DuckType.USA_BOSS_DUCK: return USA_BOSS_DUCK;
                     case DuckType.JAPANESE_STRAW_DUCK: return JAPANESE_STRAW_DUCK;
+                    case DuckType.JAPANESE_KIMONO_DUCK: return JAPANESE_KIMONO_DUCK;
                     default: return TYPE_0;
                 }
             }
