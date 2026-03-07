@@ -10,16 +10,18 @@ namespace ShooterB
     {
         public enum DailyObjectiveId
         {
-            Kill15,
-            Kill30,
-            Kill50,
-            Combo3,
-            Combo6,
-            TripleOrBetter2,
-            Elite3,
-            Elite6,
-            Finish1,
-            Finish2
+            Kill40,
+            Kill80,
+            Kill120,
+            Combo8,
+            Combo16,
+            TripleOrBetter4,
+            TripleOrBetter8,
+            Elite8,
+            Elite15,
+            Boss5,
+            Complete2,
+            Complete4
         }
 
         private enum ObjectiveType
@@ -28,7 +30,8 @@ namespace ShooterB
             ComboAny,
             ComboTripleOrBetter,
             EliteKills,
-            GameCompleted
+            BossKills,
+            StageCompleted
         }
 
         public struct DailyObjectiveState
@@ -60,9 +63,10 @@ namespace ShooterB
         private const string SelectedIdsKey = PrefsPrefix + "_SelectedObjectiveIds";
         private const string SetBonusGrantedKey = PrefsPrefix + "_SetBonusGranted";
         private const string AdWatchBonusGrantedKey = PrefsPrefix + "_AdWatchBonusGranted";
+        private const string SchemaVersionKey = PrefsPrefix + "_SchemaVersion";
+        private const int CurrentSchemaVersion = 2;
         private const int DailyObjectiveCount = 3;
-        private const int DailyObjectiveRewardCoins = 5;
-        private const int DailySetBonusCoins = 20;
+        private const int DailySetBonusCoins = 30;
         private const int DailyAdWatchBonusCoins = 10;
 
         private static DailyAwardsManager instance;
@@ -109,6 +113,7 @@ namespace ShooterB
             DontDestroyOnLoad(gameObject);
 
             RegisterDefinitions();
+            EnsureSchemaVersion();
             EnsureTodayInitialized();
             SubscribeToGameManager();
             SceneManager.sceneLoaded += HandleSceneLoaded;
@@ -117,13 +122,11 @@ namespace ShooterB
 
         private void OnDestroy()
         {
-            GameManager gameManager = FindObjectOfType<GameManager>();
-            if (gameManager == null)
-                return;
-
-            gameManager.OnBirdKilled -= HandleBirdKilled;
-            gameManager.OnComboKillDetailed -= HandleComboKillDetailed;
-            gameManager.OnGameOver -= HandleGameOver;
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnBirdKilled -= HandleBirdKilled;
+                GameManager.Instance.OnComboKillDetailed -= HandleComboKillDetailed;
+            }
 
             SceneManager.sceneLoaded -= HandleSceneLoaded;
             UnsubscribeCampaignSpawner();
@@ -233,7 +236,7 @@ namespace ShooterB
             if (!CanClaimDailyAdWatchBonus())
                 return false;
 
-            // TODO: Integrate rewarded ad watch flow here and only grant coins after successful ad completion.
+            // TODO(ads): Replace this instant grant with rewarded-ad success callback flow.
             adWatchBonusGranted = true;
             PlayerPrefs.SetInt(AdWatchBonusGrantedKey, 1);
             GameManager.Instance.AddCoins(DailyAdWatchBonusCoins);
@@ -275,26 +278,26 @@ namespace ShooterB
             GameManager.Instance.OnBirdKilled += HandleBirdKilled;
             GameManager.Instance.OnComboKillDetailed -= HandleComboKillDetailed;
             GameManager.Instance.OnComboKillDetailed += HandleComboKillDetailed;
-            GameManager.Instance.OnGameOver -= HandleGameOver;
-            GameManager.Instance.OnGameOver += HandleGameOver;
         }
 
         private void RegisterDefinitions()
         {
             definitions.Clear();
-            AddDefinition(DailyObjectiveId.Kill15, ObjectiveType.BirdKills, 15);
-            AddDefinition(DailyObjectiveId.Kill30, ObjectiveType.BirdKills, 30);
-            AddDefinition(DailyObjectiveId.Kill50, ObjectiveType.BirdKills, 50);
-            AddDefinition(DailyObjectiveId.Combo3, ObjectiveType.ComboAny, 3);
-            AddDefinition(DailyObjectiveId.Combo6, ObjectiveType.ComboAny, 6);
-            AddDefinition(DailyObjectiveId.TripleOrBetter2, ObjectiveType.ComboTripleOrBetter, 2);
-            AddDefinition(DailyObjectiveId.Elite3, ObjectiveType.EliteKills, 3);
-            AddDefinition(DailyObjectiveId.Elite6, ObjectiveType.EliteKills, 6);
-            AddDefinition(DailyObjectiveId.Finish1, ObjectiveType.GameCompleted, 1);
-            AddDefinition(DailyObjectiveId.Finish2, ObjectiveType.GameCompleted, 2);
+            AddDefinition(DailyObjectiveId.Kill40, ObjectiveType.BirdKills, 40, 8);
+            AddDefinition(DailyObjectiveId.Kill80, ObjectiveType.BirdKills, 80, 10);
+            AddDefinition(DailyObjectiveId.Kill120, ObjectiveType.BirdKills, 120, 12);
+            AddDefinition(DailyObjectiveId.Combo8, ObjectiveType.ComboAny, 8, 8);
+            AddDefinition(DailyObjectiveId.Combo16, ObjectiveType.ComboAny, 16, 12);
+            AddDefinition(DailyObjectiveId.TripleOrBetter4, ObjectiveType.ComboTripleOrBetter, 4, 10);
+            AddDefinition(DailyObjectiveId.TripleOrBetter8, ObjectiveType.ComboTripleOrBetter, 8, 14);
+            AddDefinition(DailyObjectiveId.Elite8, ObjectiveType.EliteKills, 8, 10);
+            AddDefinition(DailyObjectiveId.Elite15, ObjectiveType.EliteKills, 15, 14);
+            AddDefinition(DailyObjectiveId.Boss5, ObjectiveType.BossKills, 5, 16);
+            AddDefinition(DailyObjectiveId.Complete2, ObjectiveType.StageCompleted, 2, 10);
+            AddDefinition(DailyObjectiveId.Complete4, ObjectiveType.StageCompleted, 4, 16);
         }
 
-        private void AddDefinition(DailyObjectiveId id, ObjectiveType type, int target)
+        private void AddDefinition(DailyObjectiveId id, ObjectiveType type, int target, int coinReward)
         {
             definitions[id] = new DailyObjectiveDefinition
             {
@@ -302,7 +305,7 @@ namespace ShooterB
                 type = type,
                 target = Mathf.Max(1, target),
                 titleKey = $"daily.{id}.title",
-                coinReward = DailyObjectiveRewardCoins
+                coinReward = Mathf.Max(0, coinReward)
             };
         }
 
@@ -329,11 +332,17 @@ namespace ShooterB
                     formatKey = "daily.description.elite_kills";
                     fallbackFormat = "Kill {0} elite ducks.";
                     break;
-                case ObjectiveType.GameCompleted:
+                case ObjectiveType.BossKills:
+                    formatKey = "daily.description.boss_kills";
+                    fallbackFormat = "Kill {0} boss ducks.";
+                    break;
+                case ObjectiveType.StageCompleted:
                     formatKey = definition.target == 1
-                        ? "daily.description.game_completed_singular"
-                        : "daily.description.game_completed";
-                    fallbackFormat = definition.target == 1 ? "Finish {0} game." : "Finish {0} games.";
+                        ? "daily.description.stage_completed_singular"
+                        : "daily.description.stage_completed";
+                    fallbackFormat = definition.target == 1
+                        ? "Complete {0} campaign stage."
+                        : "Complete {0} campaign stages.";
                     break;
                 default:
                     formatKey = "daily.description.bird_kills";
@@ -347,6 +356,9 @@ namespace ShooterB
 
         private void HandleBirdKilled(Constants.DuckType duckType, Constants.WeaponType weaponType)
         {
+            if (!IsEligibleCampaignProgress())
+                return;
+
             for (int slot = 0; slot < selectedObjectiveIds.Count; slot++)
             {
                 if (completedBySlot[slot])
@@ -362,12 +374,19 @@ namespace ShooterB
                         if (IsEliteDuck(duckType))
                             IncrementSlot(slot, 1);
                         break;
+                    case ObjectiveType.BossKills:
+                        if (duckType == Constants.DuckType.MK_VOJVODA)
+                            IncrementSlot(slot, 1);
+                        break;
                 }
             }
         }
 
         private void HandleComboKillDetailed(Constants.MultiKillType comboType, Constants.WeaponType weaponType, int bonusPoints, Vector3 position)
         {
+            if (!IsEligibleCampaignProgress())
+                return;
+
             for (int slot = 0; slot < selectedObjectiveIds.Count; slot++)
             {
                 if (completedBySlot[slot])
@@ -387,25 +406,18 @@ namespace ShooterB
             }
         }
 
-        private void HandleGameOver()
-        {
-            IncrementGameCompletedObjectives();
-        }
-
         private void HandleCampaignStageResolved()
         {
-            IncrementGameCompletedObjectives();
-        }
+            if (!IsEligibleCampaignProgress())
+                return;
 
-        private void IncrementGameCompletedObjectives()
-        {
             for (int slot = 0; slot < selectedObjectiveIds.Count; slot++)
             {
                 if (completedBySlot[slot])
                     continue;
 
                 DailyObjectiveDefinition def = definitions[selectedObjectiveIds[slot]];
-                if (def.type == ObjectiveType.GameCompleted)
+                if (def.type == ObjectiveType.StageCompleted)
                     IncrementSlot(slot, 1);
             }
         }
@@ -484,6 +496,40 @@ namespace ShooterB
             Debug.Log($"[DailyAwards] Daily set completed (+{DailySetBonusCoins} coins)");
         }
 
+        private void EnsureSchemaVersion()
+        {
+            int storedVersion = PlayerPrefs.GetInt(SchemaVersionKey, 0);
+            if (storedVersion >= CurrentSchemaVersion)
+                return;
+
+            ResetDailyState();
+            PlayerPrefs.SetInt(SchemaVersionKey, CurrentSchemaVersion);
+            PlayerPrefs.Save();
+            Debug.Log($"[DailyAwards] Schema upgraded {storedVersion} -> {CurrentSchemaVersion}. Daily progress reset.");
+        }
+
+        private void ResetDailyState()
+        {
+            PlayerPrefs.DeleteKey(DayKey);
+            PlayerPrefs.DeleteKey(SelectedIdsKey);
+            PlayerPrefs.DeleteKey(SetBonusGrantedKey);
+            PlayerPrefs.DeleteKey(AdWatchBonusGrantedKey);
+
+            for (int slot = 0; slot < DailyObjectiveCount; slot++)
+            {
+                PlayerPrefs.DeleteKey(GetProgressKey(slot));
+                PlayerPrefs.DeleteKey(GetCompletedKey(slot));
+                PlayerPrefs.DeleteKey(GetRewardGrantedKey(slot));
+            }
+
+            selectedObjectiveIds.Clear();
+            Array.Clear(progressBySlot, 0, progressBySlot.Length);
+            Array.Clear(completedBySlot, 0, completedBySlot.Length);
+            Array.Clear(rewardGrantedBySlot, 0, rewardGrantedBySlot.Length);
+            setBonusGranted = false;
+            adWatchBonusGranted = false;
+        }
+
         private void GenerateNewDay(string dayToken)
         {
             selectedObjectiveIds.Clear();
@@ -494,7 +540,7 @@ namespace ShooterB
                 selectedObjectiveIds.Add(pool[i]);
 
             while (selectedObjectiveIds.Count < DailyObjectiveCount)
-                selectedObjectiveIds.Add(DailyObjectiveId.Kill15);
+                selectedObjectiveIds.Add(DailyObjectiveId.Kill40);
 
             Array.Clear(progressBySlot, 0, progressBySlot.Length);
             Array.Clear(completedBySlot, 0, completedBySlot.Length);
@@ -564,6 +610,15 @@ namespace ShooterB
                    duckType == Constants.DuckType.MK_ARCHER ||
                    duckType == Constants.DuckType.MK_VOJVODA ||
                    duckType == Constants.DuckType.FRENCH_REVOLUTIONARY;
+        }
+
+        private static bool IsEligibleCampaignProgress()
+        {
+            if (GameManager.Instance == null || GameManager.Instance.CurrentGameMode != Constants.GameMode.Campaign)
+                return false;
+
+            StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
+            return stage != null && stage.stageIndex >= 3;
         }
 
         private static string GetTodayToken()

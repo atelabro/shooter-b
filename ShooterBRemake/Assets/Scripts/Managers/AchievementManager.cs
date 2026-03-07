@@ -8,32 +8,36 @@ namespace ShooterB
     {
         public enum AchievementId
         {
-            BirdBlenderI,
-            BirdBlenderII,
-            BossSlayer,
-            CommanderDown,
-            DuckHunterI,
-            DuckHunterII,
-            DuckHunterIII,
-            DuckHunterIV,
+            FieldPromotion,
+            CityCleaner,
+            ResistanceCracker,
+            UprisingBreaker,
+            NoFlyZone,
+            ExterminatorGeneral,
             EliteControlI,
             EliteControlII,
-            ArcherCleanup,
-            LaserSweep,
-            OverkillI,
-            OverkillII,
-            PhalarxBreaker,
-            DuckHunter10,
-            PiranhaDoubleTrouble,
-            PiranhaMassacre,
-            PiranhaDoubleKill50,
+            EliteControlIII,
+            EliteControlIV,
+            BossSlayerI,
+            BossSlayerII,
+            BossSlayerIII,
+            ArcherCleanupI,
+            ArcherCleanupII,
+            PhalarxBreakerI,
+            PhalarxBreakerII,
             RifleVeteran,
-            SniperPrecision,
+            CabirnePrecision,
+            BerettaStorm,
             SulkoRampage,
+            LaserSweep,
             TeslaChainLord,
+            PiranhaMassacre,
+            DoubleDownI,
+            DoubleDownII,
             TripleThreatI,
             TripleThreatII,
-            BerettaSpray
+            OverkillI,
+            OverkillII
         }
 
         private enum ProgressSource
@@ -54,7 +58,6 @@ namespace ShooterB
             public AchievementId id;
             public ProgressSource progressSource;
             public Constants.MultiKillType? comboType;
-            public Constants.MultiKillType? minimumComboType;
             public DuckFilterMode duckFilterMode;
             public Constants.DuckType duckType;
             public Constants.WeaponType? weaponType;
@@ -62,6 +65,39 @@ namespace ShooterB
             public int coinReward;
             public string titleKey;
         }
+
+        private const int CurrentSchemaVersion = 2;
+        private const string SchemaVersionKey = "Achievement_SchemaVersion";
+
+        private static readonly string[] LegacyAchievementIdsToClear =
+        {
+            "BirdBlenderI",
+            "BirdBlenderII",
+            "BossSlayer",
+            "CommanderDown",
+            "DuckHunterI",
+            "DuckHunterII",
+            "DuckHunterIII",
+            "DuckHunterIV",
+            "DuckHunter10",
+            "EliteControlI",
+            "EliteControlII",
+            "ArcherCleanup",
+            "LaserSweep",
+            "OverkillI",
+            "OverkillII",
+            "PhalarxBreaker",
+            "PiranhaDoubleTrouble",
+            "PiranhaMassacre",
+            "PiranhaDoubleKill50",
+            "RifleVeteran",
+            "SniperPrecision",
+            "SulkoRampage",
+            "TeslaChainLord",
+            "TripleThreatI",
+            "TripleThreatII",
+            "BerettaSpray"
+        };
 
         private static AchievementManager instance;
         public static AchievementManager Instance
@@ -98,18 +134,18 @@ namespace ShooterB
             DontDestroyOnLoad(gameObject);
 
             RegisterDefinitions();
+            EnsureSchemaVersion();
             LoadState();
             SubscribeToGameManager();
         }
 
         private void OnDestroy()
         {
-            GameManager gameManager = FindObjectOfType<GameManager>();
-            if (gameManager != null)
-            {
-                gameManager.OnComboKillDetailed -= HandleComboKillDetailed;
-                gameManager.OnBirdKilled -= HandleBirdKilled;
-            }
+            if (GameManager.Instance == null)
+                return;
+
+            GameManager.Instance.OnComboKillDetailed -= HandleComboKillDetailed;
+            GameManager.Instance.OnBirdKilled -= HandleBirdKilled;
         }
 
         public int GetProgress(AchievementId id)
@@ -145,10 +181,9 @@ namespace ShooterB
             if (!definitions.TryGetValue(id, out AchievementDefinition definition))
                 return string.Empty;
 
-            if (definition.progressSource == ProgressSource.ComboKill)
-                return BuildComboDescription(definition);
-
-            return BuildBirdDescription(definition);
+            return definition.progressSource == ProgressSource.ComboKill
+                ? BuildComboDescription(definition)
+                : BuildBirdDescription(definition);
         }
 
         public int GetCoinReward(AchievementId id)
@@ -179,148 +214,43 @@ namespace ShooterB
         private void RegisterDefinitions()
         {
             definitions.Clear();
-            // Legacy id kept for save compatibility.
-            AddComboAchievement(
-                AchievementId.PiranhaDoubleKill50,
-                50,
-                Constants.MultiKillType.DoubleKill,
-                Constants.WeaponType.PiranhaGun,
-                coinReward: 12);
 
-            AddComboAchievement(
-                AchievementId.PiranhaDoubleTrouble,
-                50,
-                Constants.MultiKillType.DoubleKill,
-                Constants.WeaponType.PiranhaGun,
-                coinReward: 7);
+            AddBirdAchievement(AchievementId.FieldPromotion, 200, coinReward: 10);
+            AddBirdAchievement(AchievementId.CityCleaner, 600, coinReward: 20);
+            AddBirdAchievement(AchievementId.ResistanceCracker, 1200, coinReward: 35);
+            AddBirdAchievement(AchievementId.UprisingBreaker, 2500, coinReward: 60);
+            AddBirdAchievement(AchievementId.NoFlyZone, 4000, coinReward: 90);
+            AddBirdAchievement(AchievementId.ExterminatorGeneral, 7000, coinReward: 130);
 
-            AddComboAchievement(
-                AchievementId.PiranhaMassacre,
-                10,
-                Constants.MultiKillType.QuadraKill,
-                Constants.WeaponType.PiranhaGun,
-                coinReward: 20);
+            AddBirdAchievement(AchievementId.EliteControlI, 150, duckFilterMode: DuckFilterMode.EliteOnly, coinReward: 20);
+            AddBirdAchievement(AchievementId.EliteControlII, 400, duckFilterMode: DuckFilterMode.EliteOnly, coinReward: 45);
+            AddBirdAchievement(AchievementId.EliteControlIII, 800, duckFilterMode: DuckFilterMode.EliteOnly, coinReward: 80);
+            AddBirdAchievement(AchievementId.EliteControlIV, 1300, duckFilterMode: DuckFilterMode.EliteOnly, coinReward: 120);
 
-            AddComboAchievement(
-                AchievementId.TeslaChainLord,
-                30,
-                null,
-                Constants.WeaponType.TeslaGun,
-                Constants.MultiKillType.TripleKill,
-                coinReward: 30);
+            AddBirdAchievement(AchievementId.BossSlayerI, 60, duckType: Constants.DuckType.USA_BOSS_DUCK, coinReward: 15);
+            AddBirdAchievement(AchievementId.BossSlayerII, 180, duckType: Constants.DuckType.USA_BOSS_DUCK, coinReward: 40);
+            AddBirdAchievement(AchievementId.BossSlayerIII, 360, duckType: Constants.DuckType.USA_BOSS_DUCK, coinReward: 80);
 
-            AddComboAchievement(
-                AchievementId.BerettaSpray,
-                100,
-                Constants.MultiKillType.DoubleKill,
-                Constants.WeaponType.Beretta,
-                coinReward: 10);
+            AddBirdAchievement(AchievementId.ArcherCleanupI, 180, duckType: Constants.DuckType.MK_ARCHER, coinReward: 18);
+            AddBirdAchievement(AchievementId.ArcherCleanupII, 420, duckType: Constants.DuckType.MK_ARCHER, coinReward: 45);
 
-            AddComboAchievement(
-                AchievementId.BirdBlenderI,
-                100,
-                Constants.MultiKillType.DoubleKill,
-                coinReward: 3);
+            AddBirdAchievement(AchievementId.PhalarxBreakerI, 180, duckType: Constants.DuckType.MK_PHALARX, coinReward: 22);
+            AddBirdAchievement(AchievementId.PhalarxBreakerII, 420, duckType: Constants.DuckType.MK_PHALARX, coinReward: 55);
 
-            AddComboAchievement(
-                AchievementId.BirdBlenderII,
-                250,
-                Constants.MultiKillType.DoubleKill,
-                coinReward: 15);
+            AddBirdAchievement(AchievementId.RifleVeteran, 1200, weaponType: Constants.WeaponType.Rifle, coinReward: 20);
+            AddBirdAchievement(AchievementId.CabirnePrecision, 400, weaponType: Constants.WeaponType.Cabirne, coinReward: 18);
+            AddBirdAchievement(AchievementId.BerettaStorm, 700, weaponType: Constants.WeaponType.Beretta, coinReward: 22);
+            AddBirdAchievement(AchievementId.SulkoRampage, 550, weaponType: Constants.WeaponType.MrSulko, coinReward: 24);
+            AddBirdAchievement(AchievementId.LaserSweep, 900, weaponType: Constants.WeaponType.LaserGun, coinReward: 30);
+            AddBirdAchievement(AchievementId.TeslaChainLord, 700, weaponType: Constants.WeaponType.TeslaGun, coinReward: 32);
+            AddBirdAchievement(AchievementId.PiranhaMassacre, 650, weaponType: Constants.WeaponType.PiranhaGun, coinReward: 30);
 
-            AddComboAchievement(
-                AchievementId.TripleThreatI,
-                50,
-                Constants.MultiKillType.TripleKill,
-                coinReward: 5);
-
-            AddComboAchievement(
-                AchievementId.TripleThreatII,
-                150,
-                Constants.MultiKillType.TripleKill,
-                coinReward: 12);
-
-            AddComboAchievement(
-                AchievementId.OverkillI,
-                25,
-                Constants.MultiKillType.QuadraKill,
-                coinReward: 5);
-
-            AddComboAchievement(
-                AchievementId.OverkillII,
-                75,
-                Constants.MultiKillType.QuadraKill,
-                coinReward: 20);
-
-            AddBirdAchievement(
-                AchievementId.DuckHunterI,
-                10,
-                coinReward: 3);
-            AddBirdAchievement(
-                AchievementId.DuckHunterII,
-                100,
-                coinReward: 5);
-            AddBirdAchievement(
-                AchievementId.DuckHunterIII,
-                1000,
-                coinReward: 10);
-            AddBirdAchievement(
-                AchievementId.DuckHunterIV,
-                5000,
-                coinReward: 50);
-
-            AddBirdAchievement(
-                AchievementId.SniperPrecision,
-                200,
-                weaponType: Constants.WeaponType.Cabirne,
-                coinReward: 7);
-            AddBirdAchievement(
-                AchievementId.LaserSweep,
-                500,
-                weaponType: Constants.WeaponType.LaserGun,
-                coinReward: 10);
-            AddBirdAchievement(
-                AchievementId.SulkoRampage,
-                300,
-                weaponType: Constants.WeaponType.MrSulko,
-                coinReward: 12);
-            AddBirdAchievement(
-                AchievementId.RifleVeteran,
-                1000,
-                weaponType: Constants.WeaponType.Rifle,
-                coinReward: 15);
-
-            AddBirdAchievement(
-                AchievementId.BossSlayer,
-                50,
-                duckType: Constants.DuckType.MK_VOJVODA,
-                coinReward: 7);
-            AddBirdAchievement(
-                AchievementId.CommanderDown,
-                150,
-                duckType: Constants.DuckType.MK_VOJVODA,
-                coinReward: 20);
-            AddBirdAchievement(
-                AchievementId.ArcherCleanup,
-                200,
-                duckType: Constants.DuckType.MK_ARCHER,
-                coinReward: 10);
-            AddBirdAchievement(
-                AchievementId.PhalarxBreaker,
-                200,
-                duckType: Constants.DuckType.MK_PHALARX,
-                coinReward: 30);
-
-            AddBirdAchievement(
-                AchievementId.EliteControlI,
-                100,
-                duckFilterMode: DuckFilterMode.EliteOnly,
-                coinReward: 15);
-            AddBirdAchievement(
-                AchievementId.EliteControlII,
-                300,
-                duckFilterMode: DuckFilterMode.EliteOnly,
-                coinReward: 50);
+            AddComboAchievement(AchievementId.DoubleDownI, 150, Constants.MultiKillType.DoubleKill, coinReward: 15);
+            AddComboAchievement(AchievementId.DoubleDownII, 450, Constants.MultiKillType.DoubleKill, coinReward: 40);
+            AddComboAchievement(AchievementId.TripleThreatI, 120, Constants.MultiKillType.TripleKill, coinReward: 20);
+            AddComboAchievement(AchievementId.TripleThreatII, 320, Constants.MultiKillType.TripleKill, coinReward: 55);
+            AddComboAchievement(AchievementId.OverkillI, 60, Constants.MultiKillType.QuadraKill, coinReward: 25);
+            AddComboAchievement(AchievementId.OverkillII, 180, Constants.MultiKillType.QuadraKill, coinReward: 70);
         }
 
         private void AddBirdAchievement(
@@ -336,7 +266,6 @@ namespace ShooterB
                 id = id,
                 progressSource = ProgressSource.BirdKill,
                 comboType = null,
-                minimumComboType = null,
                 duckFilterMode = duckType.HasValue ? DuckFilterMode.Exact : duckFilterMode,
                 duckType = duckType ?? default,
                 weaponType = weaponType,
@@ -349,9 +278,7 @@ namespace ShooterB
         private void AddComboAchievement(
             AchievementId id,
             int targetCount,
-            Constants.MultiKillType? comboType,
-            Constants.WeaponType? weaponType = null,
-            Constants.MultiKillType? minimumComboType = null,
+            Constants.MultiKillType comboType,
             int coinReward = 0)
         {
             definitions[id] = new AchievementDefinition
@@ -359,10 +286,9 @@ namespace ShooterB
                 id = id,
                 progressSource = ProgressSource.ComboKill,
                 comboType = comboType,
-                minimumComboType = minimumComboType,
                 duckFilterMode = DuckFilterMode.Any,
                 duckType = default,
-                weaponType = weaponType,
+                weaponType = null,
                 targetCount = targetCount,
                 coinReward = Mathf.Max(0, coinReward),
                 titleKey = GetTitleKey(id)
@@ -374,11 +300,8 @@ namespace ShooterB
             return $"achievement.{id}.title";
         }
 
-        private static string BuildComboLabel(Constants.MultiKillType comboType, bool isMinimum)
+        private static string BuildComboLabel(Constants.MultiKillType comboType)
         {
-            if (isMinimum && comboType == Constants.MultiKillType.TripleKill)
-                return LocalizationManager.Instance.Get("achievement.combo_label.triple_or_better", "Triple+ Kills");
-
             switch (comboType)
             {
                 case Constants.MultiKillType.DoubleKill:
@@ -430,26 +353,9 @@ namespace ShooterB
 
         private static string BuildComboDescription(AchievementDefinition definition)
         {
-            Constants.MultiKillType comboType = definition.comboType ?? definition.minimumComboType ?? Constants.MultiKillType.DoubleKill;
-            bool isMinimum = definition.minimumComboType.HasValue && !definition.comboType.HasValue;
-            string comboLabel = BuildComboLabel(comboType, isMinimum);
-
-            if (definition.weaponType.HasValue)
-            {
-                string weaponKey = GetWeaponNameKey(definition.weaponType.Value);
-                string weaponName = weaponKey == null
-                    ? definition.weaponType.Value.ToString()
-                    : LocalizationManager.Instance.Get(weaponKey, definition.weaponType.Value.ToString());
-
-                string formatWithWeapon = isMinimum
-                    ? LocalizationManager.Instance.Get("achievement.description.combo_min_with_weapon", "Get {0} {1} with {2}.")
-                    : LocalizationManager.Instance.Get("achievement.description.combo_exact_with_weapon", "Get {0} {1} with {2}.");
-                return string.Format(formatWithWeapon, definition.targetCount, comboLabel, weaponName);
-            }
-
-            string format = isMinimum
-                ? LocalizationManager.Instance.Get("achievement.description.combo_min", "Get {0} {1}.")
-                : LocalizationManager.Instance.Get("achievement.description.combo_exact", "Get {0} {1}.");
+            Constants.MultiKillType comboType = definition.comboType ?? Constants.MultiKillType.DoubleKill;
+            string comboLabel = BuildComboLabel(comboType);
+            string format = LocalizationManager.Instance.Get("achievement.description.combo_exact", "Get {0} {1}.");
             return string.Format(format, definition.targetCount, comboLabel);
         }
 
@@ -485,6 +391,37 @@ namespace ShooterB
             return string.Format(genericFormat, definition.targetCount);
         }
 
+        private void EnsureSchemaVersion()
+        {
+            int storedVersion = PlayerPrefs.GetInt(SchemaVersionKey, 0);
+            if (storedVersion >= CurrentSchemaVersion)
+                return;
+
+            ResetAchievementState();
+            PlayerPrefs.SetInt(SchemaVersionKey, CurrentSchemaVersion);
+            PlayerPrefs.Save();
+            Debug.Log($"[Achievement] Schema upgraded {storedVersion} -> {CurrentSchemaVersion}. Achievement progress reset.");
+        }
+
+        private void ResetAchievementState()
+        {
+            foreach (AchievementId id in Enum.GetValues(typeof(AchievementId)))
+            {
+                PlayerPrefs.DeleteKey(GetProgressKey(id));
+                PlayerPrefs.DeleteKey(GetUnlockedKey(id));
+            }
+
+            for (int i = 0; i < LegacyAchievementIdsToClear.Length; i++)
+            {
+                string legacyId = LegacyAchievementIdsToClear[i];
+                PlayerPrefs.DeleteKey($"Achievement_{legacyId}_Progress");
+                PlayerPrefs.DeleteKey($"Achievement_{legacyId}_Unlocked");
+            }
+
+            progress.Clear();
+            unlocked.Clear();
+        }
+
         private void LoadState()
         {
             progress.Clear();
@@ -496,55 +433,24 @@ namespace ShooterB
                 int value = PlayerPrefs.GetInt(GetProgressKey(id), 0);
                 bool isUnlocked = PlayerPrefs.GetInt(GetUnlockedKey(id), 0) == 1;
 
-                progress[id] = Mathf.Max(0, value);
+                progress[id] = Mathf.Clamp(value, 0, entry.Value.targetCount);
                 if (isUnlocked)
                     unlocked.Add(id);
             }
-
-            MigrateLegacyAchievement(AchievementId.DuckHunter10, AchievementId.DuckHunterI);
-        }
-
-        private void MigrateLegacyAchievement(AchievementId oldId, AchievementId newId)
-        {
-            if (!definitions.ContainsKey(newId))
-                return;
-
-            int oldProgress = PlayerPrefs.GetInt(GetProgressKey(oldId), 0);
-            bool oldUnlocked = PlayerPrefs.GetInt(GetUnlockedKey(oldId), 0) == 1;
-
-            if (oldProgress <= 0 && !oldUnlocked)
-                return;
-
-            int target = GetTarget(newId);
-            int mergedProgress = Mathf.Clamp(Mathf.Max(GetProgress(newId), oldProgress), 0, target);
-            progress[newId] = mergedProgress;
-            PlayerPrefs.SetInt(GetProgressKey(newId), mergedProgress);
-
-            if (oldUnlocked || mergedProgress >= target)
-            {
-                unlocked.Add(newId);
-                PlayerPrefs.SetInt(GetUnlockedKey(newId), 1);
-            }
-
-            PlayerPrefs.Save();
         }
 
         private void HandleComboKillDetailed(Constants.MultiKillType comboType, Constants.WeaponType weaponType, int bonusPoints, Vector3 position)
         {
+            if (!IsEligibleCampaignProgress())
+                return;
+
             foreach (KeyValuePair<AchievementId, AchievementDefinition> entry in definitions)
             {
                 AchievementDefinition definition = entry.Value;
                 if (definition.progressSource != ProgressSource.ComboKill)
                     continue;
 
-                if (definition.comboType.HasValue && definition.comboType.Value != comboType)
-                    continue;
-
-                if (definition.minimumComboType.HasValue &&
-                    GetComboRank(comboType) < GetComboRank(definition.minimumComboType.Value))
-                    continue;
-
-                if (definition.weaponType.HasValue && definition.weaponType.Value != weaponType)
+                if (!definition.comboType.HasValue || definition.comboType.Value != comboType)
                     continue;
 
                 IncrementProgress(definition.id, 1);
@@ -553,6 +459,9 @@ namespace ShooterB
 
         private void HandleBirdKilled(Constants.DuckType duckType, Constants.WeaponType weaponType)
         {
+            if (!IsEligibleCampaignProgress())
+                return;
+
             foreach (KeyValuePair<AchievementId, AchievementDefinition> entry in definitions)
             {
                 AchievementDefinition definition = entry.Value;
@@ -580,17 +489,13 @@ namespace ShooterB
                    duckType == Constants.DuckType.FRENCH_REVOLUTIONARY;
         }
 
-        private static int GetComboRank(Constants.MultiKillType comboType)
+        private static bool IsEligibleCampaignProgress()
         {
-            switch (comboType)
-            {
-                case Constants.MultiKillType.DoubleKill:
-                    return 2;
-                case Constants.MultiKillType.TripleKill:
-                    return 3;
-                default:
-                    return 4;
-            }
+            if (GameManager.Instance == null || GameManager.Instance.CurrentGameMode != Constants.GameMode.Campaign)
+                return false;
+
+            StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
+            return stage != null && stage.stageIndex >= 3;
         }
 
         private void IncrementProgress(AchievementId id, int amount)
