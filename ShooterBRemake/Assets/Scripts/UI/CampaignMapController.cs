@@ -143,7 +143,12 @@ namespace ShooterB
             FocusMapOnCity(city);
 
             if (cityPanel != null)
+            {
+                if (cityPanel.IsShowingCity(city))
+                    return;
+
                 cityPanel.Show(city);
+            }
         }
 
         private void OnBackClicked()

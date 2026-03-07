@@ -343,6 +343,36 @@ MonoBehaviour:
     - {fileID: -643259885217684926, guid: 5897162638940463e935e24c46c4012a, type: 3}
     - {fileID: 4545161194778437091, guid: 5048e3109cfee4263ac3ce1694ad9c73, type: 3}
     - {fileID: -7507181291578394296, guid: b034f8e3d99034a108a74d0a8ed9d883, type: 3}
+  - duckType: 19
+    frames:
+    - {fileID: -9067479900136865338, guid: 7e306899169be49c2bcac69881b87ad3, type: 3}
+    - {fileID: -561321827185426860, guid: 825331a82ed9d4331ad37d7b673aefae, type: 3}
+    - {fileID: -8178935138613519726, guid: 862d67c459ee74ac883b5d42b91d79bf, type: 3}
+    - {fileID: 3723461793408487872, guid: 0843cea199178425bbfa99f256ad1ddd, type: 3}
+    - {fileID: 8562606963262622461, guid: a57bf20d9d5c04e52875d60173059f55, type: 3}
+    - {fileID: 3838277923982453327, guid: 41e20f057b237408d813b55624fd6213, type: 3}
+    - {fileID: 7634701686661688629, guid: a6b690a8fd12a47bbbd55fd3c1acaf12, type: 3}
+    - {fileID: 8863630150090537251, guid: 136f0cdf2dac64159b77baf767d2d2f3, type: 3}
+  - duckType: 19
+    frames:
+    - {fileID: -3603305866656980743, guid: 3cbb407e9db274781a436b988b563fdd, type: 3}
+    - {fileID: -8157298514292063421, guid: 330aa619882b841769dd19dc3871d515, type: 3}
+    - {fileID: -3134415612945895412, guid: c59e7efc0cfda4b38902c550e5ed9d8f, type: 3}
+    - {fileID: 1783590160383411440, guid: 8201788c9116b438bbc0477e2e99f378, type: 3}
+    - {fileID: 2342842156425794055, guid: 4dae3d85dd1aa438e990e674a49a7647, type: 3}
+    - {fileID: -7593371058929018754, guid: e224b205db1ab443e99130ff24fec7be, type: 3}
+    - {fileID: 2806498900693052580, guid: 34fec252a4257479e9a4617f1fd9defc, type: 3}
+    - {fileID: -3354330942985740623, guid: 7dce1bcd431a1419eb8de93675363353, type: 3}
+  - duckType: 19
+    frames:
+    - {fileID: 5344952769383552173, guid: 5e3184ff6f83645e5af9bb22c8e7a512, type: 3}
+    - {fileID: 5115392154115131299, guid: bc1410c34a945410f9f9a04fa55e7a57, type: 3}
+    - {fileID: 3112241997948113900, guid: 5f42651e5c23d4458a36eb6b3608d705, type: 3}
+    - {fileID: -8979832652934367670, guid: ac2f81590d513444fa46a83fa7cefe47, type: 3}
+    - {fileID: -7191676632308731423, guid: a39e9f9c77f044e59a9de2ba061da5d8, type: 3}
+    - {fileID: 3814295914723282306, guid: 3b3c45f6430a24da0b148db4b395b63f, type: 3}
+    - {fileID: 1926591269269512834, guid: a3bbac56512124cdab5ca02a0990be50, type: 3}
+    - {fileID: -7391705325852654201, guid: 0a029d2e1783a454095988ad7a1351a7, type: 3}
   - duckType: 20
     frames:
     - {fileID: 1953362783508826719, guid: 03d5cd5f240e84a018eeb578474f0a6e, type: 3}

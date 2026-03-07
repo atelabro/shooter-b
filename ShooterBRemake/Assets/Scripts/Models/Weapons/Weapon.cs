@@ -11,6 +11,7 @@ namespace ShooterB
         public Constants.WeaponType weaponType;
         public Constants.WeaponFireMode fireMode = Constants.WeaponFireMode.SingleTap;
         public int maxBullets;
+        [Min(0)] public int startModalAmmoBonus = 2;
         public float fireDelay;
         public float refillDelay;
         public Sprite weaponIcon;

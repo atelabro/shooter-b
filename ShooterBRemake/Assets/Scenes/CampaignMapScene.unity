@@ -3196,6 +3196,9 @@ MonoBehaviour:
   punctuationPause: 0.08
   stageListContainer: {fileID: 1759266711}
   stageEntryPrefab: {fileID: 4158173576686283911, guid: 23420ef5eec0a4b7a959763657aa8b04, type: 3}
+  stageScrollRect: {fileID: 0}
+  autoScrollDelaySeconds: 0.2
+  autoScrollDurationSeconds: 0.45
 --- !u!1 &1734840354
 GameObject:
   m_ObjectHideFlags: 0

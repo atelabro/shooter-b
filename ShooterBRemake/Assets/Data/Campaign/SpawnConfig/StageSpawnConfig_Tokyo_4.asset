@@ -271,11 +271,11 @@ MonoBehaviour:
       pathType: 4
       speedMultiplier: 1
       patternRef: {fileID: 0}
-    - duckType: 17
+    - duckType: 19
       delay: 0
       pathType: 6
       speedMultiplier: 1
-      patternRef: {fileID: 0}
+      patternRef: {fileID: 11400000, guid: bea3f299f3d084fc1a1167bd3b12d420, type: 2}
     - duckType: 17
       delay: 0
       pathType: 8
@@ -316,7 +316,7 @@ MonoBehaviour:
       pathType: 14
       speedMultiplier: 1
       patternRef: {fileID: 0}
-    - duckType: 17
+    - duckType: 19
       delay: 1
       pathType: 11
       speedMultiplier: 1
@@ -346,6 +346,39 @@ MonoBehaviour:
       pathType: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: bea3f299f3d084fc1a1167bd3b12d420, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 3
+    spawnSequence:
+    - duckType: 20
+      delay: 0
+      pathType: 0
+      speedMultiplier: 0
+      patternRef: {fileID: 11400000, guid: c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8, type: 2}
+    - duckType: 19
+      delay: 1
+      pathType: 0
+      speedMultiplier: 0
+      patternRef: {fileID: 11400000, guid: b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7, type: 2}
+    - duckType: 17
+      delay: 0.5
+      pathType: 0
+      speedMultiplier: 0
+      patternRef: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
+    - duckType: 17
+      delay: 0.5
+      pathType: 0
+      speedMultiplier: 0
+      patternRef: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
+    - duckType: 19
+      delay: 0.5
+      pathType: 0
+      speedMultiplier: 0
+      patternRef: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
+    - duckType: 17
+      delay: 0.5
+      pathType: 0
+      speedMultiplier: 0
+      patternRef: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
   weightGoStraight: 0.25
   weightGoTop: 0.45
   weightGoBottom: 0.3

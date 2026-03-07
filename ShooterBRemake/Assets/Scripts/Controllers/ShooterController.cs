@@ -41,6 +41,8 @@ namespace ShooterB
 
         private bool isFireHeld;
         private Vector2 heldTargetPosition;
+        private bool ammoBonusesReady;
+        private bool pendingConfiguredAmmoBonus;
 
         private void Awake()
         {
@@ -57,6 +59,7 @@ namespace ShooterB
             EnsureActiveWeapon();
 
             StartCoroutine(LogInitialization());
+            StartCoroutine(FinalizeAmmoBonusInitialization());
         }
 
         private void Update()
@@ -274,6 +277,19 @@ namespace ShooterB
             Debug.Log($"[SHOOTER] ShooterController initialized with weapon: {activeWeapon?.weaponName}");
         }
 
+        private System.Collections.IEnumerator FinalizeAmmoBonusInitialization()
+        {
+            // Wait one frame so weapon Start() initialization doesn't overwrite applied bonuses.
+            yield return null;
+            ammoBonusesReady = true;
+
+            if (pendingConfiguredAmmoBonus)
+            {
+                pendingConfiguredAmmoBonus = false;
+                ApplyConfiguredStageAmmoBonusToAllWeapons();
+            }
+        }
+
         public void Shoot(Vector2 targetPosition)
         {
             TryShoot(targetPosition, true);
@@ -440,6 +456,41 @@ namespace ShooterB
         public int GetMaxAmmo()
         {
             return activeWeapon != null ? activeWeapon.maxBullets : 0;
+        }
+
+        public void ApplyConfiguredStageAmmoBonusToAllWeapons()
+        {
+            if (!ammoBonusesReady)
+            {
+                pendingConfiguredAmmoBonus = true;
+                return;
+            }
+
+            ApplyConfiguredAmmoBonusToWeapon(rifleWeapon);
+            ApplyConfiguredAmmoBonusToWeapon(cabirneWeapon);
+            ApplyConfiguredAmmoBonusToWeapon(piranhaWeapon);
+            ApplyConfiguredAmmoBonusToWeapon(teslaWeapon);
+            ApplyConfiguredAmmoBonusToWeapon(mrSulkoWeapon);
+            ApplyConfiguredAmmoBonusToWeapon(berettaWeapon);
+            ApplyConfiguredAmmoBonusToWeapon(laserWeapon);
+        }
+
+        private void ApplyConfiguredAmmoBonusToWeapon(Weapon weapon)
+        {
+            if (weapon == null)
+                return;
+
+            ApplyAmmoBonusToWeapon(weapon, weapon.startModalAmmoBonus);
+        }
+
+        private void ApplyAmmoBonusToWeapon(Weapon weapon, int bonusAmount)
+        {
+            if (weapon == null || bonusAmount <= 0)
+                return;
+
+            weapon.maxBullets = Mathf.Max(1, weapon.maxBullets + bonusAmount);
+            weapon.ResetAmmo();
+            Debug.Log($"[SHOOTER] Ammo bonus applied to {weapon.weaponType}: +{bonusAmount}, max now {weapon.maxBullets}");
         }
 
         public bool IsRefilling()

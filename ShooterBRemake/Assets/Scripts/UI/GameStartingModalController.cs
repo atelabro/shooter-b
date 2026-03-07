@@ -16,12 +16,21 @@ namespace ShooterB
 
         [Header("Countdown")]
         public TMP_Text countdownText;
-        public float countdownStepSeconds = 1f;
-        public float startMessageSeconds = 0.75f;
+        public Button startButton;
+        public Button plusLivesButton;
+        public Button extraActionButton;
+        public TMP_Text plusLivesText;
+        public TMP_Text extraActionText;
+
+        private bool startRequested;
+        private bool plusLivesUsedThisStage;
+        private bool extraActionUsedThisStage;
 
         public void Configure(string stageName, string stageBriefing)
         {
             EnsureReferences();
+            plusLivesUsedThisStage = false;
+            extraActionUsedThisStage = false;
 
             if (titleText != null)
                 titleText.text = string.IsNullOrWhiteSpace(stageName)
@@ -30,11 +39,24 @@ namespace ShooterB
 
             if (briefingText != null)
                 briefingText.text = stageBriefing ?? string.Empty;
+
+            if (plusLivesText != null)
+                plusLivesText.text = LocalizationManager.Instance.Get("campaign.starting.plus_lives", "+2 Lives");
+
+            if (extraActionText != null)
+                extraActionText.text = LocalizationManager.Instance.Get("campaign.starting.plus_bullets", "+ Bullets");
+
+            if (plusLivesButton != null)
+                plusLivesButton.interactable = true;
+
+            if (extraActionButton != null)
+                extraActionButton.interactable = true;
         }
 
         public IEnumerator PlayCountdown()
         {
             EnsureReferences();
+            startRequested = false;
 
             if (modalRoot != null)
             {
@@ -42,20 +64,28 @@ namespace ShooterB
                 modalRoot.SetActive(true);
             }
 
-            float stepDelay = Mathf.Max(0.05f, countdownStepSeconds);
-            float startDelay = Mathf.Max(0.05f, startMessageSeconds);
-
-            SetCountdownText("3");
-            yield return new WaitForSecondsRealtime(stepDelay);
-
-            SetCountdownText("2");
-            yield return new WaitForSecondsRealtime(stepDelay);
-
-            SetCountdownText("1");
-            yield return new WaitForSecondsRealtime(stepDelay);
-
             SetCountdownText(LocalizationManager.Instance.Get("campaign.starting.start", "Start"));
-            yield return new WaitForSecondsRealtime(startDelay);
+
+            if (startButton != null)
+                startButton.onClick.AddListener(HandleStartClicked);
+
+            if (plusLivesButton != null)
+                plusLivesButton.onClick.AddListener(HandlePlusLivesClicked);
+
+            if (extraActionButton != null)
+                extraActionButton.onClick.AddListener(HandleExtraActionClicked);
+
+            while (!startRequested)
+                yield return null;
+
+            if (startButton != null)
+                startButton.onClick.RemoveListener(HandleStartClicked);
+
+            if (plusLivesButton != null)
+                plusLivesButton.onClick.RemoveListener(HandlePlusLivesClicked);
+
+            if (extraActionButton != null)
+                extraActionButton.onClick.RemoveListener(HandleExtraActionClicked);
 
             if (modalRoot != null)
                 modalRoot.SetActive(false);
@@ -99,6 +129,82 @@ namespace ShooterB
                 if (countdownTransform != null)
                     countdownText = countdownTransform.GetComponent<TMP_Text>();
             }
+
+            if (plusLivesText == null)
+            {
+                Transform plusLivesTransform = transform.Find("Card/ButtonsRow/Plus2LivesButton/PlusLivesButton");
+                if (plusLivesTransform != null)
+                    plusLivesText = plusLivesTransform.GetComponent<TMP_Text>();
+            }
+
+            if (plusLivesButton == null)
+            {
+                Transform plusLivesButtonTransform = transform.Find("Card/ButtonsRow/Plus2LivesButton");
+                if (plusLivesButtonTransform != null)
+                    plusLivesButton = plusLivesButtonTransform.GetComponent<Button>();
+            }
+
+            if (extraActionText == null)
+            {
+                Transform extraActionTransform = transform.Find("Card/ButtonsRow/ExtraActionButton/ExtraActionText");
+                if (extraActionTransform != null)
+                    extraActionText = extraActionTransform.GetComponent<TMP_Text>();
+            }
+
+            if (extraActionButton == null)
+            {
+                Transform extraActionButtonTransform = transform.Find("Card/ButtonsRow/ExtraActionButton");
+                if (extraActionButtonTransform != null)
+                    extraActionButton = extraActionButtonTransform.GetComponent<Button>();
+            }
+
+            if (startButton == null)
+            {
+                Transform startButtonTransform = transform.Find("Card/StartButton");
+                if (startButtonTransform != null)
+                    startButton = startButtonTransform.GetComponent<Button>();
+            }
+
+            if (startButton == null)
+            {
+                Transform fallbackButtonTransform = transform.Find("Card/CountdownText");
+                if (fallbackButtonTransform != null)
+                    startButton = fallbackButtonTransform.GetComponent<Button>();
+            }
+        }
+
+        private void HandleStartClicked()
+        {
+            startRequested = true;
+        }
+
+        private void HandlePlusLivesClicked()
+        {
+            if (plusLivesUsedThisStage)
+                return;
+
+            // TODO(ads): Require rewarded ad before granting +2 lives.
+            if (GameManager.Instance != null)
+                GameManager.Instance.AddBonusLives(2);
+
+            plusLivesUsedThisStage = true;
+            if (plusLivesButton != null)
+                plusLivesButton.interactable = false;
+        }
+
+        private void HandleExtraActionClicked()
+        {
+            if (extraActionUsedThisStage)
+                return;
+
+            // TODO(ads): Require rewarded ad before granting + bullets.
+            ShooterController shooterController = FindObjectOfType<ShooterController>();
+            if (shooterController != null)
+                shooterController.ApplyConfiguredStageAmmoBonusToAllWeapons();
+
+            extraActionUsedThisStage = true;
+            if (extraActionButton != null)
+                extraActionButton.interactable = false;
         }
     }
 }

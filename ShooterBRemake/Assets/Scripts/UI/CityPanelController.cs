@@ -21,8 +21,13 @@ namespace ShooterB
         [Header("Stage Cards")]
         public Transform stageListContainer;
         public CampaignStageEntryController stageEntryPrefab;
+        [Header("Stage Scroll")]
+        public ScrollRect stageScrollRect;
+        [Min(0f)] public float autoScrollDelaySeconds = 0.8f;
+        [Min(0.01f)] public float autoScrollDurationSeconds = 0.45f;
 
         private Coroutine briefingTypingCoroutine;
+        private Coroutine autoScrollCoroutine;
         private CityConfig[] allCities;
         private CityConfig currentCity;
 
@@ -45,8 +50,13 @@ namespace ShooterB
                 return;
 
             currentCity = city;
+            ResolveScrollReferences();
             ClearStageList();
             PopulateStageList(city);
+            Canvas.ForceUpdateCanvases();
+
+            if (stageScrollRect != null)
+                stageScrollRect.verticalNormalizedPosition = 1f;
 
             if (cityNameText != null)
                 cityNameText.text = CampaignLocalizationResolver.GetCityName(city);
@@ -61,6 +71,11 @@ namespace ShooterB
 
                 briefingTypingCoroutine = StartCoroutine(TypeBriefing(CampaignLocalizationResolver.GetCityBriefing(city)));
             }
+
+            if (autoScrollCoroutine != null)
+                StopCoroutine(autoScrollCoroutine);
+
+            autoScrollCoroutine = StartCoroutine(ScrollToLatestOpenedStageAfterDelay(city));
         }
 
         public void Hide()
@@ -69,6 +84,12 @@ namespace ShooterB
             {
                 StopCoroutine(briefingTypingCoroutine);
                 briefingTypingCoroutine = null;
+            }
+
+            if (autoScrollCoroutine != null)
+            {
+                StopCoroutine(autoScrollCoroutine);
+                autoScrollCoroutine = null;
             }
 
             gameObject.SetActive(false);
@@ -81,6 +102,11 @@ namespace ShooterB
                 return;
 
             Show(currentCity);
+        }
+
+        public bool IsShowingCity(CityConfig city)
+        {
+            return city != null && gameObject.activeInHierarchy && currentCity == city;
         }
 
         private void PopulateStageList(CityConfig city)
@@ -113,6 +139,81 @@ namespace ShooterB
 
             foreach (Transform child in stageListContainer)
                 Destroy(child.gameObject);
+        }
+
+        private void ResolveScrollReferences()
+        {
+            if (stageScrollRect == null && stageListContainer != null)
+                stageScrollRect = stageListContainer.GetComponentInParent<ScrollRect>(true);
+        }
+
+        private IEnumerator ScrollToLatestOpenedStageAfterDelay(CityConfig city)
+        {
+            if (city == null || city.stages == null || city.stages.Length == 0 || stageScrollRect == null)
+            {
+                autoScrollCoroutine = null;
+                yield break;
+            }
+
+            if (autoScrollDelaySeconds > 0f)
+                yield return new WaitForSecondsRealtime(autoScrollDelaySeconds);
+
+            // Ensure layout-driven content height has been calculated.
+            yield return null;
+            Canvas.ForceUpdateCanvases();
+
+            int targetIndex = GetLatestOpenedStageIndex(city);
+            float target = GetVerticalNormalizedPositionForIndex(targetIndex, city.stages.Length);
+            float start = 1f;
+            stageScrollRect.verticalNormalizedPosition = start;
+            float duration = Mathf.Max(0.01f, autoScrollDurationSeconds);
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                float eased = Mathf.SmoothStep(0f, 1f, t);
+                stageScrollRect.verticalNormalizedPosition = Mathf.Lerp(start, target, eased);
+                yield return null;
+            }
+
+            stageScrollRect.verticalNormalizedPosition = target;
+
+            autoScrollCoroutine = null;
+        }
+
+        private int GetLatestOpenedStageIndex(CityConfig city)
+        {
+            StageConfig activeStage = CampaignProgressManager.Instance.ActiveStageConfig;
+            bool activeMatchesCity =
+                CampaignProgressManager.Instance.ActiveCityConfig == city &&
+                activeStage != null;
+
+            if (activeMatchesCity)
+            {
+                int activeIndex = System.Array.IndexOf(city.stages, activeStage);
+                if (activeIndex >= 0)
+                    return activeIndex;
+            }
+
+            for (int i = city.stages.Length - 1; i >= 0; i--)
+            {
+                StageConfig stage = city.stages[i];
+                if (CampaignProgressManager.Instance.IsStageUnlocked(stage, city, allCities))
+                    return i;
+            }
+
+            return 0;
+        }
+
+        private static float GetVerticalNormalizedPositionForIndex(int index, int total)
+        {
+            if (total <= 1)
+                return 1f;
+
+            float t = Mathf.Clamp01(index / (float)(total - 1));
+            return 1f - t;
         }
 
         private IEnumerator TypeBriefing(string fullText)

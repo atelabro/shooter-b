@@ -146,6 +146,8 @@ namespace ShooterB
 
                 ["campaign.starting.default_stage"] = "Stage",
                 ["campaign.starting.start"] = "Start",
+                ["campaign.starting.plus_lives"] = "+2 Lives",
+                ["campaign.starting.plus_bullets"] = "+ Bullets",
 
                 ["achievements.scene.title"] = "ACHIEVEMENTS",
                 ["achievements.scene.general"] = "GENERAL",
@@ -301,6 +303,8 @@ namespace ShooterB
 
                 ["campaign.starting.default_stage"] = "Ниво",
                 ["campaign.starting.start"] = "Почеток",
+                ["campaign.starting.plus_lives"] = "+2 Животи",
+                ["campaign.starting.plus_bullets"] = "+ Куршуми",
 
                 ["achievements.scene.title"] = "ДОСТИГНУВАЊА",
                 ["achievements.scene.general"] = "ОПШТО",

@@ -33,6 +33,7 @@ namespace ShooterB
         public float ammoIconSpacing = 10f;
         public float ammoContainerWidth = 900f;
         public int maxDisplayedAmmoIcons = 10;
+        public int mrSulkoMaxDisplayedAmmoIcons = 20;
 
         [Header("Reload Feedback")]
         public Image reloadGlowImage;
@@ -194,7 +195,7 @@ namespace ShooterB
             int maxAmmo = shooterController.GetMaxAmmo();
             Sprite ammoSprite = shooterController.GetActiveWeaponAmmoSprite();
             int displayIconCount = GetDisplayAmmoIconCount(maxAmmo);
-            EnsureAmmoContainerWidth();
+            EnsureAmmoContainerWidth(displayIconCount);
 
             lastKnownMaxAmmo = maxAmmo;
             lastWeaponType = shooterController.GetActiveWeaponType();
@@ -239,8 +240,21 @@ namespace ShooterB
 
         private int GetDisplayAmmoIconCount(int maxAmmo)
         {
-            int iconLimit = Mathf.Max(1, maxDisplayedAmmoIcons);
+            int iconLimit = GetDisplayIconLimitForActiveWeapon();
             return Mathf.Min(maxAmmo, iconLimit);
+        }
+
+        private int GetDisplayIconLimitForActiveWeapon()
+        {
+            Constants.WeaponType? activeWeaponType = shooterController != null
+                ? shooterController.GetActiveWeaponType()
+                : null;
+
+            int defaultLimit = Mathf.Max(1, maxDisplayedAmmoIcons);
+            if (activeWeaponType == Constants.WeaponType.MrSulko)
+                return Mathf.Max(1, mrSulkoMaxDisplayedAmmoIcons);
+
+            return defaultLimit;
         }
 
         private int GetSpentAmmoDisplayCount(int maxAmmo, int currentAmmo)
@@ -373,14 +387,17 @@ namespace ShooterB
             layoutGroup.childForceExpandHeight = false;
         }
 
-        private void EnsureAmmoContainerWidth()
+        private void EnsureAmmoContainerWidth(int displayIconCount)
         {
             RectTransform containerRect = ammoContainer as RectTransform;
             if (containerRect == null)
                 return;
 
+            int safeDisplayCount = Mathf.Max(1, displayIconCount);
+            float requiredWidth = (ammoIconSize * safeDisplayCount) + (ammoIconSpacing * Mathf.Max(0, safeDisplayCount - 1));
+
             Vector2 size = containerRect.sizeDelta;
-            size.x = ammoContainerWidth;
+            size.x = Mathf.Max(ammoContainerWidth, requiredWidth);
             containerRect.sizeDelta = size;
         }
 

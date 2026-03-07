@@ -179,6 +179,16 @@ namespace ShooterB
             OnLivesChanged?.Invoke(Lives);
         }
 
+        public void AddBonusLives(int amount)
+        {
+            if (amount <= 0)
+                return;
+
+            Lives += amount;
+            OnLivesChanged?.Invoke(Lives);
+            Debug.Log($"[GameManager] Bonus lives added: +{amount}. Total lives: {Lives}");
+        }
+
         private void CalculateMultiplier()
         {
             Multiplier = Mathf.Max(1, Difficulty / 5);
