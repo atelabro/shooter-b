@@ -153,6 +153,8 @@ namespace ShooterB
                 ["achievements.scene.general"] = "GENERAL",
                 ["achievements.scene.daily_header_base"] = "DAILY AWARDS",
                 ["achievements.scene.daily_header_claimed"] = "DAILY AWARDS (CLAIMED)",
+                ["achievements.daily_ad_bonus.get_format"] = "Get +{0} coins",
+                ["achievements.daily_ad_bonus.claimed"] = "CLAIMED",
                 ["achievements.status.locked"] = "LOCKED",
 
                 ["armory.scene.title"] = "ARMORY",
@@ -310,6 +312,8 @@ namespace ShooterB
                 ["achievements.scene.general"] = "ОПШТО",
                 ["achievements.scene.daily_header_base"] = "ДНЕВНИ",
                 ["achievements.scene.daily_header_claimed"] = "ДНЕВНИ (ГОТОВО)",
+                ["achievements.daily_ad_bonus.get_format"] = "Земи +{0} златници",
+                ["achievements.daily_ad_bonus.claimed"] = "ЗЕМЕНО",
                 ["achievements.status.locked"] = "ЗАКЛУЧЕНО",
 
                 ["armory.scene.title"] = "ОРУЖЈЕ",

@@ -573,10 +573,23 @@ namespace ShooterB
                 LocalizationManager.Instance.Get("campaign.hud.popup.daily_set_body", "All daily objectives completed"),
                 DailyAwardsManager.Instance.GetDailySetBonusCoins(),
                 false,
-                "DAILY_SET");
+                "DAILY_SET",
+                true,
+                DailyAwardsManager.Instance.GetDailyAdWatchBonusCoins(),
+                DailyAwardsManager.Instance.IsDailyAdWatchBonusGranted(),
+                () => DailyAwardsManager.Instance.TryClaimDailyAdWatchBonus("campaign_hud_popup"));
         }
 
-        private void ShowRewardPopup(string header, string title, int coins, bool isDebug, string source)
+        private void ShowRewardPopup(
+            string header,
+            string title,
+            int coins,
+            bool isDebug,
+            string source,
+            bool showActionButton = false,
+            int actionBonusCoins = 0,
+            bool actionAlreadyClaimed = false,
+            Func<bool> onActionClick = null)
         {
             EnsureRewardPopupQueue();
 
@@ -594,7 +607,11 @@ namespace ShooterB
                 logPrefix = "[CampaignHUD]",
                 prefab = achievementPopupPrefab,
                 container = parent,
-                lifetime = achievementPopupLifetime
+                lifetime = showActionButton ? Mathf.Max(achievementPopupLifetime, 8f) : achievementPopupLifetime,
+                showActionButton = showActionButton,
+                actionBonusCoins = actionBonusCoins,
+                actionAlreadyClaimed = actionAlreadyClaimed,
+                onActionClick = onActionClick
             };
 
             rewardPopupQueue.Enqueue(request);

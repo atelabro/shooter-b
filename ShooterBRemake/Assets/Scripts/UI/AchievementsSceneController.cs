@@ -19,6 +19,8 @@ namespace ShooterB
         public TextMeshProUGUI sceneTitleText;
         public TextMeshProUGUI generalTitleText;
         public TextMeshProUGUI dailyAwardsTitleText;
+        public Button dailyAdBonusButton;
+        public TextMeshProUGUI dailyAdBonusButtonText;
         public Button backButton;
         public TextMeshProUGUI backButtonText;
 
@@ -46,6 +48,7 @@ namespace ShooterB
             dailyAwardsManager.OnDailyObjectiveProgressChanged += HandleDailyObjectiveProgressChanged;
             dailyAwardsManager.OnDailyObjectiveCompleted += HandleDailyObjectiveCompleted;
             dailyAwardsManager.OnDailySetCompleted += HandleDailySetCompleted;
+            dailyAwardsManager.OnDailyAdWatchBonusClaimed += HandleDailyAdWatchBonusClaimed;
             LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
             RefreshLocalizedStaticTexts();
             BuildAchievementRows();
@@ -64,6 +67,7 @@ namespace ShooterB
                 dailyAwardsManager.OnDailyObjectiveProgressChanged -= HandleDailyObjectiveProgressChanged;
                 dailyAwardsManager.OnDailyObjectiveCompleted -= HandleDailyObjectiveCompleted;
                 dailyAwardsManager.OnDailySetCompleted -= HandleDailySetCompleted;
+                dailyAwardsManager.OnDailyAdWatchBonusClaimed -= HandleDailyAdWatchBonusClaimed;
             }
 
             if (LocalizationManager.HasInstance)
@@ -148,8 +152,25 @@ namespace ShooterB
                     dailyAwardsTitleText = titleTransform.GetComponent<TextMeshProUGUI>();
             }
 
+            if (dailyAdBonusButton == null && dailyListRoot != null)
+            {
+                Transform buttonTransform = dailyListRoot.Find("DailyAwardsHeader/GetAdBonusButton");
+                if (buttonTransform != null)
+                    dailyAdBonusButton = buttonTransform.GetComponent<Button>();
+            }
+
+            if (dailyAdBonusButtonText == null && dailyAdBonusButton != null)
+                dailyAdBonusButtonText = dailyAdBonusButton.GetComponentInChildren<TextMeshProUGUI>(true);
+
             if (backButtonText == null && backButton != null)
                 backButtonText = backButton.GetComponentInChildren<TextMeshProUGUI>(true);
+
+            EnsureDailyAdBonusButton();
+            if (dailyAdBonusButton != null)
+            {
+                dailyAdBonusButton.onClick.RemoveListener(OnDailyAdBonusButtonClicked);
+                dailyAdBonusButton.onClick.AddListener(OnDailyAdBonusButtonClicked);
+            }
 
             Debug.Log($"[AchievementsSceneController] contentRoot={(contentRoot != null ? contentRoot.name : "null")} achievementsListRoot={(achievementsListRoot != null ? achievementsListRoot.name : "null")} dailyListRoot={(dailyListRoot != null ? dailyListRoot.name : "null")} rowPrefab={(rowPrefab != null ? rowPrefab.name : "null")} dailyRowPrefab={(dailyRowPrefab != null ? dailyRowPrefab.name : "null")} generalTitleMarker={(generalTitleMarker != null ? generalTitleMarker.name : "null")}");
         }
@@ -291,6 +312,11 @@ namespace ShooterB
             RefreshDailyAwardsHeader();
         }
 
+        private void HandleDailyAdWatchBonusClaimed()
+        {
+            RefreshDailyAwardsHeader();
+        }
+
         private void RefreshDailyRow(int slotIndex)
         {
             IReadOnlyList<DailyAwardsManager.DailyObjectiveState> states = DailyAwardsManager.Instance.GetTodayObjectives();
@@ -375,6 +401,8 @@ namespace ShooterB
 
             if (backButtonText != null)
                 backButtonText.text = LocalizationManager.Instance.Get("common.back", "Back");
+
+            RefreshDailyAdBonusButtonState();
         }
 
         private static string GetLockedStatusText()
@@ -393,13 +421,97 @@ namespace ShooterB
             if (dailyAwardsManager.IsDailySetBonusGranted())
             {
                 dailyAwardsTitleText.text = claimedText;
-                return;
+            }
+            else
+            {
+                int completedCount = dailyAwardsManager.GetCompletedTodayCount();
+                int objectiveCount = dailyAwardsManager.GetTodayObjectives().Count;
+                objectiveCount = Mathf.Max(1, objectiveCount);
+                dailyAwardsTitleText.text = $"{baseText} ({completedCount}/{objectiveCount})";
             }
 
-            int completedCount = dailyAwardsManager.GetCompletedTodayCount();
-            int objectiveCount = dailyAwardsManager.GetTodayObjectives().Count;
-            objectiveCount = Mathf.Max(1, objectiveCount);
-            dailyAwardsTitleText.text = $"{baseText} ({completedCount}/{objectiveCount})";
+            RefreshDailyAdBonusButtonState();
+        }
+
+        private void OnDailyAdBonusButtonClicked()
+        {
+            if (dailyAwardsManager == null)
+                return;
+
+            dailyAwardsManager.TryClaimDailyAdWatchBonus("achievements_header");
+            RefreshDailyAdBonusButtonState();
+        }
+
+        private void EnsureDailyAdBonusButton()
+        {
+            if (dailyAdBonusButton != null)
+                return;
+
+            Transform headerTransform = dailyListRoot != null ? dailyListRoot.Find("DailyAwardsHeader") : null;
+            if (headerTransform == null)
+                return;
+
+            GameObject buttonObject = new GameObject("GetAdBonusButton", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button));
+            buttonObject.transform.SetParent(headerTransform, false);
+
+            RectTransform buttonRect = buttonObject.GetComponent<RectTransform>();
+            buttonRect.anchorMin = new Vector2(1f, 1f);
+            buttonRect.anchorMax = new Vector2(1f, 1f);
+            buttonRect.pivot = new Vector2(1f, 1f);
+            buttonRect.sizeDelta = new Vector2(320f, 46f);
+            buttonRect.anchoredPosition = new Vector2(-12f, -12f);
+
+            Image buttonImage = buttonObject.GetComponent<Image>();
+            buttonImage.color = new Color(0.22f, 0.58f, 0.19f, 0.95f);
+
+            dailyAdBonusButton = buttonObject.GetComponent<Button>();
+            ColorBlock colors = dailyAdBonusButton.colors;
+            colors.normalColor = Color.white;
+            colors.highlightedColor = new Color(0.9f, 0.9f, 0.9f, 1f);
+            colors.pressedColor = new Color(0.82f, 0.82f, 0.82f, 1f);
+            colors.disabledColor = new Color(0.52f, 0.52f, 0.52f, 0.9f);
+            dailyAdBonusButton.colors = colors;
+
+            GameObject textObject = new GameObject("Text", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+            textObject.transform.SetParent(buttonObject.transform, false);
+
+            RectTransform textRect = textObject.GetComponent<RectTransform>();
+            textRect.anchorMin = Vector2.zero;
+            textRect.anchorMax = Vector2.one;
+            textRect.offsetMin = new Vector2(10f, 4f);
+            textRect.offsetMax = new Vector2(-10f, -4f);
+
+            dailyAdBonusButtonText = textObject.GetComponent<TextMeshProUGUI>();
+            dailyAdBonusButtonText.alignment = TextAlignmentOptions.Center;
+            dailyAdBonusButtonText.fontSize = 24f;
+            dailyAdBonusButtonText.fontStyle = FontStyles.Bold;
+            dailyAdBonusButtonText.enableWordWrapping = false;
+            dailyAdBonusButtonText.color = Color.white;
+        }
+
+        private void RefreshDailyAdBonusButtonState()
+        {
+            if (dailyAdBonusButton == null || dailyAwardsManager == null)
+                return;
+
+            bool canClaim = dailyAwardsManager.CanClaimDailyAdWatchBonus();
+            bool alreadyClaimed = dailyAwardsManager.IsDailyAdWatchBonusGranted();
+            dailyAdBonusButton.gameObject.SetActive(canClaim || alreadyClaimed);
+
+            if (dailyAdBonusButtonText != null)
+            {
+                if (alreadyClaimed)
+                {
+                    dailyAdBonusButtonText.text = LocalizationManager.Instance.Get("achievements.daily_ad_bonus.claimed", "CLAIMED");
+                }
+                else
+                {
+                    string format = LocalizationManager.Instance.Get("achievements.daily_ad_bonus.get_format", "Get +{0} coins");
+                    dailyAdBonusButtonText.text = string.Format(format, dailyAwardsManager.GetDailyAdWatchBonusCoins());
+                }
+            }
+
+            dailyAdBonusButton.interactable = canClaim;
         }
     }
 }

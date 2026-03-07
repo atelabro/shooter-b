@@ -167,7 +167,6 @@ open -a "Unity Hub" .
 - MenuController - Campaign, Armory, Achievements, Quit; daily badge on Achievements button
 
 ### Known Issues / TODO
-- Spawn configs missing for campaign stages 1 and 2
-- Stage unlock bug: Countryside stages 1 and 2 may all appear unlocked (check starsRequiredToUnlock)
+- Rewarded ads are not integrated yet for pre-stage bonuses (+2 lives / +ammo)
 - Campaign scoring revisit: accuracy % or kill count may suit fixed stages better than points
 - GameManager.OnBirdsKilledChanged is fired but never subscribed to - dead code to remove

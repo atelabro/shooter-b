@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -18,6 +19,10 @@ namespace ShooterB
             public GameObject prefab;
             public Transform container;
             public float lifetime;
+            public bool showActionButton;
+            public int actionBonusCoins;
+            public bool actionAlreadyClaimed;
+            public Func<bool> onActionClick;
         }
 
         private readonly Queue<RewardPopupRequest> pending = new Queue<RewardPopupRequest>();
@@ -82,7 +87,14 @@ namespace ShooterB
             AchievementUnlockPopupController popupController = activePopup.GetComponent<AchievementUnlockPopupController>();
             if (popupController != null)
             {
-                popupController.ConfigureCustom(request.header, request.title, request.coins);
+                popupController.ConfigureCustom(
+                    request.header,
+                    request.title,
+                    request.coins,
+                    request.showActionButton,
+                    request.actionBonusCoins,
+                    request.actionAlreadyClaimed,
+                    request.onActionClick);
             }
             else
             {

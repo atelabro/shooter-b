@@ -59,9 +59,11 @@ namespace ShooterB
         private const string DayKey = PrefsPrefix + "_CurrentDay";
         private const string SelectedIdsKey = PrefsPrefix + "_SelectedObjectiveIds";
         private const string SetBonusGrantedKey = PrefsPrefix + "_SetBonusGranted";
+        private const string AdWatchBonusGrantedKey = PrefsPrefix + "_AdWatchBonusGranted";
         private const int DailyObjectiveCount = 3;
         private const int DailyObjectiveRewardCoins = 5;
         private const int DailySetBonusCoins = 20;
+        private const int DailyAdWatchBonusCoins = 10;
 
         private static DailyAwardsManager instance;
         public static DailyAwardsManager Instance
@@ -82,6 +84,7 @@ namespace ShooterB
         public event Action<int> OnDailyObjectiveProgressChanged;
         public event Action<int> OnDailyObjectiveCompleted;
         public event Action OnDailySetCompleted;
+        public event Action OnDailyAdWatchBonusClaimed;
 
         private readonly Dictionary<DailyObjectiveId, DailyObjectiveDefinition> definitions =
             new Dictionary<DailyObjectiveId, DailyObjectiveDefinition>();
@@ -91,6 +94,7 @@ namespace ShooterB
         private readonly bool[] completedBySlot = new bool[DailyObjectiveCount];
         private readonly bool[] rewardGrantedBySlot = new bool[DailyObjectiveCount];
         private bool setBonusGranted;
+        private bool adWatchBonusGranted;
         private CampaignDuckSpawner subscribedCampaignSpawner;
 
         private void Awake()
@@ -207,6 +211,38 @@ namespace ShooterB
             return setBonusGranted;
         }
 
+        public int GetDailyAdWatchBonusCoins()
+        {
+            return DailyAdWatchBonusCoins;
+        }
+
+        public bool IsDailyAdWatchBonusGranted()
+        {
+            return adWatchBonusGranted;
+        }
+
+        public bool CanClaimDailyAdWatchBonus()
+        {
+            return IsTodaySetComplete() && !adWatchBonusGranted;
+        }
+
+        public bool TryClaimDailyAdWatchBonus(string source)
+        {
+            EnsureTodayInitialized();
+
+            if (!CanClaimDailyAdWatchBonus())
+                return false;
+
+            // TODO: Integrate rewarded ad watch flow here and only grant coins after successful ad completion.
+            adWatchBonusGranted = true;
+            PlayerPrefs.SetInt(AdWatchBonusGrantedKey, 1);
+            GameManager.Instance.AddCoins(DailyAdWatchBonusCoins);
+            PlayerPrefs.Save();
+            OnDailyAdWatchBonusClaimed?.Invoke();
+            Debug.Log($"[DailyAwards] Ad watch bonus claimed from {source} (+{DailyAdWatchBonusCoins} coins)");
+            return true;
+        }
+
         public void DebugResetTodayProgress()
         {
             EnsureTodayInitialized();
@@ -223,7 +259,9 @@ namespace ShooterB
             }
 
             setBonusGranted = false;
+            adWatchBonusGranted = false;
             PlayerPrefs.SetInt(SetBonusGrantedKey, 0);
+            PlayerPrefs.SetInt(AdWatchBonusGrantedKey, 0);
             PlayerPrefs.Save();
             Debug.Log("[DailyAwards] Debug reset: today's objectives progress set to 0.");
         }
@@ -462,10 +500,12 @@ namespace ShooterB
             Array.Clear(completedBySlot, 0, completedBySlot.Length);
             Array.Clear(rewardGrantedBySlot, 0, rewardGrantedBySlot.Length);
             setBonusGranted = false;
+            adWatchBonusGranted = false;
 
             PlayerPrefs.SetString(DayKey, dayToken);
             PlayerPrefs.SetString(SelectedIdsKey, string.Join(",", selectedObjectiveIds.Select(id => ((int)id).ToString()).ToArray()));
             PlayerPrefs.SetInt(SetBonusGrantedKey, 0);
+            PlayerPrefs.SetInt(AdWatchBonusGrantedKey, 0);
             for (int slot = 0; slot < DailyObjectiveCount; slot++)
             {
                 PlayerPrefs.SetInt(GetProgressKey(slot), 0);
@@ -489,6 +529,7 @@ namespace ShooterB
             }
 
             setBonusGranted = PlayerPrefs.GetInt(SetBonusGrantedKey, 0) == 1;
+            adWatchBonusGranted = PlayerPrefs.GetInt(AdWatchBonusGrantedKey, 0) == 1;
         }
 
         private bool TryLoadSelectedObjectives()
