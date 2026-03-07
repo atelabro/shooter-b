@@ -133,19 +133,7 @@ namespace ShooterB
 
         private IEnumerator SpawnSequenceCoroutine(StageSpawnConfig config)
         {
-            foreach (SpawnEntry entry in config.spawnSequence)
-            {
-                if (!isSpawning || GameManager.Instance.IsGameOver)
-                    yield break;
-
-                yield return new WaitForSeconds(entry.delay);
-
-                if (!isSpawning || GameManager.Instance.IsGameOver)
-                    yield break;
-
-                SpawnDuck(entry, config);
-            }
-
+            yield return StartCoroutine(SpawnEntriesCoroutine(config.spawnSequence, config));
             StartCoroutine(WaitForAllDucksResolved());
         }
 
@@ -165,26 +153,50 @@ namespace ShooterB
                     yield return new WaitForSeconds(wave.announcementDuration);
                 }
 
-                if (wave.spawnSequence != null)
-                {
-                    foreach (SpawnEntry entry in wave.spawnSequence)
-                    {
-                        if (!isSpawning || GameManager.Instance.IsGameOver)
-                            yield break;
-
-                        yield return new WaitForSeconds(entry.delay);
-
-                        if (!isSpawning || GameManager.Instance.IsGameOver)
-                            yield break;
-
-                        SpawnDuck(entry, config);
-                    }
-                }
-
+                yield return StartCoroutine(SpawnEntriesCoroutine(wave.spawnSequence, config));
                 yield return StartCoroutine(WaitForWaveDucksResolved(waveNumber));
             }
 
             StartCoroutine(WaitForAllDucksResolved());
+        }
+
+        private IEnumerator SpawnEntriesCoroutine(SpawnEntry[] entries, StageSpawnConfig config)
+        {
+            if (entries == null)
+                yield break;
+
+            foreach (SpawnEntry entry in entries)
+            {
+                if (!isSpawning || GameManager.Instance.IsGameOver)
+                    yield break;
+
+                yield return new WaitForSeconds(entry.delay);
+
+                if (!isSpawning || GameManager.Instance.IsGameOver)
+                    yield break;
+
+                if (entry.patternRef != null && entry.patternRef.entries != null)
+                {
+                    foreach (SpawnEntry patternEntry in entry.patternRef.entries)
+                    {
+                        if (!isSpawning || GameManager.Instance.IsGameOver)
+                            yield break;
+
+                        yield return new WaitForSeconds(patternEntry.delay);
+
+                        if (!isSpawning || GameManager.Instance.IsGameOver)
+                            yield break;
+
+                        SpawnEntry overridden = patternEntry;
+                        overridden.duckType = entry.duckType;
+                        SpawnDuck(overridden, config);
+                    }
+                }
+                else
+                {
+                    SpawnDuck(entry, config);
+                }
+            }
         }
 
         private IEnumerator WaitForWaveDucksResolved(int waveNumber)

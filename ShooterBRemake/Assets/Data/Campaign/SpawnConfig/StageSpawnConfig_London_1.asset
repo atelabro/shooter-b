@@ -12,56 +12,88 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7d10ede515c4c36b362e617a940917, type: 3}
   m_Name: StageSpawnConfig_London_1
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageSpawnConfig
-  spawnSequence:
-  - duckType: 12
-    delay: 0.92
-  - duckType: 12
-    delay: 0.82
-  - duckType: 13
-    delay: 0.92
-  - duckType: 12
-    delay: 0.82
-  - duckType: 13
-    delay: 0.82
-  - duckType: 11
-    delay: 0.82
-  - duckType: 11
-    delay: 0.72
-  - duckType: 12
-    delay: 0.82
-  - duckType: 12
-    delay: 0.82
-  - duckType: 13
-    delay: 0.72
-  - duckType: 11
-    delay: 0.82
-  - duckType: 11
-    delay: 0.72
-  - duckType: 11
-    delay: 0.82
-  - duckType: 12
-    delay: 0.72
-  - duckType: 13
-    delay: 0.72
-  - duckType: 11
-    delay: 0.72
-  - duckType: 11
-    delay: 0.72
-  - duckType: 11
-    delay: 0.62
-  - duckType: 12
-    delay: 0.72
-  - duckType: 13
-    delay: 0.72
-  - duckType: 11
-    delay: 0.62
-  - duckType: 11
-    delay: 0.62
-  - duckType: 13
-    delay: 0.72
-  - duckType: 11
-    delay: 0.62
-  weightGoStraight: 0.2
-  weightGoTop: 0.49
-  weightGoBottom: 0.31
-  duckSpeedMultiplier: 1.36
+  spawnSequence: []
+  waves:
+  - showAnnouncement: 0
+    announcementDuration: 3
+    spawnSequence:
+    - duckType: 11
+      delay: 0
+      pathType: 1
+      speedMultiplier: 1
+    - duckType: 11
+      delay: 0
+      pathType: 3
+      speedMultiplier: 1
+    - duckType: 11
+      delay: 0
+      pathType: 5
+      speedMultiplier: 1
+    - duckType: 11
+      delay: 0
+      pathType: 7
+      speedMultiplier: 1
+    - duckType: 11
+      delay: 1.1
+      pathType: 8
+      speedMultiplier: 1
+    - duckType: 11
+      delay: 0.55
+      pathType: 6
+      speedMultiplier: 1
+    - duckType: 11
+      delay: 0.55
+      pathType: 4
+      speedMultiplier: 1
+    - duckType: 11
+      delay: 0.55
+      pathType: 2
+      speedMultiplier: 1
+    - duckType: 12
+      delay: 1.2
+      pathType: 9
+      speedMultiplier: 1
+    - duckType: 12
+      delay: 0
+      pathType: 10
+      speedMultiplier: 1
+    - duckType: 12
+      delay: 1.2
+      pathType: 2
+      speedMultiplier: 1
+    - duckType: 12
+      delay: 0
+      pathType: 4
+      speedMultiplier: 1
+    - duckType: 12
+      delay: 0
+      pathType: 6
+      speedMultiplier: 1
+    - duckType: 12
+      delay: 0
+      pathType: 8
+      speedMultiplier: 1
+    - duckType: 11
+      delay: 1.2
+      pathType: 13
+      speedMultiplier: 1
+    - duckType: 11
+      delay: 0.3
+      pathType: 15
+      speedMultiplier: 1
+    - duckType: 11
+      delay: 0
+      pathType: 14
+      speedMultiplier: 1
+    - duckType: 13
+      delay: 1.3
+      pathType: 4
+      speedMultiplier: 1
+    - duckType: 13
+      delay: 0
+      pathType: 5
+      speedMultiplier: 1
+  weightGoStraight: 0.42
+  weightGoTop: 0.32
+  weightGoBottom: 0.26
+  duckSpeedMultiplier: 0.94

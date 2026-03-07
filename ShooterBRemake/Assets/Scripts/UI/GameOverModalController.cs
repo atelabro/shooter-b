@@ -68,15 +68,10 @@ namespace ShooterB
             lastIsNewHighScore = isNewHighScore;
 
             bool isCampaign = mode == Constants.GameMode.Campaign;
-            string scoreFormat = LocalizationManager.Instance.Get("campaign.gameover.score_format", "Score: {0}");
             string highFormat = LocalizationManager.Instance.Get("campaign.gameover.high_format", "High: {0}");
-            string modeFormat = LocalizationManager.Instance.Get("campaign.gameover.mode_format", "Mode: {0}");
-            string modeLabel = isCampaign
-                ? LocalizationManager.Instance.Get("campaign.mode.campaign", "Campaign")
-                : mode.ToString();
 
             if (finalScoreText != null)
-                finalScoreText.text = string.Format(scoreFormat, finalScore);
+                finalScoreText.gameObject.SetActive(false);
 
             if (highScoreText != null)
             {
@@ -86,7 +81,7 @@ namespace ShooterB
             }
 
             if (modeText != null)
-                modeText.text = string.Format(modeFormat, modeLabel);
+                modeText.gameObject.SetActive(false);
 
             if (newHighScoreBadge != null)
                 newHighScoreBadge.SetActive(!isCampaign && isNewHighScore);

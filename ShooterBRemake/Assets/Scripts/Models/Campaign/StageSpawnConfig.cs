@@ -7,12 +7,14 @@ namespace ShooterB
     public struct SpawnEntry
     {
         public Constants.DuckType duckType;
-        [Tooltip("Seconds to wait after the previous spawn before spawning this duck")]
+        [Tooltip("Seconds to wait after the previous spawn before spawning this duck (or before the first duck of the pattern if patternRef is set).")]
         public float delay;
-        [Tooltip("Movement path for this duck. Random uses weight-based pattern switching.")]
+        [Tooltip("Movement path for this duck. Ignored when patternRef is set.")]
         public Constants.DuckPathType pathType;
-        [Tooltip("Per-duck speed multiplier. <= 0 defaults to 1.")]
+        [Tooltip("Per-duck speed multiplier. <= 0 defaults to 1. Ignored when patternRef is set.")]
         public float speedMultiplier;
+        [Tooltip("If set, expands this entry into all ducks from the referenced pattern. duckType, pathType, and speedMultiplier are ignored.")]
+        public DuckPatternConfig patternRef;
     }
 
     [Serializable]

@@ -11,6 +11,8 @@ namespace ShooterB
         public CanvasGroup canvasGroup;
 
         private Coroutine activeCoroutine;
+        private Color baseTextColor = Color.white;
+        private Vector3 baseTextScale = Vector3.one;
 
         private void Awake()
         {
@@ -22,9 +24,16 @@ namespace ShooterB
 
             if (canvasGroup != null)
             {
-                canvasGroup.alpha = 0f;
+                canvasGroup.alpha = 1f;
                 canvasGroup.blocksRaycasts = false;
                 canvasGroup.interactable = false;
+            }
+
+            if (waveText != null)
+            {
+                baseTextColor = waveText.color;
+                baseTextScale = waveText.rectTransform.localScale;
+                SetTextVisual(0f, 0.92f);
             }
         }
 
@@ -41,48 +50,59 @@ namespace ShooterB
 
         private IEnumerator ShowWaveCoroutine(int waveNumber, float duration)
         {
-            if (waveText == null || canvasGroup == null)
+            if (waveText == null)
                 yield break;
 
             string format = LocalizationManager.Instance.Get("campaign.wave.label", "Wave {0}");
             waveText.text = string.Format(format, waveNumber);
 
             gameObject.SetActive(true);
-            canvasGroup.alpha = 0f;
+            SetTextVisual(0f, 0.92f);
 
-            float fadeDuration = 0.3f;
+            float fadeDuration = 0.22f;
             float totalDuration = Mathf.Max(0f, duration);
             float holdDuration = Mathf.Max(0f, totalDuration - (fadeDuration * 2f));
 
-            yield return FadeCanvas(0f, 1f, fadeDuration);
+            yield return AnimateText(0f, 1f, 0.92f, 1.04f, fadeDuration);
             if (holdDuration > 0f)
                 yield return new WaitForSeconds(holdDuration);
-            yield return FadeCanvas(1f, 0f, fadeDuration);
+            yield return AnimateText(1f, 0f, 1.02f, 0.96f, fadeDuration);
 
-            canvasGroup.alpha = 0f;
+            SetTextVisual(0f, 0.96f);
             activeCoroutine = null;
         }
 
-        private IEnumerator FadeCanvas(float from, float to, float duration)
+        private IEnumerator AnimateText(float fromAlpha, float toAlpha, float fromScale, float toScale, float duration)
         {
             if (duration <= 0f)
             {
-                canvasGroup.alpha = to;
+                SetTextVisual(toAlpha, toScale);
                 yield break;
             }
 
             float elapsed = 0f;
-            canvasGroup.alpha = from;
+            SetTextVisual(fromAlpha, fromScale);
 
             while (elapsed < duration)
             {
                 elapsed += Time.deltaTime;
                 float t = Mathf.Clamp01(elapsed / duration);
-                canvasGroup.alpha = Mathf.Lerp(from, to, t);
+                SetTextVisual(Mathf.Lerp(fromAlpha, toAlpha, t), Mathf.Lerp(fromScale, toScale, t));
                 yield return null;
             }
 
-            canvasGroup.alpha = to;
+            SetTextVisual(toAlpha, toScale);
+        }
+
+        private void SetTextVisual(float alpha, float scaleMultiplier)
+        {
+            if (waveText == null)
+                return;
+
+            Color c = baseTextColor;
+            c.a = Mathf.Clamp01(alpha);
+            waveText.color = c;
+            waveText.rectTransform.localScale = baseTextScale * scaleMultiplier;
         }
     }
 }
