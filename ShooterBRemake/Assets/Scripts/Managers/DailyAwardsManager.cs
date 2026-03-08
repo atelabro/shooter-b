@@ -625,7 +625,8 @@ namespace ShooterB
             return duckType == Constants.DuckType.MK_PHALARX ||
                    duckType == Constants.DuckType.MK_ARCHER ||
                    duckType == Constants.DuckType.MK_VOJVODA ||
-                   duckType == Constants.DuckType.FRENCH_REVOLUTIONARY;
+                   duckType == Constants.DuckType.FRENCH_REVOLUTIONARY ||
+                   duckType == Constants.DuckType.FRENCH_MUSKETEER;
         }
 
         private static bool IsEligibleCampaignProgress()

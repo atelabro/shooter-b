@@ -78,7 +78,8 @@ namespace ShooterB
             JAPANESE_SAMURAI,
             USA_BOSS_DUCK,
             JAPANESE_STRAW_DUCK,
-            JAPANESE_KIMONO_DUCK
+            JAPANESE_KIMONO_DUCK,
+            FRENCH_MUSKETEER
         }
 
         public static string GetDuckDisplayName(DuckType type)
@@ -96,6 +97,7 @@ namespace ShooterB
                 case DuckType.FRENCH_REVOLUTIONARY: return "French Revolutionary";
                 case DuckType.FRENCH_NAPOLEON: return "French Napoleon";
                 case DuckType.FRENCH_ARTIST: return "French Artist";
+                case DuckType.FRENCH_MUSKETEER: return "French Musketeer";
                 case DuckType.BRITISH_REDCOAT: return "British Redcoat";
                 case DuckType.BRITISH_POLICE: return "British Police";
                 case DuckType.BRITISH_PUNK: return "British Punk";
@@ -126,6 +128,7 @@ namespace ShooterB
                 case DuckType.FRENCH_REVOLUTIONARY: return "FRENCH_REVOLUTIONARY";
                 case DuckType.FRENCH_NAPOLEON: return "FRENCH_NAPOLEON";
                 case DuckType.FRENCH_ARTIST: return "FRENCH_ARTIST";
+                case DuckType.FRENCH_MUSKETEER: return "FRENCH_MUSKETEER";
                 case DuckType.BRITISH_REDCOAT: return "BRITISH_REDCOAT";
                 case DuckType.BRITISH_POLICE: return "BRITISH_POLICE";
                 case DuckType.BRITISH_PUNK: return "BRITISH_PUNK";
@@ -207,6 +210,7 @@ namespace ShooterB
             public const int FRENCH_REVOLUTIONARY = 2;
             public const int FRENCH_NAPOLEON = 2;
             public const int FRENCH_ARTIST = 2;
+            public const int FRENCH_MUSKETEER = 2;
             public const int BRITISH_REDCOAT = 2;
             public const int BRITISH_POLICE = 3;
             public const int BRITISH_PUNK = 4;
@@ -233,6 +237,7 @@ namespace ShooterB
                     case DuckType.FRENCH_REVOLUTIONARY: return FRENCH_REVOLUTIONARY;
                     case DuckType.FRENCH_NAPOLEON: return FRENCH_NAPOLEON;
                     case DuckType.FRENCH_ARTIST: return FRENCH_ARTIST;
+                    case DuckType.FRENCH_MUSKETEER: return FRENCH_MUSKETEER;
                     case DuckType.BRITISH_REDCOAT: return BRITISH_REDCOAT;
                     case DuckType.BRITISH_POLICE: return BRITISH_POLICE;
                     case DuckType.BRITISH_PUNK: return BRITISH_PUNK;
@@ -250,7 +255,7 @@ namespace ShooterB
 
         public static class DuckSpawnProbability
         {
-            public const float TYPE_0 = 0.58f;
+            public const float TYPE_0 = 0.56f;
             public const float TYPE_1 = 0.13f;
             public const float TYPE_2 = 0.07f;
             public const float TYPE_3 = 0.06f;
@@ -261,6 +266,7 @@ namespace ShooterB
             public const float BRITISH_POLICE = 0.02f;
             public const float BRITISH_PUNK = 0.02f;
             public const float JAPANESE_SAMURAI = 0.02f;
+            public const float FRENCH_MUSKETEER = 0.02f;
 
             public const float SINGLE_DUCK = 0.60f;
             public const float DOUBLE_DUCK = 0.20f;
