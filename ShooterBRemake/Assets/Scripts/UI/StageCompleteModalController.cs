@@ -30,6 +30,9 @@ namespace ShooterB
         public Button menuButton;
         private Button legacyBackFallbackButton;
         private StageConfig lastShownStage;
+        private bool shouldShowCityFirstCompletionAdOnContinue;
+        private CityConfig cityForOneTimeCompletionAd;
+        private bool continueFlowInProgress;
 
         private void Start()
         {
@@ -75,10 +78,13 @@ namespace ShooterB
         {
             EnsureModalRoot();
             lastShownStage = config;
+            shouldShowCityFirstCompletionAdOnContinue = false;
+            cityForOneTimeCompletionAd = null;
 
             int stars = CampaignProgressManager.Instance.CalculateStars(config, score);
 
             CampaignProgressManager.Instance.SaveStageStars(config.stageIndex, stars);
+            EvaluateCityCompletionAdEligibility(config);
 
             if (stageNameText != null)
                 stageNameText.text = CampaignLocalizationResolver.GetStageName(config);
@@ -126,8 +132,35 @@ namespace ShooterB
 
         public void OnContinueClicked()
         {
-            Time.timeScale = 1f;
+            if (continueFlowInProgress)
+                return;
 
+            Time.timeScale = 1f;
+            if (shouldShowCityFirstCompletionAdOnContinue && cityForOneTimeCompletionAd != null)
+            {
+                continueFlowInProgress = true;
+                SetNavigationButtonsInteractable(false);
+                RewardedAdService.Instance.ShowRewardedAd(
+                    RewardedAdPlacement.CityFirstCompletion,
+                    "city_first_completion_continue",
+                    result =>
+                    {
+                        CampaignProgressManager.Instance.MarkCityFirstCompletionAdShown(cityForOneTimeCompletionAd);
+                        Debug.Log($"[StageComplete] City first-completion ad attempted for {cityForOneTimeCompletionAd.cityName}. Result={result}");
+                        shouldShowCityFirstCompletionAdOnContinue = false;
+                        cityForOneTimeCompletionAd = null;
+                        continueFlowInProgress = false;
+                        SetNavigationButtonsInteractable(true);
+                        ContinueAfterAdGate();
+                    });
+                return;
+            }
+
+            ContinueAfterAdGate();
+        }
+
+        private void ContinueAfterAdGate()
+        {
             StageConfig activeStage = CampaignProgressManager.Instance.ActiveStageConfig;
             StageConfig nextStage = CampaignProgressManager.Instance.GetNextStageInActiveCityRow();
             CityConfig activeCity = CampaignProgressManager.Instance.ActiveCityConfig;
@@ -176,6 +209,42 @@ namespace ShooterB
         public void OnMenuClicked()
         {
             OnBackClicked();
+        }
+
+        private void EvaluateCityCompletionAdEligibility(StageConfig completedStage)
+        {
+            CampaignProgressManager progress = CampaignProgressManager.Instance;
+            if (progress == null || completedStage == null)
+                return;
+
+            CityConfig completedCity = ResolveCityForStage(completedStage);
+            if (completedCity == null)
+                return;
+
+            bool cityCompletedNow = progress.IsCityCompleted(completedCity);
+            if (!cityCompletedNow)
+                return;
+
+            if (progress.HasShownCityFirstCompletionAd(completedCity))
+                return;
+
+            shouldShowCityFirstCompletionAdOnContinue = true;
+            cityForOneTimeCompletionAd = completedCity;
+        }
+
+        private void SetNavigationButtonsInteractable(bool interactable)
+        {
+            if (restartButton != null)
+                restartButton.interactable = interactable;
+
+            if (backButton != null)
+                backButton.interactable = interactable;
+
+            if (continueButton != null)
+                continueButton.interactable = interactable;
+
+            if (legacyBackFallbackButton != null)
+                legacyBackFallbackButton.interactable = interactable;
         }
 
         private void EnsureModalRoot()
@@ -294,6 +363,36 @@ namespace ShooterB
                     continue;
 
                 return candidateCity;
+            }
+
+            return null;
+        }
+
+        private static CityConfig ResolveCityForStage(StageConfig stage)
+        {
+            if (stage == null)
+                return null;
+
+            CampaignProgressManager progress = CampaignProgressManager.Instance;
+            if (progress == null)
+                return null;
+
+            CityConfig activeCity = progress.ActiveCityConfig;
+            if (activeCity != null && activeCity.stages != null && System.Array.IndexOf(activeCity.stages, stage) >= 0)
+                return activeCity;
+
+            CityConfig[] allCities = progress.CampaignCities;
+            if (allCities == null)
+                return null;
+
+            for (int i = 0; i < allCities.Length; i++)
+            {
+                CityConfig city = allCities[i];
+                if (city == null || city.stages == null)
+                    continue;
+
+                if (System.Array.IndexOf(city.stages, stage) >= 0)
+                    return city;
             }
 
             return null;

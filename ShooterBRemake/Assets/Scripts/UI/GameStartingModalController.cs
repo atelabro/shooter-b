@@ -25,12 +25,17 @@ namespace ShooterB
         private bool startRequested;
         private bool plusLivesUsedThisStage;
         private bool extraActionUsedThisStage;
+        private bool mercyBonusProcessedThisStage;
+        private bool adRequestInFlight;
+        private Coroutine statusCoroutine;
 
         public void Configure(string stageName, string stageBriefing)
         {
             EnsureReferences();
             plusLivesUsedThisStage = false;
             extraActionUsedThisStage = false;
+            mercyBonusProcessedThisStage = false;
+            adRequestInFlight = false;
 
             if (titleText != null)
                 titleText.text = string.IsNullOrWhiteSpace(stageName)
@@ -47,10 +52,10 @@ namespace ShooterB
                 extraActionText.text = LocalizationManager.Instance.Get("campaign.starting.plus_bullets", "+ Bullets");
 
             if (plusLivesButton != null)
-                plusLivesButton.interactable = true;
+                plusLivesButton.interactable = !adRequestInFlight;
 
             if (extraActionButton != null)
-                extraActionButton.interactable = true;
+                extraActionButton.interactable = !adRequestInFlight;
         }
 
         public IEnumerator PlayCountdown()
@@ -74,6 +79,8 @@ namespace ShooterB
 
             if (extraActionButton != null)
                 extraActionButton.onClick.AddListener(HandleExtraActionClicked);
+
+            TryOfferMercyBoost();
 
             while (!startRequested)
                 yield return null;
@@ -180,31 +187,124 @@ namespace ShooterB
 
         private void HandlePlusLivesClicked()
         {
-            if (plusLivesUsedThisStage)
+            if (plusLivesUsedThisStage || adRequestInFlight)
                 return;
 
-            // TODO(ads): Require rewarded ad before granting +2 lives.
-            if (GameManager.Instance != null)
-                GameManager.Instance.AddBonusLives(2);
+            adRequestInFlight = true;
+            RefreshAdButtonsState();
+            RewardedAdService.Instance.ShowRewardedAd(
+                RewardedAdPlacement.CampaignStartPlusLives,
+                "campaign_start_plus_lives",
+                adResult =>
+                {
+                    adRequestInFlight = false;
 
-            plusLivesUsedThisStage = true;
-            if (plusLivesButton != null)
-                plusLivesButton.interactable = false;
+                    if (adResult != RewardedAdResult.Completed)
+                    {
+                        ShowStatusMessage(RewardedAdService.Instance.GetResultMessage(adResult));
+                        RefreshAdButtonsState();
+                        return;
+                    }
+
+                    if (GameManager.Instance != null)
+                        GameManager.Instance.AddBonusLives(2);
+
+                    plusLivesUsedThisStage = true;
+                    RefreshAdButtonsState();
+                });
         }
 
         private void HandleExtraActionClicked()
         {
-            if (extraActionUsedThisStage)
+            if (extraActionUsedThisStage || adRequestInFlight)
                 return;
 
-            // TODO(ads): Require rewarded ad before granting + bullets.
-            ShooterController shooterController = FindObjectOfType<ShooterController>();
-            if (shooterController != null)
-                shooterController.ApplyConfiguredStageAmmoBonusToAllWeapons();
+            adRequestInFlight = true;
+            RefreshAdButtonsState();
+            RewardedAdService.Instance.ShowRewardedAd(
+                RewardedAdPlacement.CampaignStartPlusBullets,
+                "campaign_start_plus_bullets",
+                adResult =>
+                {
+                    adRequestInFlight = false;
 
-            extraActionUsedThisStage = true;
+                    if (adResult != RewardedAdResult.Completed)
+                    {
+                        ShowStatusMessage(RewardedAdService.Instance.GetResultMessage(adResult));
+                        RefreshAdButtonsState();
+                        return;
+                    }
+
+                    ShooterController shooterController = FindObjectOfType<ShooterController>();
+                    if (shooterController != null)
+                        shooterController.ApplyConfiguredStageAmmoBonusToAllWeapons();
+
+                    extraActionUsedThisStage = true;
+                    RefreshAdButtonsState();
+                });
+        }
+
+        private void ShowStatusMessage(string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+                return;
+
+            if (statusCoroutine != null)
+                StopCoroutine(statusCoroutine);
+
+            statusCoroutine = StartCoroutine(ShowStatusMessageCoroutine(message));
+        }
+
+        private IEnumerator ShowStatusMessageCoroutine(string message)
+        {
+            SetCountdownText(message);
+            yield return new WaitForSecondsRealtime(1.75f);
+            SetCountdownText(LocalizationManager.Instance.Get("campaign.starting.start", "Start"));
+            statusCoroutine = null;
+        }
+
+        private void TryOfferMercyBoost()
+        {
+            if (mercyBonusProcessedThisStage)
+                return;
+
+            GameManager manager = GameManager.Instance;
+            if (manager == null || manager.ConsecutiveFailedRuns < 2)
+                return;
+
+            mercyBonusProcessedThisStage = true;
+            SetCountdownText(LocalizationManager.Instance.Get("campaign.starting.mercy_prompt", "Mercy boost available"));
+            adRequestInFlight = true;
+            RefreshAdButtonsState();
+            RewardedAdService.Instance.ShowRewardedAd(
+                RewardedAdPlacement.CampaignStartPlusLives,
+                "campaign_start_mercy_boost",
+                adResult =>
+                {
+                    adRequestInFlight = false;
+
+                    if (adResult == RewardedAdResult.Completed)
+                    {
+                        manager.AddBonusLives(2);
+                        manager.ResetConsecutiveFailedRuns();
+                        plusLivesUsedThisStage = true;
+                        RefreshAdButtonsState();
+                        ShowStatusMessage(LocalizationManager.Instance.Get("campaign.starting.mercy_granted", "Rescue bonus granted: +2 Lives"));
+                        return;
+                    }
+
+                    RefreshAdButtonsState();
+                    ShowStatusMessage(RewardedAdService.Instance.GetResultMessage(adResult));
+                });
+        }
+
+        private void RefreshAdButtonsState()
+        {
+            if (plusLivesButton != null)
+                plusLivesButton.interactable = !plusLivesUsedThisStage && !adRequestInFlight;
+
             if (extraActionButton != null)
-                extraActionButton.interactable = false;
+                extraActionButton.interactable = !extraActionUsedThisStage && !adRequestInFlight;
         }
     }
 }

@@ -100,6 +100,7 @@ namespace ShooterB
         private bool setBonusGranted;
         private bool adWatchBonusGranted;
         private CampaignDuckSpawner subscribedCampaignSpawner;
+        public RewardedAdResult LastAdWatchBonusAttemptResult { get; private set; } = RewardedAdResult.Unavailable;
 
         private void Awake()
         {
@@ -229,20 +230,35 @@ namespace ShooterB
             return IsTodaySetComplete() && !adWatchBonusGranted;
         }
 
-        public bool TryClaimDailyAdWatchBonus(string source)
+        public bool TryClaimDailyAdWatchBonus(string source, Action<RewardedAdResult> onCompleted)
         {
             EnsureTodayInitialized();
 
             if (!CanClaimDailyAdWatchBonus())
                 return false;
 
-            // TODO(ads): Replace this instant grant with rewarded-ad success callback flow.
-            adWatchBonusGranted = true;
-            PlayerPrefs.SetInt(AdWatchBonusGrantedKey, 1);
-            GameManager.Instance.AddCoins(DailyAdWatchBonusCoins);
-            PlayerPrefs.Save();
-            OnDailyAdWatchBonusClaimed?.Invoke();
-            Debug.Log($"[DailyAwards] Ad watch bonus claimed from {source} (+{DailyAdWatchBonusCoins} coins)");
+            RewardedAdService.Instance.ShowRewardedAd(
+                RewardedAdPlacement.DailyAwardsSetBonus,
+                source,
+                result =>
+                {
+                    LastAdWatchBonusAttemptResult = result;
+                    if (result != RewardedAdResult.Completed)
+                    {
+                        Debug.Log($"[DailyAwards] Ad watch bonus not granted from {source}. Result={result}");
+                        onCompleted?.Invoke(result);
+                        return;
+                    }
+
+                    adWatchBonusGranted = true;
+                    PlayerPrefs.SetInt(AdWatchBonusGrantedKey, 1);
+                    GameManager.Instance.AddCoins(DailyAdWatchBonusCoins);
+                    PlayerPrefs.Save();
+                    OnDailyAdWatchBonusClaimed?.Invoke();
+                    Debug.Log($"[DailyAwards] Ad watch bonus claimed from {source} (+{DailyAdWatchBonusCoins} coins)");
+                    onCompleted?.Invoke(result);
+                });
+
             return true;
         }
 

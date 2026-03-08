@@ -30,6 +30,7 @@ namespace ShooterB
         private DailyAwardsManager dailyAwardsManager;
         private const string DailyGeneratedPrefix = "DailyAchievement_";
         private const string AchievementGeneratedPrefix = "Achievement_";
+        private Coroutine dailyAdStatusCoroutine;
 
         private void Start()
         {
@@ -438,7 +439,20 @@ namespace ShooterB
             if (dailyAwardsManager == null)
                 return;
 
-            dailyAwardsManager.TryClaimDailyAdWatchBonus("achievements_header");
+            bool started = dailyAwardsManager.TryClaimDailyAdWatchBonus("achievements_header", HandleDailyAdBonusRequestCompleted);
+            if (!started)
+                ShowDailyAdAttemptStatus(dailyAwardsManager.LastAdWatchBonusAttemptResult);
+            else if (dailyAdBonusButton != null)
+                dailyAdBonusButton.interactable = false;
+
+            RefreshDailyAdBonusButtonState();
+        }
+
+        private void HandleDailyAdBonusRequestCompleted(RewardedAdResult result)
+        {
+            if (result != RewardedAdResult.Completed)
+                ShowDailyAdAttemptStatus(result);
+
             RefreshDailyAdBonusButtonState();
         }
 
@@ -512,6 +526,31 @@ namespace ShooterB
             }
 
             dailyAdBonusButton.interactable = canClaim;
+        }
+
+        private void ShowDailyAdAttemptStatus(RewardedAdResult result)
+        {
+            if (dailyAdBonusButtonText == null)
+                return;
+
+            string message = RewardedAdService.Instance.GetResultMessage(result);
+            if (string.IsNullOrWhiteSpace(message))
+                return;
+
+            if (dailyAdStatusCoroutine != null)
+                StopCoroutine(dailyAdStatusCoroutine);
+
+            dailyAdStatusCoroutine = StartCoroutine(ShowDailyAdAttemptStatusCoroutine(message));
+        }
+
+        private System.Collections.IEnumerator ShowDailyAdAttemptStatusCoroutine(string message)
+        {
+            if (dailyAdBonusButtonText != null)
+                dailyAdBonusButtonText.text = message;
+
+            yield return new WaitForSecondsRealtime(1.75f);
+            RefreshDailyAdBonusButtonState();
+            dailyAdStatusCoroutine = null;
         }
     }
 }

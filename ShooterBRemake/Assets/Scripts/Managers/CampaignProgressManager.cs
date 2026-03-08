@@ -21,6 +21,7 @@ namespace ShooterB
 
         private const string PREFS_KEY_PREFIX = "Campaign_Stage_";
         private const string PREFS_KEY_SUFFIX = "_Stars";
+        private const string CityFirstCompletionAdShownPrefix = "Campaign_CityFirstCompletionAdShown_";
 
         public StageConfig ActiveStageConfig { get; private set; }
         public CityConfig ActiveCityConfig { get; private set; }
@@ -284,7 +285,7 @@ namespace ShooterB
             return totalStars >= city.starsRequiredToUnlock;
         }
 
-        private bool IsCityCompleted(CityConfig city)
+        public bool IsCityCompleted(CityConfig city)
         {
             if (city == null || city.stages == null || city.stages.Length == 0)
                 return false;
@@ -298,9 +299,42 @@ namespace ShooterB
             return true;
         }
 
+        public bool HasShownCityFirstCompletionAd(CityConfig city)
+        {
+            if (city == null)
+                return false;
+
+            return PlayerPrefs.GetInt(BuildCityFirstCompletionAdShownKey(city), 0) == 1;
+        }
+
+        public void MarkCityFirstCompletionAdShown(CityConfig city)
+        {
+            if (city == null)
+                return;
+
+            PlayerPrefs.SetInt(BuildCityFirstCompletionAdShownKey(city), 1);
+            PlayerPrefs.Save();
+        }
+
         private string BuildKey(int stageIndex)
         {
             return $"{PREFS_KEY_PREFIX}{stageIndex}{PREFS_KEY_SUFFIX}";
+        }
+
+        private static string BuildCityFirstCompletionAdShownKey(CityConfig city)
+        {
+            if (city == null)
+                return CityFirstCompletionAdShownPrefix + "Unknown";
+
+            int firstStageIndex = -1;
+            if (city.stages != null && city.stages.Length > 0 && city.stages[0] != null)
+                firstStageIndex = city.stages[0].stageIndex;
+
+            string cityToken = firstStageIndex >= 0
+                ? firstStageIndex.ToString()
+                : (string.IsNullOrWhiteSpace(city.cityName) ? city.name : city.cityName).Replace(" ", "_");
+
+            return $"{CityFirstCompletionAdShownPrefix}{cityToken}";
         }
 
         private CityConfig FindCityForStage(StageConfig stage)

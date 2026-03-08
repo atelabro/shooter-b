@@ -577,7 +577,7 @@ namespace ShooterB
                 true,
                 DailyAwardsManager.Instance.GetDailyAdWatchBonusCoins(),
                 DailyAwardsManager.Instance.IsDailyAdWatchBonusGranted(),
-                () => DailyAwardsManager.Instance.TryClaimDailyAdWatchBonus("campaign_hud_popup"));
+                () => DailyAwardsManager.Instance.TryClaimDailyAdWatchBonus("campaign_hud_popup", null));
         }
 
         private void ShowRewardPopup(

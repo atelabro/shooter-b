@@ -245,6 +245,7 @@ namespace ShooterB
 
             isStageComplete = true;
             Time.timeScale = 0f;
+            GameManager.Instance.ResetConsecutiveFailedRuns();
 
             StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
 

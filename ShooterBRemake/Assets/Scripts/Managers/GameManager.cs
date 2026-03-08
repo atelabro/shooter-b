@@ -33,6 +33,7 @@ namespace ShooterB
         public bool IsPaused { get; private set; }
         public bool IsGameOver { get; private set; }
         public bool ArcadeVeryHardMode { get; private set; }
+        public int ConsecutiveFailedRuns { get; private set; }
 
         public event Action<long> OnScoreChanged;
         public event Action<int> OnMultiplierChanged;
@@ -290,6 +291,12 @@ namespace ShooterB
             if (IsGameOver)
                 return;
 
+            if (CurrentGameMode == Constants.GameMode.Campaign)
+            {
+                ConsecutiveFailedRuns++;
+                Debug.Log($"[GameManager] Campaign failed run streak increased to {ConsecutiveFailedRuns}");
+            }
+
             IsGameOver = true;
             IsPaused = false;
             Time.timeScale = 0f;
@@ -324,6 +331,15 @@ namespace ShooterB
         public bool IsNewHighScore()
         {
             return Score >= HighScore && Score > 0;
+        }
+
+        public void ResetConsecutiveFailedRuns()
+        {
+            if (ConsecutiveFailedRuns == 0)
+                return;
+
+            ConsecutiveFailedRuns = 0;
+            Debug.Log("[GameManager] Campaign failed run streak reset.");
         }
 
         private void LoadCoins()
