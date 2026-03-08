@@ -68,6 +68,7 @@ namespace ShooterB
 
         private const int CurrentSchemaVersion = 2;
         private const string SchemaVersionKey = "Achievement_SchemaVersion";
+        private const string AchievementCoinSfxResourcePath = "Audio/coin";
 
         private static readonly string[] LegacyAchievementIdsToClear =
         {
@@ -118,6 +119,9 @@ namespace ShooterB
         private readonly Dictionary<AchievementId, AchievementDefinition> definitions = new Dictionary<AchievementId, AchievementDefinition>();
         private readonly Dictionary<AchievementId, int> progress = new Dictionary<AchievementId, int>();
         private readonly HashSet<AchievementId> unlocked = new HashSet<AchievementId>();
+        private AudioSource sfxSource;
+        private AudioClip achievementCoinSfx;
+        private bool hasLoggedMissingCoinSfx;
 
         public event Action<AchievementId> OnAchievementUnlocked;
         public event Action<AchievementId> OnAchievementProgressChanged;
@@ -521,6 +525,7 @@ namespace ShooterB
                 PlayerPrefs.SetInt(GetUnlockedKey(id), 1);
                 if (definition.coinReward > 0)
                     GameManager.Instance.AddCoins(definition.coinReward);
+                PlayAchievementUnlockSfx();
                 OnAchievementUnlocked?.Invoke(id);
                 Debug.Log($"[Achievement] Unlocked: {GetTitle(id)} ({id}) reward: {definition.coinReward} coins");
             }
@@ -536,6 +541,39 @@ namespace ShooterB
         private static string GetUnlockedKey(AchievementId id)
         {
             return $"Achievement_{id}_Unlocked";
+        }
+
+        private void PlayAchievementUnlockSfx()
+        {
+            EnsureAchievementSfxLoaded();
+            if (achievementCoinSfx == null || sfxSource == null)
+                return;
+
+            sfxSource.PlayOneShot(achievementCoinSfx);
+        }
+
+        private void EnsureAchievementSfxLoaded()
+        {
+            if (sfxSource == null)
+            {
+                sfxSource = gameObject.GetComponent<AudioSource>();
+                if (sfxSource == null)
+                    sfxSource = gameObject.AddComponent<AudioSource>();
+
+                sfxSource.playOnAwake = false;
+                sfxSource.loop = false;
+                sfxSource.volume = 1f;
+            }
+
+            if (achievementCoinSfx != null)
+                return;
+
+            achievementCoinSfx = Resources.Load<AudioClip>(AchievementCoinSfxResourcePath);
+            if (achievementCoinSfx == null && !hasLoggedMissingCoinSfx)
+            {
+                hasLoggedMissingCoinSfx = true;
+                Debug.LogWarning($"[AchievementManager] Missing achievement SFX clip at Resources/{AchievementCoinSfxResourcePath}.");
+            }
         }
     }
 }

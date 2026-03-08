@@ -26,15 +26,25 @@ namespace ShooterB
         }
 
         private static RewardedAdService instance;
+        private static bool instanceSourceLogged;
         public static RewardedAdService Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    GameObject go = new GameObject("RewardedAdService");
-                    instance = go.AddComponent<RewardedAdService>();
-                    DontDestroyOnLoad(go);
+                    instance = FindObjectOfType<RewardedAdService>();
+                    if (instance != null)
+                    {
+                        instance.LogInstanceSourceOnce("scene");
+                    }
+                    else
+                    {
+                        GameObject go = new GameObject("RewardedAdService");
+                        instance = go.AddComponent<RewardedAdService>();
+                        DontDestroyOnLoad(go);
+                        instance.LogInstanceSourceOnce("auto-created");
+                    }
                 }
 
                 return instance;
@@ -73,6 +83,7 @@ namespace ShooterB
 
             instance = this;
             DontDestroyOnLoad(gameObject);
+            LogInstanceSourceOnce("awake");
             provider = CreateProvider();
         }
 
@@ -126,6 +137,15 @@ namespace ShooterB
             }
 
             return new MockRewardedAdProvider(this);
+        }
+
+        private void LogInstanceSourceOnce(string source)
+        {
+            if (instanceSourceLogged)
+                return;
+
+            instanceSourceLogged = true;
+            Debug.Log($"[RewardedAdService] Singleton source={source}, gameObject={gameObject.name}");
         }
 
         private string ResolveAdUnitId(RewardedAdPlacement placement)

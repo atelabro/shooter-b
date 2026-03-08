@@ -76,6 +76,7 @@ namespace ShooterB
             currentBullets--;
             lastFireTime = Time.time;
 
+            WeaponShootSoundManager.Instance.PlayShoot(weaponType);
             SpawnBullet(targetPosition);
 
             if (currentBullets <= 0)
@@ -135,6 +136,7 @@ namespace ShooterB
         {
             if (!isRefilling)
             {
+                WeaponReloadSoundManager.Instance.PlayReload(weaponType);
                 isRefilling = true;
                 StartCoroutine(RefillCoroutine());
             }

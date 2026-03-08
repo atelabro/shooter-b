@@ -5,6 +5,10 @@ namespace ShooterB
 {
     public class GameManager : MonoBehaviour
     {
+        private const string Quack1ResourcePath = "Audio/quack1";
+        private const string Quack2ResourcePath = "Audio/quack2";
+        private const string Quack3ResourcePath = "Audio/quack3";
+
         private static GameManager instance;
         public static GameManager Instance
         {
@@ -50,6 +54,9 @@ namespace ShooterB
         public event Action<Constants.WeaponType> OnSelectedWeaponChanged;
 
         private int birdsUntilNextDifficulty;
+        private AudioSource duckKillSfxSource;
+        private AudioClip[] quackKillClips;
+        private bool hasLoggedMissingQuackClip;
 
         private void Awake()
         {
@@ -64,6 +71,10 @@ namespace ShooterB
             LoadSelectedWeapon();
             _ = AchievementManager.Instance;
             _ = DailyAwardsManager.Instance;
+            _ = MusicManager.Instance;
+            _ = UIClickSoundManager.Instance;
+            _ = WeaponReloadSoundManager.Instance;
+            _ = WeaponShootSoundManager.Instance;
         }
 
         public void InitializeGame(Constants.GameMode mode, int startingDifficulty = Constants.INITIAL_DIFFICULTY)
@@ -126,6 +137,7 @@ namespace ShooterB
             BirdsKilled++;
             OnBirdsKilledChanged?.Invoke(BirdsKilled);
             OnBirdKilled?.Invoke(duckType, weaponType);
+            PlayRandomQuackOnDuckKill();
 
             Debug.Log($"Duck killed - Type: {duckType}, Weapon: {weaponType}, Base: {basePoints}, Multiplier: {Multiplier}, Earned: {pointsEarned}");
         }
@@ -168,6 +180,48 @@ namespace ShooterB
             }
 
             OnScoreChanged?.Invoke(Score);
+        }
+
+        private void PlayRandomQuackOnDuckKill()
+        {
+            EnsureDuckKillSfxReady();
+            if (duckKillSfxSource == null || quackKillClips == null || quackKillClips.Length == 0)
+                return;
+
+            int randomIndex = UnityEngine.Random.Range(0, quackKillClips.Length);
+            AudioClip clip = quackKillClips[randomIndex];
+            if (clip != null)
+                duckKillSfxSource.PlayOneShot(clip);
+        }
+
+        private void EnsureDuckKillSfxReady()
+        {
+            if (duckKillSfxSource == null)
+            {
+                duckKillSfxSource = gameObject.GetComponent<AudioSource>();
+                if (duckKillSfxSource == null)
+                    duckKillSfxSource = gameObject.AddComponent<AudioSource>();
+
+                duckKillSfxSource.playOnAwake = false;
+                duckKillSfxSource.loop = false;
+                duckKillSfxSource.volume = 1f;
+            }
+
+            if (quackKillClips != null)
+                return;
+
+            AudioClip quack1 = Resources.Load<AudioClip>(Quack1ResourcePath);
+            AudioClip quack2 = Resources.Load<AudioClip>(Quack2ResourcePath);
+            AudioClip quack3 = Resources.Load<AudioClip>(Quack3ResourcePath);
+            quackKillClips = System.Array.FindAll(
+                new[] { quack1, quack2, quack3 },
+                clip => clip != null);
+
+            if (quackKillClips.Length == 0 && !hasLoggedMissingQuackClip)
+            {
+                hasLoggedMissingQuackClip = true;
+                Debug.LogWarning("[GameManager] Missing quack SFX clips at Resources/Audio/quack1|quack2|quack3.");
+            }
         }
 
         private void MinusLife()

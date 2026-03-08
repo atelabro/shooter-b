@@ -192,6 +192,7 @@ namespace ShooterB
 
             adRequestInFlight = true;
             RefreshAdButtonsState();
+            SetCountdownText(LocalizationManager.Instance.Get("ads.status.loading", "Loading ad..."));
             RewardedAdService.Instance.ShowRewardedAd(
                 RewardedAdPlacement.CampaignStartPlusLives,
                 "campaign_start_plus_lives",
@@ -211,6 +212,7 @@ namespace ShooterB
 
                     plusLivesUsedThisStage = true;
                     RefreshAdButtonsState();
+                    ShowStatusMessage(LocalizationManager.Instance.Get("campaign.starting.plus_lives_granted", "Reward granted: +2 Lives"));
                 });
         }
 
@@ -221,6 +223,7 @@ namespace ShooterB
 
             adRequestInFlight = true;
             RefreshAdButtonsState();
+            SetCountdownText(LocalizationManager.Instance.Get("ads.status.loading", "Loading ad..."));
             RewardedAdService.Instance.ShowRewardedAd(
                 RewardedAdPlacement.CampaignStartPlusBullets,
                 "campaign_start_plus_bullets",
@@ -241,6 +244,7 @@ namespace ShooterB
 
                     extraActionUsedThisStage = true;
                     RefreshAdButtonsState();
+                    ShowStatusMessage(LocalizationManager.Instance.Get("campaign.starting.plus_bullets_granted", "Reward granted: + Bullets"));
                 });
         }
 
@@ -276,6 +280,7 @@ namespace ShooterB
             SetCountdownText(LocalizationManager.Instance.Get("campaign.starting.mercy_prompt", "Mercy boost available"));
             adRequestInFlight = true;
             RefreshAdButtonsState();
+            SetCountdownText(LocalizationManager.Instance.Get("ads.status.loading", "Loading ad..."));
             RewardedAdService.Instance.ShowRewardedAd(
                 RewardedAdPlacement.CampaignStartPlusLives,
                 "campaign_start_mercy_boost",
