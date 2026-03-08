@@ -23,6 +23,7 @@ namespace ShooterB
 
         public Constants.SceneType CurrentScene { get; private set; }
         private Constants.SceneType armoryReturnScene = Constants.SceneType.Menu;
+        private Constants.SceneType achievementsReturnScene = Constants.SceneType.Menu;
 
         private void Awake()
         {
@@ -126,9 +127,41 @@ namespace ShooterB
 
         public void LoadAchievementsScene()
         {
+            Constants.SceneType requestedFrom = ResolveActiveSceneType();
+            if (requestedFrom == Constants.SceneType.Splash && CurrentScene != Constants.SceneType.Splash)
+                requestedFrom = CurrentScene;
+
+            if (requestedFrom == Constants.SceneType.CampaignMap ||
+                requestedFrom == Constants.SceneType.Menu ||
+                requestedFrom == Constants.SceneType.Armory)
+            {
+                achievementsReturnScene = requestedFrom;
+            }
+            else
+            {
+                achievementsReturnScene = Constants.SceneType.Menu;
+            }
+
             CurrentScene = Constants.SceneType.Achievements;
             Debug.Log("Loading achievements scene");
             SceneManager.LoadScene(GetSceneName(Constants.SceneType.Achievements));
+        }
+
+        public void ReturnFromAchievements()
+        {
+            if (achievementsReturnScene == Constants.SceneType.CampaignMap)
+            {
+                LoadCampaignMapScene();
+                return;
+            }
+
+            if (achievementsReturnScene == Constants.SceneType.Armory)
+            {
+                LoadArmoryScene();
+                return;
+            }
+
+            ReturnToMenu();
         }
 
         public void LoadCampaignStage(StageConfig config)

@@ -7,6 +7,10 @@ namespace ShooterB
     {
         [Header("Text Target")]
         public TMP_Text popupText;
+        [Header("Text Style")]
+        public bool applyOutline = true;
+        public Color outlineColor = new Color32(27, 37, 51, 255);
+        [Range(0f, 1f)] public float outlineWidth = 0.15f;
 
         [Header("Colors")]
         public Color doubleKillColor = new Color(0.3820755f, 1f, 0.51313657f, 1f);
@@ -17,6 +21,8 @@ namespace ShooterB
         {
             if (popupText == null)
                 popupText = GetComponent<TMP_Text>();
+
+            ApplyOutlineToText();
         }
 
         public void Configure(Constants.MultiKillType type, string label)
@@ -26,6 +32,25 @@ namespace ShooterB
 
             popupText.text = label;
             popupText.color = GetColor(type);
+            ApplyOutlineToText();
+        }
+
+        private void ApplyOutlineToText()
+        {
+            if (!applyOutline || popupText == null)
+                return;
+
+            Material instanceMaterial = popupText.fontMaterial;
+            if (instanceMaterial == null)
+                return;
+
+            if (instanceMaterial.HasProperty("_OutlineColor"))
+                instanceMaterial.SetColor("_OutlineColor", outlineColor);
+
+            if (instanceMaterial.HasProperty("_OutlineWidth"))
+                instanceMaterial.SetFloat("_OutlineWidth", Mathf.Clamp01(outlineWidth));
+
+            popupText.fontMaterial = instanceMaterial;
         }
 
         private Color GetColor(Constants.MultiKillType type)

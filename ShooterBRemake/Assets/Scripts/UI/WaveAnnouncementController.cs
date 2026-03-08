@@ -9,6 +9,10 @@ namespace ShooterB
         [Header("References")]
         public TMP_Text waveText;
         public CanvasGroup canvasGroup;
+        [Header("Text Style")]
+        public bool applyOutline = true;
+        public Color outlineColor = new Color32(27, 37, 51, 255);
+        [Range(0f, 1f)] public float outlineWidth = 0.15f;
 
         private Coroutine activeCoroutine;
         private Color baseTextColor = Color.white;
@@ -33,8 +37,27 @@ namespace ShooterB
             {
                 baseTextColor = waveText.color;
                 baseTextScale = waveText.rectTransform.localScale;
+                ApplyOutlineToText(waveText);
                 SetTextVisual(0f, 0.92f);
             }
+        }
+
+        private void ApplyOutlineToText(TMP_Text text)
+        {
+            if (!applyOutline || text == null)
+                return;
+
+            Material instanceMaterial = text.fontMaterial;
+            if (instanceMaterial == null)
+                return;
+
+            if (instanceMaterial.HasProperty("_OutlineColor"))
+                instanceMaterial.SetColor("_OutlineColor", outlineColor);
+
+            if (instanceMaterial.HasProperty("_OutlineWidth"))
+                instanceMaterial.SetFloat("_OutlineWidth", Mathf.Clamp01(outlineWidth));
+
+            text.fontMaterial = instanceMaterial;
         }
 
         public void ShowWave(int waveNumber, float duration)
