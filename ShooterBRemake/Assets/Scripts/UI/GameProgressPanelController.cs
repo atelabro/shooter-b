@@ -10,6 +10,10 @@ namespace ShooterB
         public TextMeshProUGUI remainingDucksText;
         public string wavesFormat = "Waves: {0}";
         public string ducksFormat = "Ducks: {0}";
+        [Header("Text Style")]
+        public bool applyOutline = true;
+        public Color outlineColor = new Color32(27, 37, 51, 255);
+        [Range(0f, 1f)] public float outlineWidth = 0.15f;
 
         private CampaignDuckSpawner campaignDuckSpawner;
         private bool hasInitializedFromStage;
@@ -20,6 +24,7 @@ namespace ShooterB
 
         private void Start()
         {
+            ApplyTextStyleOverrides();
             InitializeFromActiveStage();
             SubscribeToEvents();
             RefreshUI();
@@ -171,6 +176,33 @@ namespace ShooterB
 
             if (remainingDucksText != null)
                 remainingDucksText.text = string.Format(ducksFormat, Mathf.Max(0, remainingDucks));
+        }
+
+        private void ApplyTextStyleOverrides()
+        {
+            if (!applyOutline)
+                return;
+
+            ApplyOutlineToText(remainingWavesText);
+            ApplyOutlineToText(remainingDucksText);
+        }
+
+        private void ApplyOutlineToText(TextMeshProUGUI text)
+        {
+            if (text == null)
+                return;
+
+            Material instanceMaterial = text.fontMaterial;
+            if (instanceMaterial == null)
+                return;
+
+            if (instanceMaterial.HasProperty("_OutlineColor"))
+                instanceMaterial.SetColor("_OutlineColor", outlineColor);
+
+            if (instanceMaterial.HasProperty("_OutlineWidth"))
+                instanceMaterial.SetFloat("_OutlineWidth", Mathf.Clamp01(outlineWidth));
+
+            text.fontMaterial = instanceMaterial;
         }
     }
 }
