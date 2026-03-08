@@ -41,7 +41,14 @@ namespace ShooterB
 
             instance = this;
             DontDestroyOnLoad(gameObject);
+            AudioSettingsManager.Instance.OnAudioSettingsChanged += HandleAudioSettingsChanged;
             EnsureReady();
+        }
+
+        private void OnDestroy()
+        {
+            if (AudioSettingsManager.HasInstance)
+                AudioSettingsManager.Instance.OnAudioSettingsChanged -= HandleAudioSettingsChanged;
         }
 
         public void PlayReload(Constants.WeaponType weaponType)
@@ -73,7 +80,7 @@ namespace ShooterB
 
                 reloadSfxSource.playOnAwake = false;
                 reloadSfxSource.loop = false;
-                reloadSfxSource.volume = 1f;
+                reloadSfxSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
             }
 
             if (clipsByWeaponType.Count > 0)
@@ -100,6 +107,14 @@ namespace ShooterB
                     break;
                 }
             }
+        }
+
+        private void HandleAudioSettingsChanged()
+        {
+            if (reloadSfxSource == null)
+                return;
+
+            reloadSfxSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
         }
     }
 }

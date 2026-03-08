@@ -119,6 +119,7 @@ namespace ShooterB
         private readonly Dictionary<AchievementId, AchievementDefinition> definitions = new Dictionary<AchievementId, AchievementDefinition>();
         private readonly Dictionary<AchievementId, int> progress = new Dictionary<AchievementId, int>();
         private readonly HashSet<AchievementId> unlocked = new HashSet<AchievementId>();
+        private GameManager cachedGameManager;
         private AudioSource sfxSource;
         private AudioClip achievementCoinSfx;
         private bool hasLoggedMissingCoinSfx;
@@ -141,15 +142,19 @@ namespace ShooterB
             EnsureSchemaVersion();
             LoadState();
             SubscribeToGameManager();
+            AudioSettingsManager.Instance.OnAudioSettingsChanged += HandleAudioSettingsChanged;
         }
 
         private void OnDestroy()
         {
-            if (GameManager.Instance == null)
-                return;
+            if (cachedGameManager != null)
+            {
+                cachedGameManager.OnComboKillDetailed -= HandleComboKillDetailed;
+                cachedGameManager.OnBirdKilled -= HandleBirdKilled;
+            }
 
-            GameManager.Instance.OnComboKillDetailed -= HandleComboKillDetailed;
-            GameManager.Instance.OnBirdKilled -= HandleBirdKilled;
+            if (AudioSettingsManager.HasInstance)
+                AudioSettingsManager.Instance.OnAudioSettingsChanged -= HandleAudioSettingsChanged;
         }
 
         public int GetProgress(AchievementId id)
@@ -206,13 +211,14 @@ namespace ShooterB
 
         private void SubscribeToGameManager()
         {
-            if (GameManager.Instance == null)
+            cachedGameManager = GameManager.Instance;
+            if (cachedGameManager == null)
                 return;
 
-            GameManager.Instance.OnComboKillDetailed -= HandleComboKillDetailed;
-            GameManager.Instance.OnComboKillDetailed += HandleComboKillDetailed;
-            GameManager.Instance.OnBirdKilled -= HandleBirdKilled;
-            GameManager.Instance.OnBirdKilled += HandleBirdKilled;
+            cachedGameManager.OnComboKillDetailed -= HandleComboKillDetailed;
+            cachedGameManager.OnComboKillDetailed += HandleComboKillDetailed;
+            cachedGameManager.OnBirdKilled -= HandleBirdKilled;
+            cachedGameManager.OnBirdKilled += HandleBirdKilled;
         }
 
         private void RegisterDefinitions()
@@ -562,7 +568,7 @@ namespace ShooterB
 
                 sfxSource.playOnAwake = false;
                 sfxSource.loop = false;
-                sfxSource.volume = 1f;
+                sfxSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
             }
 
             if (achievementCoinSfx != null)
@@ -574,6 +580,14 @@ namespace ShooterB
                 hasLoggedMissingCoinSfx = true;
                 Debug.LogWarning($"[AchievementManager] Missing achievement SFX clip at Resources/{AchievementCoinSfxResourcePath}.");
             }
+        }
+
+        private void HandleAudioSettingsChanged()
+        {
+            if (sfxSource == null)
+                return;
+
+            sfxSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
         }
     }
 }

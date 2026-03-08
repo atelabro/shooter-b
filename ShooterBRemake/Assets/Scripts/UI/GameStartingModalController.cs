@@ -27,7 +27,6 @@ namespace ShooterB
         private bool extraActionUsedThisStage;
         private bool mercyBonusProcessedThisStage;
         private bool adRequestInFlight;
-        private Coroutine statusCoroutine;
 
         public void Configure(string stageName, string stageBriefing)
         {
@@ -69,8 +68,6 @@ namespace ShooterB
                 modalRoot.SetActive(true);
             }
 
-            SetCountdownText(LocalizationManager.Instance.Get("campaign.starting.start", "Start"));
-
             if (startButton != null)
                 startButton.onClick.AddListener(HandleStartClicked);
 
@@ -96,12 +93,6 @@ namespace ShooterB
 
             if (modalRoot != null)
                 modalRoot.SetActive(false);
-        }
-
-        private void SetCountdownText(string value)
-        {
-            if (countdownText != null)
-                countdownText.text = value;
         }
 
         private void EnsureReferences()
@@ -192,17 +183,17 @@ namespace ShooterB
 
             adRequestInFlight = true;
             RefreshAdButtonsState();
-            SetCountdownText(LocalizationManager.Instance.Get("ads.status.loading", "Loading ad..."));
+            PauseGameAudioForAd();
             RewardedAdService.Instance.ShowRewardedAd(
                 RewardedAdPlacement.CampaignStartPlusLives,
                 "campaign_start_plus_lives",
                 adResult =>
                 {
+                    ResumeGameAudioAfterAd();
                     adRequestInFlight = false;
 
                     if (adResult != RewardedAdResult.Completed)
                     {
-                        ShowStatusMessage(RewardedAdService.Instance.GetResultMessage(adResult));
                         RefreshAdButtonsState();
                         return;
                     }
@@ -212,7 +203,6 @@ namespace ShooterB
 
                     plusLivesUsedThisStage = true;
                     RefreshAdButtonsState();
-                    ShowStatusMessage(LocalizationManager.Instance.Get("campaign.starting.plus_lives_granted", "Reward granted: +2 Lives"));
                 });
         }
 
@@ -223,17 +213,17 @@ namespace ShooterB
 
             adRequestInFlight = true;
             RefreshAdButtonsState();
-            SetCountdownText(LocalizationManager.Instance.Get("ads.status.loading", "Loading ad..."));
+            PauseGameAudioForAd();
             RewardedAdService.Instance.ShowRewardedAd(
                 RewardedAdPlacement.CampaignStartPlusBullets,
                 "campaign_start_plus_bullets",
                 adResult =>
                 {
+                    ResumeGameAudioAfterAd();
                     adRequestInFlight = false;
 
                     if (adResult != RewardedAdResult.Completed)
                     {
-                        ShowStatusMessage(RewardedAdService.Instance.GetResultMessage(adResult));
                         RefreshAdButtonsState();
                         return;
                     }
@@ -244,27 +234,7 @@ namespace ShooterB
 
                     extraActionUsedThisStage = true;
                     RefreshAdButtonsState();
-                    ShowStatusMessage(LocalizationManager.Instance.Get("campaign.starting.plus_bullets_granted", "Reward granted: + Bullets"));
                 });
-        }
-
-        private void ShowStatusMessage(string message)
-        {
-            if (string.IsNullOrWhiteSpace(message))
-                return;
-
-            if (statusCoroutine != null)
-                StopCoroutine(statusCoroutine);
-
-            statusCoroutine = StartCoroutine(ShowStatusMessageCoroutine(message));
-        }
-
-        private IEnumerator ShowStatusMessageCoroutine(string message)
-        {
-            SetCountdownText(message);
-            yield return new WaitForSecondsRealtime(1.75f);
-            SetCountdownText(LocalizationManager.Instance.Get("campaign.starting.start", "Start"));
-            statusCoroutine = null;
         }
 
         private void TryOfferMercyBoost()
@@ -277,15 +247,15 @@ namespace ShooterB
                 return;
 
             mercyBonusProcessedThisStage = true;
-            SetCountdownText(LocalizationManager.Instance.Get("campaign.starting.mercy_prompt", "Mercy boost available"));
             adRequestInFlight = true;
             RefreshAdButtonsState();
-            SetCountdownText(LocalizationManager.Instance.Get("ads.status.loading", "Loading ad..."));
+            PauseGameAudioForAd();
             RewardedAdService.Instance.ShowRewardedAd(
                 RewardedAdPlacement.CampaignStartPlusLives,
                 "campaign_start_mercy_boost",
                 adResult =>
                 {
+                    ResumeGameAudioAfterAd();
                     adRequestInFlight = false;
 
                     if (adResult == RewardedAdResult.Completed)
@@ -294,12 +264,10 @@ namespace ShooterB
                         manager.ResetConsecutiveFailedRuns();
                         plusLivesUsedThisStage = true;
                         RefreshAdButtonsState();
-                        ShowStatusMessage(LocalizationManager.Instance.Get("campaign.starting.mercy_granted", "Rescue bonus granted: +2 Lives"));
                         return;
                     }
 
                     RefreshAdButtonsState();
-                    ShowStatusMessage(RewardedAdService.Instance.GetResultMessage(adResult));
                 });
         }
 
@@ -310,6 +278,16 @@ namespace ShooterB
 
             if (extraActionButton != null)
                 extraActionButton.interactable = !extraActionUsedThisStage && !adRequestInFlight;
+        }
+
+        private static void PauseGameAudioForAd()
+        {
+            AudioListener.pause = true;
+        }
+
+        private static void ResumeGameAudioAfterAd()
+        {
+            AudioListener.pause = false;
         }
     }
 }

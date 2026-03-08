@@ -46,6 +46,7 @@ namespace ShooterB
             SceneManager.sceneLoaded += HandleSceneLoaded;
             cachedGameManager = GameManager.Instance;
             cachedGameManager.OnPauseStateChanged += HandlePauseStateChanged;
+            AudioSettingsManager.Instance.OnAudioSettingsChanged += HandleAudioSettingsChanged;
 
             ApplySceneMusicPolicy(SceneManager.GetActiveScene().name);
         }
@@ -56,6 +57,9 @@ namespace ShooterB
 
             if (cachedGameManager != null)
                 cachedGameManager.OnPauseStateChanged -= HandlePauseStateChanged;
+
+            if (AudioSettingsManager.HasInstance)
+                AudioSettingsManager.Instance.OnAudioSettingsChanged -= HandleAudioSettingsChanged;
         }
 
         public void PlayCampaignBgm()
@@ -119,7 +123,7 @@ namespace ShooterB
 
             musicSource.playOnAwake = false;
             musicSource.loop = true;
-            musicSource.volume = 0.45f;
+            musicSource.volume = AudioSettingsManager.Instance.GetEffectiveMusicVolume() * 0.45f;
         }
 
         private void EnsureCampaignClipLoaded()
@@ -141,6 +145,14 @@ namespace ShooterB
                 return;
 
             SetPaused(isPaused);
+        }
+
+        private void HandleAudioSettingsChanged()
+        {
+            if (musicSource == null)
+                return;
+
+            musicSource.volume = AudioSettingsManager.Instance.GetEffectiveMusicVolume() * 0.45f;
         }
 
         private void ApplySceneMusicPolicy(string sceneName)

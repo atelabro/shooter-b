@@ -11,7 +11,7 @@ namespace ShooterB
             fireMode = Constants.WeaponFireMode.HoldAutomatic;
             maxBullets = 14;
             fireDelay = 0.2f;
-            refillDelay = 2.4f;
+            refillDelay = 1.6f;
 
             if (bulletPrefab == null)
                 Debug.LogError("[BERETTA] bulletPrefab is not assigned. Assign Beretta bullet prefab via ShooterController or weapon prefab.");

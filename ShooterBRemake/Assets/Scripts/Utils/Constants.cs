@@ -28,6 +28,9 @@ namespace ShooterB
         public const string PREFS_SELECTED_WEAPON = "SelectedWeapon";
         public const string PREFS_COINS = "Coins";
         public const string PREFS_LANGUAGE = "Language";
+        public const string PREFS_MASTER_VOLUME = "MasterVolume";
+        public const string PREFS_MUSIC_VOLUME = "MusicVolume";
+        public const string PREFS_SFX_VOLUME = "SfxVolume";
         public const string FONT_COLOR_HEX = "FFB02A";
 
         public enum GameMode

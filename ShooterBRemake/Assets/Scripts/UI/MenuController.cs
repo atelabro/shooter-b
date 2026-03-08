@@ -1,6 +1,6 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace ShooterB
 {
@@ -19,6 +19,10 @@ namespace ShooterB
         public TextMeshProUGUI armoryButtonText;
         public TextMeshProUGUI achievementsButtonText;
         public TextMeshProUGUI quitButtonText;
+
+        [Header("Settings UI")]
+        public Button settingsButton;
+        public MenuSettingsModalController settingsModalController;
 
         [Header("Achievements Badge")]
         public RectTransform achievementsBadgeRoot;
@@ -47,6 +51,9 @@ namespace ShooterB
                 quitButton.onClick.AddListener(OnQuitClicked);
 
             ResolveMenuTextReferences();
+            EnsureSettingsUIReferences();
+            RegisterSettingsListeners();
+
             LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
             InitializeLanguageDropdown();
             UpdateHighScore();
@@ -83,6 +90,17 @@ namespace ShooterB
         private void OnQuitClicked()
         {
             SceneController.Instance.QuitGame();
+        }
+
+        private void OnSettingsClicked()
+        {
+            if (settingsModalController != null)
+            {
+                settingsModalController.Open();
+                return;
+            }
+
+            Debug.LogWarning("[MenuController] settingsModalController is not assigned.");
         }
 
         private void UpdateHighScore()
@@ -123,9 +141,7 @@ namespace ShooterB
         private void InitializeLanguageDropdown()
         {
             if (languageDropdown == null)
-            {
                 languageDropdown = FindObjectOfType<LanguageDropdownController>(true);
-            }
 
             if (languageDropdown == null)
             {
@@ -149,6 +165,24 @@ namespace ShooterB
 
             if (quitButtonText == null && quitButton != null)
                 quitButtonText = FindText(quitButton.transform, "QuitButton");
+        }
+
+        private void EnsureSettingsUIReferences()
+        {
+            if (settingsButton == null)
+                Debug.LogWarning("[MenuController] settingsButton is not assigned.");
+
+            if (settingsModalController == null)
+                Debug.LogWarning("[MenuController] settingsModalController is not assigned.");
+        }
+
+        private void RegisterSettingsListeners()
+        {
+            if (settingsButton == null)
+                return;
+
+            settingsButton.onClick.RemoveListener(OnSettingsClicked);
+            settingsButton.onClick.AddListener(OnSettingsClicked);
         }
 
         private void RefreshAchievementsBadge()

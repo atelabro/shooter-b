@@ -44,6 +44,7 @@ namespace ShooterB
             DontDestroyOnLoad(gameObject);
 
             EnsureAudioReady();
+            AudioSettingsManager.Instance.OnAudioSettingsChanged += HandleAudioSettingsChanged;
             SceneManager.sceneLoaded += HandleSceneLoaded;
             AttachEmittersToAllButtonsInScene();
             nextRescanAt = Time.unscaledTime + Mathf.Max(0.2f, rescanIntervalSeconds);
@@ -61,6 +62,9 @@ namespace ShooterB
         private void OnDestroy()
         {
             SceneManager.sceneLoaded -= HandleSceneLoaded;
+
+            if (AudioSettingsManager.HasInstance)
+                AudioSettingsManager.Instance.OnAudioSettingsChanged -= HandleAudioSettingsChanged;
         }
 
         public void PlayClick()
@@ -82,7 +86,7 @@ namespace ShooterB
 
                 sfxSource.playOnAwake = false;
                 sfxSource.loop = false;
-                sfxSource.volume = 1f;
+                sfxSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
             }
 
             if (clickClip != null)
@@ -99,6 +103,14 @@ namespace ShooterB
         private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             AttachEmittersToAllButtonsInScene();
+        }
+
+        private void HandleAudioSettingsChanged()
+        {
+            if (sfxSource == null)
+                return;
+
+            sfxSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
         }
 
         private static void AttachEmittersToAllButtonsInScene()

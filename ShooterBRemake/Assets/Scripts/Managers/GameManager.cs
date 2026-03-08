@@ -71,10 +71,18 @@ namespace ShooterB
             LoadSelectedWeapon();
             _ = AchievementManager.Instance;
             _ = DailyAwardsManager.Instance;
+            _ = AudioSettingsManager.Instance;
             _ = MusicManager.Instance;
             _ = UIClickSoundManager.Instance;
             _ = WeaponReloadSoundManager.Instance;
             _ = WeaponShootSoundManager.Instance;
+            AudioSettingsManager.Instance.OnAudioSettingsChanged += HandleAudioSettingsChanged;
+        }
+
+        private void OnDestroy()
+        {
+            if (AudioSettingsManager.HasInstance)
+                AudioSettingsManager.Instance.OnAudioSettingsChanged -= HandleAudioSettingsChanged;
         }
 
         public void InitializeGame(Constants.GameMode mode, int startingDifficulty = Constants.INITIAL_DIFFICULTY)
@@ -204,7 +212,7 @@ namespace ShooterB
 
                 duckKillSfxSource.playOnAwake = false;
                 duckKillSfxSource.loop = false;
-                duckKillSfxSource.volume = 1f;
+                duckKillSfxSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
             }
 
             if (quackKillClips != null)
@@ -222,6 +230,14 @@ namespace ShooterB
                 hasLoggedMissingQuackClip = true;
                 Debug.LogWarning("[GameManager] Missing quack SFX clips at Resources/Audio/quack1|quack2|quack3.");
             }
+        }
+
+        private void HandleAudioSettingsChanged()
+        {
+            if (duckKillSfxSource == null)
+                return;
+
+            duckKillSfxSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
         }
 
         private void MinusLife()
