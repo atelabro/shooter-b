@@ -9,11 +9,6 @@ namespace ShooterB
         [Header("References")]
         public TMP_Text waveText;
         public CanvasGroup canvasGroup;
-        [Header("Label Overrides (Optional)")]
-        [Tooltip("If set, this format overrides the localized wave label for English.")]
-        public string englishWaveFormatOverride = string.Empty;
-        [Tooltip("If set, this format overrides the localized wave label for Macedonian.")]
-        public string macedonianWaveFormatOverride = string.Empty;
         [Header("Text Style")]
         public bool applyOutline = true;
         public Color outlineColor = new Color32(27, 37, 51, 255);
@@ -65,7 +60,7 @@ namespace ShooterB
             text.fontMaterial = instanceMaterial;
         }
 
-        public void ShowWave(int waveNumber, float duration)
+        public void ShowWave(int waveNumber, float duration, string labelFormatOverride = null)
         {
             if (!gameObject.activeSelf)
                 gameObject.SetActive(true);
@@ -73,15 +68,15 @@ namespace ShooterB
             if (activeCoroutine != null)
                 StopCoroutine(activeCoroutine);
 
-            activeCoroutine = StartCoroutine(ShowWaveCoroutine(waveNumber, duration));
+            activeCoroutine = StartCoroutine(ShowWaveCoroutine(waveNumber, duration, labelFormatOverride));
         }
 
-        private IEnumerator ShowWaveCoroutine(int waveNumber, float duration)
+        private IEnumerator ShowWaveCoroutine(int waveNumber, float duration, string labelFormatOverride)
         {
             if (waveText == null)
                 yield break;
 
-            string format = ResolveWaveFormat();
+            string format = ResolveWaveFormat(labelFormatOverride);
             waveText.text = string.Format(format, waveNumber);
 
             gameObject.SetActive(true);
@@ -100,15 +95,10 @@ namespace ShooterB
             activeCoroutine = null;
         }
 
-        private string ResolveWaveFormat()
+        private static string ResolveWaveFormat(string labelFormatOverride)
         {
-            LocalizationManager.Language language = LocalizationManager.Instance.CurrentLanguage;
-            string overrideFormat = language == LocalizationManager.Language.Macedonian
-                ? macedonianWaveFormatOverride
-                : englishWaveFormatOverride;
-
-            if (!string.IsNullOrWhiteSpace(overrideFormat))
-                return overrideFormat;
+            if (!string.IsNullOrWhiteSpace(labelFormatOverride))
+                return labelFormatOverride;
 
             return LocalizationManager.Instance.Get("campaign.wave.label", "Wave {0}");
         }

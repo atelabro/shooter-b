@@ -16,6 +16,8 @@ namespace ShooterB
         public int starThreshold3;
         public int starsRequiredToUnlock;
         public int startingDifficulty;
+        public bool forceStartingWeapon;
+        public Constants.WeaponType forcedStartingWeapon = Constants.WeaponType.Rifle;
         public StageSpawnConfig spawnConfig;
     }
 }

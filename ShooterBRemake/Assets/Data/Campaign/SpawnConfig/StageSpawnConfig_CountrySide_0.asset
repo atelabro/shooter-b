@@ -14,49 +14,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageSpawnConfig
   spawnSequence: []
   waves:
-  - showAnnouncement: 0
-    announcementDuration: 3
+  - showAnnouncement: 1
+    announcementDuration: 5
+    englishWaveLabelFormat: Touch the screen to shoot
+    macedonianWaveLabelFormat: "\u0414\u043E\u043F\u0440\u0438 \u0433\u043E \u0435\u043A\u0440\u0430\u043D\u043E\u0442
+      \u0437\u0430 \u043F\u0443\u043A\u0430\u045A\u0435"
     spawnSequence:
     - duckType: 5
       delay: 0
       pathType: 2
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 5
       delay: 0
       pathType: 4
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 5
       delay: 0
       pathType: 6
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 5
       delay: 0
       pathType: 8
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 5
       delay: 1.3
       pathType: 1
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 5
       delay: 0
       pathType: 3
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 5
       delay: 0
       pathType: 5
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 5
       delay: 0
       pathType: 7
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 6
       delay: 1.3
       pathType: 9
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 6
       delay: 0
       pathType: 10
       speedMultiplier: 1
+      patternRef: {fileID: 0}
     - duckType: 5
       delay: 2
       pathType: 0
@@ -67,6 +80,32 @@ MonoBehaviour:
       pathType: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: b5ad9f0c401ae4ba496f1a7448c3515a, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 5
+    englishWaveLabelFormat: The bullets travel to towards the ducks
+    macedonianWaveLabelFormat: "\u041A\u0443\u0440\u0448\u0443\u043C\u0438\u0442\u0435
+      \u043F\u0430\u0442\u043A\u0443\u0432\u0430\u0430\u0442 \u043A\u043E\u043D \u043F\u0430\u0442\u043A\u0438\u0442\u0435"
+    spawnSequence:
+    - duckType: 8
+      delay: 0
+      pathType: 17
+      speedMultiplier: 0.8
+      patternRef: {fileID: 0}
+    - duckType: 5
+      delay: 0.5
+      pathType: 4
+      speedMultiplier: 1
+      patternRef: {fileID: 0}
+    - duckType: 14
+      delay: 0.5
+      pathType: 6
+      speedMultiplier: 1
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0.8
+      pathType: 6
+      speedMultiplier: 0.8
+      patternRef: {fileID: 0}
   weightGoStraight: 0.65
   weightGoTop: 0.2
   weightGoBottom: 0.15

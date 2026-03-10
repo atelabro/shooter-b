@@ -22,6 +22,10 @@ namespace ShooterB
     {
         public bool showAnnouncement = true;
         public float announcementDuration = 3f;
+        [Tooltip("Optional wave label format override for English, e.g. 'Training Wave {0}'. Leave empty to use localization default.")]
+        public string englishWaveLabelFormat;
+        [Tooltip("Optional wave label format override for Macedonian, e.g. 'Тренинг Бран {0}'. Leave empty to use localization default.")]
+        public string macedonianWaveLabelFormat;
         public SpawnEntry[] spawnSequence;
     }
 

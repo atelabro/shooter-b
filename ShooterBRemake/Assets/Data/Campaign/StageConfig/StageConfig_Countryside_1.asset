@@ -14,14 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 1
   mapName: Countryside - Day 2
-  mapNameMk: Почеток - Ден 2
+  mapNameMk: "\u041F\u043E\u0447\u0435\u0442\u043E\u043A - \u0414\u0435\u043D 2"
   briefingText: "First contact. They are disorganized but numerous.\n  Take them
     down."
-  briefingTextMk: Прв контакт. Непријателите се неорганизирани но бројни. Елиминирај ги.
+  briefingTextMk: "\u041F\u0440\u0432 \u043A\u043E\u043D\u0442\u0430\u043A\u0442.
+    \u041D\u0435\u043F\u0440\u0438\u0458\u0430\u0442\u0435\u043B\u0438\u0442\u0435
+    \u0441\u0435 \u043D\u0435\u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0438\u0440\u0430\u043D\u0438
+    \u043D\u043E \u0431\u0440\u043E\u0458\u043D\u0438. \u0415\u043B\u0438\u043C\u0438\u043D\u0438\u0440\u0430\u0458
+    \u0433\u0438."
   backgroundSprite: {fileID: -4733943478823697903, guid: 4edc43d3cf22b44abbae19dc3868a298, type: 3}
   starThreshold1: 20
   starThreshold2: 28
   starThreshold3: 37
   starsRequiredToUnlock: 1
   startingDifficulty: 2
+  forceStartingWeapon: 1
+  forcedStartingWeapon: 3
   spawnConfig: {fileID: 11400000, guid: 9b12a4a04b4554c0682ce9f446f415a8, type: 2}

@@ -258,10 +258,10 @@ namespace ShooterB
             stageCompleteModalController.Show(stage, GameManager.Instance.Score);
         }
 
-        private void HandleWaveStarting(int waveNumber, float duration)
+        private void HandleWaveStarting(int waveNumber, float duration, string labelFormatOverride)
         {
             if (waveAnnouncementController != null)
-                waveAnnouncementController.ShowWave(waveNumber, duration);
+                waveAnnouncementController.ShowWave(waveNumber, duration, labelFormatOverride);
         }
 
         private IEnumerator BeginStageAfterCountdown()

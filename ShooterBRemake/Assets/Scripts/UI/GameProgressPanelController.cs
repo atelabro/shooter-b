@@ -134,7 +134,7 @@ namespace ShooterB
             return count;
         }
 
-        private void HandleWaveStarting(int waveNumber, float duration)
+        private void HandleWaveStarting(int waveNumber, float duration, string labelFormatOverride)
         {
             if (totalWaves <= 0)
                 return;

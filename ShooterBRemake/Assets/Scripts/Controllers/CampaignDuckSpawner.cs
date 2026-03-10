@@ -30,7 +30,7 @@ namespace ShooterB
         private float boundLeft;
 
         public event Action OnAllDucksResolved;
-        public event Action<int, float> OnWaveStarting; // waveNumber (1-based), displayDuration
+        public event Action<int, float, string> OnWaveStarting; // waveNumber (1-based), displayDuration, optional format override
 
         private bool isSpawning = false;
         private int activeDuckCount = 0;
@@ -149,7 +149,8 @@ namespace ShooterB
 
                 if (wave.showAnnouncement)
                 {
-                    OnWaveStarting?.Invoke(waveNumber, wave.announcementDuration);
+                    string labelFormat = ResolveWaveLabelFormat(wave);
+                    OnWaveStarting?.Invoke(waveNumber, wave.announcementDuration, labelFormat);
                     yield return new WaitForSeconds(wave.announcementDuration);
                 }
 
@@ -220,6 +221,19 @@ namespace ShooterB
                     yield break;
                 }
             }
+        }
+
+        private static string ResolveWaveLabelFormat(WaveConfig wave)
+        {
+            if (wave == null)
+                return null;
+
+            LocalizationManager.Language language = LocalizationManager.Instance.CurrentLanguage;
+            string format = language == LocalizationManager.Language.Macedonian
+                ? wave.macedonianWaveLabelFormat
+                : wave.englishWaveLabelFormat;
+
+            return string.IsNullOrWhiteSpace(format) ? null : format;
         }
 
         private IEnumerator WaitForAllDucksResolved()

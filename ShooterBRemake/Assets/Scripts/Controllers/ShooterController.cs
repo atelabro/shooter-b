@@ -395,6 +395,16 @@ namespace ShooterB
 
         private void ApplyConfiguredStartingWeapon()
         {
+            StageConfig activeStage = CampaignProgressManager.Instance != null
+                ? CampaignProgressManager.Instance.ActiveStageConfig
+                : null;
+            if (activeStage != null && activeStage.forceStartingWeapon)
+            {
+                if (!SetActiveWeaponByType(activeStage.forcedStartingWeapon))
+                    activeWeapon = rifleWeapon;
+                return;
+            }
+
             if (GameManager.Instance == null)
             {
                 if (activeWeapon == null)

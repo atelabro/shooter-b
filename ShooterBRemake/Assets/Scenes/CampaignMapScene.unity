@@ -2897,6 +2897,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CityPin
       objectReference: {fileID: 0}
+    - target: {fileID: 200000000, guid: d61c837a25374d8286a45ebfb0563052, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 224000000, guid: d61c837a25374d8286a45ebfb0563052, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
