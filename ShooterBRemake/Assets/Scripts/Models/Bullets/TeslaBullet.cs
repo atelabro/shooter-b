@@ -60,7 +60,7 @@ namespace ShooterB
 
             Vector2 primaryHitPosition = primaryDuck.transform.position;
             primaryDuck.OnHit(firedByWeapon);
-            Debug.Log($"[TESLA] Primary hit duck at {primaryHitPosition}");
+            GameLog.Log($"[TESLA] Primary hit duck at {primaryHitPosition}");
 
             bool spawnedChain = false;
             if (remainingChains > 0)

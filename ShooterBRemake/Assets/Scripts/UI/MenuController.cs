@@ -100,7 +100,7 @@ namespace ShooterB
                 return;
             }
 
-            Debug.LogWarning("[MenuController] settingsModalController is not assigned.");
+            GameLog.Warning("[MenuController] settingsModalController is not assigned.");
         }
 
         private void UpdateHighScore()
@@ -145,7 +145,7 @@ namespace ShooterB
 
             if (languageDropdown == null)
             {
-                Debug.LogWarning("[MenuController] languageDropdown reference is missing.");
+                GameLog.Warning("[MenuController] languageDropdown reference is missing.");
                 return;
             }
 
@@ -170,10 +170,10 @@ namespace ShooterB
         private void EnsureSettingsUIReferences()
         {
             if (settingsButton == null)
-                Debug.LogWarning("[MenuController] settingsButton is not assigned.");
+                GameLog.Warning("[MenuController] settingsButton is not assigned.");
 
             if (settingsModalController == null)
-                Debug.LogWarning("[MenuController] settingsModalController is not assigned.");
+                GameLog.Warning("[MenuController] settingsModalController is not assigned.");
         }
 
         private void RegisterSettingsListeners()

@@ -66,7 +66,7 @@ namespace ShooterB
                 spriteRenderer.enabled = true;
             }
 
-            Debug.Log($"[BULLET] Initialized at {transform.position}, target: {targetPosition}, direction: {direction}, distance: {initialDistance}");
+            GameLog.Log($"[BULLET] Initialized at {transform.position}, target: {targetPosition}, direction: {direction}, distance: {initialDistance}");
         }
 
         protected virtual void FixedUpdate()
@@ -136,7 +136,7 @@ namespace ShooterB
                 spriteRenderer.enabled = false;
             }
 
-            Debug.Log($"[BULLET] Bang triggered at {transform.position}");
+            GameLog.Log($"[BULLET] Bang triggered at {transform.position}");
         }
 
         protected virtual void CheckCollisions()
@@ -151,7 +151,7 @@ namespace ShooterB
                 {
                     uniqueDucksHit.Add(duck);
                     duck.OnHit(firedByWeapon);
-                    Debug.Log($"[BULLET] Hit duck at {hit.transform.position}");
+                    GameLog.Log($"[BULLET] Hit duck at {hit.transform.position}");
                 }
             }
 

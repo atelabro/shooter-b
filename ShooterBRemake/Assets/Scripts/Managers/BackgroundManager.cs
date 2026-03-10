@@ -52,13 +52,13 @@ namespace ShooterB
 
             if (!BackgroundPaths.TryGetValue(key, out string path))
             {
-                Debug.LogWarning($"[BackgroundManager] Unknown background key: {key}");
+                GameLog.Warning($"[BackgroundManager] Unknown background key: {key}");
                 return null;
             }
 
             Sprite sprite = Resources.Load<Sprite>(path);
             if (sprite == null)
-                Debug.LogWarning($"[BackgroundManager] Could not load sprite at path: {path}");
+                GameLog.Warning($"[BackgroundManager] Could not load sprite at path: {path}");
 
             return sprite;
         }

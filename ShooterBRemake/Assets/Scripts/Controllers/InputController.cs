@@ -28,7 +28,7 @@ namespace ShooterB
                 pauseModalController = FindObjectOfType<PauseModalController>(true);
             }
 
-            Debug.Log($"[INPUT] InputController initialized");
+            GameLog.Log($"[INPUT] InputController initialized");
         }
 
         private void Update()
@@ -63,7 +63,7 @@ namespace ShooterB
                 }
                 else
                 {
-                    Debug.LogWarning("[INPUT] PauseModalController not found for Escape handling.");
+                    GameLog.Warning("[INPUT] PauseModalController not found for Escape handling.");
                 }
             }
         }

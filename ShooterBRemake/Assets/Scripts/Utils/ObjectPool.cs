@@ -36,7 +36,7 @@ namespace ShooterB
                 }
 
                 poolDictionary.Add(pool.tag, objectPool);
-                Debug.Log($"Pool initialized: {pool.tag} with {pool.size} objects");
+                GameLog.Log($"Pool initialized: {pool.tag} with {pool.size} objects");
             }
         }
 
@@ -44,7 +44,7 @@ namespace ShooterB
         {
             if (!poolDictionary.ContainsKey(tag))
             {
-                Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
+                GameLog.Warning($"Pool with tag {tag} doesn't exist.");
                 return null;
             }
 
@@ -59,7 +59,7 @@ namespace ShooterB
                 Pool pool = pools.Find(p => p.tag == tag);
                 objectToSpawn = Instantiate(pool.prefab);
                 objectToSpawn.transform.SetParent(transform);
-                Debug.Log($"Pool {tag} exhausted, created new object");
+                GameLog.Log($"Pool {tag} exhausted, created new object");
             }
 
             objectToSpawn.SetActive(true);
@@ -70,7 +70,7 @@ namespace ShooterB
         {
             if (!poolDictionary.ContainsKey(tag))
             {
-                Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
+                GameLog.Warning($"Pool with tag {tag} doesn't exist.");
                 Destroy(obj);
                 return;
             }
@@ -84,7 +84,7 @@ namespace ShooterB
         {
             if (!poolDictionary.ContainsKey(tag))
             {
-                Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
+                GameLog.Warning($"Pool with tag {tag} doesn't exist.");
                 return;
             }
 
@@ -99,14 +99,14 @@ namespace ShooterB
                 poolDictionary[tag].Enqueue(obj);
             }
 
-            Debug.Log($"Preloaded {count} additional objects for pool: {tag}");
+            GameLog.Log($"Preloaded {count} additional objects for pool: {tag}");
         }
 
         public void ClearPool(string tag)
         {
             if (!poolDictionary.ContainsKey(tag))
             {
-                Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
+                GameLog.Warning($"Pool with tag {tag} doesn't exist.");
                 return;
             }
 
@@ -117,7 +117,7 @@ namespace ShooterB
                 Destroy(obj);
             }
 
-            Debug.Log($"Cleared pool: {tag}");
+            GameLog.Log($"Cleared pool: {tag}");
         }
 
         public void ClearAllPools()
@@ -132,7 +132,7 @@ namespace ShooterB
             }
 
             poolDictionary.Clear();
-            Debug.Log("All pools cleared");
+            GameLog.Log("All pools cleared");
         }
     }
 }

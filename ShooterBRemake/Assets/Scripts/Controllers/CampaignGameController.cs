@@ -52,7 +52,7 @@ namespace ShooterB
             }
             else
             {
-                Debug.LogWarning("[CampaignGameController] CampaignDuckSpawner not found in scene.");
+                GameLog.Warning("[CampaignGameController] CampaignDuckSpawner not found in scene.");
             }
         }
 
@@ -78,11 +78,11 @@ namespace ShooterB
 
             if (editorFallbackStage == null)
             {
-                Debug.LogWarning("[CampaignGameController] No ActiveStageConfig and no editorFallbackStage assigned.");
+                GameLog.Warning("[CampaignGameController] No ActiveStageConfig and no editorFallbackStage assigned.");
                 return;
             }
 
-            Debug.Log("[CampaignGameController] No ActiveStageConfig found - using editorFallbackStage for testing.");
+            GameLog.Log("[CampaignGameController] No ActiveStageConfig found - using editorFallbackStage for testing.");
             if (editorFallbackCity != null)
                 CampaignProgressManager.Instance.SetActiveCampaignLocation(editorFallbackCity, editorFallbackStage);
             else
@@ -113,14 +113,14 @@ namespace ShooterB
 
             if (backgroundRenderer == null)
             {
-                Debug.LogWarning("[CampaignGameController] Background renderer is missing.");
+                GameLog.Warning("[CampaignGameController] Background renderer is missing.");
                 return;
             }
 
             StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
             if (stage == null || stage.backgroundSprite == null)
             {
-                Debug.LogWarning("[CampaignGameController] No background sprite set on active stage config.");
+                GameLog.Warning("[CampaignGameController] No background sprite set on active stage config.");
                 return;
             }
 
@@ -183,16 +183,16 @@ namespace ShooterB
                 stageCompleteModalController = FindObjectOfType<StageCompleteModalController>(true);
 
             if (pauseModalController == null)
-                Debug.LogWarning("[CampaignGameController] PauseModalController not found in scene.");
+                GameLog.Warning("[CampaignGameController] PauseModalController not found in scene.");
 
             if (gameOverModalController == null)
-                Debug.LogWarning("[CampaignGameController] GameOverModalController not found in scene.");
+                GameLog.Warning("[CampaignGameController] GameOverModalController not found in scene.");
 
             if (stageCompleteModalController == null)
-                Debug.LogWarning("[CampaignGameController] StageCompleteModalController not found in scene.");
+                GameLog.Warning("[CampaignGameController] StageCompleteModalController not found in scene.");
 
             if (gameStartingModalPanel == null)
-                Debug.LogWarning("[CampaignGameController] gameStartingModalPanel is not assigned.");
+                GameLog.Warning("[CampaignGameController] gameStartingModalPanel is not assigned.");
 
             if (gameStartingModalController == null && gameStartingModalPanel != null)
                 gameStartingModalController = gameStartingModalPanel.GetComponent<GameStartingModalController>();
@@ -201,7 +201,7 @@ namespace ShooterB
                 gameStartingModalController = gameStartingModalPanel.AddComponent<GameStartingModalController>();
 
             if (gameStartingModalController == null)
-                Debug.LogWarning("[CampaignGameController] gameStartingModalController is not assigned.");
+                GameLog.Warning("[CampaignGameController] gameStartingModalController is not assigned.");
         }
 
         private void HideModals()
@@ -251,7 +251,7 @@ namespace ShooterB
 
             if (stageCompleteModalController == null)
             {
-                Debug.LogWarning("[CampaignGameController] StageCompleteModalController not found.");
+                GameLog.Warning("[CampaignGameController] StageCompleteModalController not found.");
                 return;
             }
 
@@ -271,7 +271,7 @@ namespace ShooterB
 
             if (campaignDuckSpawner != null)
             {
-                Debug.Log("[CampaignGameController] Countdown finished, starting campaign spawner.");
+                GameLog.Log("[CampaignGameController] Countdown finished, starting campaign spawner.");
                 campaignDuckSpawner.StartSpawning();
             }
         }
@@ -280,7 +280,7 @@ namespace ShooterB
         {
             if (gameOverModalController == null)
             {
-                Debug.LogWarning("[CampaignGameController] Cannot show game-over modal. Reference is missing.");
+                GameLog.Warning("[CampaignGameController] Cannot show game-over modal. Reference is missing.");
                 return;
             }
 

@@ -42,7 +42,7 @@ namespace ShooterB
         {
             if (duckFrameLibrary == null)
             {
-                Debug.LogError("[CampaignDuckSpawner] duckFrameLibrary is not assigned.");
+                GameLog.Error("[CampaignDuckSpawner] duckFrameLibrary is not assigned.");
             }
 
             InitializeDuckPool();
@@ -66,7 +66,7 @@ namespace ShooterB
             Camera cam = gameCamera != null ? gameCamera : Camera.main;
             if (cam == null)
             {
-                Debug.LogError("[CampaignDuckSpawner] Camera is null. Cannot calculate spawn bounds.");
+                GameLog.Error("[CampaignDuckSpawner] Camera is null. Cannot calculate spawn bounds.");
                 return;
             }
 
@@ -96,7 +96,7 @@ namespace ShooterB
 
             if (spawnConfig == null)
             {
-                Debug.LogWarning("[CampaignDuckSpawner] No spawn config configured for active stage.");
+                GameLog.Warning("[CampaignDuckSpawner] No spawn config configured for active stage.");
                 return;
             }
 
@@ -105,7 +105,7 @@ namespace ShooterB
 
             if (!hasWaves && !hasSequence)
             {
-                Debug.LogWarning("[CampaignDuckSpawner] No spawn sequence or waves configured for active stage.");
+                GameLog.Warning("[CampaignDuckSpawner] No spawn sequence or waves configured for active stage.");
                 return;
             }
 
@@ -116,12 +116,12 @@ namespace ShooterB
             if (hasWaves)
             {
                 StartCoroutine(SpawnWavesCoroutine(spawnConfig));
-                Debug.Log($"[CampaignDuckSpawner] Starting wave mode with {spawnConfig.waves.Length} waves.");
+                GameLog.Log($"[CampaignDuckSpawner] Starting wave mode with {spawnConfig.waves.Length} waves.");
             }
             else
             {
                 StartCoroutine(SpawnSequenceCoroutine(spawnConfig));
-                Debug.Log($"[CampaignDuckSpawner] Starting sequence with {spawnConfig.spawnSequence.Length} entries.");
+                GameLog.Log($"[CampaignDuckSpawner] Starting sequence with {spawnConfig.spawnSequence.Length} entries.");
             }
         }
 
@@ -216,7 +216,7 @@ namespace ShooterB
 
                 if (elapsed >= timeout)
                 {
-                    Debug.LogWarning($"[CampaignDuckSpawner] Timed out waiting for wave {waveNumber} ducks to resolve.");
+                    GameLog.Warning($"[CampaignDuckSpawner] Timed out waiting for wave {waveNumber} ducks to resolve.");
                     yield break;
                 }
             }
@@ -234,7 +234,7 @@ namespace ShooterB
 
                 if (elapsed >= timeout)
                 {
-                    Debug.LogWarning("[CampaignDuckSpawner] Timed out waiting for ducks to resolve. Forcing stage complete.");
+                    GameLog.Warning("[CampaignDuckSpawner] Timed out waiting for ducks to resolve. Forcing stage complete.");
                     break;
                 }
             }
@@ -248,7 +248,7 @@ namespace ShooterB
             GameObject duckObj = GetDuckFromPool();
             if (duckObj == null)
             {
-                Debug.LogWarning("[CampaignDuckSpawner] Duck pool exhausted.");
+                GameLog.Warning("[CampaignDuckSpawner] Duck pool exhausted.");
                 return;
             }
 
@@ -289,7 +289,7 @@ namespace ShooterB
         {
             if (duck == null)
             {
-                Debug.LogError("[CampaignDuckSpawner] Trying to return null duck to pool.");
+                GameLog.Error("[CampaignDuckSpawner] Trying to return null duck to pool.");
                 return;
             }
 
@@ -337,14 +337,14 @@ namespace ShooterB
         {
             if (duckFrameLibrary == null)
             {
-                Debug.LogError("[CampaignDuckSpawner] duckFrameLibrary is not assigned.");
+                GameLog.Error("[CampaignDuckSpawner] duckFrameLibrary is not assigned.");
                 return null;
             }
 
             Sprite[] frames = duckFrameLibrary.GetFrames(type);
             if (frames == null || frames.Length == 0)
             {
-                Debug.LogError($"[CampaignDuckSpawner] No frames found for duck type {type} in duckFrameLibrary.");
+                GameLog.Error($"[CampaignDuckSpawner] No frames found for duck type {type} in duckFrameLibrary.");
             }
 
             return frames;

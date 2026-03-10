@@ -3608,14 +3608,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.RewardedAdService
   providerMode: 1
   useTestAdUnitIds: 1
-  androidCampaignStartPlusLivesUnitId: 
-  androidCampaignStartPlusBulletsUnitId: 
-  androidDailyAwardsSetBonusUnitId: 
-  androidCityFirstCompletionUnitId: 
-  iosCampaignStartPlusLivesUnitId: 
-  iosCampaignStartPlusBulletsUnitId: 
-  iosDailyAwardsSetBonusUnitId: 
-  iosCityFirstCompletionUnitId: 
+  androidCampaignStartPlusLivesUnitId: ca-app-pub-3126525952020256/4931630846
+  androidCampaignStartPlusBulletsUnitId: ca-app-pub-3126525952020256/4931630846
+  androidDailyAwardsSetBonusUnitId: ca-app-pub-3126525952020256/4931630846
+  androidCityFirstCompletionUnitId: ca-app-pub-3126525952020256/4931630846
+  iosCampaignStartPlusLivesUnitId: ca-app-pub-3126525952020256/5147107479
+  iosCampaignStartPlusBulletsUnitId: ca-app-pub-3126525952020256/5147107479
+  iosDailyAwardsSetBonusUnitId: ca-app-pub-3126525952020256/5147107479
+  iosCityFirstCompletionUnitId: ca-app-pub-3126525952020256/5147107479
   mockOutcomeMode: 0
   weightedCompletionChance: 0.8
   weightedCanceledChance: 0.1

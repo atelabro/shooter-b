@@ -344,7 +344,7 @@ namespace ShooterB
             if (reloadGlowImage != null && reloadingText != null)
                 return;
 
-            Debug.LogWarning("[CampaignHUD] Reload feedback references are not fully assigned. Assign both reloadGlowImage and reloadingText in the inspector.");
+            GameLog.Warning("[CampaignHUD] Reload feedback references are not fully assigned. Assign both reloadGlowImage and reloadingText in the inspector.");
             hasLoggedMissingReloadReferences = true;
         }
 
@@ -406,7 +406,7 @@ namespace ShooterB
             if (pauseModalController != null)
                 pauseModalController.Show();
             else
-                Debug.LogWarning("[CampaignHUD] Pause button pressed but PauseModalController is missing.");
+                GameLog.Warning("[CampaignHUD] Pause button pressed but PauseModalController is missing.");
         }
 
         private void HandleComboKill(Constants.MultiKillType type, int bonusPoints, Vector3 comboWorldPosition)
@@ -526,7 +526,7 @@ namespace ShooterB
         {
             if (achievementPopupPrefab == null)
             {
-                Debug.LogWarning("[CampaignHUD] achievementPopupPrefab is missing.");
+                GameLog.Warning("[CampaignHUD] achievementPopupPrefab is missing.");
                 return;
             }
 

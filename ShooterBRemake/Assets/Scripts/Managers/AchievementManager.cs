@@ -410,7 +410,7 @@ namespace ShooterB
             ResetAchievementState();
             PlayerPrefs.SetInt(SchemaVersionKey, CurrentSchemaVersion);
             PlayerPrefs.Save();
-            Debug.Log($"[Achievement] Schema upgraded {storedVersion} -> {CurrentSchemaVersion}. Achievement progress reset.");
+            GameLog.Log($"[Achievement] Schema upgraded {storedVersion} -> {CurrentSchemaVersion}. Achievement progress reset.");
         }
 
         private void ResetAchievementState()
@@ -534,7 +534,7 @@ namespace ShooterB
                     GameManager.Instance.AddCoins(definition.coinReward);
                 PlayAchievementUnlockSfx();
                 OnAchievementUnlocked?.Invoke(id);
-                Debug.Log($"[Achievement] Unlocked: {GetTitle(id)} ({id}) reward: {definition.coinReward} coins");
+                GameLog.Log($"[Achievement] Unlocked: {GetTitle(id)} ({id}) reward: {definition.coinReward} coins");
             }
 
             PlayerPrefs.Save();
@@ -579,7 +579,7 @@ namespace ShooterB
             if (achievementCoinSfx == null && !hasLoggedMissingCoinSfx)
             {
                 hasLoggedMissingCoinSfx = true;
-                Debug.LogWarning($"[AchievementManager] Missing achievement SFX clip at Resources/{AchievementCoinSfxResourcePath}.");
+                GameLog.Warning($"[AchievementManager] Missing achievement SFX clip at Resources/{AchievementCoinSfxResourcePath}.");
             }
         }
 

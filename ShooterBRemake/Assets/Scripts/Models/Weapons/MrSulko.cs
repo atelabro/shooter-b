@@ -14,11 +14,11 @@ namespace ShooterB
             refillDelay = 0.72f;
 
             if (bulletPrefab == null)
-                Debug.LogError("[MRSULKO] bulletPrefab is not assigned. Assign MrSulko bullet prefab via ShooterController or weapon prefab.");
+                GameLog.Error("[MRSULKO] bulletPrefab is not assigned. Assign MrSulko bullet prefab via ShooterController or weapon prefab.");
 
             base.Start();
 
-            Debug.Log($"[MRSULKO] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
+            GameLog.Log($"[MRSULKO] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
         }
     }
 }

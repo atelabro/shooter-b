@@ -103,7 +103,7 @@ namespace ShooterB
                         continue;
 
                     hasLoggedMissingClip = true;
-                    Debug.LogWarning($"[WeaponShootSoundManager] Missing shoot SFX for {kv.Key} in Resources/Audio.");
+                    GameLog.Warning($"[WeaponShootSoundManager] Missing shoot SFX for {kv.Key} in Resources/Audio.");
                     break;
                 }
             }

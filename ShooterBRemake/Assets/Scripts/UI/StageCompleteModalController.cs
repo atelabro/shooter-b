@@ -146,7 +146,7 @@ namespace ShooterB
                     result =>
                     {
                         CampaignProgressManager.Instance.MarkCityFirstCompletionAdShown(cityForOneTimeCompletionAd);
-                        Debug.Log($"[StageComplete] City first-completion ad attempted for {cityForOneTimeCompletionAd.cityName}. Result={result}");
+                        GameLog.Log($"[StageComplete] City first-completion ad attempted for {cityForOneTimeCompletionAd.cityName}. Result={result}");
                         shouldShowCityFirstCompletionAdOnContinue = false;
                         cityForOneTimeCompletionAd = null;
                         continueFlowInProgress = false;

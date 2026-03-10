@@ -121,7 +121,7 @@ namespace ShooterB
             Canvas canvas = FindObjectOfType<Canvas>();
             if (canvas == null)
             {
-                Debug.LogWarning("[ARMORY] Canvas missing; cannot initialize weapon list.");
+                GameLog.Warning("[ARMORY] Canvas missing; cannot initialize weapon list.");
                 return;
             }
 
@@ -301,7 +301,7 @@ namespace ShooterB
         {
             if (weaponCardPrefab == null)
             {
-                Debug.LogError("[ARMORY] Weapon card prefab is not assigned.");
+                GameLog.Error("[ARMORY] Weapon card prefab is not assigned.");
                 return null;
             }
 
@@ -311,7 +311,7 @@ namespace ShooterB
             WeaponCardItemUI itemUI = rowObj.GetComponent<WeaponCardItemUI>();
             if (itemUI == null)
             {
-                Debug.LogError("[ARMORY] Weapon card prefab is missing WeaponCardItemUI.");
+                GameLog.Error("[ARMORY] Weapon card prefab is missing WeaponCardItemUI.");
                 Destroy(rowObj);
                 return null;
             }
@@ -521,7 +521,7 @@ namespace ShooterB
 
             if (!missingIconWarnings.Contains(weaponType))
             {
-                Debug.LogWarning($"[ARMORY] No icon found for {weaponType}.");
+                GameLog.Warning($"[ARMORY] No icon found for {weaponType}.");
                 missingIconWarnings.Add(weaponType);
             }
 

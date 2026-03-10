@@ -13,7 +13,7 @@ namespace ShooterB
 
             base.Awake();
 
-            Debug.Log($"[CABIRNEBULLET] Initialized - Start: {startRadius}, End: {secondRadius}, Effective: {effectiveRadius}, Speed: {baseSpeed}");
+            GameLog.Log($"[CABIRNEBULLET] Initialized - Start: {startRadius}, End: {secondRadius}, Effective: {effectiveRadius}, Speed: {baseSpeed}");
         }
     }
 }

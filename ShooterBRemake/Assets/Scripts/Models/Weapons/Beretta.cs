@@ -14,11 +14,11 @@ namespace ShooterB
             refillDelay = 1.6f;
 
             if (bulletPrefab == null)
-                Debug.LogError("[BERETTA] bulletPrefab is not assigned. Assign Beretta bullet prefab via ShooterController or weapon prefab.");
+                GameLog.Error("[BERETTA] bulletPrefab is not assigned. Assign Beretta bullet prefab via ShooterController or weapon prefab.");
 
             base.Start();
 
-            Debug.Log($"[BERETTA] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
+            GameLog.Log($"[BERETTA] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
         }
     }
 }

@@ -67,7 +67,7 @@ namespace ShooterB
             lastOrientation = orientation;
 
             if (logSafeAreaChanges)
-                Debug.Log($"[SAFE AREA] {name} safeArea={safeArea} screen={screenWidth}x{screenHeight} orientation={orientation}");
+                GameLog.Log($"[SAFE AREA] {name} safeArea={safeArea} screen={screenWidth}x{screenHeight} orientation={orientation}");
 
             float left = (safeArea.xMin + (applyLeft ? extraPaddingPx.x : 0f)) / screenWidth;
             float right = (safeArea.xMax - (applyRight ? extraPaddingPx.x : 0f)) / screenWidth;

@@ -43,7 +43,7 @@ namespace ShooterB
                 }
                 else
                 {
-                    Debug.LogWarning($"[CityPinController] Missing pin sprite for city '{cityName}'. Path: '{config.pinSpriteResourcePath}'");
+                    GameLog.Warning($"[CityPinController] Missing pin sprite for city '{cityName}'. Path: '{config.pinSpriteResourcePath}'");
                 }
             }
 

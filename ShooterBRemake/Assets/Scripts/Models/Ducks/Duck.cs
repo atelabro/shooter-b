@@ -645,7 +645,7 @@ namespace ShooterB
             }
             else
             {
-                Debug.LogWarning($"[DUCK] SpriteRenderer missing on hit for type {duckType}.");
+                GameLog.Warning($"[DUCK] SpriteRenderer missing on hit for type {duckType}.");
             }
 
             // Keep current scale -- PPU handles sizing relative to the alive sprite
@@ -666,7 +666,7 @@ namespace ShooterB
             // Return to pool after falling off screen
             Invoke(nameof(ReturnToPool), DEAD_CLEANUP_TIME);
 
-            Debug.Log($"Duck hit by {weaponType}! Type: {duckType}, Points: {pointValue}");
+            GameLog.Log($"Duck hit by {weaponType}! Type: {duckType}, Points: {pointValue}");
         }
 
         private Sprite GetDeathSprite(Constants.WeaponType weaponType)
@@ -677,7 +677,7 @@ namespace ShooterB
                 return registeredDeathSprite;
             }
 
-            Debug.LogWarning($"[DUCK] No registered death sprite for weapon {weaponType}.");
+            GameLog.Warning($"[DUCK] No registered death sprite for weapon {weaponType}.");
             return null;
         }
 
@@ -689,7 +689,7 @@ namespace ShooterB
 
             if (transform.parent == null)
             {
-                Debug.LogError("Duck has no parent! Cannot return to pool.");
+                GameLog.Error("Duck has no parent! Cannot return to pool.");
                 gameObject.SetActive(false);
                 return;
             }
@@ -701,7 +701,7 @@ namespace ShooterB
             }
             else
             {
-                Debug.LogWarning($"IDuckSpawner not found on parent '{transform.parent.name}'. Deactivating duck.");
+                GameLog.Warning($"IDuckSpawner not found on parent '{transform.parent.name}'. Deactivating duck.");
                 gameObject.SetActive(false);
             }
         }

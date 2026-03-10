@@ -35,7 +35,7 @@ namespace ShooterB
         private void Start()
         {
             ResolveReferences();
-            Debug.Log("[AchievementsSceneController] Start");
+            GameLog.Log("[AchievementsSceneController] Start");
 
             if (backButton != null)
             {
@@ -121,7 +121,7 @@ namespace ShooterB
                         if (candidate != null)
                         {
                             dailyRowPrefab = candidate;
-                            Debug.Log($"[AchievementsSceneController] dailyRowPrefab auto-found in DailyAwardSection: {candidate.gameObject.name}");
+                            GameLog.Log($"[AchievementsSceneController] dailyRowPrefab auto-found in DailyAwardSection: {candidate.gameObject.name}");
                             break;
                         }
                     }
@@ -139,7 +139,7 @@ namespace ShooterB
                         if (candidate.gameObject.name.IndexOf("AchievementListItem", StringComparison.OrdinalIgnoreCase) >= 0)
                         {
                             dailyRowPrefab = candidate;
-                            Debug.Log($"[AchievementsSceneController] dailyRowPrefab fallback auto-found: {candidate.gameObject.name}");
+                            GameLog.Log($"[AchievementsSceneController] dailyRowPrefab fallback auto-found: {candidate.gameObject.name}");
                             break;
                         }
                     }
@@ -173,14 +173,14 @@ namespace ShooterB
                 dailyAdBonusButton.onClick.AddListener(OnDailyAdBonusButtonClicked);
             }
 
-            Debug.Log($"[AchievementsSceneController] contentRoot={(contentRoot != null ? contentRoot.name : "null")} achievementsListRoot={(achievementsListRoot != null ? achievementsListRoot.name : "null")} dailyListRoot={(dailyListRoot != null ? dailyListRoot.name : "null")} rowPrefab={(rowPrefab != null ? rowPrefab.name : "null")} dailyRowPrefab={(dailyRowPrefab != null ? dailyRowPrefab.name : "null")} generalTitleMarker={(generalTitleMarker != null ? generalTitleMarker.name : "null")}");
+            GameLog.Log($"[AchievementsSceneController] contentRoot={(contentRoot != null ? contentRoot.name : "null")} achievementsListRoot={(achievementsListRoot != null ? achievementsListRoot.name : "null")} dailyListRoot={(dailyListRoot != null ? dailyListRoot.name : "null")} rowPrefab={(rowPrefab != null ? rowPrefab.name : "null")} dailyRowPrefab={(dailyRowPrefab != null ? dailyRowPrefab.name : "null")} generalTitleMarker={(generalTitleMarker != null ? generalTitleMarker.name : "null")}");
         }
 
         private void BuildAchievementRows()
         {
             if (achievementsListRoot == null || rowPrefab == null)
             {
-                Debug.LogWarning("[AchievementsSceneController] Missing achievementsListRoot or rowPrefab reference.");
+                GameLog.Warning("[AchievementsSceneController] Missing achievementsListRoot or rowPrefab reference.");
                 return;
             }
 
@@ -233,12 +233,12 @@ namespace ShooterB
             Transform targetRoot = dailyListRoot != null ? dailyListRoot : achievementsListRoot;
             if (template == null)
             {
-                Debug.LogWarning("[AchievementsSceneController] Daily template is null. Skipping daily rows.");
+                GameLog.Warning("[AchievementsSceneController] Daily template is null. Skipping daily rows.");
                 return;
             }
             if (targetRoot == null)
             {
-                Debug.LogWarning("[AchievementsSceneController] Daily target root is null. Skipping daily rows.");
+                GameLog.Warning("[AchievementsSceneController] Daily target root is null. Skipping daily rows.");
                 return;
             }
 
@@ -262,7 +262,7 @@ namespace ShooterB
                 dailyRows.Add(row);
             }
 
-            Debug.Log($"[AchievementsSceneController] Built daily rows: {dailyRows.Count}");
+            GameLog.Log($"[AchievementsSceneController] Built daily rows: {dailyRows.Count}");
         }
 
         private void HandleAchievementUnlocked(AchievementManager.AchievementId id)

@@ -48,7 +48,6 @@ namespace ShooterB
         public event Action OnGameOver;
         public event Action<Constants.MultiKillType, int, Vector3> OnComboKill;
         public event Action<Constants.MultiKillType, Constants.WeaponType, int, Vector3> OnComboKillDetailed;
-        public event Action<int> OnBirdsKilledChanged;
         public event Action<Constants.DuckType, Constants.WeaponType> OnBirdKilled;
         public event Action OnBirdPassed;
         public event Action<Constants.WeaponType> OnSelectedWeaponChanged;
@@ -105,7 +104,7 @@ namespace ShooterB
             OnLivesChanged?.Invoke(Lives);
             OnDifficultyChanged?.Invoke(Difficulty);
 
-            Debug.Log($"Game initialized - Mode: {mode}, Difficulty: {Difficulty}, Lives: {Lives}");
+            GameLog.Log($"Game initialized - Mode: {mode}, Difficulty: {Difficulty}, Lives: {Lives}");
         }
 
         public void BirdCreated()
@@ -116,7 +115,7 @@ namespace ShooterB
             if (BirdCount % Constants.BONUS_LIFE_BIRD_COUNT == 0)
             {
                 PlusLife();
-                Debug.Log($"Bonus life awarded at bird count: {BirdCount}");
+                GameLog.Log($"Bonus life awarded at bird count: {BirdCount}");
             }
 
             if (birdsUntilNextDifficulty <= 0 && Difficulty < Constants.MAX_DIFFICULTY)
@@ -126,7 +125,7 @@ namespace ShooterB
                 UpdateBirdsUntilNextDifficulty();
                 OnDifficultyChanged?.Invoke(Difficulty);
                 OnMultiplierChanged?.Invoke(Multiplier);
-                Debug.Log($"Difficulty increased to {Difficulty}, Multiplier: {Multiplier}");
+                GameLog.Log($"Difficulty increased to {Difficulty}, Multiplier: {Multiplier}");
             }
         }
 
@@ -143,18 +142,17 @@ namespace ShooterB
             AddPoints(pointsEarned);
 
             BirdsKilled++;
-            OnBirdsKilledChanged?.Invoke(BirdsKilled);
             OnBirdKilled?.Invoke(duckType, weaponType);
             PlayRandomQuackOnDuckKill();
 
-            Debug.Log($"Duck killed - Type: {duckType}, Weapon: {weaponType}, Base: {basePoints}, Multiplier: {Multiplier}, Earned: {pointsEarned}");
+            GameLog.Log($"Duck killed - Type: {duckType}, Weapon: {weaponType}, Base: {basePoints}, Multiplier: {Multiplier}, Earned: {pointsEarned}");
         }
 
         public void BirdPassed()
         {
             MinusLife();
             OnBirdPassed?.Invoke();
-            Debug.Log($"Duck passed - Lives remaining: {Lives}");
+            GameLog.Log($"Duck passed - Lives remaining: {Lives}");
 
             if (Lives <= 0)
             {
@@ -174,7 +172,7 @@ namespace ShooterB
             Vector3 comboPosition = worldPosition ?? Vector3.zero;
             OnComboKill?.Invoke(type, bonusPoints, comboPosition);
             OnComboKillDetailed?.Invoke(type, weaponType, bonusPoints, comboPosition);
-            Debug.Log($"Combo! {type} with {weaponType} - Bonus points: {bonusPoints}");
+            GameLog.Log($"Combo! {type} with {weaponType} - Bonus points: {bonusPoints}");
         }
 
         private void AddPoints(int points)
@@ -228,7 +226,7 @@ namespace ShooterB
             if (quackKillClips.Length == 0 && !hasLoggedMissingQuackClip)
             {
                 hasLoggedMissingQuackClip = true;
-                Debug.LogWarning("[GameManager] Missing quack SFX clips at Resources/Audio/quack1|quack2|quack3.");
+                GameLog.Warning("[GameManager] Missing quack SFX clips at Resources/Audio/quack1|quack2|quack3.");
             }
         }
 
@@ -259,7 +257,7 @@ namespace ShooterB
 
             Lives += amount;
             OnLivesChanged?.Invoke(Lives);
-            Debug.Log($"[GameManager] Bonus lives added: +{amount}. Total lives: {Lives}");
+            GameLog.Log($"[GameManager] Bonus lives added: +{amount}. Total lives: {Lives}");
         }
 
         private void CalculateMultiplier()
@@ -278,14 +276,14 @@ namespace ShooterB
         public void SetArcadeVeryHardMode(bool enabled)
         {
             ArcadeVeryHardMode = enabled;
-            Debug.Log($"Arcade very hard mode set to: {ArcadeVeryHardMode}");
+            GameLog.Log($"Arcade very hard mode set to: {ArcadeVeryHardMode}");
         }
 
         public void SetSelectedWeapon(Constants.WeaponType weaponType)
         {
             if (!IsWeaponSupportedInCurrentBuild(weaponType))
             {
-                Debug.LogWarning($"[GameManager] Unsupported armory weapon '{weaponType}'. Falling back to Rifle.");
+                GameLog.Warning($"[GameManager] Unsupported armory weapon '{weaponType}'. Falling back to Rifle.");
                 weaponType = Constants.WeaponType.Rifle;
             }
 
@@ -293,7 +291,7 @@ namespace ShooterB
             PlayerPrefs.SetInt(Constants.PREFS_SELECTED_WEAPON, (int)weaponType);
             PlayerPrefs.Save();
             OnSelectedWeaponChanged?.Invoke(SelectedWeaponType);
-            Debug.Log($"[GameManager] Selected weapon saved: {SelectedWeaponType}");
+            GameLog.Log($"[GameManager] Selected weapon saved: {SelectedWeaponType}");
         }
 
         public void AddCoins(int amount)
@@ -305,7 +303,7 @@ namespace ShooterB
             PlayerPrefs.SetInt(Constants.PREFS_COINS, Coins);
             PlayerPrefs.Save();
             OnCoinsChanged?.Invoke(Coins);
-            Debug.Log($"[GameManager] Coins added: +{amount}. Total: {Coins}");
+            GameLog.Log($"[GameManager] Coins added: +{amount}. Total: {Coins}");
         }
 
         public bool TrySpendCoins(int amount)
@@ -323,7 +321,7 @@ namespace ShooterB
             PlayerPrefs.SetInt(Constants.PREFS_COINS, Coins);
             PlayerPrefs.Save();
             OnCoinsChanged?.Invoke(Coins);
-            Debug.Log($"[GameManager] Coins spent: -{amount}. Total: {Coins}");
+            GameLog.Log($"[GameManager] Coins spent: -{amount}. Total: {Coins}");
             return true;
         }
 
@@ -335,7 +333,7 @@ namespace ShooterB
             IsPaused = true;
             Time.timeScale = 0f;
             OnPauseStateChanged?.Invoke(true);
-            Debug.Log("Game paused");
+            GameLog.Log("Game paused");
         }
 
         public void ResumeGame()
@@ -346,14 +344,14 @@ namespace ShooterB
             IsPaused = false;
             Time.timeScale = 1f;
             OnPauseStateChanged?.Invoke(false);
-            Debug.Log("Game resumed");
+            GameLog.Log("Game resumed");
         }
 
         public void RestartGame()
         {
             Time.timeScale = 1f;
             InitializeGame(CurrentGameMode);
-            Debug.Log("Game restarted");
+            GameLog.Log("Game restarted");
         }
 
         private void TriggerGameOver()
@@ -364,7 +362,7 @@ namespace ShooterB
             if (CurrentGameMode == Constants.GameMode.Campaign)
             {
                 ConsecutiveFailedRuns++;
-                Debug.Log($"[GameManager] Campaign failed run streak increased to {ConsecutiveFailedRuns}");
+                GameLog.Log($"[GameManager] Campaign failed run streak increased to {ConsecutiveFailedRuns}");
             }
 
             IsGameOver = true;
@@ -373,7 +371,7 @@ namespace ShooterB
             SaveHighScore();
             OnPauseStateChanged?.Invoke(false);
             OnGameOver?.Invoke();
-            Debug.Log($"Game Over! Final Score: {Score}, High Score: {HighScore}");
+            GameLog.Log($"Game Over! Final Score: {Score}, High Score: {HighScore}");
         }
 
         private void LoadHighScore()
@@ -385,7 +383,7 @@ namespace ShooterB
             }
 
             HighScore = PlayerPrefs.GetInt(Constants.PREFS_HIGH_SCORE_ARCADE, 0);
-            Debug.Log($"High score loaded: {HighScore} for mode {CurrentGameMode}");
+            GameLog.Log($"High score loaded: {HighScore} for mode {CurrentGameMode}");
         }
 
         private void SaveHighScore()
@@ -395,7 +393,7 @@ namespace ShooterB
 
             PlayerPrefs.SetInt(Constants.PREFS_HIGH_SCORE_ARCADE, (int)HighScore);
             PlayerPrefs.Save();
-            Debug.Log($"High score saved: {HighScore} for mode {CurrentGameMode}");
+            GameLog.Log($"High score saved: {HighScore} for mode {CurrentGameMode}");
         }
 
         public bool IsNewHighScore()
@@ -409,7 +407,7 @@ namespace ShooterB
                 return;
 
             ConsecutiveFailedRuns = 0;
-            Debug.Log("[GameManager] Campaign failed run streak reset.");
+            GameLog.Log("[GameManager] Campaign failed run streak reset.");
         }
 
         private void LoadCoins()

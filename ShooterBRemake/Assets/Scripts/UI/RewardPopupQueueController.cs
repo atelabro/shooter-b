@@ -77,7 +77,7 @@ namespace ShooterB
         {
             if (request.prefab == null)
             {
-                Debug.LogWarning($"{request.logPrefix} achievementPopupPrefab is missing.");
+                GameLog.Warning($"{request.logPrefix} achievementPopupPrefab is missing.");
                 yield break;
             }
 
@@ -113,7 +113,7 @@ namespace ShooterB
                 popupRect.SetAsLastSibling();
             }
 
-            Debug.Log($"{request.logPrefix} {request.source} popup shown ({(request.isDebug ? "DEBUG" : "LIVE")}): {request.title}, +{Mathf.Max(0, request.coins)} coins");
+            GameLog.Log($"{request.logPrefix} {request.source} popup shown ({(request.isDebug ? "DEBUG" : "LIVE")}): {request.title}, +{Mathf.Max(0, request.coins)} coins");
 
             float lifetime = Mathf.Max(0.1f, request.lifetime);
             yield return new WaitForSecondsRealtime(lifetime);

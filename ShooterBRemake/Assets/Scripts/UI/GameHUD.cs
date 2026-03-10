@@ -91,7 +91,7 @@ namespace ShooterB
             SubscribeToEvents();
             UpdateAllUI();
 
-            Debug.Log("GameHUD initialized");
+            GameLog.Log("GameHUD initialized");
         }
 
         private void OnDestroy()
@@ -368,7 +368,7 @@ namespace ShooterB
             if (reloadGlowImage != null && reloadingText != null)
                 return;
 
-            Debug.LogWarning("[GameHUD] Reload feedback references are not fully assigned. Assign both reloadGlowImage and reloadingText in the inspector.");
+            GameLog.Warning("[GameHUD] Reload feedback references are not fully assigned. Assign both reloadGlowImage and reloadingText in the inspector.");
             hasLoggedMissingReloadReferences = true;
         }
 
@@ -420,7 +420,7 @@ namespace ShooterB
             }
             else
             {
-                Debug.LogWarning("[GameHUD] Pause button pressed but PauseModalController is missing.");
+                GameLog.Warning("[GameHUD] Pause button pressed but PauseModalController is missing.");
             }
         }
 
@@ -432,7 +432,7 @@ namespace ShooterB
             }
             else
             {
-                Debug.LogWarning("[GameHUD] Menu button pressed but PauseModalController is missing.");
+                GameLog.Warning("[GameHUD] Menu button pressed but PauseModalController is missing.");
             }
         }
 
@@ -553,7 +553,7 @@ namespace ShooterB
         {
             if (achievementPopupPrefab == null)
             {
-                Debug.LogWarning("[GameHUD] achievementPopupPrefab is missing.");
+                GameLog.Warning("[GameHUD] achievementPopupPrefab is missing.");
                 return;
             }
 

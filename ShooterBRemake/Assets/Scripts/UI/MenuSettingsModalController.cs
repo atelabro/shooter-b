@@ -49,7 +49,7 @@ namespace ShooterB
         {
             if (modalRoot == null)
             {
-                Debug.LogWarning("[MenuSettingsModalController] modalRoot is not assigned.");
+                GameLog.Warning("[MenuSettingsModalController] modalRoot is not assigned.");
                 return;
             }
 
@@ -82,7 +82,7 @@ namespace ShooterB
             }
             else
             {
-                Debug.LogWarning("[MenuSettingsModalController] closeButton is not assigned.");
+                GameLog.Warning("[MenuSettingsModalController] closeButton is not assigned.");
             }
 
             if (masterSlider != null)
@@ -92,7 +92,7 @@ namespace ShooterB
             }
             else
             {
-                Debug.LogWarning("[MenuSettingsModalController] masterSlider is not assigned.");
+                GameLog.Warning("[MenuSettingsModalController] masterSlider is not assigned.");
             }
 
             if (musicSlider != null)
@@ -102,7 +102,7 @@ namespace ShooterB
             }
             else
             {
-                Debug.LogWarning("[MenuSettingsModalController] musicSlider is not assigned.");
+                GameLog.Warning("[MenuSettingsModalController] musicSlider is not assigned.");
             }
 
             if (sfxSlider != null)
@@ -112,7 +112,7 @@ namespace ShooterB
             }
             else
             {
-                Debug.LogWarning("[MenuSettingsModalController] sfxSlider is not assigned.");
+                GameLog.Warning("[MenuSettingsModalController] sfxSlider is not assigned.");
             }
         }
 

@@ -103,7 +103,7 @@ namespace ShooterB
                         continue;
 
                     hasLoggedMissingClip = true;
-                    Debug.LogWarning($"[WeaponReloadSoundManager] Missing reload SFX for {kv.Key} in Resources/Audio.");
+                    GameLog.Warning($"[WeaponReloadSoundManager] Missing reload SFX for {kv.Key} in Resources/Audio.");
                     break;
                 }
             }

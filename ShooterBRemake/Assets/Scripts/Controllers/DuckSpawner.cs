@@ -42,7 +42,7 @@ namespace ShooterB
 
         private void Awake()
         {
-            Debug.Log($"[DUCKSPAWNER] Awake called on {gameObject.name}");
+            GameLog.Log($"[DUCKSPAWNER] Awake called on {gameObject.name}");
             spawnCountsByType = new int[System.Enum.GetValues(typeof(Constants.DuckType)).Length];
             ValidateDuckTypeFrames();
             InitializeDuckPool();
@@ -53,7 +53,7 @@ namespace ShooterB
         {
             if (duckFrameLibrary == null)
             {
-                Debug.LogError("[DUCKSPAWNER] duckFrameLibrary is not assigned.");
+                GameLog.Error("[DUCKSPAWNER] duckFrameLibrary is not assigned.");
                 return;
             }
 
@@ -85,13 +85,13 @@ namespace ShooterB
         {
             if (frames == null || frames.Length == 0)
             {
-                Debug.LogError($"[DUCKSPAWNER] No frames set for {type} ({fieldName}).");
+                GameLog.Error($"[DUCKSPAWNER] No frames set for {type} ({fieldName}).");
             }
         }
 
         private void Start()
         {
-            Debug.Log($"[DUCKSPAWNER] Start called on {gameObject.name}");
+            GameLog.Log($"[DUCKSPAWNER] Start called on {gameObject.name}");
             StartSpawning();
         }
 
@@ -107,7 +107,7 @@ namespace ShooterB
                 duckPool.Enqueue(duck);
             }
 
-            Debug.Log($"Duck pool initialized with {poolSize} ducks");
+            GameLog.Log($"Duck pool initialized with {poolSize} ducks");
         }
 
         private void CalculateSpawnBounds()
@@ -130,14 +130,14 @@ namespace ShooterB
                 boundRight = topRight.x + 2f;
                 boundLeft = bottomLeft.x - 2f;
 
-                Debug.Log($"Camera Z: {cam.transform.position.z}, Distance: {distanceFromCamera}");
-                Debug.Log($"Spawn bounds - Bottom-Left: {bottomLeft}, Top-Right: {topRight}");
-                Debug.Log($"Spawn bounds - SpawnX: {spawnX}, Y range: {minY} to {maxY}");
-                Debug.Log($"Duck bounds - Top: {boundTop}, Bottom: {boundBottom}, Right: {boundRight}, Left: {boundLeft}");
+                GameLog.Log($"Camera Z: {cam.transform.position.z}, Distance: {distanceFromCamera}");
+                GameLog.Log($"Spawn bounds - Bottom-Left: {bottomLeft}, Top-Right: {topRight}");
+                GameLog.Log($"Spawn bounds - SpawnX: {spawnX}, Y range: {minY} to {maxY}");
+                GameLog.Log($"Duck bounds - Top: {boundTop}, Bottom: {boundBottom}, Right: {boundRight}, Left: {boundLeft}");
             }
             else
             {
-                Debug.LogError("Camera is null! Cannot calculate spawn bounds!");
+                GameLog.Error("Camera is null! Cannot calculate spawn bounds!");
             }
         }
 
@@ -149,7 +149,7 @@ namespace ShooterB
                 isSpawning = true;
                 nextSpawnTime = Time.time + GetInitialSpawnDelay();
                 StartCoroutine(SpawnCoroutine());
-                Debug.Log("Duck spawning started - Arcade random");
+                GameLog.Log("Duck spawning started - Arcade random");
             }
         }
 
@@ -157,7 +157,7 @@ namespace ShooterB
         {
             isSpawning = false;
             StopAllCoroutines();
-            Debug.Log("Duck spawning stopped");
+            GameLog.Log("Duck spawning stopped");
         }
 
         private IEnumerator SpawnCoroutine()
@@ -200,7 +200,7 @@ namespace ShooterB
             GameObject duckObj = GetDuckFromPool();
             if (duckObj == null)
             {
-                Debug.LogWarning("Duck pool exhausted!");
+                GameLog.Warning("Duck pool exhausted!");
                 return;
             }
 
@@ -221,14 +221,14 @@ namespace ShooterB
         {
             if (duckFrameLibrary == null)
             {
-                Debug.LogError("[DUCKSPAWNER] duckFrameLibrary is not assigned.");
+                GameLog.Error("[DUCKSPAWNER] duckFrameLibrary is not assigned.");
                 return null;
             }
 
             Sprite[] frames = duckFrameLibrary.GetFrames(type);
             if (frames == null || frames.Length == 0)
             {
-                Debug.LogError($"[DUCKSPAWNER] No frames found for duck type {type} in duckFrameLibrary.");
+                GameLog.Error($"[DUCKSPAWNER] No frames found for duck type {type} in duckFrameLibrary.");
             }
 
             return frames;
@@ -256,13 +256,13 @@ namespace ShooterB
         {
             if (duck == null)
             {
-                Debug.LogError("Trying to return null duck to pool!");
+                GameLog.Error("Trying to return null duck to pool!");
                 return;
             }
 
             if (duckPool == null)
             {
-                Debug.LogError("Duck pool is null! Spawner may not be initialized yet.");
+                GameLog.Error("Duck pool is null! Spawner may not be initialized yet.");
                 duck.SetActive(false);
                 return;
             }
@@ -270,7 +270,7 @@ namespace ShooterB
             duck.SetActive(false);
             duckPool.Enqueue(duck);
             activeDuckCount = Mathf.Max(0, activeDuckCount - 1);
-            Debug.Log($"Duck returned to pool. Pool size: {duckPool.Count}");
+            GameLog.Log($"Duck returned to pool. Pool size: {duckPool.Count}");
         }
 
         private Constants.DuckType SelectDuckType()
@@ -347,7 +347,7 @@ namespace ShooterB
                 return;
             }
 
-            Debug.Log(
+            GameLog.Log(
                 $"[DUCKSPAWNER] Spawn distribution @ {totalSpawnedCount} spawns | " +
                 $"{Constants.GetDuckDebugName(Constants.DuckType.Type0)}: {GetActualPercent(Constants.DuckType.Type0):F1}% (exp {Constants.DuckSpawnProbability.TYPE_0 * 100f:F1}%) | " +
                 $"{Constants.GetDuckDebugName(Constants.DuckType.Type1)}: {GetActualPercent(Constants.DuckType.Type1):F1}% (exp {Constants.DuckSpawnProbability.TYPE_1 * 100f:F1}%) | " +

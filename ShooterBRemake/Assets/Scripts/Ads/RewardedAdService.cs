@@ -98,7 +98,7 @@ namespace ShooterB
             EnsureProvider();
             provider.Show(placement, source, result =>
             {
-                Debug.Log($"[RewardedAdService] placement={placement}, source={source}, result={result}");
+                GameLog.Log($"[RewardedAdService] placement={placement}, source={source}, result={result}");
                 onCompleted?.Invoke(result);
             });
         }
@@ -132,7 +132,7 @@ namespace ShooterB
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
                 return new AdMobRewardedAdProvider(this);
 #else
-                Debug.LogWarning("[RewardedAdService] AdMob provider selected, but current platform/build does not support runtime AdMob SDK calls. Falling back to Mock provider.");
+                GameLog.Warning("[RewardedAdService] AdMob provider selected, but current platform/build does not support runtime AdMob SDK calls. Falling back to Mock provider.");
 #endif
             }
 
@@ -145,7 +145,7 @@ namespace ShooterB
                 return;
 
             instanceSourceLogged = true;
-            Debug.Log($"[RewardedAdService] Singleton source={source}, gameObject={gameObject.name}");
+            GameLog.Log($"[RewardedAdService] Singleton source={source}, gameObject={gameObject.name}");
         }
 
         private string ResolveAdUnitId(RewardedAdPlacement placement)
@@ -382,7 +382,7 @@ namespace ShooterB
 
                     if (loadError != null || loadedAd == null)
                     {
-                        Debug.LogWarning($"[RewardedAdService] Failed to load rewarded ad for {placement}. error={loadError}");
+                        GameLog.Warning($"[RewardedAdService] Failed to load rewarded ad for {placement}. error={loadError}");
                         return;
                     }
 

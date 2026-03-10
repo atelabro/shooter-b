@@ -31,7 +31,7 @@ namespace ShooterB
             GameManager.Instance.OnGameOver += HandleGameOver;
             LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
 
-            Debug.Log($"GameController started - Score: {GameManager.Instance.Score}, Lives: {GameManager.Instance.Lives}, Difficulty: {GameManager.Instance.Difficulty}");
+            GameLog.Log($"GameController started - Score: {GameManager.Instance.Score}, Lives: {GameManager.Instance.Lives}, Difficulty: {GameManager.Instance.Difficulty}");
         }
 
         private void OnDestroy()
@@ -55,7 +55,7 @@ namespace ShooterB
                 mainCamera.orthographic = true;
                 mainCamera.orthographicSize = Constants.CAMERA_HEIGHT / 2f / 100f;
 
-                Debug.Log($"Camera configured - Orthographic size: {mainCamera.orthographicSize}");
+                GameLog.Log($"Camera configured - Orthographic size: {mainCamera.orthographicSize}");
             }
         }
 
@@ -70,14 +70,14 @@ namespace ShooterB
 
             if (backgroundRenderer == null)
             {
-                Debug.LogWarning("[GameController] Background renderer is missing.");
+                GameLog.Warning("[GameController] Background renderer is missing.");
                 return;
             }
 
             Sprite background = BackgroundManager.GetBackgroundForMode(GameManager.Instance.CurrentGameMode);
             if (background == null)
             {
-                Debug.LogWarning("[GameController] Background sprite could not be loaded.");
+                GameLog.Warning("[GameController] Background sprite could not be loaded.");
                 return;
             }
 
@@ -153,13 +153,13 @@ namespace ShooterB
                 gameStartingModalController = FindObjectOfType<GameStartingModalController>(true);
 
             if (pauseModalController == null)
-                Debug.LogWarning("[GameController] PauseModalController not found in scene.");
+                GameLog.Warning("[GameController] PauseModalController not found in scene.");
 
             if (gameOverModalController == null)
-                Debug.LogWarning("[GameController] GameOverModalController not found in scene.");
+                GameLog.Warning("[GameController] GameOverModalController not found in scene.");
 
             if (gameStartingModalController == null)
-                Debug.LogWarning("[GameController] GameStartingModalController not found in scene.");
+                GameLog.Warning("[GameController] GameStartingModalController not found in scene.");
         }
 
         private void ConfigureGameStartingModal()
@@ -199,7 +199,7 @@ namespace ShooterB
         {
             if (gameOverModalController == null)
             {
-                Debug.LogWarning("[GameController] Cannot show game-over modal. Reference is missing.");
+                GameLog.Warning("[GameController] Cannot show game-over modal. Reference is missing.");
                 return;
             }
 

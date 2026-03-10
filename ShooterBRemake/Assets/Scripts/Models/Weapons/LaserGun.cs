@@ -16,11 +16,11 @@ namespace ShooterB
             refillDelay = 0.83f;
 
             if (bulletPrefab == null)
-                Debug.LogError("[LASER] bulletPrefab is not assigned. Assign Laser bullet prefab via ShooterController or weapon prefab.");
+                GameLog.Error("[LASER] bulletPrefab is not assigned. Assign Laser bullet prefab via ShooterController or weapon prefab.");
 
             base.Start();
 
-            Debug.Log($"[LASER] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
+            GameLog.Log($"[LASER] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
         }
     }
 }

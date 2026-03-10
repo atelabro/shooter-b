@@ -14,11 +14,11 @@ namespace ShooterB
             refillDelay = 0.4f;
 
             if (bulletPrefab == null)
-                Debug.LogError("[TESLA] bulletPrefab is not assigned. Assign Tesla bullet prefab via ShooterController or weapon prefab.");
+                GameLog.Error("[TESLA] bulletPrefab is not assigned. Assign Tesla bullet prefab via ShooterController or weapon prefab.");
 
             base.Start();
 
-            Debug.Log($"[TESLA] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
+            GameLog.Log($"[TESLA] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
         }
     }
 }

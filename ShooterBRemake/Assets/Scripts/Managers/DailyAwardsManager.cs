@@ -245,7 +245,7 @@ namespace ShooterB
                     LastAdWatchBonusAttemptResult = result;
                     if (result != RewardedAdResult.Completed)
                     {
-                        Debug.Log($"[DailyAwards] Ad watch bonus not granted from {source}. Result={result}");
+                        GameLog.Log($"[DailyAwards] Ad watch bonus not granted from {source}. Result={result}");
                         onCompleted?.Invoke(result);
                         return;
                     }
@@ -255,7 +255,7 @@ namespace ShooterB
                     GameManager.Instance.AddCoins(DailyAdWatchBonusCoins);
                     PlayerPrefs.Save();
                     OnDailyAdWatchBonusClaimed?.Invoke();
-                    Debug.Log($"[DailyAwards] Ad watch bonus claimed from {source} (+{DailyAdWatchBonusCoins} coins)");
+                    GameLog.Log($"[DailyAwards] Ad watch bonus claimed from {source} (+{DailyAdWatchBonusCoins} coins)");
                     onCompleted?.Invoke(result);
                 });
 
@@ -282,7 +282,7 @@ namespace ShooterB
             PlayerPrefs.SetInt(SetBonusGrantedKey, 0);
             PlayerPrefs.SetInt(AdWatchBonusGrantedKey, 0);
             PlayerPrefs.Save();
-            Debug.Log("[DailyAwards] Debug reset: today's objectives progress set to 0.");
+            GameLog.Log("[DailyAwards] Debug reset: today's objectives progress set to 0.");
         }
 
         private void SubscribeToGameManager()
@@ -492,7 +492,7 @@ namespace ShooterB
                 }
 
                 OnDailyObjectiveCompleted?.Invoke(slot);
-                Debug.Log($"[DailyAwards] Objective completed: {def.id} (+{def.coinReward} coins)");
+                GameLog.Log($"[DailyAwards] Objective completed: {def.id} (+{def.coinReward} coins)");
                 TryGrantSetBonus();
             }
 
@@ -509,7 +509,7 @@ namespace ShooterB
             GameManager.Instance.AddCoins(DailySetBonusCoins);
             OnDailySetCompleted?.Invoke();
             PlayerPrefs.Save();
-            Debug.Log($"[DailyAwards] Daily set completed (+{DailySetBonusCoins} coins)");
+            GameLog.Log($"[DailyAwards] Daily set completed (+{DailySetBonusCoins} coins)");
         }
 
         private void EnsureSchemaVersion()
@@ -521,7 +521,7 @@ namespace ShooterB
             ResetDailyState();
             PlayerPrefs.SetInt(SchemaVersionKey, CurrentSchemaVersion);
             PlayerPrefs.Save();
-            Debug.Log($"[DailyAwards] Schema upgraded {storedVersion} -> {CurrentSchemaVersion}. Daily progress reset.");
+            GameLog.Log($"[DailyAwards] Schema upgraded {storedVersion} -> {CurrentSchemaVersion}. Daily progress reset.");
         }
 
         private void ResetDailyState()
@@ -576,7 +576,7 @@ namespace ShooterB
             }
 
             PlayerPrefs.Save();
-            Debug.Log($"[DailyAwards] New day initialized: {dayToken}");
+            GameLog.Log($"[DailyAwards] New day initialized: {dayToken}");
         }
 
         private void LoadSlotState()

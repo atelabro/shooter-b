@@ -14,11 +14,11 @@ namespace ShooterB
             refillDelay = 0.6f;
 
             if (bulletPrefab == null)
-                Debug.LogError("[CABIRNE] bulletPrefab is not assigned. Assign Cabirne bullet prefab via ShooterController or weapon prefab.");
+                GameLog.Error("[CABIRNE] bulletPrefab is not assigned. Assign Cabirne bullet prefab via ShooterController or weapon prefab.");
 
             base.Start();
 
-            Debug.Log($"[CABIRNE] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
+            GameLog.Log($"[CABIRNE] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
         }
     }
 }

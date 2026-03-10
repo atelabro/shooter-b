@@ -69,7 +69,7 @@ namespace ShooterB
 
             if (bulletPrefab == null)
             {
-                Debug.LogError($"[WEAPON] {weaponName} bulletPrefab is NULL! Cannot shoot.");
+                GameLog.Error($"[WEAPON] {weaponName} bulletPrefab is NULL! Cannot shoot.");
                 return false;
             }
 
@@ -89,33 +89,33 @@ namespace ShooterB
 
         protected virtual void SpawnBullet(Vector2 targetPosition)
         {
-            Debug.Log($"[WEAPON] SpawnBullet called - bulletPrefab is null? {bulletPrefab == null}");
+            GameLog.Log($"[WEAPON] SpawnBullet called - bulletPrefab is null? {bulletPrefab == null}");
 
             if (bulletPrefab == null)
             {
-                Debug.LogError($"[WEAPON] {weaponName} bulletPrefab is NULL! Cannot spawn bullet. Make sure it's assigned in Inspector.");
+                GameLog.Error($"[WEAPON] {weaponName} bulletPrefab is NULL! Cannot spawn bullet. Make sure it's assigned in Inspector.");
                 return;
             }
 
             Vector2 gunPosition = GetGunPosition();
-            Debug.Log($"[WEAPON] Gun position calculated: {gunPosition}");
+            GameLog.Log($"[WEAPON] Gun position calculated: {gunPosition}");
 
             GameObject bulletObj = BulletPool.Get(bulletPrefab);
             bulletObj.transform.position = new Vector3(gunPosition.x, gunPosition.y, -5);
-            Debug.Log($"[WEAPON] Bullet GameObject instantiated: {bulletObj.name}");
+            GameLog.Log($"[WEAPON] Bullet GameObject instantiated: {bulletObj.name}");
 
             Bullet bullet = bulletObj.GetComponent<Bullet>();
-            Debug.Log($"[WEAPON] Bullet component found? {bullet != null}");
+            GameLog.Log($"[WEAPON] Bullet component found? {bullet != null}");
 
             if (bullet != null)
             {
                 bullet.SetPoolSourcePrefab(bulletPrefab);
                 bullet.Initialize(targetPosition, weaponType);
-                Debug.Log($"[WEAPON] Bullet spawned at {gunPosition}, traveling to {targetPosition}");
+                GameLog.Log($"[WEAPON] Bullet spawned at {gunPosition}, traveling to {targetPosition}");
             }
             else
             {
-                Debug.LogError($"[WEAPON] No Bullet component on {bulletObj.name}! Check prefab has RifleBullet script.");
+                GameLog.Error($"[WEAPON] No Bullet component on {bulletObj.name}! Check prefab has RifleBullet script.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace ShooterB
             yield return new WaitForSeconds(refillDelay);
             currentBullets = maxBullets;
             isRefilling = false;
-            Debug.Log($"[WEAPON] {weaponName} refilled to {maxBullets} bullets");
+            GameLog.Log($"[WEAPON] {weaponName} refilled to {maxBullets} bullets");
         }
 
         public virtual void ResetAmmo()

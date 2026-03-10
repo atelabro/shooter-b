@@ -41,14 +41,14 @@ namespace ShooterB
         {
             CurrentScene = sceneType;
             string sceneName = GetSceneName(sceneType);
-            Debug.Log($"Loading scene: {sceneName}");
+            GameLog.Log($"Loading scene: {sceneName}");
             SceneManager.LoadScene(sceneName);
         }
 
         public void LoadGameScene(Constants.GameMode mode)
         {
             CurrentScene = Constants.SceneType.Game;
-            Debug.Log($"Loading game scene with mode: {mode}");
+            GameLog.Log($"Loading game scene with mode: {mode}");
 
             GameManager.Instance.InitializeGame(mode);
             SceneManager.LoadScene(GetSceneName(Constants.SceneType.Game));
@@ -57,7 +57,7 @@ namespace ShooterB
         public void LoadCampaignMapScene()
         {
             CurrentScene = Constants.SceneType.CampaignMap;
-            Debug.Log("Loading campaign map scene");
+            GameLog.Log("Loading campaign map scene");
             SceneManager.LoadScene(GetSceneName(Constants.SceneType.CampaignMap));
         }
 
@@ -79,7 +79,7 @@ namespace ShooterB
             }
 
             CurrentScene = Constants.SceneType.Armory;
-            Debug.Log("Loading armory scene");
+            GameLog.Log("Loading armory scene");
             SceneManager.LoadScene(GetSceneName(Constants.SceneType.Armory));
         }
 
@@ -143,7 +143,7 @@ namespace ShooterB
             }
 
             CurrentScene = Constants.SceneType.Achievements;
-            Debug.Log("Loading achievements scene");
+            GameLog.Log("Loading achievements scene");
             SceneManager.LoadScene(GetSceneName(Constants.SceneType.Achievements));
         }
 
@@ -167,7 +167,7 @@ namespace ShooterB
         public void LoadCampaignStage(StageConfig config)
         {
             CurrentScene = Constants.SceneType.CampaignGame;
-            Debug.Log($"Loading campaign stage: {config.mapName} (index {config.stageIndex})");
+            GameLog.Log($"Loading campaign stage: {config.mapName} (index {config.stageIndex})");
 
             CampaignProgressManager.Instance.SetActiveStage(config);
             GameManager.Instance.InitializeGame(Constants.GameMode.Campaign, config.startingDifficulty);
@@ -178,7 +178,7 @@ namespace ShooterB
         {
             Time.timeScale = 1f;
             Constants.GameMode mode = GameManager.Instance.CurrentGameMode;
-            Debug.Log($"Reloading game scene with mode: {mode}");
+            GameLog.Log($"Reloading game scene with mode: {mode}");
 
             GameManager.Instance.InitializeGame(mode);
             SceneManager.LoadScene(GetSceneName(CurrentScene));
@@ -187,13 +187,13 @@ namespace ShooterB
         public void ReturnToMenu()
         {
             Time.timeScale = 1f;
-            Debug.Log("Returning to menu");
+            GameLog.Log("Returning to menu");
             LoadScene(Constants.SceneType.Menu);
         }
 
         public void QuitGame()
         {
-            Debug.Log("Quitting game");
+            GameLog.Log("Quitting game");
             #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
             #else

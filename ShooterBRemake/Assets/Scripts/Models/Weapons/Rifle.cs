@@ -15,12 +15,12 @@ namespace ShooterB
 
             if (bulletPrefab == null)
             {
-                Debug.LogError("[RIFLE] bulletPrefab is not assigned. Assign it via ShooterController in the Inspector.");
+                GameLog.Error("[RIFLE] bulletPrefab is not assigned. Assign it via ShooterController in the Inspector.");
             }
 
             base.Start();
 
-            Debug.Log($"[RIFLE] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
+            GameLog.Log($"[RIFLE] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
         }
     }
 }

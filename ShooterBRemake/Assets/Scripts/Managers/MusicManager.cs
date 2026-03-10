@@ -72,7 +72,7 @@ namespace ShooterB
                 if (!hasLoggedMissingCampaignClip)
                 {
                     hasLoggedMissingCampaignClip = true;
-                    Debug.LogWarning($"[MusicManager] Missing campaign music clip at Resources/{CampaignClipResourcePath}.");
+                    GameLog.Warning($"[MusicManager] Missing campaign music clip at Resources/{CampaignClipResourcePath}.");
                 }
                 return;
             }

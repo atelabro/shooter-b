@@ -203,7 +203,7 @@ namespace ShooterB
 
             if (typedWeapon == null)
             {
-                Debug.LogError($"[SHOOTER] Prefab '{prefab.name}' does not contain required component {typeof(T).Name}. Falling back to runtime-created weapon.");
+                GameLog.Error($"[SHOOTER] Prefab '{prefab.name}' does not contain required component {typeof(T).Name}. Falling back to runtime-created weapon.");
                 Destroy(weaponInstance.gameObject);
                 return CreateWeaponInstance<T>(fallbackName, expectedWeaponType, defaultBulletPrefab, defaultIcon);
             }
@@ -221,7 +221,7 @@ namespace ShooterB
         {
             if (activeWeapon == null)
             {
-                Debug.LogError("[SHOOTER] Failed to initialize active weapon.");
+                GameLog.Error("[SHOOTER] Failed to initialize active weapon.");
             }
             else
             {
@@ -274,7 +274,7 @@ namespace ShooterB
         private System.Collections.IEnumerator LogInitialization()
         {
             yield return null;
-            Debug.Log($"[SHOOTER] ShooterController initialized with weapon: {activeWeapon?.weaponName}");
+            GameLog.Log($"[SHOOTER] ShooterController initialized with weapon: {activeWeapon?.weaponName}");
         }
 
         private System.Collections.IEnumerator FinalizeAmmoBonusInitialization()
@@ -302,7 +302,7 @@ namespace ShooterB
 
             if (activeWeapon == null)
             {
-                Debug.LogWarning("[SHOOTER] No active weapon!");
+                GameLog.Warning("[SHOOTER] No active weapon!");
                 return;
             }
 
@@ -334,7 +334,7 @@ namespace ShooterB
         {
             if (activeWeapon == null)
             {
-                Debug.LogWarning("[SHOOTER] No active weapon!");
+                GameLog.Warning("[SHOOTER] No active weapon!");
                 return;
             }
 
@@ -342,19 +342,19 @@ namespace ShooterB
 
             if (shot)
             {
-                Debug.Log($"[SHOOTER] Shot fired at {targetPosition}. Ammo remaining: {activeWeapon.CurrentBullets}");
+                GameLog.Log($"[SHOOTER] Shot fired at {targetPosition}. Ammo remaining: {activeWeapon.CurrentBullets}");
             }
             else
             {
                 if (logFailure)
-                    Debug.Log($"[SHOOTER] Cannot shoot - Ammo: {activeWeapon.CurrentBullets}, Refilling: {activeWeapon.IsRefilling}");
+                    GameLog.Log($"[SHOOTER] Cannot shoot - Ammo: {activeWeapon.CurrentBullets}, Refilling: {activeWeapon.IsRefilling}");
             }
         }
 
         private void SetActiveWeapon(Weapon weapon, string weaponName)
         {
             activeWeapon = weapon;
-            Debug.Log($"[SHOOTER] Switched weapon to {weaponName}");
+            GameLog.Log($"[SHOOTER] Switched weapon to {weaponName}");
         }
 
         public bool SetActiveWeaponByType(Constants.WeaponType weaponType)
@@ -362,7 +362,7 @@ namespace ShooterB
             Weapon weapon = GetWeaponByType(weaponType);
             if (weapon == null)
             {
-                Debug.LogWarning($"[SHOOTER] Requested weapon '{weaponType}' is unavailable in this scene setup.");
+                GameLog.Warning($"[SHOOTER] Requested weapon '{weaponType}' is unavailable in this scene setup.");
                 return false;
             }
 
@@ -413,17 +413,17 @@ namespace ShooterB
 
             if (cabirneBulletPrefab != null)
             {
-                Debug.LogWarning("[SHOOTER] mrSulkoBulletPrefab is not assigned. Falling back to Cabirne bullet prefab.");
+                GameLog.Warning("[SHOOTER] mrSulkoBulletPrefab is not assigned. Falling back to Cabirne bullet prefab.");
                 return cabirneBulletPrefab;
             }
 
             if (rifleBulletPrefab != null)
             {
-                Debug.LogWarning("[SHOOTER] mrSulkoBulletPrefab is not assigned. Falling back to Rifle bullet prefab.");
+                GameLog.Warning("[SHOOTER] mrSulkoBulletPrefab is not assigned. Falling back to Rifle bullet prefab.");
                 return rifleBulletPrefab;
             }
 
-            Debug.LogWarning("[SHOOTER] mrSulkoBulletPrefab is not assigned and no fallback bullet prefab is available.");
+            GameLog.Warning("[SHOOTER] mrSulkoBulletPrefab is not assigned and no fallback bullet prefab is available.");
             return null;
         }
 
@@ -434,17 +434,17 @@ namespace ShooterB
 
             if (teslaBulletPrefab != null)
             {
-                Debug.LogWarning("[SHOOTER] laserBulletPrefab is not assigned. Falling back to Tesla bullet prefab.");
+                GameLog.Warning("[SHOOTER] laserBulletPrefab is not assigned. Falling back to Tesla bullet prefab.");
                 return teslaBulletPrefab;
             }
 
             if (rifleBulletPrefab != null)
             {
-                Debug.LogWarning("[SHOOTER] laserBulletPrefab is not assigned. Falling back to Rifle bullet prefab.");
+                GameLog.Warning("[SHOOTER] laserBulletPrefab is not assigned. Falling back to Rifle bullet prefab.");
                 return rifleBulletPrefab;
             }
 
-            Debug.LogWarning("[SHOOTER] laserBulletPrefab is not assigned and no fallback bullet prefab is available.");
+            GameLog.Warning("[SHOOTER] laserBulletPrefab is not assigned and no fallback bullet prefab is available.");
             return null;
         }
 
@@ -490,7 +490,7 @@ namespace ShooterB
 
             weapon.maxBullets = Mathf.Max(1, weapon.maxBullets + bonusAmount);
             weapon.ResetAmmo();
-            Debug.Log($"[SHOOTER] Ammo bonus applied to {weapon.weaponType}: +{bonusAmount}, max now {weapon.maxBullets}");
+            GameLog.Log($"[SHOOTER] Ammo bonus applied to {weapon.weaponType}: +{bonusAmount}, max now {weapon.maxBullets}");
         }
 
         public bool IsRefilling()

@@ -14,11 +14,11 @@ namespace ShooterB
             refillDelay = 1.4f;
 
             if (bulletPrefab == null)
-                Debug.LogError("[PIRANHA] bulletPrefab is not assigned. Assign Piranha bullet prefab via ShooterController or weapon prefab.");
+                GameLog.Error("[PIRANHA] bulletPrefab is not assigned. Assign Piranha bullet prefab via ShooterController or weapon prefab.");
 
             base.Start();
 
-            Debug.Log($"[PIRANHA] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
+            GameLog.Log($"[PIRANHA] Initialized - Bullets: {maxBullets}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
         }
     }
 }

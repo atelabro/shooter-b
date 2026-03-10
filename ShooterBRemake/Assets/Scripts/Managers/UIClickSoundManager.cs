@@ -96,7 +96,7 @@ namespace ShooterB
             if (clickClip == null && !hasLoggedMissingClickClip)
             {
                 hasLoggedMissingClickClip = true;
-                Debug.LogWarning($"[UIClickSoundManager] Missing click SFX clip at Resources/{ClickClipResourcePath}.");
+                GameLog.Warning($"[UIClickSoundManager] Missing click SFX clip at Resources/{ClickClipResourcePath}.");
             }
         }
 
