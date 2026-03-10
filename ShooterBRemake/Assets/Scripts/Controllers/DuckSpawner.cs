@@ -60,7 +60,6 @@ namespace ShooterB
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.Type0), Constants.DuckType.Type0, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.Type1), Constants.DuckType.Type1, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.Type2), Constants.DuckType.Type2, nameof(duckFrameLibrary));
-            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.Type3), Constants.DuckType.Type3, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.Type4), Constants.DuckType.Type4, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.MK_PHALARX), Constants.DuckType.MK_PHALARX, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.MK_ARCHER), Constants.DuckType.MK_ARCHER, nameof(duckFrameLibrary));
@@ -279,8 +278,7 @@ namespace ShooterB
             float t0 = Constants.DuckSpawnProbability.TYPE_0;
             float t1 = t0 + Constants.DuckSpawnProbability.TYPE_1;
             float t2 = t1 + Constants.DuckSpawnProbability.TYPE_2;
-            float t3 = t2 + Constants.DuckSpawnProbability.TYPE_3;
-            float t4 = t3 + Constants.DuckSpawnProbability.TYPE_4;
+            float t4 = t2 + Constants.DuckSpawnProbability.TYPE_4;
             float t5 = t4 + Constants.DuckSpawnProbability.MK_PHALARX;
             float t6 = t5 + Constants.DuckSpawnProbability.MK_ARCHER;
             float t7 = t6 + Constants.DuckSpawnProbability.BRITISH_REDCOAT;
@@ -291,7 +289,6 @@ namespace ShooterB
             if (r < t0) return Constants.DuckType.Type0;
             if (r < t1) return Constants.DuckType.Type1;
             if (r < t2) return Constants.DuckType.Type2;
-            if (r < t3) return Constants.DuckType.Type3;
             if (r < t4) return Constants.DuckType.Type4;
             if (r < t5) return Constants.DuckType.MK_PHALARX;
             if (r < t6) return Constants.DuckType.MK_ARCHER;
@@ -352,7 +349,6 @@ namespace ShooterB
                 $"{Constants.GetDuckDebugName(Constants.DuckType.Type0)}: {GetActualPercent(Constants.DuckType.Type0):F1}% (exp {Constants.DuckSpawnProbability.TYPE_0 * 100f:F1}%) | " +
                 $"{Constants.GetDuckDebugName(Constants.DuckType.Type1)}: {GetActualPercent(Constants.DuckType.Type1):F1}% (exp {Constants.DuckSpawnProbability.TYPE_1 * 100f:F1}%) | " +
                 $"{Constants.GetDuckDebugName(Constants.DuckType.Type2)}: {GetActualPercent(Constants.DuckType.Type2):F1}% (exp {Constants.DuckSpawnProbability.TYPE_2 * 100f:F1}%) | " +
-                $"{Constants.GetDuckDebugName(Constants.DuckType.Type3)}: {GetActualPercent(Constants.DuckType.Type3):F1}% (exp {Constants.DuckSpawnProbability.TYPE_3 * 100f:F1}%) | " +
                 $"{Constants.GetDuckDebugName(Constants.DuckType.Type4)}: {GetActualPercent(Constants.DuckType.Type4):F1}% (exp {Constants.DuckSpawnProbability.TYPE_4 * 100f:F1}%) | " +
                 $"{Constants.GetDuckDebugName(Constants.DuckType.MK_PHALARX)}: {GetActualPercent(Constants.DuckType.MK_PHALARX):F1}% (exp {Constants.DuckSpawnProbability.MK_PHALARX * 100f:F1}%) | " +
                 $"{Constants.GetDuckDebugName(Constants.DuckType.MK_ARCHER)}: {GetActualPercent(Constants.DuckType.MK_ARCHER):F1}% (exp {Constants.DuckSpawnProbability.MK_ARCHER * 100f:F1}%) | " +

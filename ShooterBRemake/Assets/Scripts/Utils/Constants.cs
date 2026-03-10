@@ -61,8 +61,7 @@ namespace ShooterB
             Type0,
             Type1,
             Type2,
-            Type3,
-            Type4,
+            Type4 = 4,
             MK_PHALARX,
             MK_ARCHER,
             MK_VOJVODA,
@@ -89,7 +88,6 @@ namespace ShooterB
                 case DuckType.Type0: return "Duck I";
                 case DuckType.Type1: return "Duck II";
                 case DuckType.Type2: return "Duck III";
-                case DuckType.Type3: return "Duck IV";
                 case DuckType.Type4: return "Duck V";
                 case DuckType.MK_PHALARX: return "Macedonian Phalanx";
                 case DuckType.MK_ARCHER: return "Macedonian Archer";
@@ -120,7 +118,6 @@ namespace ShooterB
                 case DuckType.Type0: return "TYPE_0";
                 case DuckType.Type1: return "TYPE_1";
                 case DuckType.Type2: return "TYPE_2";
-                case DuckType.Type3: return "TYPE_3";
                 case DuckType.Type4: return "TYPE_4";
                 case DuckType.MK_PHALARX: return "MK_PHALARX";
                 case DuckType.MK_ARCHER: return "MK_ARCHER";
@@ -202,7 +199,6 @@ namespace ShooterB
             public const int TYPE_0 = 1;
             public const int TYPE_1 = 2;
             public const int TYPE_2 = 5;
-            public const int TYPE_3 = 10;
             public const int TYPE_4 = 15;
             public const int MK_PHALARX = 1;
             public const int MK_ARCHER = 1;
@@ -229,7 +225,6 @@ namespace ShooterB
                     case DuckType.Type0: return TYPE_0;
                     case DuckType.Type1: return TYPE_1;
                     case DuckType.Type2: return TYPE_2;
-                    case DuckType.Type3: return TYPE_3;
                     case DuckType.Type4: return TYPE_4;
                     case DuckType.MK_PHALARX: return MK_PHALARX;
                     case DuckType.MK_ARCHER: return MK_ARCHER;
@@ -258,7 +253,6 @@ namespace ShooterB
             public const float TYPE_0 = 0.56f;
             public const float TYPE_1 = 0.13f;
             public const float TYPE_2 = 0.07f;
-            public const float TYPE_3 = 0.06f;
             public const float TYPE_4 = 0.04f;
             public const float MK_PHALARX = 0.02f;
             public const float MK_ARCHER = 0.02f;
