@@ -171,5 +171,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.BerettaBullet
   startRadius: 0.3
   secondRadius: 0.12
-  effectiveRadius: 0.24
+  effectiveRadius: 0.324
   baseSpeed: 50

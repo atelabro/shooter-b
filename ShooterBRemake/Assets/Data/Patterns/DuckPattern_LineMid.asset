@@ -15,14 +15,18 @@ MonoBehaviour:
   patternName: LineMid
   entries:
   - delay: 0
-    pathType: 3
+    startLane: 3
+    pathProjection: 1
     speedMultiplier: 0
   - delay: 0
-    pathType: 4
+    startLane: 4
+    pathProjection: 1
     speedMultiplier: 0
   - delay: 0
-    pathType: 5
+    startLane: 6
+    pathProjection: 1
     speedMultiplier: 0
   - delay: 0
-    pathType: 6
+    startLane: 7
+    pathProjection: 1
     speedMultiplier: 0

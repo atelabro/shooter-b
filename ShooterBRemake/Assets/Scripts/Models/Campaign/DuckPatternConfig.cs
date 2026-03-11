@@ -8,7 +8,10 @@ namespace ShooterB
     {
         [Tooltip("Seconds to wait after the previous spawn.")]
         public float delay;
-        public Constants.DuckPathType pathType;
+        [Tooltip("Starting vertical lane (1=bottom, 9=top).")]
+        public Constants.DuckStartLane startLane;
+        [Tooltip("Movement projection for this pattern entry.")]
+        public Constants.DuckPathProjection pathProjection;
         [Tooltip("Per-duck speed multiplier. <= 0 defaults to 1.")]
         public float speedMultiplier;
     }

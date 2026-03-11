@@ -5,25 +5,11 @@ namespace ShooterB
 {
     public class TeslaBullet : Bullet
     {
-        private const float LEGACY_TESLA_BULLET_HEIGHT_WORLD = 0.28f; // 28px at 100 PPU
-        private const float LEGACY_TESLA_VISUAL_SCALE = 1.9f;
-
         [Header("Tesla Chain")]
         public float aoeRadius = 6.0f;
         public int chainCount = 2;
         private int remainingChains;
         private readonly HashSet<int> hitDuckIds = new HashSet<int>();
-
-        protected override void Awake()
-        {
-            startRadius = 1.2f;
-            secondRadius = 0.6f;
-            effectiveRadius = 1.485f;
-            baseSpeed = 60f;
-            visualScaleMultiplier = ComputeNormalizedTeslaVisualScale();
-
-            base.Awake();
-        }
 
         public override void Initialize(Vector2 target, Constants.WeaponType weaponType = Constants.WeaponType.TeslaGun)
         {
@@ -178,18 +164,5 @@ namespace ShooterB
                    viewPoint.y >= 0f && viewPoint.y <= 1f;
         }
 
-        private float ComputeNormalizedTeslaVisualScale()
-        {
-            SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-            Sprite sprite = renderer != null ? renderer.sprite : null;
-            if (sprite == null || sprite.pixelsPerUnit <= 0f)
-                return LEGACY_TESLA_VISUAL_SCALE;
-
-            float spriteHeightAtScaleOne = sprite.rect.height / sprite.pixelsPerUnit;
-            if (spriteHeightAtScaleOne <= 0f)
-                return LEGACY_TESLA_VISUAL_SCALE;
-
-            return LEGACY_TESLA_VISUAL_SCALE * (LEGACY_TESLA_BULLET_HEIGHT_WORLD / spriteHeightAtScaleOne);
-        }
     }
 }

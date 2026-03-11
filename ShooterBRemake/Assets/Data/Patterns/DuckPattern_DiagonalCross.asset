@@ -15,20 +15,26 @@ MonoBehaviour:
   patternName: DiagonalCross
   entries:
   - delay: 0
-    pathType: 11
+    startLane: 5
+    pathProjection: 4
     speedMultiplier: 0
   - delay: 0
-    pathType: 12
+    startLane: 5
+    pathProjection: 5
     speedMultiplier: 0
   - delay: 0.5
-    pathType: 11
+    startLane: 5
+    pathProjection: 4
     speedMultiplier: 0
   - delay: 0
-    pathType: 12
+    startLane: 5
+    pathProjection: 5
     speedMultiplier: 0
   - delay: 0.5
-    pathType: 11
+    startLane: 5
+    pathProjection: 4
     speedMultiplier: 0
   - delay: 0
-    pathType: 12
+    startLane: 5
+    pathProjection: 5
     speedMultiplier: 0

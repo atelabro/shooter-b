@@ -169,8 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae312e2c9132743338987477d1e41d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.RifleBullet
-  startRadius: 0.6
-  secondRadius: 0.2
-  effectiveRadius: 0.45
-  baseSpeed: 35
+  startRadius: 0.2
+  secondRadius: 0.7
+  effectiveRadius: 1.215
+  baseSpeed: 50
   visualScaleMultiplier: 1

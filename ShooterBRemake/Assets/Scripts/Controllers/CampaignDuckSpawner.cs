@@ -191,7 +191,8 @@ namespace ShooterB
                         SpawnEntry resolved = new SpawnEntry
                         {
                             duckType = entry.duckType,
-                            pathType = patternEntry.pathType,
+                            startLane = patternEntry.startLane,
+                            pathProjection = patternEntry.pathProjection,
                             speedMultiplier = patternEntry.speedMultiplier,
                             delay = patternEntry.delay
                         };
@@ -271,7 +272,7 @@ namespace ShooterB
                 return;
 
             Sprite[] frames = GetFramesForType(entry.duckType);
-            Vector2 spawnPosition = GetSpawnPosition(entry.pathType);
+            Vector2 spawnPosition = GetSpawnPosition(entry.startLane, entry.pathProjection);
 
             duck.Initialize(
                 entry.duckType,
@@ -279,7 +280,8 @@ namespace ShooterB
                 spawnPosition,
                 boundTop, boundBottom, boundRight, boundLeft,
                 frames,
-                entry.pathType,
+                entry.startLane,
+                entry.pathProjection,
                 config.weightGoStraight,
                 config.weightGoTop,
                 config.weightGoBottom
@@ -334,17 +336,26 @@ namespace ShooterB
             return duck;
         }
 
-        private Vector2 GetSpawnPosition(Constants.DuckPathType pathType)
+        private Vector2 GetSpawnPosition(Constants.DuckStartLane startLane, Constants.DuckPathProjection pathProjection)
         {
-            float randomY = UnityEngine.Random.Range(minY, maxY);
-
-            if (pathType == Constants.DuckPathType.Random)
+            if (pathProjection == Constants.DuckPathProjection.Random)
             {
+                float randomY = UnityEngine.Random.Range(minY, maxY);
                 float randomXOffset = UnityEngine.Random.Range(0f, 1f);
                 return new Vector2(spawnX - randomXOffset, randomY);
             }
 
-            return new Vector2(spawnX, randomY);
+            return new Vector2(spawnX, GetLaneCenterY(startLane));
+        }
+
+        private float GetLaneCenterY(Constants.DuckStartLane startLane)
+        {
+            int lane = (int)startLane;
+            if (lane < 1 || lane > 9)
+                lane = 5;
+
+            float laneHeight = (maxY - minY) / 9f;
+            return minY + laneHeight * (lane - 0.5f);
         }
 
         private Sprite[] GetFramesForType(Constants.DuckType type)

@@ -15,23 +15,30 @@ MonoBehaviour:
   patternName: SineWaveFinale
   entries:
   - delay: 0
-    pathType: 14
+    startLane: 4
+    pathProjection: 6
     speedMultiplier: 0
   - delay: 0
-    pathType: 15
+    startLane: 6
+    pathProjection: 6
     speedMultiplier: 0
   - delay: 0.3
-    pathType: 14
+    startLane: 4
+    pathProjection: 6
     speedMultiplier: 0
   - delay: 0
-    pathType: 15
+    startLane: 6
+    pathProjection: 6
     speedMultiplier: 0
   - delay: 0.3
-    pathType: 14
+    startLane: 4
+    pathProjection: 6
     speedMultiplier: 0
   - delay: 0
-    pathType: 15
+    startLane: 6
+    pathProjection: 6
     speedMultiplier: 0
   - delay: 0.3
-    pathType: 13
+    startLane: 5
+    pathProjection: 6
     speedMultiplier: 2.5

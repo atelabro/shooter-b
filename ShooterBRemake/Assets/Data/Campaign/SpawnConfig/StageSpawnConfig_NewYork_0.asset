@@ -19,68 +19,84 @@ MonoBehaviour:
     spawnSequence:
     - duckType: 14
       delay: 0
-      pathType: 2
+      startLane: 2
+      pathProjection: 1
       speedMultiplier: 1
     - duckType: 14
       delay: 0
-      pathType: 4
+      startLane: 4
+      pathProjection: 1
       speedMultiplier: 1
     - duckType: 14
       delay: 0
-      pathType: 6
+      startLane: 7
+      pathProjection: 1
       speedMultiplier: 1
     - duckType: 14
       delay: 0
-      pathType: 8
+      startLane: 9
+      pathProjection: 1
       speedMultiplier: 1
     - duckType: 14
       delay: 1.2
-      pathType: 1
+      startLane: 1
+      pathProjection: 1
       speedMultiplier: 1
     - duckType: 14
       delay: 0
-      pathType: 3
+      startLane: 3
+      pathProjection: 1
       speedMultiplier: 1
     - duckType: 14
       delay: 0
-      pathType: 5
+      startLane: 6
+      pathProjection: 1
       speedMultiplier: 1
     - duckType: 14
       delay: 0
-      pathType: 7
+      startLane: 8
+      pathProjection: 1
       speedMultiplier: 1
     - duckType: 14
       delay: 1.3
-      pathType: 9
+      startLane: 5
+      pathProjection: 2
       speedMultiplier: 1
     - duckType: 14
       delay: 0
-      pathType: 10
+      startLane: 5
+      pathProjection: 3
       speedMultiplier: 1
     - duckType: 15
       delay: 1.3
-      pathType: 4
+      startLane: 4
+      pathProjection: 1
       speedMultiplier: 1
     - duckType: 15
       delay: 0
-      pathType: 5
+      startLane: 6
+      pathProjection: 1
       speedMultiplier: 1
     - duckType: 15
       delay: 1.2
-      pathType: 11
+      startLane: 5
+      pathProjection: 4
       speedMultiplier: 1
     - duckType: 15
       delay: 0
-      pathType: 12
+      startLane: 5
+      pathProjection: 5
       speedMultiplier: 1
     - duckType: 14
       delay: 2
-      pathType: 0
+      startLane: 5
+      pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: 16803afcbc0a046e999a0d9de306ed56, type: 2}
     - duckType: 15
       delay: 2
-      pathType: 0
+      startLane: 5
+      pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: b5ad9f0c401ae4ba496f1a7448c3515a, type: 2}
   weightGoStraight: 0.38

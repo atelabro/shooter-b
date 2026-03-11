@@ -14,7 +14,8 @@ namespace ShooterB
         public float speed = 10f;
         private Vector2 velocity;
         private Constants.MovementPattern currentPattern;
-        private Constants.DuckPathType currentPathType;
+        private Constants.DuckStartLane currentStartLane;
+        private Constants.DuckPathProjection currentPathProjection;
         private Vector2 bezierP0, bezierP1, bezierP2, bezierP3;
         private float pathProgress;
         private int patternChangeCounter = 0;
@@ -81,7 +82,8 @@ namespace ShooterB
             Constants.DuckType type, int difficulty, Vector2 startPosition,
             float boundTop, float boundBottom, float boundRight, float boundLeft,
             Sprite[] typeAliveFrames,
-            Constants.DuckPathType pathType = Constants.DuckPathType.Random,
+            Constants.DuckStartLane startLane = Constants.DuckStartLane.Lane5,
+            Constants.DuckPathProjection pathProjection = Constants.DuckPathProjection.Random,
             float goStraightWeight = 0.4f, float goTopWeight = 0.3f, float goBottomWeight = 0.3f)
         {
             duckType = type;
@@ -120,39 +122,52 @@ namespace ShooterB
             screenBottom = boundBottom;
             screenRight = boundRight;
             screenLeft = boundLeft;
-            currentPathType = pathType;
+            currentStartLane = SanitizeLane(startLane);
+            currentPathProjection = pathProjection;
             pathProgress = 0f;
             patternChangeCounter = 0;
 
-            if (IsStraightPath(currentPathType))
+            if (currentPathProjection == Constants.DuckPathProjection.Straight)
             {
-                float safeHeight = screenTop - screenBottom;
-                float laneHeight = safeHeight / 8f;
-                int laneIndex = (int)currentPathType - (int)Constants.DuckPathType.Straight_1;
-                startPosition.y = screenBottom + laneHeight * (laneIndex + 0.5f);
+                startPosition = new Vector2(screenLeft, GetLaneCenterY(currentStartLane));
             }
-            else if (IsBezierPath(currentPathType))
+            else if (IsBezierPath(currentPathProjection))
             {
-                ConfigureBezierControlPoints(currentPathType);
+                ConfigureBezierControlPoints(currentPathProjection);
                 startPosition = bezierP0;
             }
-            else if (IsDiagonalPath(currentPathType))
+            else if (IsDiagonalPath(currentPathProjection))
             {
                 float safeHeight = screenTop - screenBottom;
                 float margin = safeHeight * 0.05f;
-                if (currentPathType == Constants.DuckPathType.DiagonalRise)
+                if (currentPathProjection == Constants.DuckPathProjection.DiagonalRise)
                     startPosition = new Vector2(screenLeft, screenBottom + margin);
                 else
                     startPosition = new Vector2(screenLeft, screenTop - margin);
             }
-            else if (IsSinWavePath(currentPathType))
+            else if (IsSinWavePath(currentPathProjection))
             {
                 startPosition = new Vector2(screenLeft, GetSinWaveCenterY());
             }
-            else if (IsZigZagPath(currentPathType))
+            else if (IsZigZagPath(currentPathProjection))
             {
                 startPosition = new Vector2(screenLeft, GetZigZagStartY());
             }
+            else if (IsBounce(currentPathProjection))
+            {
+                startPosition = new Vector2(screenLeft, GetLaneCenterY(currentStartLane));
+            }
+            else if (IsDiagonalVPath(currentPathProjection))
+            {
+                float safeHeight = screenTop - screenBottom;
+                float margin = safeHeight * 0.05f;
+                startPosition = currentPathProjection == Constants.DuckPathProjection.DiagonalV
+                    ? new Vector2(screenLeft, screenBottom + margin)
+                    : new Vector2(screenLeft, screenTop - margin);
+            }
+
+            if (spriteRenderer != null)
+                spriteRenderer.flipX = false;
 
             transform.position = new Vector3(startPosition.x, startPosition.y, -5);
             velocity = new Vector2(speed, 0f);
@@ -171,7 +186,7 @@ namespace ShooterB
                 animator.enabled = false;
             }
 
-            if (currentPathType == Constants.DuckPathType.Random)
+            if (currentPathProjection == Constants.DuckPathProjection.Random)
             {
                 SelectRandomPattern();
             }
@@ -257,7 +272,7 @@ namespace ShooterB
 
             AnimateAliveSprite();
 
-            if (currentPathType == Constants.DuckPathType.Random)
+            if (currentPathProjection == Constants.DuckPathProjection.Random)
             {
                 patternChangeCounter++;
                 if (patternChangeCounter >= PATTERN_CHANGE_FRAMES)
@@ -271,7 +286,7 @@ namespace ShooterB
 
                 rb.linearVelocity = velocity;
             }
-            else if (IsStraightPath(currentPathType))
+            else if (currentPathProjection == Constants.DuckPathProjection.Straight)
             {
                 velocity.x = speed;
                 velocity.y = 0f;
@@ -280,17 +295,25 @@ namespace ShooterB
                 if (transform.position.x > screenRight)
                     DuckPassedScreen();
             }
-            else if (IsDiagonalPath(currentPathType))
+            else if (IsDiagonalPath(currentPathProjection))
             {
                 AdvanceDiagonalPath();
             }
-            else if (IsSinWavePath(currentPathType))
+            else if (IsSinWavePath(currentPathProjection))
             {
                 AdvanceSinWavePath();
             }
-            else if (IsZigZagPath(currentPathType))
+            else if (IsZigZagPath(currentPathProjection))
             {
                 AdvanceZigZagPath();
+            }
+            else if (IsBounce(currentPathProjection))
+            {
+                AdvanceBouncePath();
+            }
+            else if (IsDiagonalVPath(currentPathProjection))
+            {
+                AdvanceDiagonalVPath();
             }
             else
             {
@@ -298,73 +321,62 @@ namespace ShooterB
             }
         }
 
-        private bool IsStraightPath(Constants.DuckPathType p)
-            => p >= Constants.DuckPathType.Straight_1 && p <= Constants.DuckPathType.Straight_8;
+        private Constants.DuckStartLane SanitizeLane(Constants.DuckStartLane lane)
+        {
+            int value = (int)lane;
+            if (value < 1 || value > 9)
+                return Constants.DuckStartLane.Lane5;
+            return lane;
+        }
 
-        private bool IsBezierPath(Constants.DuckPathType p)
-            => p == Constants.DuckPathType.BezierMountain || p == Constants.DuckPathType.BezierValley;
+        private float GetLaneCenterY(Constants.DuckStartLane lane)
+        {
+            int laneIndex = Mathf.Clamp((int)lane, 1, 9) - 1;
+            float laneHeight = (screenTop - screenBottom) / 9f;
+            return screenBottom + laneHeight * (laneIndex + 0.5f);
+        }
 
-        private bool IsDiagonalPath(Constants.DuckPathType p)
-            => p == Constants.DuckPathType.DiagonalRise || p == Constants.DuckPathType.DiagonalFall;
+        private bool IsBezierPath(Constants.DuckPathProjection p)
+            => p == Constants.DuckPathProjection.BezierMountain || p == Constants.DuckPathProjection.BezierValley;
 
-        private bool IsSinWavePath(Constants.DuckPathType p)
-            => p == Constants.DuckPathType.SinWave ||
-               p == Constants.DuckPathType.SinWaveLow ||
-               p == Constants.DuckPathType.SinWaveMid ||
-               p == Constants.DuckPathType.SinWaveHigh ||
-               p == Constants.DuckPathType.SinWaveBigMid;
+        private bool IsDiagonalPath(Constants.DuckPathProjection p)
+            => p == Constants.DuckPathProjection.DiagonalRise || p == Constants.DuckPathProjection.DiagonalFall;
 
-        private bool IsZigZagPath(Constants.DuckPathType p)
-            => p == Constants.DuckPathType.ZigZagTopFirstLow ||
-               p == Constants.DuckPathType.ZigZagTopFirstMid ||
-               p == Constants.DuckPathType.ZigZagTopFirstHigh ||
-               p == Constants.DuckPathType.ZigZagBottomFirstLow ||
-               p == Constants.DuckPathType.ZigZagBottomFirstMid ||
-               p == Constants.DuckPathType.ZigZagBottomFirstHigh;
+        private bool IsSinWavePath(Constants.DuckPathProjection p)
+            => p == Constants.DuckPathProjection.SinWave ||
+               p == Constants.DuckPathProjection.SinWaveBig ||
+               p == Constants.DuckPathProjection.SinWaveStartDown;
+
+        private bool IsZigZagPath(Constants.DuckPathProjection p)
+            => p == Constants.DuckPathProjection.ZigZagTopFirst || p == Constants.DuckPathProjection.ZigZagBottomFirst;
+
+        private bool IsBounce(Constants.DuckPathProjection p)
+            => p == Constants.DuckPathProjection.BounceMid;
+
+        private bool IsDiagonalVPath(Constants.DuckPathProjection p)
+            => p == Constants.DuckPathProjection.DiagonalV || p == Constants.DuckPathProjection.DiagonalInverseV;
 
         private float GetSinWaveCenterY()
         {
-            float safeHeight = screenTop - screenBottom;
-            switch (currentPathType)
-            {
-                case Constants.DuckPathType.SinWaveLow:
-                    return screenBottom + safeHeight * 0.35f;
-                case Constants.DuckPathType.SinWaveHigh:
-                    return screenBottom + safeHeight * 0.65f;
-                case Constants.DuckPathType.SinWaveBigMid:
-                case Constants.DuckPathType.SinWaveMid:
-                default:
-                    return (screenTop + screenBottom) * 0.5f;
-            }
+            return GetLaneCenterY(currentStartLane);
         }
 
         private float GetZigZagStartY()
         {
-            float safeHeight = screenTop - screenBottom;
-            if (currentPathType == Constants.DuckPathType.ZigZagTopFirstLow ||
-                currentPathType == Constants.DuckPathType.ZigZagBottomFirstLow)
-                return screenBottom + safeHeight * 0.30f;
-
-            if (currentPathType == Constants.DuckPathType.ZigZagTopFirstHigh ||
-                currentPathType == Constants.DuckPathType.ZigZagBottomFirstHigh)
-                return screenBottom + safeHeight * 0.70f;
-
-            return (screenTop + screenBottom) * 0.5f;
+            return GetLaneCenterY(currentStartLane);
         }
 
         private bool IsZigZagTopFirst()
-            => currentPathType == Constants.DuckPathType.ZigZagTopFirstLow ||
-               currentPathType == Constants.DuckPathType.ZigZagTopFirstMid ||
-               currentPathType == Constants.DuckPathType.ZigZagTopFirstHigh;
+            => currentPathProjection == Constants.DuckPathProjection.ZigZagTopFirst;
 
-        private void ConfigureBezierControlPoints(Constants.DuckPathType pathType)
+        private void ConfigureBezierControlPoints(Constants.DuckPathProjection projection)
         {
             float w = screenRight - screenLeft;
             float safeHeight = screenTop - screenBottom;
             float margin = safeHeight * 0.05f;
             float topMargin = safeHeight * 0.02f;
 
-            if (pathType == Constants.DuckPathType.BezierMountain)
+            if (projection == Constants.DuckPathProjection.BezierMountain)
             {
                 bezierP0 = new Vector2(screenLeft, screenBottom + margin);
                 bezierP1 = new Vector2(screenLeft + w * 0.35f, screenTop - topMargin);
@@ -419,7 +431,7 @@ namespace ShooterB
             float safeHeight = screenTop - screenBottom;
             float margin = safeHeight * 0.05f;
             float x = Mathf.Lerp(screenLeft, screenRight, pathProgress);
-            float y = currentPathType == Constants.DuckPathType.DiagonalRise
+            float y = currentPathProjection == Constants.DuckPathProjection.DiagonalRise
                 ? Mathf.Lerp(screenBottom + margin, screenTop - margin, pathProgress)
                 : Mathf.Lerp(screenTop - margin, screenBottom + margin, pathProgress);
 
@@ -445,15 +457,16 @@ namespace ShooterB
             float safeHeight = screenTop - screenBottom;
             float margin = safeHeight * 0.05f;
             float midY = GetSinWaveCenterY();
-            float amplitude = currentPathType == Constants.DuckPathType.SinWaveBigMid
+            float amplitude = currentPathProjection == Constants.DuckPathProjection.SinWaveBig
                 ? (safeHeight * 0.5f) - margin
                 : safeHeight * 0.18f;
             float maxAmplitude = Mathf.Max(0f, (safeHeight * 0.5f) - margin);
             amplitude = Mathf.Min(amplitude, maxAmplitude);
             float waves = 1.5f;
+            float directionSign = currentPathProjection == Constants.DuckPathProjection.SinWaveStartDown ? -1f : 1f;
 
             float x = Mathf.Lerp(screenLeft, screenRight, pathProgress);
-            float y = midY + Mathf.Sin(pathProgress * Mathf.PI * 2f * waves) * amplitude;
+            float y = midY + (directionSign * Mathf.Sin(pathProgress * Mathf.PI * 2f * waves) * amplitude);
             rb.MovePosition(new Vector2(x, y));
         }
 
@@ -496,6 +509,77 @@ namespace ShooterB
                 y = Mathf.Lerp(y3, y4, (pathProgress - 0.75f) / 0.25f);
 
             float x = Mathf.Lerp(screenLeft, screenRight, pathProgress);
+            rb.MovePosition(new Vector2(x, y));
+        }
+
+        private void AdvanceBouncePath()
+        {
+            float screenWidth = screenRight - screenLeft;
+            if (screenWidth <= 0f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            const float bouncePoint = 0.55f;
+            pathProgress += (speed * Time.fixedDeltaTime) / screenWidth;
+            if (pathProgress >= 1f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            float x;
+            if (pathProgress < bouncePoint)
+            {
+                x = Mathf.Lerp(screenLeft, screenLeft + screenWidth * bouncePoint, pathProgress / bouncePoint);
+                if (spriteRenderer != null) spriteRenderer.flipX = false;
+            }
+            else
+            {
+                x = Mathf.Lerp(screenLeft + screenWidth * bouncePoint, screenLeft, (pathProgress - bouncePoint) / (1f - bouncePoint));
+                if (spriteRenderer != null) spriteRenderer.flipX = true;
+            }
+
+            rb.MovePosition(new Vector2(x, GetLaneCenterY(currentStartLane)));
+        }
+
+        private void AdvanceDiagonalVPath()
+        {
+            float screenWidth = screenRight - screenLeft;
+            if (screenWidth <= 0f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            pathProgress += (speed * Time.fixedDeltaTime) / screenWidth;
+            if (pathProgress >= 1f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            float safeHeight = screenTop - screenBottom;
+            float margin = safeHeight * 0.05f;
+            float bottomY = screenBottom + margin;
+            float topY = screenTop - margin;
+            float x = Mathf.Lerp(screenLeft, screenRight, pathProgress);
+            float y;
+
+            if (currentPathProjection == Constants.DuckPathProjection.DiagonalV)
+            {
+                y = pathProgress < 0.5f
+                    ? Mathf.Lerp(bottomY, topY, pathProgress / 0.5f)
+                    : Mathf.Lerp(topY, bottomY, (pathProgress - 0.5f) / 0.5f);
+            }
+            else
+            {
+                y = pathProgress < 0.5f
+                    ? Mathf.Lerp(topY, bottomY, pathProgress / 0.5f)
+                    : Mathf.Lerp(bottomY, topY, (pathProgress - 0.5f) / 0.5f);
+            }
+
             rb.MovePosition(new Vector2(x, y));
         }
 
@@ -606,6 +690,9 @@ namespace ShooterB
 
             isDead = true;
             GameManager.Instance.BirdKilled(duckType, weaponType);
+
+            if (spriteRenderer != null)
+                spriteRenderer.flipX = false;
 
             // Store the alive sprite for reuse when this duck is recycled
             if (aliveSprite == null && spriteRenderer != null)

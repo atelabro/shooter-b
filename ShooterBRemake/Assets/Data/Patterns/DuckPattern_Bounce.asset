@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0551601c3b139460cbd86d06a4fc4d73, type: 3}
+  m_Name: DuckPattern_Bounce
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.DuckPatternConfig
+  patternName: Bounce
+  entries:
+  - delay: 0
+    startLane: 7
+    pathProjection: 11
+    speedMultiplier: 0
+  - delay: 0.5
+    startLane: 3
+    pathProjection: 11
+    speedMultiplier: 0
+  - delay: 0.5
+    startLane: 9
+    pathProjection: 11
+    speedMultiplier: 0
+  - delay: 0.5
+    startLane: 5
+    pathProjection: 11
+    speedMultiplier: 0
+  - delay: 0.5
+    startLane: 1
+    pathProjection: 11
+    speedMultiplier: 0

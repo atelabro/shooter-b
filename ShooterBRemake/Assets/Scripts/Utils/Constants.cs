@@ -147,32 +147,36 @@ namespace ShooterB
             GoBottom
         }
 
-        public enum DuckPathType
+        public enum DuckStartLane
         {
-            Random = 0,            // existing weight-based behavior (default)
-            Straight_1 = 1,        // horizontal lane 1 (lowest, near bottom)
-            Straight_2 = 2,
-            Straight_3 = 3,
-            Straight_4 = 4,
-            Straight_5 = 5,
-            Straight_6 = 6,
-            Straight_7 = 7,
-            Straight_8 = 8,        // lane 8 (highest, near top)
-            BezierMountain = 9,    // enters bottom-left, peaks center-top, exits bottom-right
-            BezierValley = 10,     // enters top-left, dips center-bottom, exits top-right
-            DiagonalRise = 11,     // enters bottom-left, exits top-right
-            DiagonalFall = 12,     // enters top-left, exits bottom-right
-            SinWaveMid = 13,       // centered sine wave
-            SinWaveLow = 14,       // lower-band sine wave
-            SinWaveHigh = 15,      // upper-band sine wave
-            SinWaveBigMid = 16,    // centered, near end-to-end vertical amplitude
-            ZigZagTopFirstLow = 17,      // start low, then top->bottom->top->bottom
-            ZigZagTopFirstMid = 18,      // start mid, then top->bottom->top->bottom
-            ZigZagTopFirstHigh = 19,     // start high, then top->bottom->top->bottom
-            ZigZagBottomFirstLow = 20,   // start low, then bottom->top->bottom->top
-            ZigZagBottomFirstMid = 21,   // start mid, then bottom->top->bottom->top
-            ZigZagBottomFirstHigh = 22,  // start high, then bottom->top->bottom->top
-            SinWave = SinWaveMid,        // legacy alias
+            Unspecified = 0,
+            Lane1 = 1,
+            Lane2 = 2,
+            Lane3 = 3,
+            Lane4 = 4,
+            Lane5 = 5,
+            Lane6 = 6,
+            Lane7 = 7,
+            Lane8 = 8,
+            Lane9 = 9
+        }
+
+        public enum DuckPathProjection
+        {
+            Random = 0,
+            Straight = 1,
+            BezierMountain = 2,
+            BezierValley = 3,
+            DiagonalRise = 4,
+            DiagonalFall = 5,
+            SinWave = 6,
+            SinWaveBig = 7,
+            ZigZagTopFirst = 8,
+            ZigZagBottomFirst = 9,
+            SinWaveStartDown = 10,
+            BounceMid = 11,
+            DiagonalV = 12,
+            DiagonalInverseV = 13
         }
 
         public enum MultiKillType

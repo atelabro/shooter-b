@@ -15,38 +15,50 @@ MonoBehaviour:
   patternName: O
   entries:
   - delay: 0
-    pathType: 3
+    startLane: 3
+    pathProjection: 1
     speedMultiplier: 0
   - delay: 0
-    pathType: 4
+    startLane: 4
+    pathProjection: 1
     speedMultiplier: 0
   - delay: 0
-    pathType: 5
+    startLane: 6
+    pathProjection: 1
     speedMultiplier: 0
   - delay: 0
-    pathType: 6
+    startLane: 7
+    pathProjection: 1
     speedMultiplier: 0
   - delay: 0.5
-    pathType: 2
+    startLane: 2
+    pathProjection: 1
     speedMultiplier: 0
   - delay: 0
-    pathType: 7
+    startLane: 8
+    pathProjection: 1
     speedMultiplier: 0
   - delay: 0.5
-    pathType: 1
+    startLane: 1
+    pathProjection: 1
     speedMultiplier: 0
   - delay: 0
-    pathType: 8
+    startLane: 9
+    pathProjection: 1
     speedMultiplier: 0
   - delay: 0.5
-    pathType: 3
+    startLane: 3
+    pathProjection: 1
     speedMultiplier: 0
   - delay: 0
-    pathType: 4
+    startLane: 4
+    pathProjection: 1
     speedMultiplier: 0
   - delay: 0
-    pathType: 5
+    startLane: 6
+    pathProjection: 1
     speedMultiplier: 0
   - delay: 0
-    pathType: 6
+    startLane: 7
+    pathProjection: 1
     speedMultiplier: 0

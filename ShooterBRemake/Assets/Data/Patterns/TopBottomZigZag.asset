@@ -15,20 +15,26 @@ MonoBehaviour:
   patternName: 
   entries:
   - delay: 0
-    pathType: 1
+    startLane: 1
+    pathProjection: 1
     speedMultiplier: 1.2
   - delay: 0.5
-    pathType: 8
+    startLane: 9
+    pathProjection: 1
     speedMultiplier: 1.2
   - delay: 0.5
-    pathType: 1
+    startLane: 1
+    pathProjection: 1
     speedMultiplier: 1.2
   - delay: 0.5
-    pathType: 8
+    startLane: 9
+    pathProjection: 1
     speedMultiplier: 1.2
   - delay: 0.5
-    pathType: 1
+    startLane: 1
+    pathProjection: 1
     speedMultiplier: 1.2
   - delay: 0.5
-    pathType: 8
+    startLane: 9
+    pathProjection: 1
     speedMultiplier: 1.2

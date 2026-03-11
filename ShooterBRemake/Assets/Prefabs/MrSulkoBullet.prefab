@@ -171,5 +171,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.MrSulkoBullet
   startRadius: 0.55
   secondRadius: 0.2
-  effectiveRadius: 0.4
+  effectiveRadius: 0.54
   baseSpeed: 58
