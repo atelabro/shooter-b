@@ -19,6 +19,7 @@ namespace ShooterB
         public TextMeshProUGUI musicLabelText;
         public TextMeshProUGUI sfxLabelText;
         public TextMeshProUGUI languageLabelText;
+        public TextMeshProUGUI creditsBodyText;
         public TextMeshProUGUI closeButtonText;
 
         private bool isApplyingValues;
@@ -89,6 +90,9 @@ namespace ShooterB
             {
                 closeButton.onClick.RemoveListener(Hide);
                 closeButton.onClick.AddListener(Hide);
+
+                if (closeButtonText == null)
+                    closeButtonText = closeButton.GetComponentInChildren<TextMeshProUGUI>(true);
             }
             else
             {
@@ -182,6 +186,11 @@ namespace ShooterB
 
             if (languageLabelText != null)
                 languageLabelText.text = LocalizationManager.Instance.Get("settings.language", "Language");
+
+            if (creditsBodyText != null)
+                creditsBodyText.text = LocalizationManager.Instance.Get(
+                    "settings.credits_body",
+                    "This game is a remake of the original DuckOff, first created in 2014 for Android only. It was rebuilt with care, respect for the original, and a lot of passion for bringing it back in a new form.");
 
             if (closeButtonText != null)
                 closeButtonText.text = LocalizationManager.Instance.Get("common.close", "Close");

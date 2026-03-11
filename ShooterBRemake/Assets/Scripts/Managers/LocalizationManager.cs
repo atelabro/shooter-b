@@ -114,6 +114,7 @@ namespace ShooterB
                 ["settings.music"] = "Music",
                 ["settings.sfx"] = "SFX",
                 ["settings.language"] = "Language",
+                ["settings.credits_body"] = "This game is a remake of the original DuckOff, first created in 2014 for Android only. It was rebuilt with care, respect for the original, and a lot of passion for bringing it back in a new form.",
                 ["language.english"] = "English",
                 ["language.macedonian"] = "Macedonian",
 
@@ -308,6 +309,7 @@ namespace ShooterB
                 ["settings.music"] = "Музика",
                 ["settings.sfx"] = "ЗВУЦИ",
                 ["settings.language"] = "Јазик",
+                ["settings.credits_body"] = "Оваа игра е римејк на оригиналниот DuckOff, првпат создаден во 2014 година само за Android. Повторно е изградена со грижа, почит кон оригиналот и многу страст за да се врати во нова форма.",
                 ["language.english"] = "Англиски",
                 ["language.macedonian"] = "Македонски",
 
