@@ -18,9 +18,9 @@ MonoBehaviour:
   briefingText: Final London holdout. Constant pressure from every lane, no downtime.
   briefingTextMk: Финална одбрана на Лондон. Постојан притисок од секоја линија без пауза.
   backgroundSprite: {fileID: 3900472106126663053, guid: 59763e1944dc541ffade968ca127eeea, type: 3}
-  starThreshold1: 176
-  starThreshold2: 263
-  starThreshold3: 353
+  starThreshold1: 0
+  starThreshold2: 275
+  starThreshold3: 360
   starsRequiredToUnlock: 10
   startingDifficulty: 16
   spawnConfig: {fileID: 11400000, guid: e4c37ad3699b4b058e7f652fe11aa205, type: 2}

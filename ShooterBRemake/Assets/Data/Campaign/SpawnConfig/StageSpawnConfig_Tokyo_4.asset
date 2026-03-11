@@ -96,7 +96,7 @@ MonoBehaviour:
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 20
-      delay: 2
+      delay: 1.5
       startLane: 5
       pathProjection: 0
       speedMultiplier: 1
@@ -171,7 +171,7 @@ MonoBehaviour:
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 17
-      delay: 2
+      delay: 1.5
       startLane: 5
       pathProjection: 0
       speedMultiplier: 1
@@ -276,7 +276,7 @@ MonoBehaviour:
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 19
-      delay: 2
+      delay: 1.5
       startLane: 5
       pathProjection: 0
       speedMultiplier: 1
@@ -405,7 +405,7 @@ MonoBehaviour:
       speedMultiplier: 1.4
       patternRef: {fileID: 0}
     - duckType: 20
-      delay: 2
+      delay: 1.5
       startLane: 5
       pathProjection: 0
       speedMultiplier: 1

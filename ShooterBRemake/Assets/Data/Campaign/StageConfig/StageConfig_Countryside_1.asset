@@ -23,9 +23,9 @@ MonoBehaviour:
     \u043D\u043E \u0431\u0440\u043E\u0458\u043D\u0438. \u0415\u043B\u0438\u043C\u0438\u043D\u0438\u0440\u0430\u0458
     \u0433\u0438."
   backgroundSprite: {fileID: -4733943478823697903, guid: 4edc43d3cf22b44abbae19dc3868a298, type: 3}
-  starThreshold1: 20
-  starThreshold2: 28
-  starThreshold3: 37
+  starThreshold1: 0
+  starThreshold2: 73
+  starThreshold3: 95
   starsRequiredToUnlock: 1
   startingDifficulty: 2
   forceStartingWeapon: 1

@@ -123,11 +123,11 @@ namespace ShooterB
         private static readonly Constants.WeaponType[] OrderedWeapons =
         {
             Constants.WeaponType.PiranhaGun,
-            Constants.WeaponType.Rifle,
             Constants.WeaponType.Cabirne,
             Constants.WeaponType.Beretta,
-            Constants.WeaponType.LaserGun,
+            Constants.WeaponType.Rifle,
             Constants.WeaponType.MrSulko,
+            Constants.WeaponType.LaserGun,
             Constants.WeaponType.TeslaGun
         };
 
@@ -140,12 +140,7 @@ namespace ShooterB
         {
             return new HashSet<Constants.WeaponType>
             {
-                Constants.WeaponType.PiranhaGun,
-                Constants.WeaponType.Rifle,
-                Constants.WeaponType.Cabirne,
-                Constants.WeaponType.Beretta,
-                Constants.WeaponType.MrSulko,
-                Constants.WeaponType.TeslaGun
+                Constants.WeaponType.PiranhaGun
             };
         }
 
@@ -164,7 +159,7 @@ namespace ShooterB
                     ? GetDefaultDisplayName(type)
                     : LocalizationManager.Instance.Get(weaponNameKey, GetDefaultDisplayName(type)),
                 description = LocalizationManager.Instance.Get(stats.descriptionKey, GetDefaultDescription(type)),
-                cost = type == Constants.WeaponType.PiranhaGun ? 0 : GenerateCost(stats),
+                cost = GetHardcodedCost(type),
                 fireTypeLabel = LocalizationManager.Instance.Get(
                     fireModeKey,
                     stats.fireMode == Constants.WeaponFireMode.HoldAutomatic ? "Automatic" : "Single Tap"),
@@ -187,19 +182,19 @@ namespace ShooterB
             return StatsByWeapon[Constants.WeaponType.Rifle];
         }
 
-        private static int GenerateCost(WeaponStats stats)
+        private static int GetHardcodedCost(Constants.WeaponType type)
         {
-            float fireScore = 1f / Mathf.Max(0.08f, stats.fireDelay);
-            float reloadScore = 1f / Mathf.Max(0.2f, stats.reloadDelay);
-            float speedScore = stats.travelSpeed / 25f;
-            float aoeScore = stats.areaOfEffect;
-            float chainScore = stats.chainLightning * 1.8f;
-            float autoBonus = stats.fireMode == Constants.WeaponFireMode.HoldAutomatic ? 1.5f : 0f;
-
-            float totalScore = (fireScore * 8f) + (reloadScore * 7f) + (speedScore * 5f) + (aoeScore * 9f) + (chainScore * 12f) + (autoBonus * 10f);
-            int rawCost = Mathf.RoundToInt(60f + totalScore * 8f);
-            int roundedCost = Mathf.RoundToInt(rawCost / 5f) * 5;
-            return Mathf.Clamp(roundedCost, 80, 900);
+            switch (type)
+            {
+                case Constants.WeaponType.PiranhaGun: return 0;
+                case Constants.WeaponType.Cabirne:    return 150;
+                case Constants.WeaponType.Beretta:    return 200;
+                case Constants.WeaponType.Rifle:      return 350;
+                case Constants.WeaponType.MrSulko:    return 550;
+                case Constants.WeaponType.LaserGun:   return 800;
+                case Constants.WeaponType.TeslaGun:   return 1050;
+                default:                              return 500;
+            }
         }
 
         private static string GetDefaultDisplayName(Constants.WeaponType type)

@@ -18,9 +18,9 @@ MonoBehaviour:
   briefingText: Final New York push. Continuous elite waves and relentless entry speed.
   briefingTextMk: Финален пробив во Њујорк. Континуирани елитни бранови и немилосрдна брзина на влез.
   backgroundSprite: {fileID: -5569311537959265139, guid: 6f9fc4dea27b549209fb75d5010d25ae, type: 3}
-  starThreshold1: 152
-  starThreshold2: 228
-  starThreshold3: 296
+  starThreshold1: 0
+  starThreshold2: 335
+  starThreshold3: 438
   starsRequiredToUnlock: 13
   startingDifficulty: 18
   spawnConfig: {fileID: 11400000, guid: d2b2f8b9a9c64c4c8f71a2e3d8f4c206, type: 2}

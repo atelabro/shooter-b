@@ -16,6 +16,8 @@ MonoBehaviour:
   waves:
   - showAnnouncement: 0
     announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
     spawnSequence:
     - duckType: 5
       delay: 0
@@ -103,6 +105,8 @@ MonoBehaviour:
       patternRef: {fileID: 11400000, guid: a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
     spawnSequence:
     - duckType: 6
       delay: 0
@@ -190,6 +194,8 @@ MonoBehaviour:
       patternRef: {fileID: 11400000, guid: b5ad9f0c401ae4ba496f1a7448c3515a, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
     spawnSequence:
     - duckType: 7
       delay: 0
@@ -289,6 +295,8 @@ MonoBehaviour:
       patternRef: {fileID: 11400000, guid: bea3f299f3d084fc1a1167bd3b12d420, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
     spawnSequence:
     - duckType: 7
       delay: 0
@@ -310,6 +318,8 @@ MonoBehaviour:
       patternRef: {fileID: 11400000, guid: 16f75fdc480b7453192c0a21c497da84, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
     spawnSequence:
     - duckType: 7
       delay: 0
@@ -332,4 +342,4 @@ MonoBehaviour:
   weightGoStraight: 0.5
   weightGoTop: 0.28
   weightGoBottom: 0.22
-  duckSpeedMultiplier: 1
+  duckSpeedMultiplier: 0.85

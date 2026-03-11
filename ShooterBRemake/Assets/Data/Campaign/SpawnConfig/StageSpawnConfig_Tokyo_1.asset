@@ -123,11 +123,113 @@ MonoBehaviour:
       pathProjection: 1
       speedMultiplier: 1
     - duckType: 17
-      delay: 2.5
+      delay: 1.8
       startLane: 5
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: bea3f299f3d084fc1a1167bd3b12d420, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 3
+    spawnSequence:
+    - duckType: 17
+      delay: 0
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: 16803afcbc0a046e999a0d9de306ed56, type: 2}
+    - duckType: 19
+      delay: 1.8
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: d8c1b2ad318ae4983a857cc91f45ce1e, type: 2}
+    - duckType: 17
+      delay: 1.8
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: 5e1c1d28e634146d1b83af237f03a79a, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 3
+    spawnSequence:
+    - duckType: 19
+      delay: 0
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8, type: 2}
+    - duckType: 17
+      delay: 1.8
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9, type: 2}
+    - duckType: 19
+      delay: 1.8
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7, type: 2}
+    - duckType: 17
+      delay: 1.8
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 3
+    spawnSequence:
+    - duckType: 17
+      delay: 0
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: ec794f1a2210c40359e01dc4d1b6d10a, type: 2}
+    - duckType: 19
+      delay: 1.8
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: 2cba38f4705ce4f4196a5ba8e0495999, type: 2}
+    - duckType: 17
+      delay: 1.8
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: efa1dc85c253441beba3718897527763, type: 2}
+    - duckType: 19
+      delay: 1.8
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: f58e9d68a74ce483699796122483e086, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 3
+    spawnSequence:
+    - duckType: 19
+      delay: 0
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: 7b5adc80f6125479fba01bf3891086b7, type: 2}
+    - duckType: 17
+      delay: 1.8
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: c1d2d1f2289d242c08b77ce368b01033, type: 2}
+    - duckType: 19
+      delay: 1.8
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: b3e3de1eccf4b4d088d7be0cd1d9aa3e, type: 2}
+    - duckType: 17
+      delay: 1.8
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: 0ae1decb711d844b9988dc9bb05eceec, type: 2}
   weightGoStraight: 0.25
   weightGoTop: 0.45
   weightGoBottom: 0.3

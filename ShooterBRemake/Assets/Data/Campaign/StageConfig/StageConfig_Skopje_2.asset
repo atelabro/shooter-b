@@ -18,9 +18,9 @@ MonoBehaviour:
   briefingText: Tight lanes and fast angle changes. Precision over panic.
   briefingTextMk: Тесни линии и брзи промени на агол. Прецизност пред паника.
   backgroundSprite: {fileID: 5461148535016659524, guid: dd1d131ecc9034273b186391b87da1a0, type: 3}
-  starThreshold1: 11
-  starThreshold2: 17
-  starThreshold3: 22
+  starThreshold1: 0
+  starThreshold2: 99
+  starThreshold3: 130
   starsRequiredToUnlock: 5
   startingDifficulty: 6
   spawnConfig: {fileID: 11400000, guid: e485d6c75a34473e8814937157ac4e00, type: 2}

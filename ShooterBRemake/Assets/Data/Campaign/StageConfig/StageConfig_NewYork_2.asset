@@ -18,9 +18,9 @@ MonoBehaviour:
   briefingText: Harbor airspace is crowded and unpredictable. Prioritize elite targets.
   briefingTextMk: Воздушниот простор над пристаништето е густ и непредвидлив. Приоритет дај на елитните цели.
   backgroundSprite: {fileID: -3658742858688128993, guid: f5adb842d694446768a3a4273f717909, type: 3}
-  starThreshold1: 112
-  starThreshold2: 168
-  starThreshold3: 224
+  starThreshold1: 0
+  starThreshold2: 242
+  starThreshold3: 317
   starsRequiredToUnlock: 4
   startingDifficulty: 15
   spawnConfig: {fileID: 11400000, guid: d2b2f8b9a9c64c4c8f71a2e3d8f4c203, type: 2}

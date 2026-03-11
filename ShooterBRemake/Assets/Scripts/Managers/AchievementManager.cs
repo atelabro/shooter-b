@@ -16,15 +16,19 @@ namespace ShooterB
             ExterminatorGeneral,
             EliteControlI,
             EliteControlII,
-            EliteControlIII,
-            EliteControlIV,
             BossSlayerI,
             BossSlayerII,
             BossSlayerIII,
-            ArcherCleanupI,
-            ArcherCleanupII,
-            PhalarxBreakerI,
-            PhalarxBreakerII,
+            SkopjeDefenderI,
+            SkopjeDefenderII,
+            ParisianHunterI,
+            ParisianHunterII,
+            LondonPatrolI,
+            LondonPatrolII,
+            NewYorkCleanupI,
+            NewYorkCleanupII,
+            TokyoOperationI,
+            TokyoOperationII,
             RifleVeteran,
             CabirnePrecision,
             BerettaStorm,
@@ -50,7 +54,18 @@ namespace ShooterB
         {
             Any,
             Exact,
-            EliteOnly
+            EliteOnly,
+            Group
+        }
+
+        private enum DuckGroup
+        {
+            None,
+            Skopje,
+            Paris,
+            London,
+            NewYork,
+            Tokyo
         }
 
         private struct AchievementDefinition
@@ -59,6 +74,7 @@ namespace ShooterB
             public ProgressSource progressSource;
             public Constants.MultiKillType? comboType;
             public DuckFilterMode duckFilterMode;
+            public DuckGroup duckGroup;
             public Constants.DuckType duckType;
             public Constants.WeaponType? weaponType;
             public int targetCount;
@@ -66,7 +82,7 @@ namespace ShooterB
             public string titleKey;
         }
 
-        private const int CurrentSchemaVersion = 2;
+        private const int CurrentSchemaVersion = 3;
         private const string SchemaVersionKey = "Achievement_SchemaVersion";
         private const string AchievementCoinSfxResourcePath = "Audio/coin";
 
@@ -97,7 +113,13 @@ namespace ShooterB
             "TeslaChainLord",
             "TripleThreatI",
             "TripleThreatII",
-            "BerettaSpray"
+            "BerettaSpray",
+            "EliteControlIII",
+            "EliteControlIV",
+            "ArcherCleanupI",
+            "ArcherCleanupII",
+            "PhalarxBreakerI",
+            "PhalarxBreakerII"
         };
 
         private static AchievementManager instance;
@@ -234,18 +256,21 @@ namespace ShooterB
 
             AddBirdAchievement(AchievementId.EliteControlI, 150, duckFilterMode: DuckFilterMode.EliteOnly, coinReward: 20);
             AddBirdAchievement(AchievementId.EliteControlII, 400, duckFilterMode: DuckFilterMode.EliteOnly, coinReward: 45);
-            AddBirdAchievement(AchievementId.EliteControlIII, 800, duckFilterMode: DuckFilterMode.EliteOnly, coinReward: 80);
-            AddBirdAchievement(AchievementId.EliteControlIV, 1300, duckFilterMode: DuckFilterMode.EliteOnly, coinReward: 120);
 
             AddBirdAchievement(AchievementId.BossSlayerI, 60, duckType: Constants.DuckType.USA_BOSS_DUCK, coinReward: 15);
             AddBirdAchievement(AchievementId.BossSlayerII, 180, duckType: Constants.DuckType.USA_BOSS_DUCK, coinReward: 40);
             AddBirdAchievement(AchievementId.BossSlayerIII, 360, duckType: Constants.DuckType.USA_BOSS_DUCK, coinReward: 80);
 
-            AddBirdAchievement(AchievementId.ArcherCleanupI, 180, duckType: Constants.DuckType.MK_ARCHER, coinReward: 18);
-            AddBirdAchievement(AchievementId.ArcherCleanupII, 420, duckType: Constants.DuckType.MK_ARCHER, coinReward: 45);
-
-            AddBirdAchievement(AchievementId.PhalarxBreakerI, 180, duckType: Constants.DuckType.MK_PHALARX, coinReward: 22);
-            AddBirdAchievement(AchievementId.PhalarxBreakerII, 420, duckType: Constants.DuckType.MK_PHALARX, coinReward: 55);
+            AddCityAchievement(AchievementId.SkopjeDefenderI, 100, DuckGroup.Skopje, coinReward: 18);
+            AddCityAchievement(AchievementId.SkopjeDefenderII, 350, DuckGroup.Skopje, coinReward: 50);
+            AddCityAchievement(AchievementId.ParisianHunterI, 100, DuckGroup.Paris, coinReward: 18);
+            AddCityAchievement(AchievementId.ParisianHunterII, 350, DuckGroup.Paris, coinReward: 50);
+            AddCityAchievement(AchievementId.LondonPatrolI, 100, DuckGroup.London, coinReward: 18);
+            AddCityAchievement(AchievementId.LondonPatrolII, 350, DuckGroup.London, coinReward: 50);
+            AddCityAchievement(AchievementId.NewYorkCleanupI, 100, DuckGroup.NewYork, coinReward: 18);
+            AddCityAchievement(AchievementId.NewYorkCleanupII, 350, DuckGroup.NewYork, coinReward: 50);
+            AddCityAchievement(AchievementId.TokyoOperationI, 100, DuckGroup.Tokyo, coinReward: 18);
+            AddCityAchievement(AchievementId.TokyoOperationII, 350, DuckGroup.Tokyo, coinReward: 50);
 
             AddBirdAchievement(AchievementId.RifleVeteran, 1200, weaponType: Constants.WeaponType.Rifle, coinReward: 20);
             AddBirdAchievement(AchievementId.CabirnePrecision, 400, weaponType: Constants.WeaponType.Cabirne, coinReward: 18);
@@ -297,6 +322,23 @@ namespace ShooterB
                 progressSource = ProgressSource.ComboKill,
                 comboType = comboType,
                 duckFilterMode = DuckFilterMode.Any,
+                duckType = default,
+                weaponType = null,
+                targetCount = targetCount,
+                coinReward = Mathf.Max(0, coinReward),
+                titleKey = GetTitleKey(id)
+            };
+        }
+
+        private void AddCityAchievement(AchievementId id, int targetCount, DuckGroup group, int coinReward = 0)
+        {
+            definitions[id] = new AchievementDefinition
+            {
+                id = id,
+                progressSource = ProgressSource.BirdKill,
+                comboType = null,
+                duckFilterMode = DuckFilterMode.Group,
+                duckGroup = group,
                 duckType = default,
                 weaponType = null,
                 targetCount = targetCount,
@@ -361,6 +403,50 @@ namespace ShooterB
             }
         }
 
+        private static DuckGroup GetDuckGroup(Constants.DuckType duckType)
+        {
+            switch (duckType)
+            {
+                case Constants.DuckType.MK_PHALARX:
+                case Constants.DuckType.MK_ARCHER:
+                case Constants.DuckType.MK_VOJVODA:
+                    return DuckGroup.Skopje;
+                case Constants.DuckType.FRENCH_REVOLUTIONARY:
+                case Constants.DuckType.FRENCH_NAPOLEON:
+                case Constants.DuckType.FRENCH_ARTIST:
+                case Constants.DuckType.FRENCH_MUSKETEER:
+                    return DuckGroup.Paris;
+                case Constants.DuckType.BRITISH_REDCOAT:
+                case Constants.DuckType.BRITISH_POLICE:
+                case Constants.DuckType.BRITISH_PUNK:
+                    return DuckGroup.London;
+                case Constants.DuckType.USA_POLICE:
+                case Constants.DuckType.USA_WORKER:
+                case Constants.DuckType.USA_BUSINESS:
+                case Constants.DuckType.USA_BOSS_DUCK:
+                    return DuckGroup.NewYork;
+                case Constants.DuckType.JAPANESE_SAMURAI:
+                case Constants.DuckType.JAPANESE_STRAW_DUCK:
+                case Constants.DuckType.JAPANESE_KIMONO_DUCK:
+                    return DuckGroup.Tokyo;
+                default:
+                    return DuckGroup.None;
+            }
+        }
+
+        private static string GetCityGroupNameKey(DuckGroup group)
+        {
+            switch (group)
+            {
+                case DuckGroup.Skopje:  return "achievement.city_group.skopje";
+                case DuckGroup.Paris:   return "achievement.city_group.paris";
+                case DuckGroup.London:  return "achievement.city_group.london";
+                case DuckGroup.NewYork: return "achievement.city_group.newyork";
+                case DuckGroup.Tokyo:   return "achievement.city_group.tokyo";
+                default:                return null;
+            }
+        }
+
         private static string BuildComboDescription(AchievementDefinition definition)
         {
             Constants.MultiKillType comboType = definition.comboType ?? Constants.MultiKillType.DoubleKill;
@@ -385,6 +471,17 @@ namespace ShooterB
             {
                 string format = LocalizationManager.Instance.Get("achievement.description.bird_kill_elite", "Kill {0} elite ducks.");
                 return string.Format(format, definition.targetCount);
+            }
+
+            if (definition.duckFilterMode == DuckFilterMode.Group)
+            {
+                string cityKey = GetCityGroupNameKey(definition.duckGroup);
+                string cityName = cityKey != null
+                    ? LocalizationManager.Instance.Get(cityKey, definition.duckGroup.ToString())
+                    : definition.duckGroup.ToString();
+                string format = LocalizationManager.Instance.Get(
+                    "achievement.description.bird_kill_city_group", "Kill {0} {1} ducks.");
+                return string.Format(format, definition.targetCount, cityName);
             }
 
             if (definition.weaponType.HasValue)
@@ -485,6 +582,10 @@ namespace ShooterB
                     continue;
 
                 if (definition.duckFilterMode == DuckFilterMode.EliteOnly && !IsEliteDuck(duckType))
+                    continue;
+
+                if (definition.duckFilterMode == DuckFilterMode.Group &&
+                    GetDuckGroup(duckType) != definition.duckGroup)
                     continue;
 
                 IncrementProgress(definition.id, 1);

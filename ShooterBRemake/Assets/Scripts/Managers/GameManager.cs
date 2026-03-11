@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 namespace ShooterB
 {
@@ -52,6 +53,7 @@ namespace ShooterB
         public event Action OnBirdPassed;
         public event Action<Constants.WeaponType> OnSelectedWeaponChanged;
 
+        private readonly HashSet<Constants.WeaponType> unlockedWeapons = new HashSet<Constants.WeaponType>();
         private int birdsUntilNextDifficulty;
         private AudioSource duckKillSfxSource;
         private AudioClip[] quackKillClips;
@@ -67,6 +69,7 @@ namespace ShooterB
             instance = this;
             DontDestroyOnLoad(gameObject);
             LoadCoins();
+            LoadUnlockedWeapons();
             LoadSelectedWeapon();
             _ = AchievementManager.Instance;
             _ = DailyAwardsManager.Instance;
@@ -287,11 +290,34 @@ namespace ShooterB
                 weaponType = Constants.WeaponType.Rifle;
             }
 
+            if (!IsWeaponUnlocked(weaponType))
+            {
+                GameLog.Warning($"[GameManager] Locked weapon '{weaponType}' cannot be selected. Keeping {SelectedWeaponType}.");
+                return;
+            }
+
             SelectedWeaponType = weaponType;
             PlayerPrefs.SetInt(Constants.PREFS_SELECTED_WEAPON, (int)weaponType);
             PlayerPrefs.Save();
             OnSelectedWeaponChanged?.Invoke(SelectedWeaponType);
             GameLog.Log($"[GameManager] Selected weapon saved: {SelectedWeaponType}");
+        }
+
+        public bool IsWeaponUnlocked(Constants.WeaponType weaponType)
+        {
+            return unlockedWeapons.Contains(weaponType);
+        }
+
+        public void UnlockWeapon(Constants.WeaponType weaponType)
+        {
+            if (!IsWeaponSupportedInCurrentBuild(weaponType))
+                return;
+
+            if (!unlockedWeapons.Add(weaponType))
+                return;
+
+            SaveUnlockedWeapons();
+            GameLog.Log($"[GameManager] Weapon unlocked: {weaponType}");
         }
 
         public void AddCoins(int amount)
@@ -415,19 +441,63 @@ namespace ShooterB
             Coins = Mathf.Max(0, PlayerPrefs.GetInt(Constants.PREFS_COINS, 0));
         }
 
+        private void LoadUnlockedWeapons()
+        {
+            unlockedWeapons.Clear();
+            unlockedWeapons.Add(Constants.WeaponType.PiranhaGun);
+
+            string stored = PlayerPrefs.GetString(Constants.PREFS_UNLOCKED_WEAPONS, string.Empty);
+            if (!string.IsNullOrWhiteSpace(stored))
+            {
+                string[] parts = stored.Split(',');
+                for (int i = 0; i < parts.Length; i++)
+                {
+                    if (!int.TryParse(parts[i], out int rawValue) || !Enum.IsDefined(typeof(Constants.WeaponType), rawValue))
+                        continue;
+
+                    Constants.WeaponType weaponType = (Constants.WeaponType)rawValue;
+                    if (IsWeaponSupportedInCurrentBuild(weaponType))
+                        unlockedWeapons.Add(weaponType);
+                }
+            }
+
+            SaveUnlockedWeapons();
+        }
+
         private void LoadSelectedWeapon()
         {
             int storedValue = PlayerPrefs.GetInt(Constants.PREFS_SELECTED_WEAPON, (int)Constants.WeaponType.Rifle);
             if (!Enum.IsDefined(typeof(Constants.WeaponType), storedValue))
             {
-                SelectedWeaponType = Constants.WeaponType.Rifle;
+                SelectedWeaponType = GetDefaultSelectedWeapon();
                 return;
             }
 
             Constants.WeaponType loadedType = (Constants.WeaponType)storedValue;
-            SelectedWeaponType = IsWeaponSupportedInCurrentBuild(loadedType)
+            SelectedWeaponType = IsWeaponSupportedInCurrentBuild(loadedType) && IsWeaponUnlocked(loadedType)
                 ? loadedType
-                : Constants.WeaponType.Rifle;
+                : GetDefaultSelectedWeapon();
+        }
+
+        private void SaveUnlockedWeapons()
+        {
+            List<int> storedValues = new List<int>(unlockedWeapons.Count);
+            foreach (Constants.WeaponType weaponType in unlockedWeapons)
+            {
+                if (IsWeaponSupportedInCurrentBuild(weaponType))
+                    storedValues.Add((int)weaponType);
+            }
+
+            storedValues.Sort();
+            PlayerPrefs.SetString(Constants.PREFS_UNLOCKED_WEAPONS, string.Join(",", storedValues));
+            PlayerPrefs.Save();
+        }
+
+        private Constants.WeaponType GetDefaultSelectedWeapon()
+        {
+            return IsWeaponUnlocked(Constants.WeaponType.Rifle)
+                ? Constants.WeaponType.Rifle
+                : Constants.WeaponType.PiranhaGun;
         }
 
         private static bool IsWeaponSupportedInCurrentBuild(Constants.WeaponType type)

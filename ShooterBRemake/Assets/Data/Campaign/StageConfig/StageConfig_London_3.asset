@@ -18,9 +18,9 @@ MonoBehaviour:
   briefingText: Bridge crossings are saturated. Prioritize high-speed entries first.
   briefingTextMk: Премините на мостот се заситени. Прво неутрализирај ги најбрзите влезови.
   backgroundSprite: {fileID: 8070779983081810468, guid: 0e5a77fb10c294f9cb72f10efb8f890d, type: 3}
-  starThreshold1: 157
-  starThreshold2: 237
-  starThreshold3: 319
+  starThreshold1: 0
+  starThreshold2: 280
+  starThreshold3: 366
   starsRequiredToUnlock: 7
   startingDifficulty: 15
   spawnConfig: {fileID: 11400000, guid: e4c37ad3699b4b058e7f652fe11aa204, type: 2}

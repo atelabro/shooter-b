@@ -152,7 +152,7 @@ MonoBehaviour:
       pathProjection: 9
       speedMultiplier: 1
     - duckType: 10
-      delay: 2
+      delay: 1.7
       startLane: 5
       pathProjection: 0
       speedMultiplier: 1
@@ -236,11 +236,65 @@ MonoBehaviour:
       pathProjection: 4
       speedMultiplier: 1.3
     - duckType: 9
-      delay: 2
+      delay: 1.7
       startLane: 5
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: ec794f1a2210c40359e01dc4d1b6d10a, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 3
+    spawnSequence:
+    - duckType: 9
+      delay: 0
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: 0ae1decb711d844b9988dc9bb05eceec, type: 2}
+    - duckType: 10
+      delay: 1.7
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: f58e9d68a74ce483699796122483e086, type: 2}
+    - duckType: 9
+      delay: 1.7
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: c1d2d1f2289d242c08b77ce368b01033, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 3
+    spawnSequence:
+    - duckType: 10
+      delay: 0
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: b3e3de1eccf4b4d088d7be0cd1d9aa3e, type: 2}
+    - duckType: 9
+      delay: 1.7
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: efa1dc85c253441beba3718897527763, type: 2}
+    - duckType: 10
+      delay: 1.7
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: 2cba38f4705ce4f4196a5ba8e0495999, type: 2}
+    - duckType: 9
+      delay: 1.7
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: 8d319f5046e5b416c85abb405b9ee08c, type: 2}
+    - duckType: 10
+      delay: 1.7
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: 7b5adc80f6125479fba01bf3891086b7, type: 2}
   weightGoStraight: 0.45
   weightGoTop: 0.3
   weightGoBottom: 0.25

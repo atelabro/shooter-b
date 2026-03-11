@@ -34,7 +34,6 @@ namespace ShooterB
 
         private readonly Dictionary<Constants.WeaponType, WeaponCardItemUI> cardsByWeapon = new Dictionary<Constants.WeaponType, WeaponCardItemUI>();
         private readonly Dictionary<Constants.WeaponType, WeaponCardViewModel> modelsByWeapon = new Dictionary<Constants.WeaponType, WeaponCardViewModel>();
-        private readonly HashSet<Constants.WeaponType> unlockedWeapons = new HashSet<Constants.WeaponType>();
         private readonly HashSet<Constants.WeaponType> missingIconWarnings = new HashSet<Constants.WeaponType>();
 
         private UnlockWeaponModalUI unlockModal;
@@ -282,8 +281,6 @@ namespace ShooterB
 
             cardsByWeapon.Clear();
             modelsByWeapon.Clear();
-            unlockedWeapons.Clear();
-            unlockedWeapons.UnionWith(ArmoryUIDataSource.BuildDefaultUnlockedSet());
 
             IReadOnlyList<Constants.WeaponType> ordered = ArmoryUIDataSource.GetOrderedWeapons();
             for (int i = 0; i < ordered.Count; i++)
@@ -388,7 +385,7 @@ namespace ShooterB
                 if (card == null || !modelsByWeapon.ContainsKey(type))
                     continue;
 
-                bool isLocked = !unlockedWeapons.Contains(type);
+                bool isLocked = !GameManager.Instance.IsWeaponUnlocked(type);
                 bool canAfford = !isLocked || CurrentCoins >= modelsByWeapon[type].cost;
                 WeaponCardVisualState visualState = new WeaponCardVisualState
                 {
@@ -403,7 +400,7 @@ namespace ShooterB
 
         private void OnCardPressed(Constants.WeaponType weaponType)
         {
-            bool isUnlocked = unlockedWeapons.Contains(weaponType);
+            bool isUnlocked = GameManager.Instance.IsWeaponUnlocked(weaponType);
             if (!isUnlocked)
             {
                 OpenUnlockModal(weaponType);
@@ -442,7 +439,7 @@ namespace ShooterB
                 return;
             }
 
-            unlockedWeapons.Add(pendingModalWeapon);
+            GameManager.Instance.UnlockWeapon(pendingModalWeapon);
             GameManager.Instance.SetSelectedWeapon(pendingModalWeapon);
             CloseUnlockModal();
             RefreshAllCardStates();

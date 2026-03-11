@@ -232,6 +232,39 @@ MonoBehaviour:
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: 7b5adc80f6125479fba01bf3891086b7, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 3
+    spawnSequence:
+    - duckType: 7
+      delay: 0
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: efa1dc85c253441beba3718897527763, type: 2}
+    - duckType: 6
+      delay: 2
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: 2d01777c954db436b831e9b796d71c6a, type: 2}
+    - duckType: 7
+      delay: 2
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: 16f75fdc480b7453192c0a21c497da84, type: 2}
+    - duckType: 6
+      delay: 1.5
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: ac4838029454f411c9e71938fa60d64f, type: 2}
+    - duckType: 7
+      delay: 2
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      patternRef: {fileID: 11400000, guid: f58e9d68a74ce483699796122483e086, type: 2}
   weightGoStraight: 0.5
   weightGoTop: 0.28
   weightGoBottom: 0.22

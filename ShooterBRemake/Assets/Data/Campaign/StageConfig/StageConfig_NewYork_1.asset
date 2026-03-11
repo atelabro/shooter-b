@@ -23,9 +23,9 @@ MonoBehaviour:
     \u0433\u0438 \u0431\u0440\u0437\u0438\u0442\u0435 \u0432\u043B\u0435\u0437\u043E\u0432\u0438
     \u0438 \u0434\u0440\u0436\u0438 \u0433\u0438 \u043B\u0438\u043D\u0438\u0438\u0442\u0435."
   backgroundSprite: {fileID: -740964376350419543, guid: 1556d899e6d6d43a2ad1dfc80a3bd2dd, type: 3}
-  starThreshold1: 100
-  starThreshold2: 152
-  starThreshold3: 204
+  starThreshold1: 0
+  starThreshold2: 283
+  starThreshold3: 370
   starsRequiredToUnlock: 2
   startingDifficulty: 14
   spawnConfig: {fileID: 11400000, guid: d2b2f8b9a9c64c4c8f71a2e3d8f4c202, type: 2}

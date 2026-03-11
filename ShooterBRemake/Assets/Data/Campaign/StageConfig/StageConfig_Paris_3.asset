@@ -18,9 +18,9 @@ MonoBehaviour:
   briefingText: Long lines and surprise dives. Control angles before they swarm.
   briefingTextMk: Долги линии и изненадни нурнувања. Контролирај ги аглите пред да те опколат.
   backgroundSprite: {fileID: -7666902988477780871, guid: b0560c40ae9ed4d9bac0d14f75ae892e, type: 3}
-  starThreshold1: 75
-  starThreshold2: 120
-  starThreshold3: 165
+  starThreshold1: 0
+  starThreshold2: 156
+  starThreshold3: 204
   starsRequiredToUnlock: 8
   startingDifficulty: 12
   spawnConfig: {fileID: 11400000, guid: d733382dcd84483489a6698653710959, type: 2}

@@ -18,9 +18,9 @@ MonoBehaviour:
   briefingText: Dense skyline lanes mean nonstop pressure. Keep combos alive or get overrun.
   briefingTextMk: Густите линии меѓу облакодерите носат постојан притисок. Одржувај комбо или ќе те прегазат.
   backgroundSprite: {fileID: 6086781016941967579, guid: 250bc5a3025b743b9acb617b2bc769b3, type: 3}
-  starThreshold1: 124
-  starThreshold2: 188
-  starThreshold3: 248
+  starThreshold1: 0
+  starThreshold2: 268
+  starThreshold3: 350
   starsRequiredToUnlock: 7
   startingDifficulty: 16
   spawnConfig: {fileID: 11400000, guid: d2b2f8b9a9c64c4c8f71a2e3d8f4c204, type: 2}

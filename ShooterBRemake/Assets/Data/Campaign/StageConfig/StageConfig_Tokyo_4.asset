@@ -18,9 +18,9 @@ MonoBehaviour:
   briefingText: Final Tokyo engagement under neon chaos. Maintain combo tempo to survive.
   briefingTextMk: Финална пресметка во Токио под неонски хаос. Одржи го темпото на комбо за да преживееш.
   backgroundSprite: {fileID: -2626040343620404388, guid: 54e1d3a31ad6249d0b6483b04ae29e9b, type: 3}
-  starThreshold1: 129
-  starThreshold2: 192
-  starThreshold3: 257
+  starThreshold1: 0
+  starThreshold2: 359
+  starThreshold3: 469
   starsRequiredToUnlock: 10
   startingDifficulty: 17
   spawnConfig: {fileID: 11400000, guid: 9b2d5a1c4f7343ec8ef362e0a4fbb305, type: 2}

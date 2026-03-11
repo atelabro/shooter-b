@@ -18,9 +18,9 @@ MonoBehaviour:
   briefingText: Louvre approaches are crowded. Prioritize fast targets first.
   briefingTextMk: Приодите кон Лувр се пренатрупани. Прво елиминирај ги брзите цели.
   backgroundSprite: {fileID: -2980691944179823259, guid: f26d23d2bfee346dbaed78915cdfed60, type: 3}
-  starThreshold1: 55
-  starThreshold2: 90
-  starThreshold3: 125
+  starThreshold1: 0
+  starThreshold2: 153
+  starThreshold3: 201
   starsRequiredToUnlock: 2
   startingDifficulty: 10
   spawnConfig: {fileID: 11400000, guid: c468e6c42e80473f85162d6ad60f396d, type: 2}

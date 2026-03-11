@@ -18,9 +18,9 @@ MonoBehaviour:
   briefingText: High-altitude lanes open up here. Prioritize long arcs before they stack.
   briefingTextMk: Тука се отвораат висински линии. Прво неутрализирај ги долгите лакови пред да се насоберат.
   backgroundSprite: {fileID: -2055535976081845140, guid: 2c2b32e5084424f42ad8263ccdf7d16c, type: 3}
-  starThreshold1: 106
-  starThreshold2: 160
-  starThreshold3: 215
+  starThreshold1: 0
+  starThreshold2: 330
+  starThreshold3: 432
   starsRequiredToUnlock: 4
   startingDifficulty: 15
   spawnConfig: {fileID: 11400000, guid: 9b2d5a1c4f7343ec8ef362e0a4fbb303, type: 2}
