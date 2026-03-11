@@ -29,9 +29,9 @@ namespace ShooterB
         public AudioClip emptyStarClip;
 
         [Header("Star Reveal Timing")]
-        [Min(0f)] public float starRevealInitialDelaySeconds = 0.08f;
-        [Min(0f)] public float starRevealStepDelaySeconds = 0.16f;
-        [Min(0.01f)] public float starPopDurationSeconds = 0.18f;
+        [Min(0f)] public float starRevealInitialDelaySeconds = 0.14f;
+        [Min(0f)] public float starRevealStepDelaySeconds = 0.34f;
+        [Min(0.01f)] public float starPopDurationSeconds = 0.32f;
         [Range(0.2f, 1.5f)] public float starIdleScale = 0.72f;
         [Range(1f, 2.5f)] public float starPopScale = 1.22f;
 
