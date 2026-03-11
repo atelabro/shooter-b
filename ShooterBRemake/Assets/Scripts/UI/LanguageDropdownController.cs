@@ -167,6 +167,12 @@ namespace ShooterB
             if (currentLabel != null)
                 currentLabel.text = LocalizationManager.GetLanguageCode(language);
 
+            if (englishLabel != null)
+                englishLabel.text = LocalizationManager.Instance.Get("language.english", "English");
+
+            if (macedonianLabel != null)
+                macedonianLabel.text = LocalizationManager.Instance.Get("language.macedonian", "Macedonian");
+
             if (englishFlagImage != null)
                 englishFlagImage.sprite = englishFlagSprite;
 

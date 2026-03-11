@@ -113,6 +113,9 @@ namespace ShooterB
                 ["settings.master"] = "Master Sound",
                 ["settings.music"] = "Music",
                 ["settings.sfx"] = "SFX",
+                ["settings.language"] = "Language",
+                ["language.english"] = "English",
+                ["language.macedonian"] = "Macedonian",
 
                 ["common.back"] = "Back",
                 ["common.armory"] = "Armory",
@@ -304,6 +307,9 @@ namespace ShooterB
                 ["settings.master"] = "Аудио",
                 ["settings.music"] = "Музика",
                 ["settings.sfx"] = "ЗВУЦИ",
+                ["settings.language"] = "Јазик",
+                ["language.english"] = "Англиски",
+                ["language.macedonian"] = "Македонски",
 
                 ["common.back"] = "Назад",
                 ["common.armory"] = "Оружје",

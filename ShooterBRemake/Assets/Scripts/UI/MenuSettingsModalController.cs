@@ -18,22 +18,16 @@ namespace ShooterB
         public TextMeshProUGUI masterLabelText;
         public TextMeshProUGUI musicLabelText;
         public TextMeshProUGUI sfxLabelText;
+        public TextMeshProUGUI languageLabelText;
         public TextMeshProUGUI closeButtonText;
 
         private bool isApplyingValues;
+        private bool isInitialized;
+        private ModalDialogAnimator modalAnimator;
 
-        private void Start()
+        private void Awake()
         {
-            _ = LocalizationManager.Instance;
-            _ = AudioSettingsManager.Instance;
-
-            RegisterListeners();
-            Hide();
-            ApplySlidersFromSettings();
-            RefreshLocalizedTexts();
-
-            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
-            AudioSettingsManager.Instance.OnAudioSettingsChanged += HandleAudioSettingsChanged;
+            EnsureInitialized();
         }
 
         private void OnDestroy()
@@ -47,6 +41,8 @@ namespace ShooterB
 
         public void Open()
         {
+            EnsureInitialized();
+
             if (modalRoot == null)
             {
                 GameLog.Warning("[MenuSettingsModalController] modalRoot is not assigned.");
@@ -54,13 +50,27 @@ namespace ShooterB
             }
 
             ApplySlidersFromSettings();
-            modalRoot.SetActive(true);
+            EnsureAnimator();
+
+            if (modalAnimator != null)
+                modalAnimator.Show();
+            else
+                modalRoot.SetActive(true);
         }
 
         public void Hide()
         {
+            EnsureInitialized();
+
             if (modalRoot != null)
-                modalRoot.SetActive(false);
+            {
+                EnsureAnimator();
+
+                if (modalAnimator != null)
+                    modalAnimator.Hide();
+                else
+                    modalRoot.SetActive(false);
+            }
         }
 
         private void HandleLanguageChanged(LocalizationManager.Language language)
@@ -170,8 +180,48 @@ namespace ShooterB
             if (sfxLabelText != null)
                 sfxLabelText.text = LocalizationManager.Instance.Get("settings.sfx", "SFX");
 
+            if (languageLabelText != null)
+                languageLabelText.text = LocalizationManager.Instance.Get("settings.language", "Language");
+
             if (closeButtonText != null)
                 closeButtonText.text = LocalizationManager.Instance.Get("common.close", "Close");
+        }
+
+        private void EnsureInitialized()
+        {
+            if (isInitialized)
+                return;
+
+            _ = LocalizationManager.Instance;
+            _ = AudioSettingsManager.Instance;
+
+            EnsureAnimator();
+            RegisterListeners();
+            ApplySlidersFromSettings();
+            RefreshLocalizedTexts();
+
+            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
+            AudioSettingsManager.Instance.OnAudioSettingsChanged += HandleAudioSettingsChanged;
+            isInitialized = true;
+        }
+
+        private void EnsureAnimator()
+        {
+            if (modalRoot == null)
+                return;
+
+            modalAnimator = modalRoot.GetComponent<ModalDialogAnimator>();
+            if (modalAnimator == null)
+                modalAnimator = modalRoot.AddComponent<ModalDialogAnimator>();
+
+            modalAnimator.modalRoot = modalRoot;
+
+            if (modalAnimator.contentTarget == null)
+            {
+                Transform panelTransform = modalRoot.transform.Find("Panel");
+                if (panelTransform != null)
+                    modalAnimator.contentTarget = panelTransform as RectTransform;
+            }
         }
     }
 }
