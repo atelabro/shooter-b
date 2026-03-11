@@ -320,6 +320,26 @@ namespace ShooterB
             GameLog.Log($"[GameManager] Weapon unlocked: {weaponType}");
         }
 
+        public void UnlockAllWeapons()
+        {
+            bool changed = false;
+            Constants.WeaponType[] weaponTypes = (Constants.WeaponType[])Enum.GetValues(typeof(Constants.WeaponType));
+            for (int i = 0; i < weaponTypes.Length; i++)
+            {
+                Constants.WeaponType weaponType = weaponTypes[i];
+                if (!IsWeaponSupportedInCurrentBuild(weaponType))
+                    continue;
+
+                changed |= unlockedWeapons.Add(weaponType);
+            }
+
+            if (!changed)
+                return;
+
+            SaveUnlockedWeapons();
+            GameLog.Log("[GameManager] All supported weapons unlocked for testing.");
+        }
+
         public void AddCoins(int amount)
         {
             if (amount <= 0)
@@ -349,6 +369,49 @@ namespace ShooterB
             OnCoinsChanged?.Invoke(Coins);
             GameLog.Log($"[GameManager] Coins spent: -{amount}. Total: {Coins}");
             return true;
+        }
+
+        public void ResetCoins()
+        {
+            if (Coins == 0)
+                return;
+
+            Coins = 0;
+            PlayerPrefs.SetInt(Constants.PREFS_COINS, Coins);
+            PlayerPrefs.Save();
+            OnCoinsChanged?.Invoke(Coins);
+            GameLog.Log("[GameManager] Coins reset to 0.");
+        }
+
+        public void ResetUnlockedWeaponsToDefault()
+        {
+            unlockedWeapons.Clear();
+            unlockedWeapons.Add(Constants.WeaponType.PiranhaGun);
+            SaveUnlockedWeapons();
+
+            if (!IsWeaponUnlocked(SelectedWeaponType))
+            {
+                SelectedWeaponType = GetDefaultSelectedWeapon();
+                PlayerPrefs.SetInt(Constants.PREFS_SELECTED_WEAPON, (int)SelectedWeaponType);
+                PlayerPrefs.Save();
+                OnSelectedWeaponChanged?.Invoke(SelectedWeaponType);
+            }
+
+            GameLog.Log("[GameManager] Unlocked weapons reset to defaults.");
+        }
+
+        public void ResetAllProgressForTesting()
+        {
+            PlayerPrefs.DeleteKey(Constants.PREFS_COINS);
+            PlayerPrefs.DeleteKey(Constants.PREFS_SELECTED_WEAPON);
+            PlayerPrefs.DeleteKey(Constants.PREFS_UNLOCKED_WEAPONS);
+
+            Coins = 0;
+            LoadUnlockedWeapons();
+            LoadSelectedWeapon();
+            OnCoinsChanged?.Invoke(Coins);
+            OnSelectedWeaponChanged?.Invoke(SelectedWeaponType);
+            GameLog.Log("[GameManager] Core testing progress reset.");
         }
 
         public void PauseGame()

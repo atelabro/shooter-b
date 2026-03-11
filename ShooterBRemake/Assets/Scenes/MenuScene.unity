@@ -1854,6 +1854,7 @@ MonoBehaviour:
   quitButton: {fileID: 422015577}
   highScoreText: {fileID: 0}
   titleText: {fileID: 0}
+  logoTapTarget: {fileID: 0}
   campaignButtonText: {fileID: 0}
   armoryButtonText: {fileID: 0}
   achievementsButtonText: {fileID: 0}
@@ -1866,6 +1867,7 @@ MonoBehaviour:
   achievementsBadgeSize: {x: 28, y: 28}
   achievementsBadgeColor: {r: 0.8627451, g: 0.1764706, b: 0.1764706, a: 1}
   languageDropdown: {fileID: 2099000102}
+  allowBetaDevPanel: 1
 --- !u!4 &688693834
 Transform:
   m_ObjectHideFlags: 0

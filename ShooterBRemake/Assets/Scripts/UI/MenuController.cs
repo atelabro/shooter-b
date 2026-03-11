@@ -1,5 +1,7 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ShooterB
@@ -7,6 +9,8 @@ namespace ShooterB
     public class MenuController : MonoBehaviour
     {
         private static Sprite runtimeBadgeCircleSprite;
+        private const int DevPanelTapCount = 7;
+        private const float DevPanelTapWindowSeconds = 1.5f;
 
         [Header("UI Elements")]
         public Button campaignButton;
@@ -15,6 +19,7 @@ namespace ShooterB
         public Button quitButton;
         public TextMeshProUGUI highScoreText;
         public TextMeshProUGUI titleText;
+        public Graphic logoTapTarget;
         public TextMeshProUGUI campaignButtonText;
         public TextMeshProUGUI armoryButtonText;
         public TextMeshProUGUI achievementsButtonText;
@@ -33,6 +38,13 @@ namespace ShooterB
 
         [Header("Localization")]
         public LanguageDropdownController languageDropdown;
+
+        [Header("Dev Panel")]
+        public bool allowBetaDevPanel = true;
+
+        private DevPanelController devPanelController;
+        private int titleTapCount;
+        private float lastTitleTapTime;
 
         private void Start()
         {
@@ -59,6 +71,7 @@ namespace ShooterB
             UpdateHighScore();
             RefreshLocalizedTexts();
             RefreshAchievementsBadge();
+            EnsureDevPanel();
         }
 
         private void OnDestroy()
@@ -136,6 +149,7 @@ namespace ShooterB
                 quitButtonText.text = LocalizationManager.Instance.Get("menu.quit", "QUIT");
 
             UpdateHighScore();
+            EnsureLogoTapTrigger();
         }
 
         private void InitializeLanguageDropdown()
@@ -183,6 +197,67 @@ namespace ShooterB
 
             settingsButton.onClick.RemoveListener(OnSettingsClicked);
             settingsButton.onClick.AddListener(OnSettingsClicked);
+        }
+
+        private void EnsureDevPanel()
+        {
+            if (!IsDevPanelAllowed())
+                return;
+
+            if (devPanelController == null)
+                devPanelController = gameObject.GetComponent<DevPanelController>() ?? gameObject.AddComponent<DevPanelController>();
+
+            EnsureLogoTapTrigger();
+        }
+
+        private void EnsureLogoTapTrigger()
+        {
+            if (!IsDevPanelAllowed())
+                return;
+
+            if (logoTapTarget == null)
+            {
+                logoTapTarget = FindGraphicByName("Logo");
+                if (logoTapTarget == null)
+                    logoTapTarget = titleText;
+            }
+
+            if (logoTapTarget == null)
+            {
+                GameLog.Warning("[MenuController] Dev panel trigger target is not assigned. Set logoTapTarget on MenuController.");
+                return;
+            }
+
+            logoTapTarget.raycastTarget = true;
+
+            TitleTapTrigger trigger = logoTapTarget.GetComponent<TitleTapTrigger>();
+            if (trigger == null)
+                trigger = logoTapTarget.gameObject.AddComponent<TitleTapTrigger>();
+
+            trigger.Initialize(HandleTitleTapped);
+        }
+
+        private void HandleTitleTapped()
+        {
+            if (!IsDevPanelAllowed())
+                return;
+
+            if (Time.unscaledTime - lastTitleTapTime > DevPanelTapWindowSeconds)
+                titleTapCount = 0;
+
+            lastTitleTapTime = Time.unscaledTime;
+            titleTapCount++;
+
+            if (titleTapCount < DevPanelTapCount)
+                return;
+
+            titleTapCount = 0;
+            devPanelController?.Toggle();
+        }
+
+        private bool IsDevPanelAllowed()
+        {
+            return Debug.isDebugBuild || allowBetaDevPanel;
         }
 
         private void RefreshAchievementsBadge()
@@ -317,6 +392,39 @@ namespace ShooterB
             }
 
             return root.GetComponentInChildren<TextMeshProUGUI>(true);
+        }
+
+        private static Graphic FindGraphicByName(string objectName)
+        {
+            if (string.IsNullOrWhiteSpace(objectName))
+                return null;
+
+            Graphic[] graphics = FindObjectsOfType<Graphic>(true);
+            for (int i = 0; i < graphics.Length; i++)
+            {
+                if (graphics[i] != null && graphics[i].gameObject.name == objectName)
+                    return graphics[i];
+            }
+
+            return null;
+        }
+
+        private sealed class TitleTapTrigger : MonoBehaviour, IPointerClickHandler
+        {
+            private Action onTap;
+
+            public void Initialize(Action callback)
+            {
+                onTap = callback;
+            }
+
+            public void OnPointerClick(PointerEventData eventData)
+            {
+                if (eventData != null && eventData.button != PointerEventData.InputButton.Left)
+                    return;
+
+                onTap?.Invoke();
+            }
         }
     }
 }
