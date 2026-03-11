@@ -6571,6 +6571,13 @@ MonoBehaviour:
   - {fileID: 1972656537}
   filledStarSprite: {fileID: -3302650454433535116, guid: db3f792b81ed34f6390a608767080f99, type: 3}
   emptyStarSprite: {fileID: 8187951022384246752, guid: db3f792b81ed34f6390a608767080f99, type: 3}
+  earnedStarClip: {fileID: 0}
+  emptyStarClip: {fileID: 0}
+  starRevealInitialDelaySeconds: 0.08
+  starRevealStepDelaySeconds: 0.16
+  starPopDurationSeconds: 0.18
+  starIdleScale: 0.72
+  starPopScale: 1.22
   restartButton: {fileID: 49299410}
   backButton: {fileID: 0}
   continueButton: {fileID: 0}

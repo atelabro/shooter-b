@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 namespace ShooterB
 {
@@ -238,6 +241,11 @@ namespace ShooterB
             ConfigureGameStartingModal();
         }
 
+        private void Update()
+        {
+            HandleDebugStageCompleteShortcut();
+        }
+
         private void HandleStageComplete()
         {
             if (isStageComplete)
@@ -256,6 +264,53 @@ namespace ShooterB
             }
 
             stageCompleteModalController.Show(stage, GameManager.Instance.Score);
+        }
+
+        private void HandleDebugStageCompleteShortcut()
+        {
+            if (isStageComplete)
+                return;
+
+            int forcedStars = GetDebugStageCompleteStars();
+            if (forcedStars <= 0)
+                return;
+
+            StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
+            if (stage == null || stageCompleteModalController == null)
+                return;
+
+            isStageComplete = true;
+            Time.timeScale = 0f;
+            GameManager.Instance.ResetConsecutiveFailedRuns();
+            stageCompleteModalController.ShowDebug(stage, forcedStars);
+        }
+
+        private static int GetDebugStageCompleteStars()
+        {
+#if ENABLE_INPUT_SYSTEM
+            if (Keyboard.current != null)
+            {
+                if (Keyboard.current.yKey.wasPressedThisFrame)
+                    return 1;
+
+                if (Keyboard.current.uKey.wasPressedThisFrame)
+                    return 2;
+
+                if (Keyboard.current.iKey.wasPressedThisFrame)
+                    return 3;
+            }
+#elif ENABLE_LEGACY_INPUT_MANAGER
+            if (Input.GetKeyDown(KeyCode.Y))
+                return 1;
+
+            if (Input.GetKeyDown(KeyCode.U))
+                return 2;
+
+            if (Input.GetKeyDown(KeyCode.I))
+                return 3;
+#endif
+
+            return 0;
         }
 
         private void HandleWaveStarting(int waveNumber, float duration, string labelFormatOverride)

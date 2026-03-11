@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,6 +24,17 @@ namespace ShooterB
         public Sprite filledStarSprite;
         public Sprite emptyStarSprite;
 
+        [Header("Star Reveal Audio")]
+        public AudioClip earnedStarClip;
+        public AudioClip emptyStarClip;
+
+        [Header("Star Reveal Timing")]
+        [Min(0f)] public float starRevealInitialDelaySeconds = 0.08f;
+        [Min(0f)] public float starRevealStepDelaySeconds = 0.16f;
+        [Min(0.01f)] public float starPopDurationSeconds = 0.18f;
+        [Range(0.2f, 1.5f)] public float starIdleScale = 0.72f;
+        [Range(1f, 2.5f)] public float starPopScale = 1.22f;
+
         [Header("Buttons")]
         public Button restartButton;
         public Button backButton;
@@ -35,6 +47,10 @@ namespace ShooterB
         private bool continueFlowInProgress;
         private bool isInitialized;
         private ModalDialogAnimator modalAnimator;
+        private AudioSource starAudioSource;
+        private Coroutine starRevealRoutine;
+        private readonly Vector3[] starBaseScales = new Vector3[3];
+        private int lastResolvedStars;
 
         private void Awake()
         {
@@ -60,25 +76,38 @@ namespace ShooterB
 
             if (LocalizationManager.HasInstance)
                 LocalizationManager.Instance.OnLanguageChanged -= HandleLanguageChanged;
+
+            if (AudioSettingsManager.HasInstance)
+                AudioSettingsManager.Instance.OnAudioSettingsChanged -= HandleAudioSettingsChanged;
         }
 
         public void Show(StageConfig config, long score)
+        {
+            int stars = CampaignProgressManager.Instance.CalculateStars(config, score);
+            CampaignProgressManager.Instance.SaveStageStars(config.stageIndex, stars);
+            ShowResolved(config, stars, true);
+        }
+
+        public void ShowDebug(StageConfig config, int forcedStars)
+        {
+            ShowResolved(config, Mathf.Clamp(forcedStars, 0, GetStarIconCount()), false);
+        }
+
+        private void ShowResolved(StageConfig config, int stars, bool evaluateProgression)
         {
             EnsureInitialized();
             EnsureModalRoot();
             lastShownStage = config;
             shouldShowCityFirstCompletionAdOnContinue = false;
             cityForOneTimeCompletionAd = null;
+            lastResolvedStars = Mathf.Clamp(stars, 0, GetStarIconCount());
 
-            int stars = CampaignProgressManager.Instance.CalculateStars(config, score);
-
-            CampaignProgressManager.Instance.SaveStageStars(config.stageIndex, stars);
-            EvaluateCityCompletionAdEligibility(config);
+            if (evaluateProgression)
+                EvaluateCityCompletionAdEligibility(config);
 
             if (stageNameText != null)
                 stageNameText.text = CampaignLocalizationResolver.GetStageName(config);
-
-            ApplyStarIcons(stars);
+            ResetStarIconsForReveal();
 
             if (modalRoot != null)
             {
@@ -89,6 +118,8 @@ namespace ShooterB
                 else
                     modalRoot.SetActive(true);
             }
+
+            StartStarRevealSequence();
         }
 
         private void ApplyStarIcons(int earnedStars)
@@ -121,6 +152,9 @@ namespace ShooterB
                 else
                     modalRoot.SetActive(false);
             }
+
+            StopStarRevealSequence();
+            ResetStarTransforms();
         }
 
         public void OnRestartClicked()
@@ -266,6 +300,8 @@ namespace ShooterB
             EnsureAnimator();
             ResolveButtons();
             ResolveTextReferences();
+            EnsureStarAudioReady();
+            CaptureStarBaseScales();
             RefreshLocalizedTexts();
 
             if (restartButton != null)
@@ -281,6 +317,7 @@ namespace ShooterB
                 legacyBackFallbackButton.onClick.AddListener(OnBackClicked);
 
             LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
+            AudioSettingsManager.Instance.OnAudioSettingsChanged += HandleAudioSettingsChanged;
             isInitialized = true;
         }
 
@@ -349,6 +386,190 @@ namespace ShooterB
 
             if (stageNameText != null && lastShownStage != null)
                 stageNameText.text = CampaignLocalizationResolver.GetStageName(lastShownStage);
+        }
+
+        private void HandleAudioSettingsChanged()
+        {
+            if (starAudioSource != null)
+                starAudioSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
+        }
+
+        private void EnsureStarAudioReady()
+        {
+            if (starAudioSource == null)
+            {
+                starAudioSource = GetComponent<AudioSource>();
+                if (starAudioSource == null)
+                    starAudioSource = gameObject.AddComponent<AudioSource>();
+
+                starAudioSource.playOnAwake = false;
+                starAudioSource.loop = false;
+            }
+
+            starAudioSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
+        }
+
+        private void CaptureStarBaseScales()
+        {
+            if (starIcons == null)
+                return;
+
+            int count = Mathf.Min(starIcons.Length, starBaseScales.Length);
+            for (int i = 0; i < count; i++)
+            {
+                if (starIcons[i] == null)
+                    continue;
+
+                RectTransform rectTransform = starIcons[i].rectTransform;
+                if (rectTransform != null)
+                    starBaseScales[i] = rectTransform.localScale;
+            }
+        }
+
+        private void ResetStarIconsForReveal()
+        {
+            if (starIcons == null)
+                return;
+
+            CaptureStarBaseScales();
+
+            for (int i = 0; i < starIcons.Length; i++)
+            {
+                Image icon = starIcons[i];
+                if (icon == null)
+                    continue;
+
+                icon.sprite = emptyStarSprite;
+                icon.enabled = emptyStarSprite != null;
+
+                RectTransform rectTransform = icon.rectTransform;
+                if (rectTransform != null)
+                    rectTransform.localScale = GetBaseStarScale(i) * starIdleScale;
+            }
+        }
+
+        private void ResetStarTransforms()
+        {
+            if (starIcons == null)
+                return;
+
+            for (int i = 0; i < starIcons.Length; i++)
+            {
+                Image icon = starIcons[i];
+                if (icon == null)
+                    continue;
+
+                RectTransform rectTransform = icon.rectTransform;
+                if (rectTransform != null)
+                    rectTransform.localScale = GetBaseStarScale(i);
+            }
+        }
+
+        private void StartStarRevealSequence()
+        {
+            StopStarRevealSequence();
+
+            if (starIcons == null || starIcons.Length == 0)
+                return;
+
+            starRevealRoutine = StartCoroutine(PlayStarRevealSequence());
+        }
+
+        private void StopStarRevealSequence()
+        {
+            if (starRevealRoutine == null)
+                return;
+
+            StopCoroutine(starRevealRoutine);
+            starRevealRoutine = null;
+        }
+
+        private IEnumerator PlayStarRevealSequence()
+        {
+            if (starRevealInitialDelaySeconds > 0f)
+                yield return WaitForUnscaledSeconds(starRevealInitialDelaySeconds);
+
+            int slotCount = GetStarIconCount();
+            for (int i = 0; i < slotCount; i++)
+            {
+                Image icon = starIcons[i];
+                if (icon == null)
+                    continue;
+
+                bool earned = i < lastResolvedStars;
+                icon.sprite = earned ? filledStarSprite : emptyStarSprite;
+                icon.enabled = earned ? filledStarSprite != null : emptyStarSprite != null;
+
+                PlayStarClip(earned ? earnedStarClip : emptyStarClip);
+                yield return AnimateStarPop(icon.rectTransform, i);
+
+                if (i < slotCount - 1 && starRevealStepDelaySeconds > 0f)
+                    yield return WaitForUnscaledSeconds(starRevealStepDelaySeconds);
+            }
+
+            starRevealRoutine = null;
+        }
+
+        private IEnumerator AnimateStarPop(RectTransform rectTransform, int index)
+        {
+            if (rectTransform == null)
+                yield break;
+
+            Vector3 baseScale = GetBaseStarScale(index);
+            float duration = Mathf.Max(0.01f, starPopDurationSeconds);
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                float scaleMultiplier = EvaluateStarPopScale(t);
+                rectTransform.localScale = baseScale * scaleMultiplier;
+                yield return null;
+            }
+
+            rectTransform.localScale = baseScale;
+        }
+
+        private void PlayStarClip(AudioClip clip)
+        {
+            EnsureStarAudioReady();
+            if (starAudioSource == null || clip == null)
+                return;
+
+            starAudioSource.PlayOneShot(clip);
+        }
+
+        private IEnumerator WaitForUnscaledSeconds(float seconds)
+        {
+            float elapsed = 0f;
+            while (elapsed < seconds)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                yield return null;
+            }
+        }
+
+        private float EvaluateStarPopScale(float t)
+        {
+            t = Mathf.Clamp01(t);
+            if (t < 0.45f)
+                return Mathf.LerpUnclamped(starIdleScale, starPopScale, t / 0.45f);
+
+            return Mathf.LerpUnclamped(starPopScale, 1f, (t - 0.45f) / 0.55f);
+        }
+
+        private Vector3 GetBaseStarScale(int index)
+        {
+            if (index < 0 || index >= starBaseScales.Length || starBaseScales[index] == Vector3.zero)
+                return Vector3.one;
+
+            return starBaseScales[index];
+        }
+
+        private int GetStarIconCount()
+        {
+            return starIcons == null ? 0 : starIcons.Length;
         }
 
         private TextMeshProUGUI FindTextByContent(string content)
