@@ -13,13 +13,13 @@ namespace ShooterB
         public RectTransform contentTarget;
 
         [Header("Show")]
-        [Min(0f)] public float showDuration = 0.18f;
-        [Range(0.5f, 1.2f)] public float showStartScale = 0.94f;
-        [Range(0.8f, 1.2f)] public float showOvershootScale = 1.02f;
+        [Min(0f)] public float showDuration = 0.13f;
+        [Range(0.5f, 1.2f)] public float showStartScale = 0.97f;
+        [Range(0.8f, 1.2f)] public float showOvershootScale = 1f;
 
         [Header("Hide")]
-        [Min(0f)] public float hideDuration = 0.12f;
-        [Range(0.5f, 1.2f)] public float hideEndScale = 0.96f;
+        [Min(0f)] public float hideDuration = 0.09f;
+        [Range(0.5f, 1.2f)] public float hideEndScale = 0.98f;
 
         private Coroutine activeTransition;
         private Vector3 contentBaseScale = Vector3.one;

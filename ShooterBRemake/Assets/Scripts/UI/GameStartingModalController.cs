@@ -27,6 +27,7 @@ namespace ShooterB
         private bool extraActionUsedThisStage;
         private bool mercyBonusProcessedThisStage;
         private bool adRequestInFlight;
+        private ModalDialogAnimator modalAnimator;
 
         public void Configure(string stageName, string stageBriefing)
         {
@@ -65,7 +66,12 @@ namespace ShooterB
             if (modalRoot != null)
             {
                 modalRoot.transform.SetAsLastSibling();
-                modalRoot.SetActive(true);
+                EnsureAnimator();
+
+                if (modalAnimator != null)
+                    modalAnimator.Show();
+                else
+                    modalRoot.SetActive(true);
             }
 
             if (startButton != null)
@@ -92,13 +98,22 @@ namespace ShooterB
                 extraActionButton.onClick.RemoveListener(HandleExtraActionClicked);
 
             if (modalRoot != null)
-                modalRoot.SetActive(false);
+            {
+                EnsureAnimator();
+
+                if (modalAnimator != null)
+                    modalAnimator.HideImmediate();
+                else
+                    modalRoot.SetActive(false);
+            }
         }
 
         private void EnsureReferences()
         {
             if (modalRoot == null)
                 modalRoot = gameObject;
+
+            EnsureAnimator();
 
             Image rootImage = modalRoot.GetComponent<Image>();
             if (rootImage != null)
@@ -169,6 +184,18 @@ namespace ShooterB
                 if (fallbackButtonTransform != null)
                     startButton = fallbackButtonTransform.GetComponent<Button>();
             }
+        }
+
+        private void EnsureAnimator()
+        {
+            if (modalRoot == null)
+                return;
+
+            modalAnimator = modalRoot.GetComponent<ModalDialogAnimator>();
+            if (modalAnimator == null)
+                modalAnimator = modalRoot.AddComponent<ModalDialogAnimator>();
+
+            modalAnimator.modalRoot = modalRoot;
         }
 
         private void HandleStartClicked()

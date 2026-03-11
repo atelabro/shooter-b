@@ -30,24 +30,19 @@ namespace ShooterB
         private long lastHighScore;
         private Constants.GameMode lastMode;
         private bool lastIsNewHighScore;
+        private bool isInitialized;
+        private ModalDialogAnimator modalAnimator;
 
-        private void Start()
+        private void Awake()
         {
-            EnsureModalRoot();
-            ResolveTextReferences();
-            RefreshLocalizedTexts();
-
-            if (retryButton != null)
-                retryButton.onClick.AddListener(OnRetryClicked);
-
-            if (menuButton != null)
-                menuButton.onClick.AddListener(OnMenuClicked);
-
-            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
+            EnsureInitialized();
         }
 
         private void OnDestroy()
         {
+            if (!isInitialized)
+                return;
+
             if (retryButton != null)
                 retryButton.onClick.RemoveListener(OnRetryClicked);
 
@@ -60,6 +55,7 @@ namespace ShooterB
 
         public void Show(long finalScore, long highScore, Constants.GameMode mode, bool isNewHighScore)
         {
+            EnsureInitialized();
             EnsureModalRoot();
             hasLastShowData = true;
             lastFinalScore = finalScore;
@@ -87,15 +83,30 @@ namespace ShooterB
                 newHighScoreBadge.SetActive(!isCampaign && isNewHighScore);
 
             if (modalRoot != null)
-                modalRoot.SetActive(true);
+            {
+                EnsureAnimator();
+
+                if (modalAnimator != null)
+                    modalAnimator.Show();
+                else
+                    modalRoot.SetActive(true);
+            }
         }
 
         public void Hide()
         {
+            EnsureInitialized();
             EnsureModalRoot();
 
             if (modalRoot != null)
-                modalRoot.SetActive(false);
+            {
+                EnsureAnimator();
+
+                if (modalAnimator != null)
+                    modalAnimator.Hide();
+                else
+                    modalRoot.SetActive(false);
+            }
         }
 
         public void OnRetryClicked()
@@ -115,6 +126,38 @@ namespace ShooterB
         {
             if (modalRoot == null)
                 modalRoot = gameObject;
+        }
+
+        private void EnsureInitialized()
+        {
+            if (isInitialized)
+                return;
+
+            EnsureModalRoot();
+            EnsureAnimator();
+            ResolveTextReferences();
+            RefreshLocalizedTexts();
+
+            if (retryButton != null)
+                retryButton.onClick.AddListener(OnRetryClicked);
+
+            if (menuButton != null)
+                menuButton.onClick.AddListener(OnMenuClicked);
+
+            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
+            isInitialized = true;
+        }
+
+        private void EnsureAnimator()
+        {
+            if (modalRoot == null)
+                return;
+
+            modalAnimator = modalRoot.GetComponent<ModalDialogAnimator>();
+            if (modalAnimator == null)
+                modalAnimator = modalRoot.AddComponent<ModalDialogAnimator>();
+
+            modalAnimator.modalRoot = modalRoot;
         }
 
         private void ResolveTextReferences()
@@ -152,7 +195,20 @@ namespace ShooterB
             RefreshLocalizedTexts();
 
             if (modalRoot != null && modalRoot.activeInHierarchy && hasLastShowData)
-                Show(lastFinalScore, lastHighScore, lastMode, lastIsNewHighScore);
+            {
+                bool isCampaign = lastMode == Constants.GameMode.Campaign;
+                string highFormat = LocalizationManager.Instance.Get("campaign.gameover.high_format", "High: {0}");
+
+                if (highScoreText != null)
+                {
+                    highScoreText.gameObject.SetActive(!isCampaign);
+                    if (!isCampaign)
+                        highScoreText.text = string.Format(highFormat, lastHighScore);
+                }
+
+                if (newHighScoreBadge != null)
+                    newHighScoreBadge.SetActive(!isCampaign && lastIsNewHighScore);
+            }
         }
 
         private TextMeshProUGUI FindTextByContent(string content)

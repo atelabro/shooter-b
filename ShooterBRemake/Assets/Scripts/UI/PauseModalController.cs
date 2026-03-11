@@ -17,27 +17,19 @@ namespace ShooterB
         public TextMeshProUGUI resumeButtonText;
         public TextMeshProUGUI restartButtonText;
         public TextMeshProUGUI menuButtonText;
+        private bool isInitialized;
+        private ModalDialogAnimator modalAnimator;
 
-        private void Start()
+        private void Awake()
         {
-            EnsureModalRoot();
-            ResolveTextReferences();
-            RefreshLocalizedTexts();
-
-            if (resumeButton != null)
-                resumeButton.onClick.AddListener(OnResumeClicked);
-
-            if (restartButton != null)
-                restartButton.onClick.AddListener(OnRestartClicked);
-
-            if (menuButton != null)
-                menuButton.onClick.AddListener(OnMenuClicked);
-
-            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
+            EnsureInitialized();
         }
 
         private void OnDestroy()
         {
+            if (!isInitialized)
+                return;
+
             if (resumeButton != null)
                 resumeButton.onClick.RemoveListener(OnResumeClicked);
 
@@ -53,23 +45,40 @@ namespace ShooterB
 
         public void Show()
         {
+            EnsureInitialized();
+
             if (GameManager.Instance.IsGameOver)
                 return;
 
             EnsureModalRoot();
 
             if (modalRoot != null)
-                modalRoot.SetActive(true);
+            {
+                EnsureAnimator();
+
+                if (modalAnimator != null)
+                    modalAnimator.Show();
+                else
+                    modalRoot.SetActive(true);
+            }
 
             GameManager.Instance.PauseGame();
         }
 
         public void Hide()
         {
+            EnsureInitialized();
             EnsureModalRoot();
 
             if (modalRoot != null)
-                modalRoot.SetActive(false);
+            {
+                EnsureAnimator();
+
+                if (modalAnimator != null)
+                    modalAnimator.Hide();
+                else
+                    modalRoot.SetActive(false);
+            }
         }
 
         public void Toggle()
@@ -107,6 +116,41 @@ namespace ShooterB
         {
             if (modalRoot == null)
                 modalRoot = gameObject;
+        }
+
+        private void EnsureInitialized()
+        {
+            if (isInitialized)
+                return;
+
+            EnsureModalRoot();
+            EnsureAnimator();
+            ResolveTextReferences();
+            RefreshLocalizedTexts();
+
+            if (resumeButton != null)
+                resumeButton.onClick.AddListener(OnResumeClicked);
+
+            if (restartButton != null)
+                restartButton.onClick.AddListener(OnRestartClicked);
+
+            if (menuButton != null)
+                menuButton.onClick.AddListener(OnMenuClicked);
+
+            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
+            isInitialized = true;
+        }
+
+        private void EnsureAnimator()
+        {
+            if (modalRoot == null)
+                return;
+
+            modalAnimator = modalRoot.GetComponent<ModalDialogAnimator>();
+            if (modalAnimator == null)
+                modalAnimator = modalRoot.AddComponent<ModalDialogAnimator>();
+
+            modalAnimator.modalRoot = modalRoot;
         }
 
         private void ResolveTextReferences()

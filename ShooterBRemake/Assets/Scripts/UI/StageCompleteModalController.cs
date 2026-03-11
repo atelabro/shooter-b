@@ -33,31 +33,19 @@ namespace ShooterB
         private bool shouldShowCityFirstCompletionAdOnContinue;
         private CityConfig cityForOneTimeCompletionAd;
         private bool continueFlowInProgress;
+        private bool isInitialized;
+        private ModalDialogAnimator modalAnimator;
 
-        private void Start()
+        private void Awake()
         {
-            EnsureModalRoot();
-            ResolveButtons();
-            ResolveTextReferences();
-            RefreshLocalizedTexts();
-
-            if (restartButton != null)
-                restartButton.onClick.AddListener(OnRestartClicked);
-
-            if (backButton != null)
-                backButton.onClick.AddListener(OnBackClicked);
-
-            if (continueButton != null)
-                continueButton.onClick.AddListener(OnContinueClicked);
-
-            if (legacyBackFallbackButton != null && legacyBackFallbackButton != backButton)
-                legacyBackFallbackButton.onClick.AddListener(OnBackClicked);
-
-            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
+            EnsureInitialized();
         }
 
         private void OnDestroy()
         {
+            if (!isInitialized)
+                return;
+
             if (restartButton != null)
                 restartButton.onClick.RemoveListener(OnRestartClicked);
 
@@ -76,6 +64,7 @@ namespace ShooterB
 
         public void Show(StageConfig config, long score)
         {
+            EnsureInitialized();
             EnsureModalRoot();
             lastShownStage = config;
             shouldShowCityFirstCompletionAdOnContinue = false;
@@ -92,7 +81,14 @@ namespace ShooterB
             ApplyStarIcons(stars);
 
             if (modalRoot != null)
-                modalRoot.SetActive(true);
+            {
+                EnsureAnimator();
+
+                if (modalAnimator != null)
+                    modalAnimator.Show();
+                else
+                    modalRoot.SetActive(true);
+            }
         }
 
         private void ApplyStarIcons(int earnedStars)
@@ -113,10 +109,18 @@ namespace ShooterB
 
         public void Hide()
         {
+            EnsureInitialized();
             EnsureModalRoot();
 
             if (modalRoot != null)
-                modalRoot.SetActive(false);
+            {
+                EnsureAnimator();
+
+                if (modalAnimator != null)
+                    modalAnimator.Hide();
+                else
+                    modalRoot.SetActive(false);
+            }
         }
 
         public void OnRestartClicked()
@@ -251,6 +255,45 @@ namespace ShooterB
         {
             if (modalRoot == null)
                 modalRoot = gameObject;
+        }
+
+        private void EnsureInitialized()
+        {
+            if (isInitialized)
+                return;
+
+            EnsureModalRoot();
+            EnsureAnimator();
+            ResolveButtons();
+            ResolveTextReferences();
+            RefreshLocalizedTexts();
+
+            if (restartButton != null)
+                restartButton.onClick.AddListener(OnRestartClicked);
+
+            if (backButton != null)
+                backButton.onClick.AddListener(OnBackClicked);
+
+            if (continueButton != null)
+                continueButton.onClick.AddListener(OnContinueClicked);
+
+            if (legacyBackFallbackButton != null && legacyBackFallbackButton != backButton)
+                legacyBackFallbackButton.onClick.AddListener(OnBackClicked);
+
+            LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
+            isInitialized = true;
+        }
+
+        private void EnsureAnimator()
+        {
+            if (modalRoot == null)
+                return;
+
+            modalAnimator = modalRoot.GetComponent<ModalDialogAnimator>();
+            if (modalAnimator == null)
+                modalAnimator = modalRoot.AddComponent<ModalDialogAnimator>();
+
+            modalAnimator.modalRoot = modalRoot;
         }
 
         private void ResolveButtons()
