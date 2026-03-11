@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 namespace ShooterB
 {
@@ -19,6 +20,7 @@ namespace ShooterB
         public TextMeshProUGUI menuButtonText;
         private bool isInitialized;
         private ModalDialogAnimator modalAnimator;
+        private Coroutine closeRoutine;
 
         private void Awake()
         {
@@ -29,6 +31,9 @@ namespace ShooterB
         {
             if (!isInitialized)
                 return;
+
+            if (closeRoutine != null)
+                StopCoroutine(closeRoutine);
 
             if (resumeButton != null)
                 resumeButton.onClick.RemoveListener(OnResumeClicked);
@@ -94,22 +99,31 @@ namespace ShooterB
 
         public void OnResumeClicked()
         {
-            GameManager.Instance.ResumeGame();
-            Hide();
+            StartCloseTransition(() =>
+            {
+                GameManager.Instance.ResumeGame();
+            });
         }
 
         public void OnRestartClicked()
         {
-            SceneController.Instance.ReloadCurrentGameScene();
+            StartCloseTransition(() =>
+            {
+                Time.timeScale = 1f;
+                SceneController.Instance.ReloadCurrentGameScene();
+            });
         }
 
         public void OnMenuClicked()
         {
-            Time.timeScale = 1f;
-            if (GameManager.Instance.CurrentGameMode == Constants.GameMode.Campaign)
-                SceneController.Instance.LoadCampaignMapScene();
-            else
-                SceneController.Instance.ReturnToMenu();
+            StartCloseTransition(() =>
+            {
+                Time.timeScale = 1f;
+                if (GameManager.Instance.CurrentGameMode == Constants.GameMode.Campaign)
+                    SceneController.Instance.LoadCampaignMapScene();
+                else
+                    SceneController.Instance.ReturnToMenu();
+            });
         }
 
         private void EnsureModalRoot()
@@ -201,6 +215,35 @@ namespace ShooterB
             }
 
             return null;
+        }
+
+        private void StartCloseTransition(System.Action onClosed)
+        {
+            EnsureInitialized();
+            EnsureModalRoot();
+
+            if (closeRoutine != null)
+                StopCoroutine(closeRoutine);
+
+            closeRoutine = StartCoroutine(CloseThenInvoke(onClosed));
+        }
+
+        private IEnumerator CloseThenInvoke(System.Action onClosed)
+        {
+            float delay = 0f;
+            if (modalRoot != null)
+            {
+                EnsureAnimator();
+                delay = modalAnimator != null ? modalAnimator.HideWithDelay() : 0f;
+                if (modalAnimator == null)
+                    modalRoot.SetActive(false);
+            }
+
+            if (delay > 0f)
+                yield return new WaitForSecondsRealtime(delay);
+
+            closeRoutine = null;
+            onClosed?.Invoke();
         }
     }
 }

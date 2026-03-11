@@ -49,6 +49,7 @@ namespace ShooterB
         private ModalDialogAnimator modalAnimator;
         private AudioSource starAudioSource;
         private Coroutine starRevealRoutine;
+        private Coroutine closeRoutine;
         private readonly Vector3[] starBaseScales = new Vector3[3];
         private int lastResolvedStars;
 
@@ -61,6 +62,12 @@ namespace ShooterB
         {
             if (!isInitialized)
                 return;
+
+            if (starRevealRoutine != null)
+                StopCoroutine(starRevealRoutine);
+
+            if (closeRoutine != null)
+                StopCoroutine(closeRoutine);
 
             if (restartButton != null)
                 restartButton.onClick.RemoveListener(OnRestartClicked);
@@ -159,13 +166,20 @@ namespace ShooterB
 
         public void OnRestartClicked()
         {
-            SceneController.Instance.ReloadCurrentGameScene();
+            StartCloseTransition(() =>
+            {
+                Time.timeScale = 1f;
+                SceneController.Instance.ReloadCurrentGameScene();
+            });
         }
 
         public void OnBackClicked()
         {
-            Time.timeScale = 1f;
-            SceneController.Instance.LoadCampaignMapScene();
+            StartCloseTransition(() =>
+            {
+                Time.timeScale = 1f;
+                SceneController.Instance.LoadCampaignMapScene();
+            });
         }
 
         public void OnContinueClicked()
@@ -173,11 +187,11 @@ namespace ShooterB
             if (continueFlowInProgress)
                 return;
 
-            Time.timeScale = 1f;
             if (shouldShowCityFirstCompletionAdOnContinue && cityForOneTimeCompletionAd != null)
             {
                 continueFlowInProgress = true;
                 SetNavigationButtonsInteractable(false);
+                Time.timeScale = 1f;
                 RewardedAdService.Instance.ShowRewardedAd(
                     RewardedAdPlacement.CityFirstCompletion,
                     "city_first_completion_continue",
@@ -189,12 +203,12 @@ namespace ShooterB
                         cityForOneTimeCompletionAd = null;
                         continueFlowInProgress = false;
                         SetNavigationButtonsInteractable(true);
-                        ContinueAfterAdGate();
+                        StartCloseTransition(ContinueAfterAdGate);
                     });
                 return;
             }
 
-            ContinueAfterAdGate();
+            StartCloseTransition(ContinueAfterAdGate);
         }
 
         private void ContinueAfterAdGate()
@@ -570,6 +584,37 @@ namespace ShooterB
         private int GetStarIconCount()
         {
             return starIcons == null ? 0 : starIcons.Length;
+        }
+
+        private void StartCloseTransition(System.Action onClosed)
+        {
+            EnsureInitialized();
+            EnsureModalRoot();
+
+            if (closeRoutine != null)
+                StopCoroutine(closeRoutine);
+
+            SetNavigationButtonsInteractable(false);
+            closeRoutine = StartCoroutine(CloseThenInvoke(onClosed));
+        }
+
+        private IEnumerator CloseThenInvoke(System.Action onClosed)
+        {
+            float delay = 0f;
+            if (modalRoot != null)
+            {
+                EnsureAnimator();
+                delay = modalAnimator != null ? modalAnimator.HideWithDelay() : 0f;
+                if (modalAnimator == null)
+                    modalRoot.SetActive(false);
+            }
+
+            if (delay > 0f)
+                yield return new WaitForSecondsRealtime(delay);
+
+            closeRoutine = null;
+            SetNavigationButtonsInteractable(true);
+            onClosed?.Invoke();
         }
 
         private TextMeshProUGUI FindTextByContent(string content)

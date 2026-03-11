@@ -102,7 +102,7 @@ namespace ShooterB
                 EnsureAnimator();
 
                 if (modalAnimator != null)
-                    modalAnimator.HideImmediate();
+                    yield return StartCoroutine(HideAnimated());
                 else
                     modalRoot.SetActive(false);
             }
@@ -196,6 +196,16 @@ namespace ShooterB
                 modalAnimator = modalRoot.AddComponent<ModalDialogAnimator>();
 
             modalAnimator.modalRoot = modalRoot;
+        }
+
+        private IEnumerator HideAnimated()
+        {
+            if (modalAnimator == null)
+                yield break;
+
+            float delay = modalAnimator.HideWithDelay();
+            if (delay > 0f)
+                yield return new WaitForSecondsRealtime(delay);
         }
 
         private void HandleStartClicked()
