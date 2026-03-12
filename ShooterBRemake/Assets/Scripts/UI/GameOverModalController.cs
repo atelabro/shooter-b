@@ -7,6 +7,10 @@ namespace ShooterB
 {
     public class GameOverModalController : MonoBehaviour
     {
+        private sealed class GameOverModalActionRunner : MonoBehaviour
+        {
+        }
+
         [Header("Modal Root")]
         public GameObject modalRoot;
 
@@ -34,6 +38,7 @@ namespace ShooterB
         private bool isInitialized;
         private ModalDialogAnimator modalAnimator;
         private Coroutine closeRoutine;
+        private static GameOverModalActionRunner actionRunner;
 
         private void Awake()
         {
@@ -45,8 +50,7 @@ namespace ShooterB
             if (!isInitialized)
                 return;
 
-            if (closeRoutine != null)
-                StopCoroutine(closeRoutine);
+            CancelPendingCloseTransition();
 
             if (retryButton != null)
                 retryButton.onClick.RemoveListener(OnRetryClicked);
@@ -244,14 +248,8 @@ namespace ShooterB
             EnsureInitialized();
             EnsureModalRoot();
 
-            if (closeRoutine != null)
-                StopCoroutine(closeRoutine);
+            CancelPendingCloseTransition();
 
-            closeRoutine = StartCoroutine(CloseThenInvoke(onClosed));
-        }
-
-        private IEnumerator CloseThenInvoke(System.Action onClosed)
-        {
             float delay = 0f;
             if (modalRoot != null)
             {
@@ -261,11 +259,39 @@ namespace ShooterB
                     modalRoot.SetActive(false);
             }
 
+            closeRoutine = EnsureActionRunner().StartCoroutine(InvokeAfterDelay(delay, () =>
+            {
+                closeRoutine = null;
+                onClosed?.Invoke();
+            }));
+        }
+
+        private static GameOverModalActionRunner EnsureActionRunner()
+        {
+            if (actionRunner != null)
+                return actionRunner;
+
+            GameObject runnerObject = new GameObject("GameOverModalActionRunner");
+            DontDestroyOnLoad(runnerObject);
+            actionRunner = runnerObject.AddComponent<GameOverModalActionRunner>();
+            return actionRunner;
+        }
+
+        private static IEnumerator InvokeAfterDelay(float delay, System.Action onClosed)
+        {
             if (delay > 0f)
                 yield return new WaitForSecondsRealtime(delay);
 
-            closeRoutine = null;
             onClosed?.Invoke();
+        }
+
+        private void CancelPendingCloseTransition()
+        {
+            if (closeRoutine != null && actionRunner != null)
+            {
+                actionRunner.StopCoroutine(closeRoutine);
+                closeRoutine = null;
+            }
         }
     }
 }

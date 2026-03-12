@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8325305610028678624}
   - component: {fileID: 3714888454508107405}
+  - component: {fileID: 3803408402435065518}
   m_Layer: 0
   m_Name: PuffRenderer
   m_TagString: Untagged
@@ -91,6 +92,28 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!95 &3803408402435065518
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027846848634039256}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8395a21c235c64c868220c0ce43c7409, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5614944451369821607
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,16 +302,18 @@ MonoBehaviour:
   britishRedcoatSizeMultiplier: 1
   britishPoliceSizeMultiplier: 1
   britishPunkSizeMultiplier: 1
-  targetHitRadiusWorld: 0.45
-  deathSpriteScaleMultiplier: 1
-  deathSpriteDelay: 0.08
+  targetHitRadiusWorld: 0.43
+  deathSpriteScaleMultiplier: 0.4
+  deathSpriteDelay: 0.15
   hitPuffRenderer: {fileID: 3714888454508107405}
+  hitPuffAnimator: {fileID: 0}
   hitPuffOffsetNormalized: {x: 0, y: 0.05}
-  hitPuffWidthMultiplier: 1.15
-  hitPuffHeightMultiplier: 1.15
+  hitPuffWidthMultiplier: 1
+  hitPuffHeightMultiplier: 1
   hitPuffSortingOffset: 1
-  keepDeadDuckForDebug: 1
-  freezeDeadDuckForDebug: 1
+  hitPuffLifetime: 0.52
+  keepDeadDuckForDebug: 0
+  freezeDeadDuckForDebug: 0
 --- !u!95 &5044256694237563094
 Animator:
   serializedVersion: 7

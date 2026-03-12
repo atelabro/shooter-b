@@ -50,10 +50,12 @@ namespace ShooterB
 
         [Header("Hit Puff")]
         [SerializeField] private SpriteRenderer hitPuffRenderer;
+        [SerializeField] private Animator hitPuffAnimator;
         [SerializeField] private Vector2 hitPuffOffsetNormalized = new Vector2(0f, 0.05f);
         [SerializeField] private float hitPuffWidthMultiplier = 2.5f;
         [SerializeField] private float hitPuffHeightMultiplier = 2.5f;
         [SerializeField] private int hitPuffSortingOffset = 1;
+        [SerializeField] private float hitPuffLifetime = 0.18f;
 
         [Header("Debug")]
         [SerializeField] private bool keepDeadDuckForDebug;
@@ -74,6 +76,9 @@ namespace ShooterB
         private Sprite[] aliveFrames;
         private int aliveFrameIndex;
         private float aliveFrameTimer;
+        private Transform hitPuffOriginalParent;
+        private Vector3 hitPuffOriginalLocalPosition;
+        private Vector3 hitPuffOriginalLocalScale;
         private const float ALIVE_ANIMATION_FPS = 12f;
 
         private const float DEAD_GRAVITY = 2f;
@@ -89,6 +94,19 @@ namespace ShooterB
 
             rb.gravityScale = 0;
             rb.bodyType = RigidbodyType2D.Kinematic;
+
+            if (hitPuffRenderer != null)
+            {
+                Transform puffTransform = hitPuffRenderer.transform;
+                hitPuffOriginalParent = puffTransform.parent;
+                hitPuffOriginalLocalPosition = puffTransform.localPosition;
+                hitPuffOriginalLocalScale = puffTransform.localScale;
+
+                if (hitPuffAnimator == null)
+                {
+                    hitPuffAnimator = hitPuffRenderer.GetComponent<Animator>();
+                }
+            }
         }
 
         public void Initialize(
@@ -211,20 +229,25 @@ namespace ShooterB
 
         private void ApplyNormalizedScale()
         {
-            if (spriteRenderer == null || spriteRenderer.sprite == null)
+            ApplySpriteScale(spriteRenderer != null ? spriteRenderer.sprite : null, GetTypeSizeMultiplier(duckType));
+        }
+
+        private void ApplySpriteScale(Sprite sprite, float scaleMultiplier)
+        {
+            if (sprite == null)
             {
                 transform.localScale = Vector3.one;
                 return;
             }
 
-            float spriteHeightAtScaleOne = spriteRenderer.sprite.rect.height / spriteRenderer.sprite.pixelsPerUnit;
+            float spriteHeightAtScaleOne = sprite.rect.height / sprite.pixelsPerUnit;
             if (spriteHeightAtScaleOne <= 0f)
             {
-                transform.localScale = Vector3.one * GetTypeSizeMultiplier(duckType);
+                transform.localScale = Vector3.one * scaleMultiplier;
                 return;
             }
 
-            float normalizedScale = (targetAliveHeightWorld / spriteHeightAtScaleOne) * GetTypeSizeMultiplier(duckType);
+            float normalizedScale = (targetAliveHeightWorld / spriteHeightAtScaleOne) * scaleMultiplier;
             transform.localScale = Vector3.one * normalizedScale;
         }
 
@@ -788,6 +811,7 @@ namespace ShooterB
                 if (deathSprite != null)
                 {
                     spriteRenderer.sprite = deathSprite;
+                    ApplySpriteScale(deathSprite, GetTypeSizeMultiplier(duckType) * deathSpriteScaleMultiplier);
                 }
 
                 spriteRenderer.enabled = true;
@@ -821,9 +845,12 @@ namespace ShooterB
 
         private void ResetHitPuff()
         {
+            CancelInvoke(nameof(HideAndReattachHitPuff));
+
             if (hitPuffRenderer != null)
             {
                 hitPuffRenderer.enabled = false;
+                ReattachHitPuff();
             }
         }
 
@@ -839,7 +866,10 @@ namespace ShooterB
                     hitPuffRenderer.sortingOrder = spriteRenderer.sortingOrder + hitPuffSortingOffset;
                 }
 
+                hitPuffRenderer.transform.SetParent(null, true);
                 hitPuffRenderer.enabled = true;
+                RestartHitPuffAnimation();
+                Invoke(nameof(HideAndReattachHitPuff), hitPuffLifetime);
             }
         }
 
@@ -898,6 +928,42 @@ namespace ShooterB
                 targetWidth / (puffSpriteSize.x * parentScaleX),
                 targetHeight / (puffSpriteSize.y * parentScaleY),
                 1f);
+        }
+
+        private void HideAndReattachHitPuff()
+        {
+            if (hitPuffRenderer == null)
+            {
+                return;
+            }
+
+            hitPuffRenderer.enabled = false;
+            ReattachHitPuff();
+        }
+
+        private void ReattachHitPuff()
+        {
+            if (hitPuffRenderer == null)
+            {
+                return;
+            }
+
+            Transform puffTransform = hitPuffRenderer.transform;
+            puffTransform.SetParent(hitPuffOriginalParent, false);
+            puffTransform.localPosition = hitPuffOriginalLocalPosition;
+            puffTransform.localScale = hitPuffOriginalLocalScale;
+        }
+
+        private void RestartHitPuffAnimation()
+        {
+            if (hitPuffAnimator == null)
+            {
+                return;
+            }
+
+            hitPuffAnimator.Rebind();
+            hitPuffAnimator.Update(0f);
+            hitPuffAnimator.Play(0, 0, 0f);
         }
 
     }

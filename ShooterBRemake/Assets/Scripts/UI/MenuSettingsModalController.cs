@@ -12,12 +12,14 @@ namespace ShooterB
         public Slider masterSlider;
         public Slider musicSlider;
         public Slider sfxSlider;
+        public Toggle vibrationToggle;
 
         [Header("Optional Text Refs")]
         public TextMeshProUGUI titleText;
         public TextMeshProUGUI masterLabelText;
         public TextMeshProUGUI musicLabelText;
         public TextMeshProUGUI sfxLabelText;
+        public TextMeshProUGUI vibrationLabelText;
         public TextMeshProUGUI languageLabelText;
         public TextMeshProUGUI creditsBodyText;
         public TextMeshProUGUI closeButtonText;
@@ -38,6 +40,9 @@ namespace ShooterB
 
             if (AudioSettingsManager.HasInstance)
                 AudioSettingsManager.Instance.OnAudioSettingsChanged -= HandleAudioSettingsChanged;
+
+            if (HapticsSettingsManager.HasInstance)
+                HapticsSettingsManager.Instance.OnVibrationSettingsChanged -= HandleVibrationSettingsChanged;
         }
 
         public void Open()
@@ -84,6 +89,11 @@ namespace ShooterB
             ApplySlidersFromSettings();
         }
 
+        private void HandleVibrationSettingsChanged()
+        {
+            ApplyToggleFromSettings();
+        }
+
         private void RegisterListeners()
         {
             if (closeButton != null)
@@ -128,6 +138,12 @@ namespace ShooterB
             {
                 GameLog.Warning("[MenuSettingsModalController] sfxSlider is not assigned.");
             }
+
+            if (vibrationToggle != null)
+            {
+                vibrationToggle.onValueChanged.RemoveListener(HandleVibrationChanged);
+                vibrationToggle.onValueChanged.AddListener(HandleVibrationChanged);
+            }
         }
 
         private void ApplySlidersFromSettings()
@@ -142,6 +158,16 @@ namespace ShooterB
 
             if (sfxSlider != null)
                 sfxSlider.SetValueWithoutNotify(AudioSettingsManager.Instance.SfxVolume);
+
+            isApplyingValues = false;
+        }
+
+        private void ApplyToggleFromSettings()
+        {
+            isApplyingValues = true;
+
+            if (vibrationToggle != null)
+                vibrationToggle.SetIsOnWithoutNotify(HapticsSettingsManager.Instance.VibrationEnabled);
 
             isApplyingValues = false;
         }
@@ -170,6 +196,14 @@ namespace ShooterB
             AudioSettingsManager.Instance.SetSfx(value);
         }
 
+        private void HandleVibrationChanged(bool isEnabled)
+        {
+            if (isApplyingValues)
+                return;
+
+            HapticsSettingsManager.Instance.SetVibrationEnabled(isEnabled);
+        }
+
         private void RefreshLocalizedTexts()
         {
             if (titleText != null)
@@ -183,6 +217,9 @@ namespace ShooterB
 
             if (sfxLabelText != null)
                 sfxLabelText.text = LocalizationManager.Instance.Get("settings.sfx", "SFX");
+
+            if (vibrationLabelText != null)
+                vibrationLabelText.text = LocalizationManager.Instance.Get("settings.vibration", "Enable Vibration");
 
             if (languageLabelText != null)
                 languageLabelText.text = LocalizationManager.Instance.Get("settings.language", "Language");
@@ -203,14 +240,17 @@ namespace ShooterB
 
             _ = LocalizationManager.Instance;
             _ = AudioSettingsManager.Instance;
+            _ = HapticsSettingsManager.Instance;
 
             EnsureAnimator();
             RegisterListeners();
             ApplySlidersFromSettings();
+            ApplyToggleFromSettings();
             RefreshLocalizedTexts();
 
             LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
             AudioSettingsManager.Instance.OnAudioSettingsChanged += HandleAudioSettingsChanged;
+            HapticsSettingsManager.Instance.OnVibrationSettingsChanged += HandleVibrationSettingsChanged;
             isInitialized = true;
         }
 

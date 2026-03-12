@@ -59,6 +59,8 @@ namespace ShooterB
             EnsureReferences();
             CaptureVisualDefaults();
 
+            pendingShow = false;
+
             if (modalRoot != null && !modalRoot.activeSelf)
             {
                 pendingShow = true;
@@ -69,6 +71,7 @@ namespace ShooterB
             if (activeTransition != null)
                 StopCoroutine(activeTransition);
 
+            ApplyVisualState(1f, 1f, Vector2.zero, false);
             activeTransition = StartCoroutine(AnimateShow());
         }
 
@@ -89,6 +92,7 @@ namespace ShooterB
             if (activeTransition != null)
                 StopCoroutine(activeTransition);
 
+            pendingShow = false;
             activeTransition = StartCoroutine(AnimateHide());
         }
 
@@ -244,6 +248,7 @@ namespace ShooterB
 
         private IEnumerator AnimateHide()
         {
+            pendingShow = false;
             float duration = Mathf.Max(0.0001f, hideDuration);
             float elapsed = 0f;
 

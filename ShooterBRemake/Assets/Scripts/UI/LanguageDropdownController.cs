@@ -8,6 +8,7 @@ namespace ShooterB
     {
         private const string EnglishFlagResourcePath = "Flags/uk_flag";
         private const string MacedonianFlagResourcePath = "Flags/mk_flag";
+        private const int PopupSortingOrder = 100;
 
         [Header("Controls")]
         public Button currentButton;
@@ -31,6 +32,9 @@ namespace ShooterB
         public Sprite arrowUpSprite;
 
         private bool isInitialized;
+        private RectTransform optionsRectTransform;
+        private Canvas optionsCanvas;
+        private GraphicRaycaster optionsRaycaster;
 
         public void Initialize()
         {
@@ -136,6 +140,9 @@ namespace ShooterB
                 if (child != null)
                     macedonianFlagImage = child.GetComponent<Image>();
             }
+
+            optionsRectTransform = optionsRoot != null ? optionsRoot.transform as RectTransform : null;
+            EnsurePopupCanvas();
         }
 
         private void ToggleOptions()
@@ -143,18 +150,23 @@ namespace ShooterB
             if (optionsRoot == null)
                 return;
 
-            optionsRoot.SetActive(!optionsRoot.activeSelf);
+            bool shouldOpen = !optionsRoot.activeSelf;
+            if (shouldOpen)
+            {
+                OpenOptionsPopup();
+            }
+            else
+            {
+                CloseOptionsPopup();
+            }
+
             UpdateArrowState();
         }
 
         private void SelectLanguage(LocalizationManager.Language language)
         {
             LocalizationManager.Instance.SetLanguage(language);
-
-            if (optionsRoot != null)
-                optionsRoot.SetActive(false);
-
-            UpdateArrowState();
+            CloseOptionsPopup();
         }
 
         private void HandleLanguageChanged(LocalizationManager.Language language)
@@ -168,10 +180,10 @@ namespace ShooterB
                 currentLabel.text = LocalizationManager.GetLanguageCode(language);
 
             if (englishLabel != null)
-                englishLabel.text = LocalizationManager.Instance.Get("language.english", "English");
+                englishLabel.text = "EN";
 
             if (macedonianLabel != null)
-                macedonianLabel.text = LocalizationManager.Instance.Get("language.macedonian", "Macedonian");
+                macedonianLabel.text = "MK";
 
             if (englishFlagImage != null)
                 englishFlagImage.sprite = englishFlagSprite;
@@ -212,5 +224,55 @@ namespace ShooterB
             }
         }
 
+        private void OpenOptionsPopup()
+        {
+            if (optionsRoot == null || optionsRectTransform == null)
+                return;
+
+            SetPopupSorting(true);
+            optionsRectTransform.SetAsLastSibling();
+            optionsRoot.SetActive(true);
+        }
+
+        private void CloseOptionsPopup()
+        {
+            if (optionsRoot == null)
+                return;
+
+            optionsRoot.SetActive(false);
+            SetPopupSorting(false);
+            UpdateArrowState();
+        }
+
+        private void EnsurePopupCanvas()
+        {
+            if (optionsRoot == null)
+                return;
+
+            optionsCanvas = optionsRoot.GetComponent<Canvas>();
+            if (optionsCanvas == null)
+                optionsCanvas = optionsRoot.AddComponent<Canvas>();
+
+            optionsCanvas.overrideSorting = false;
+            optionsCanvas.sortingOrder = 0;
+
+            optionsRaycaster = optionsRoot.GetComponent<GraphicRaycaster>();
+            if (optionsRaycaster == null)
+                optionsRaycaster = optionsRoot.AddComponent<GraphicRaycaster>();
+
+            optionsRaycaster.enabled = false;
+        }
+
+        private void SetPopupSorting(bool isOpen)
+        {
+            if (optionsCanvas == null)
+                return;
+
+            optionsCanvas.overrideSorting = isOpen;
+            optionsCanvas.sortingOrder = isOpen ? PopupSortingOrder : 0;
+
+            if (optionsRaycaster != null)
+                optionsRaycaster.enabled = isOpen;
+        }
     }
 }

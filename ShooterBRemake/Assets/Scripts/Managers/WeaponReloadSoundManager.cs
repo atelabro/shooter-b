@@ -68,6 +68,7 @@ namespace ShooterB
 
             lastPlayTimeByWeaponType[weaponType] = Time.unscaledTime;
             reloadSfxSource.PlayOneShot(clip);
+            Haptics.Reload();
         }
 
         private void EnsureReady()

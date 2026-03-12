@@ -7,6 +7,10 @@ namespace ShooterB
 {
     public class StageCompleteModalController : MonoBehaviour
     {
+        private sealed class StageCompleteModalActionRunner : MonoBehaviour
+        {
+        }
+
         private const float ContinueMapTransitionMinDelaySeconds = 1f;
 
         [Header("Modal Root")]
@@ -50,6 +54,7 @@ namespace ShooterB
         private AudioSource starAudioSource;
         private Coroutine starRevealRoutine;
         private Coroutine closeRoutine;
+        private static StageCompleteModalActionRunner actionRunner;
         private readonly Vector3[] starBaseScales = new Vector3[3];
         private int lastResolvedStars;
 
@@ -66,8 +71,7 @@ namespace ShooterB
             if (starRevealRoutine != null)
                 StopCoroutine(starRevealRoutine);
 
-            if (closeRoutine != null)
-                StopCoroutine(closeRoutine);
+            CancelPendingCloseTransition();
 
             if (restartButton != null)
                 restartButton.onClick.RemoveListener(OnRestartClicked);
@@ -591,15 +595,9 @@ namespace ShooterB
             EnsureInitialized();
             EnsureModalRoot();
 
-            if (closeRoutine != null)
-                StopCoroutine(closeRoutine);
+            CancelPendingCloseTransition();
 
             SetNavigationButtonsInteractable(false);
-            closeRoutine = StartCoroutine(CloseThenInvoke(onClosed));
-        }
-
-        private IEnumerator CloseThenInvoke(System.Action onClosed)
-        {
             float delay = 0f;
             if (modalRoot != null)
             {
@@ -609,12 +607,40 @@ namespace ShooterB
                     modalRoot.SetActive(false);
             }
 
+            closeRoutine = EnsureActionRunner().StartCoroutine(InvokeAfterDelay(delay, () =>
+            {
+                closeRoutine = null;
+                SetNavigationButtonsInteractable(true);
+                onClosed?.Invoke();
+            }));
+        }
+
+        private static StageCompleteModalActionRunner EnsureActionRunner()
+        {
+            if (actionRunner != null)
+                return actionRunner;
+
+            GameObject runnerObject = new GameObject("StageCompleteModalActionRunner");
+            DontDestroyOnLoad(runnerObject);
+            actionRunner = runnerObject.AddComponent<StageCompleteModalActionRunner>();
+            return actionRunner;
+        }
+
+        private static IEnumerator InvokeAfterDelay(float delay, System.Action onClosed)
+        {
             if (delay > 0f)
                 yield return new WaitForSecondsRealtime(delay);
 
-            closeRoutine = null;
-            SetNavigationButtonsInteractable(true);
             onClosed?.Invoke();
+        }
+
+        private void CancelPendingCloseTransition()
+        {
+            if (closeRoutine != null && actionRunner != null)
+            {
+                actionRunner.StopCoroutine(closeRoutine);
+                closeRoutine = null;
+            }
         }
 
         private TextMeshProUGUI FindTextByContent(string content)

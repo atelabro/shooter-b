@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &100001
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37,8 +37,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -400, y: 300}
+  m_SizeDelta: {x: -800, y: -600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &100002
 CanvasRenderer:
@@ -93,12 +93,21 @@ MonoBehaviour:
   modalRoot: {fileID: 100000}
   titleText: {fileID: 3924556375695803023}
   briefingText: {fileID: 6612558745912967808}
-  countdownText: {fileID: 1925040765710660611}
-  startButton: {fileID: 0}
-  plusLivesButton: {fileID: 0}
-  extraActionButton: {fileID: 0}
-  plusLivesText: {fileID: 0}
-  extraActionText: {fileID: 0}
+  startButton: {fileID: 7732001188822300012}
+  plusLivesButton: {fileID: 1762606532858968018}
+  extraActionButton: {fileID: 6018892237459911004}
+  plusLivesText: {fileID: 5606957938436250035}
+  extraActionText: {fileID: 6018892237459911013}
+  titleRevealDelay: 0.02
+  titleBangDuration: 0.2
+  titleBangStartScale: 0.68
+  titleBangOvershootScale: 1.12
+  briefingTypingCharsPerSecond: 45
+  briefingPunctuationPause: 0.08
+  buttonRevealStagger: 0.06
+  buttonBangDuration: 0.18
+  buttonBangStartScale: 0.78
+  buttonBangOvershootScale: 1.08
 --- !u!1 &200000
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,10 +247,10 @@ RectTransform:
   - {fileID: 6018892237459911001}
   m_Father: {fileID: 200001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 450, y: -480}
-  m_SizeDelta: {x: 860, y: 160}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &450002
 MonoBehaviour:
@@ -281,7 +290,7 @@ GameObject:
   - component: {fileID: 5119676769149167890}
   - component: {fileID: 5606957938436250035}
   m_Layer: 5
-  m_Name: PlusLivesButton
+  m_Name: PlusLivesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -418,6 +427,7 @@ GameObject:
   - component: {fileID: 8920777878119549400}
   - component: {fileID: 7713962622502524070}
   - component: {fileID: 1762606532858968018}
+  - component: {fileID: 1762606532858968019}
   m_Layer: 5
   m_Name: Plus2LivesButton
   m_TagString: Untagged
@@ -440,9 +450,9 @@ RectTransform:
   - {fileID: 2032415268624079704}
   m_Father: {fileID: 450001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 315, y: -80}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 220, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8920777878119549400
@@ -527,6 +537,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &1762606532858968019
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897079869355836148}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1113823883804255906
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,10 +945,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 200001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 450, y: -180}
-  m_SizeDelta: {x: 860, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5946141143114571579
 CanvasRenderer:
@@ -1040,6 +1062,7 @@ GameObject:
   - component: {fileID: 6018892237459911002}
   - component: {fileID: 6018892237459911003}
   - component: {fileID: 6018892237459911004}
+  - component: {fileID: 6018892237459911005}
   m_Layer: 5
   m_Name: ExtraActionButton
   m_TagString: Untagged
@@ -1062,9 +1085,9 @@ RectTransform:
   - {fileID: 6018892237459911011}
   m_Father: {fileID: 450001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 545, y: -80}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 220, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6018892237459911002
@@ -1149,6 +1172,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &6018892237459911005
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6018892237459911000}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &6018892237459911010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,7 +1335,7 @@ GameObject:
   - component: {fileID: 7732001188822300012}
   - component: {fileID: 1925040765710660611}
   m_Layer: 5
-  m_Name: CountdownText
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1321,10 +1356,10 @@ RectTransform:
   - {fileID: 6958699937460163168}
   m_Father: {fileID: 200001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 450, y: -340}
-  m_SizeDelta: {x: 860, y: 120}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8632888112652389067
 CanvasRenderer:
