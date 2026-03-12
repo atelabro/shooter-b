@@ -80,7 +80,10 @@ namespace ShooterB
             USA_BOSS_DUCK,
             JAPANESE_STRAW_DUCK,
             JAPANESE_KIMONO_DUCK,
-            FRENCH_MUSKETEER
+            FRENCH_MUSKETEER,
+            MK_SAMUIL_GUARD,
+            MK_SAMUIL_ELITE,
+            MK_SAMUIL_KING
         }
 
         public static string GetDuckDisplayName(DuckType type)
@@ -108,6 +111,9 @@ namespace ShooterB
                 case DuckType.USA_BOSS_DUCK: return "USA Boss Duck";
                 case DuckType.JAPANESE_STRAW_DUCK: return "Japanese Straw Duck";
                 case DuckType.JAPANESE_KIMONO_DUCK: return "Japanese Kimono Duck";
+                case DuckType.MK_SAMUIL_GUARD: return "Samuil Guard";
+                case DuckType.MK_SAMUIL_ELITE: return "Samuil Elite";
+                case DuckType.MK_SAMUIL_KING: return "Samuil King";
                 // Reserve this switch for future region-specific duck additions (e.g. France).
                 default: return type.ToString();
             }
@@ -138,6 +144,9 @@ namespace ShooterB
                 case DuckType.USA_BOSS_DUCK: return "USA_BOSS_DUCK";
                 case DuckType.JAPANESE_STRAW_DUCK: return "JAPANESE_STRAW_DUCK";
                 case DuckType.JAPANESE_KIMONO_DUCK: return "JAPANESE_KIMONO_DUCK";
+                case DuckType.MK_SAMUIL_GUARD: return "MK_SAMUIL_GUARD";
+                case DuckType.MK_SAMUIL_ELITE: return "MK_SAMUIL_ELITE";
+                case DuckType.MK_SAMUIL_KING: return "MK_SAMUIL_KING";
                 default: return type.ToString();
             }
         }
@@ -223,6 +232,9 @@ namespace ShooterB
             public const int USA_BOSS_DUCK = 5;
             public const int JAPANESE_STRAW_DUCK = 4;
             public const int JAPANESE_KIMONO_DUCK = 4;
+            public const int MK_SAMUIL_GUARD = 1;
+            public const int MK_SAMUIL_ELITE = 1;
+            public const int MK_SAMUIL_KING = 1;
 
             public static int GetPoints(DuckType type)
             {
@@ -249,6 +261,9 @@ namespace ShooterB
                     case DuckType.USA_BOSS_DUCK: return USA_BOSS_DUCK;
                     case DuckType.JAPANESE_STRAW_DUCK: return JAPANESE_STRAW_DUCK;
                     case DuckType.JAPANESE_KIMONO_DUCK: return JAPANESE_KIMONO_DUCK;
+                    case DuckType.MK_SAMUIL_GUARD: return MK_SAMUIL_GUARD;
+                    case DuckType.MK_SAMUIL_ELITE: return MK_SAMUIL_ELITE;
+                    case DuckType.MK_SAMUIL_KING: return MK_SAMUIL_KING;
                     default: return TYPE_0;
                 }
             }
