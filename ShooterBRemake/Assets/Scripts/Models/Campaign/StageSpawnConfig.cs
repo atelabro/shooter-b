@@ -9,7 +9,7 @@ namespace ShooterB
         public Constants.DuckType duckType;
         [Tooltip("Seconds to wait after the previous spawn before spawning this duck (or before the first duck of the pattern if patternRef is set).")]
         public float delay;
-        [Tooltip("Optional health override for this duck. Values <= 0 use the duck type default.")]
+        [Tooltip("Optional health override for this duck. Values <= 0 use 1 health.")]
         public int healthOverride;
         [Tooltip("Starting vertical lane for this duck (1=bottom, 9=top). Ignored when patternRef is set.")]
         public Constants.DuckStartLane startLane;

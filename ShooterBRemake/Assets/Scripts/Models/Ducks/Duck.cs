@@ -44,6 +44,8 @@ namespace ShooterB
         [SerializeField] private float deathSpriteScaleMultiplier = 1.25f;
         [SerializeField] private float deathSpriteDelay = 0.08f;
         [SerializeField] private float healthBarVerticalOffset = 1.25f;
+        [SerializeField] private float healthBarWidth = 1.2f;
+        [SerializeField] private float healthBarHeight = 0.16f;
 
         [Header("Components")]
         private Rigidbody2D rb;
@@ -130,7 +132,7 @@ namespace ShooterB
         {
             duckType = type;
             pointValue = Constants.DuckPoints.GetPoints(type);
-            maxHealth = healthOverride > 0 ? healthOverride : Constants.DuckHealth.GetMaxHealth(type);
+            maxHealth = healthOverride > 0 ? healthOverride : 1;
             currentHealth = maxHealth;
             speed = Constants.DuckSpeed.GetSpeed(difficulty);
             movementWeightGoStraight = goStraightWeight;
@@ -248,7 +250,7 @@ namespace ShooterB
 
             int sortingOrder = spriteRenderer != null ? spriteRenderer.sortingOrder + 2 : Constants.SORTING_LAYER_DUCKS + 2;
             healthBar.EnsureInitialized(transform, sortingOrder);
-            healthBar.SetLayout(healthBarVerticalOffset, sortingOrder);
+            healthBar.SetLayout(healthBarVerticalOffset, healthBarWidth, healthBarHeight, sortingOrder);
             healthBar.UpdateFill(1f);
             healthBar.SetVisible(maxHealth > 1);
         }
@@ -259,7 +261,7 @@ namespace ShooterB
                 return;
 
             int sortingOrder = spriteRenderer != null ? spriteRenderer.sortingOrder + 2 : Constants.SORTING_LAYER_DUCKS + 2;
-            healthBar.SetLayout(healthBarVerticalOffset, sortingOrder);
+            healthBar.SetLayout(healthBarVerticalOffset, healthBarWidth, healthBarHeight, sortingOrder);
         }
 
         private void ApplyNormalizedScale()

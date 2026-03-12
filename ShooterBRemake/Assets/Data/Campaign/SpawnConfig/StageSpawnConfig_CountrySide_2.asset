@@ -23,66 +23,77 @@ MonoBehaviour:
     spawnSequence:
     - duckType: 5
       delay: 0
+      healthOverride: 0
       startLane: 2
       pathProjection: 1
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 5
       delay: 0
+      healthOverride: 0
       startLane: 4
       pathProjection: 1
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 5
       delay: 0
+      healthOverride: 0
       startLane: 7
       pathProjection: 1
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 5
       delay: 0
+      healthOverride: 0
       startLane: 9
       pathProjection: 1
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 6
       delay: 1.2
+      healthOverride: 0
       startLane: 1
       pathProjection: 1
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 6
       delay: 0
+      healthOverride: 0
       startLane: 3
       pathProjection: 1
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 6
       delay: 0
+      healthOverride: 0
       startLane: 6
       pathProjection: 1
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 6
       delay: 0
+      healthOverride: 0
       startLane: 8
       pathProjection: 1
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 7
       delay: 1.3
+      healthOverride: 0
       startLane: 5
       pathProjection: 2
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 7
       delay: 0
+      healthOverride: 0
       startLane: 5
       pathProjection: 3
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 5
       delay: 2
+      healthOverride: 0
       startLane: 5
       pathProjection: 0
       speedMultiplier: 1
@@ -96,76 +107,101 @@ MonoBehaviour:
     spawnSequence:
     - duckType: 12
       delay: 0
+      healthOverride: 0
       startLane: 1
       pathProjection: 1
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8, type: 2}
     - duckType: 21
       delay: 2
+      healthOverride: 0
       startLane: 3
       pathProjection: 1
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: f7a91e162400f49519a969748570e081, type: 2}
     - duckType: 5
       delay: 4
+      healthOverride: 0
       startLane: 6
       pathProjection: 1
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9, type: 2}
     - duckType: 11
       delay: 0.55
+      healthOverride: 0
       startLane: 8
       pathProjection: 1
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 5
       delay: 1.2
+      healthOverride: 0
       startLane: 5
       pathProjection: 6
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 5
       delay: 0.3
+      healthOverride: 0
       startLane: 6
       pathProjection: 6
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 5
       delay: 0
+      healthOverride: 0
       startLane: 4
       pathProjection: 6
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 7
       delay: 1.3
+      healthOverride: 0
       startLane: 5
       pathProjection: 4
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 7
       delay: 0
+      healthOverride: 0
       startLane: 5
       pathProjection: 5
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 7
       delay: 1.2
+      healthOverride: 0
       startLane: 4
       pathProjection: 1
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 7
       delay: 0
+      healthOverride: 0
       startLane: 6
       pathProjection: 1
       speedMultiplier: 1
       patternRef: {fileID: 0}
     - duckType: 7
       delay: 3
+      healthOverride: 0
       startLane: 5
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: ec794f1a2210c40359e01dc4d1b6d10a, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 5
+    englishWaveLabelFormat: Some ducks are harder to kill
+    macedonianWaveLabelFormat: "\u041D\u0435\u043A\u043E\u0438 \u043F\u0430\u0442\u043A\u0438
+      \u0441\u0435 \u043F\u043E\u0441\u043D\u0430\u0436\u043D\u0438"
+    spawnSequence:
+    - duckType: 23
+      delay: 0
+      healthOverride: 5
+      startLane: 0
+      pathProjection: 11
+      speedMultiplier: 0.9
+      patternRef: {fileID: 0}
   - showAnnouncement: 1
     announcementDuration: 5
     englishWaveLabelFormat: Good luck captain!

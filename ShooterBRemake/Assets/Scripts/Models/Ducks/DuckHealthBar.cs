@@ -6,6 +6,7 @@ namespace ShooterB
     {
         private const float DefaultWidth = 1.2f;
         private const float DefaultHeight = 0.16f;
+        private const float BarPadding = 0.04f;
         private static Sprite defaultBarSprite;
 
         private Transform barRoot;
@@ -31,15 +32,17 @@ namespace ShooterB
             Hide();
         }
 
-        public void SetLayout(float yOffset, int sortingOrder)
+        public void SetLayout(float yOffset, float width, float height, int sortingOrder)
         {
             if (barRoot == null)
                 return;
 
             barRoot.localPosition = new Vector3(0f, yOffset, 0f);
+            float resolvedWidth = width > 0f ? width : DefaultWidth;
+            float resolvedHeight = height > 0f ? height : DefaultHeight;
             backgroundRenderer.drawMode = SpriteDrawMode.Sliced;
-            backgroundRenderer.size = new Vector2(DefaultWidth, DefaultHeight);
-            fillRenderer.transform.localPosition = new Vector3(-0.02f, 0f, -0.01f);
+            backgroundRenderer.size = new Vector2(resolvedWidth, resolvedHeight);
+            fillRenderer.transform.localPosition = new Vector3(-(BarPadding * 0.5f), 0f, -0.01f);
             ApplySorting(sortingOrder);
         }
 
@@ -57,11 +60,15 @@ namespace ShooterB
                 return;
 
             float clamped = Mathf.Clamp01(normalizedHealth);
-            float fillWidth = Mathf.Lerp(0f, DefaultWidth - 0.04f, clamped);
-            fillRenderer.size = new Vector2(fillWidth, DefaultHeight - 0.04f);
+            float backgroundWidth = backgroundRenderer != null ? backgroundRenderer.size.x : DefaultWidth;
+            float backgroundHeight = backgroundRenderer != null ? backgroundRenderer.size.y : DefaultHeight;
+            float innerWidth = Mathf.Max(0f, backgroundWidth - BarPadding);
+            float innerHeight = Mathf.Max(0f, backgroundHeight - BarPadding);
+            float fillWidth = Mathf.Lerp(0f, innerWidth, clamped);
+            fillRenderer.size = new Vector2(fillWidth, innerHeight);
 
             if (fillWidth > 0f)
-                fillRenderer.transform.localPosition = new Vector3((-DefaultWidth * 0.5f) + (fillWidth * 0.5f) + 0.02f, 0f, -0.01f);
+                fillRenderer.transform.localPosition = new Vector3((-backgroundWidth * 0.5f) + (fillWidth * 0.5f) + (BarPadding * 0.5f), 0f, -0.01f);
         }
 
         public void Hide()

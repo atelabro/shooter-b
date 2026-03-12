@@ -287,6 +287,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.Duck
   duckType: 0
   pointValue: 1
+  maxHealth: 1
+  currentHealth: 1
   speed: 10
   targetAliveHeightWorld: 1.8
   type0SizeMultiplier: 1
@@ -305,6 +307,9 @@ MonoBehaviour:
   targetHitRadiusWorld: 0.43
   deathSpriteScaleMultiplier: 0.4
   deathSpriteDelay: 0.15
+  healthBarVerticalOffset: 1.4
+  healthBarWidth: 1.8
+  healthBarHeight: 0.22
   hitPuffRenderer: {fileID: 3714888454508107405}
   hitPuffAnimator: {fileID: 0}
   hitPuffOffsetNormalized: {x: 0, y: 0.05}
