@@ -323,34 +323,20 @@ namespace ShooterB
 
         private IEnumerator BeginStageAfterCountdown()
         {
-            GameLog.Log("[CampaignGameController] BeginStageAfterCountdown started.");
-
             if (gameStartingModalController != null)
-            {
-                GameLog.Log("[CampaignGameController] Waiting for player to click Start.");
                 yield return StartCoroutine(gameStartingModalController.PlayCountdown());
-                GameLog.Log("[CampaignGameController] PlayCountdown finished.");
-            }
-            else
-            {
-                GameLog.Warning("[CampaignGameController] gameStartingModalController is null, skipping modal.");
-            }
 
             if (spawnDelayAfterStart > 0f)
-            {
-                GameLog.Log($"[CampaignGameController] Waiting {spawnDelayAfterStart}s before spawning.");
                 yield return new WaitForSecondsRealtime(spawnDelayAfterStart);
-                GameLog.Log("[CampaignGameController] Spawn delay done.");
-            }
 
             if (campaignDuckSpawner != null)
             {
-                GameLog.Log("[CampaignGameController] Calling StartSpawning.");
+                GameLog.Log("[CampaignGameController] Countdown finished, starting campaign spawner.");
                 campaignDuckSpawner.StartSpawning();
             }
             else
             {
-                GameLog.Error("[CampaignGameController] campaignDuckSpawner is null, cannot start spawning.");
+                GameLog.Warning("[CampaignGameController] CampaignDuckSpawner not found, cannot start spawning.");
             }
         }
 

@@ -5889,7 +5889,7 @@ MonoBehaviour:
   stageCompleteModalController: {fileID: 2136250308}
   gameStartingModalPanel: {fileID: 720000002}
   gameStartingModalController: {fileID: 720000006}
-  spawnDelayAfterStart: 1
+  spawnDelayAfterStart: 4
   waveAnnouncementController: {fileID: 1691952856}
 --- !u!4 &1921754309
 Transform:
