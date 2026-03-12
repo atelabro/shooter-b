@@ -14,8 +14,7 @@ namespace ShooterB
         public TMP_Text titleText;
         public TMP_Text briefingText;
 
-        [Header("Countdown")]
-        public TMP_Text countdownText;
+        [Header("Buttons")]
         public Button startButton;
         public Button plusLivesButton;
         public Button extraActionButton;
@@ -102,7 +101,7 @@ namespace ShooterB
                 EnsureAnimator();
 
                 if (modalAnimator != null)
-                    yield return StartCoroutine(HideAnimated());
+                    modalAnimator.Hide();
                 else
                     modalRoot.SetActive(false);
             }
@@ -134,13 +133,6 @@ namespace ShooterB
                 Transform briefingTransform = transform.Find("Card/BriefingText");
                 if (briefingTransform != null)
                     briefingText = briefingTransform.GetComponent<TMP_Text>();
-            }
-
-            if (countdownText == null)
-            {
-                Transform countdownTransform = transform.Find("Card/CountdownText");
-                if (countdownTransform != null)
-                    countdownText = countdownTransform.GetComponent<TMP_Text>();
             }
 
             if (plusLivesText == null)
@@ -178,12 +170,6 @@ namespace ShooterB
                     startButton = startButtonTransform.GetComponent<Button>();
             }
 
-            if (startButton == null)
-            {
-                Transform fallbackButtonTransform = transform.Find("Card/CountdownText");
-                if (fallbackButtonTransform != null)
-                    startButton = fallbackButtonTransform.GetComponent<Button>();
-            }
         }
 
         private void EnsureAnimator()
@@ -196,16 +182,6 @@ namespace ShooterB
                 modalAnimator = modalRoot.AddComponent<ModalDialogAnimator>();
 
             modalAnimator.modalRoot = modalRoot;
-        }
-
-        private IEnumerator HideAnimated()
-        {
-            if (modalAnimator == null)
-                yield break;
-
-            float delay = modalAnimator.HideWithDelay();
-            if (delay > 0f)
-                yield return new WaitForSecondsRealtime(delay);
         }
 
         private void HandleStartClicked()

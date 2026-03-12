@@ -86,13 +86,20 @@ namespace ShooterB
 
         public void StartSpawning()
         {
+            GameLog.Log("[CampaignDuckSpawner] StartSpawning called.");
+
             if (isSpawning)
+            {
+                GameLog.Warning("[CampaignDuckSpawner] Already spawning, ignoring call.");
                 return;
+            }
 
             isSpawning = true;
 
             StageConfig stage = CampaignProgressManager.Instance.ActiveStageConfig;
             StageSpawnConfig spawnConfig = stage != null ? stage.spawnConfig : null;
+
+            GameLog.Log($"[CampaignDuckSpawner] Active stage: {(stage != null ? stage.name : "null")}, spawnConfig: {(spawnConfig != null ? spawnConfig.name : "null")}");
 
             if (spawnConfig == null)
             {
@@ -102,6 +109,8 @@ namespace ShooterB
 
             bool hasWaves = spawnConfig.waves != null && spawnConfig.waves.Length > 0;
             bool hasSequence = spawnConfig.spawnSequence != null && spawnConfig.spawnSequence.Length > 0;
+
+            GameLog.Log($"[CampaignDuckSpawner] hasWaves={hasWaves}, hasSequence={hasSequence}.");
 
             if (!hasWaves && !hasSequence)
             {

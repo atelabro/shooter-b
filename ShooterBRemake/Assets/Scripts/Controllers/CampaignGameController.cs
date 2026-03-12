@@ -26,6 +26,7 @@ namespace ShooterB
         [Header("Game Start Modal")]
         public GameObject gameStartingModalPanel;
         public GameStartingModalController gameStartingModalController;
+        public float spawnDelayAfterStart = 4f;
 
         [Header("Wave Announcement")]
         public WaveAnnouncementController waveAnnouncementController;
@@ -51,12 +52,13 @@ namespace ShooterB
             {
                 campaignDuckSpawner.OnAllDucksResolved += HandleStageComplete;
                 campaignDuckSpawner.OnWaveStarting += HandleWaveStarting;
-                StartCoroutine(BeginStageAfterCountdown());
             }
             else
             {
                 GameLog.Warning("[CampaignGameController] CampaignDuckSpawner not found in scene.");
             }
+
+            StartCoroutine(BeginStageAfterCountdown());
         }
 
         private void OnDestroy()
@@ -321,13 +323,34 @@ namespace ShooterB
 
         private IEnumerator BeginStageAfterCountdown()
         {
+            GameLog.Log("[CampaignGameController] BeginStageAfterCountdown started.");
+
             if (gameStartingModalController != null)
+            {
+                GameLog.Log("[CampaignGameController] Waiting for player to click Start.");
                 yield return StartCoroutine(gameStartingModalController.PlayCountdown());
+                GameLog.Log("[CampaignGameController] PlayCountdown finished.");
+            }
+            else
+            {
+                GameLog.Warning("[CampaignGameController] gameStartingModalController is null, skipping modal.");
+            }
+
+            if (spawnDelayAfterStart > 0f)
+            {
+                GameLog.Log($"[CampaignGameController] Waiting {spawnDelayAfterStart}s before spawning.");
+                yield return new WaitForSecondsRealtime(spawnDelayAfterStart);
+                GameLog.Log("[CampaignGameController] Spawn delay done.");
+            }
 
             if (campaignDuckSpawner != null)
             {
-                GameLog.Log("[CampaignGameController] Countdown finished, starting campaign spawner.");
+                GameLog.Log("[CampaignGameController] Calling StartSpawning.");
                 campaignDuckSpawner.StartSpawning();
+            }
+            else
+            {
+                GameLog.Error("[CampaignGameController] campaignDuckSpawner is null, cannot start spawning.");
             }
         }
 
