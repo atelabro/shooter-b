@@ -83,7 +83,8 @@ namespace ShooterB
             FRENCH_MUSKETEER,
             MK_SAMUIL_GUARD,
             MK_SAMUIL_ELITE,
-            MK_SAMUIL_KING
+            MK_SAMUIL_KING,
+            FRENCH_MUSKETEER_2
         }
 
         public static string GetDuckDisplayName(DuckType type)
@@ -101,6 +102,7 @@ namespace ShooterB
                 case DuckType.FRENCH_NAPOLEON: return "French Napoleon";
                 case DuckType.FRENCH_ARTIST: return "French Artist";
                 case DuckType.FRENCH_MUSKETEER: return "French Musketeer";
+                case DuckType.FRENCH_MUSKETEER_2: return "French Musketeer II";
                 case DuckType.BRITISH_REDCOAT: return "British Redcoat";
                 case DuckType.BRITISH_POLICE: return "British Police";
                 case DuckType.BRITISH_PUNK: return "British Punk";
@@ -134,6 +136,7 @@ namespace ShooterB
                 case DuckType.FRENCH_NAPOLEON: return "FRENCH_NAPOLEON";
                 case DuckType.FRENCH_ARTIST: return "FRENCH_ARTIST";
                 case DuckType.FRENCH_MUSKETEER: return "FRENCH_MUSKETEER";
+                case DuckType.FRENCH_MUSKETEER_2: return "FRENCH_MUSKETEER_2";
                 case DuckType.BRITISH_REDCOAT: return "BRITISH_REDCOAT";
                 case DuckType.BRITISH_POLICE: return "BRITISH_POLICE";
                 case DuckType.BRITISH_PUNK: return "BRITISH_PUNK";
@@ -222,6 +225,7 @@ namespace ShooterB
             public const int FRENCH_NAPOLEON = 2;
             public const int FRENCH_ARTIST = 2;
             public const int FRENCH_MUSKETEER = 2;
+            public const int FRENCH_MUSKETEER_2 = 2;
             public const int BRITISH_REDCOAT = 2;
             public const int BRITISH_POLICE = 3;
             public const int BRITISH_PUNK = 4;
@@ -251,6 +255,7 @@ namespace ShooterB
                     case DuckType.FRENCH_NAPOLEON: return FRENCH_NAPOLEON;
                     case DuckType.FRENCH_ARTIST: return FRENCH_ARTIST;
                     case DuckType.FRENCH_MUSKETEER: return FRENCH_MUSKETEER;
+                    case DuckType.FRENCH_MUSKETEER_2: return FRENCH_MUSKETEER_2;
                     case DuckType.BRITISH_REDCOAT: return BRITISH_REDCOAT;
                     case DuckType.BRITISH_POLICE: return BRITISH_POLICE;
                     case DuckType.BRITISH_PUNK: return BRITISH_PUNK;

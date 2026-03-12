@@ -733,7 +733,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -9078433564869610177, guid: 172e5bef3c849408f8f3ed942c576bdd, type: 3}
+  m_Sprite: {fileID: -3257798542224243084, guid: 67bde3a7e1e8547aeaea60c2972e7ac9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2374,6 +2374,7 @@ MonoBehaviour:
   achievementsBadgeColor: {r: 0.8627451, g: 0.1764706, b: 0.1764706, a: 1}
   languageDropdown: {fileID: 2099000102}
   allowBetaDevPanel: 1
+  devPanelCampaignCities: []
 --- !u!4 &688693834
 Transform:
   m_ObjectHideFlags: 0

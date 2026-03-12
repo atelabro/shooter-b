@@ -433,3 +433,13 @@ MonoBehaviour:
     - {fileID: 7598421838277338659, guid: e0330f475506e487696a9d28483954cc, type: 3}
     - {fileID: 4700524644914086700, guid: ccbe3b39fbcb94dfa9f179b68da0a7f3, type: 3}
     - {fileID: -3712486628594011187, guid: 67561f2ccca684767a44158a3d6a1578, type: 3}
+  - duckType: 25
+    frames:
+    - {fileID: 2146353680234253642, guid: 0e5006eeea84443a6964f3dd1a96c0cc, type: 3}
+    - {fileID: -1849671666549224617, guid: a0e19cdb63cb144adbc7d0270b6237cc, type: 3}
+    - {fileID: -1312680247954520458, guid: 1dc96f254c6a345d5aa006d7acccb52d, type: 3}
+    - {fileID: -8544916573777633366, guid: 00d54f00a2d2a405fbb23ce30e4d1442, type: 3}
+    - {fileID: 8044358218733386689, guid: f55242b7295ff4d0eab7f9bd6d7c687b, type: 3}
+    - {fileID: -5258559453463981116, guid: 328e98045b3e24a91be1aa9abe87bb39, type: 3}
+    - {fileID: -8497526824034426276, guid: 174dde81462924d1a836c06d08e9802d, type: 3}
+    - {fileID: 3034882535655422529, guid: b1a60c7be304f4895bd0ccdf98ceefbd, type: 3}

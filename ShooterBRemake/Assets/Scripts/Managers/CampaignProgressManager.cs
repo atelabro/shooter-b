@@ -159,6 +159,68 @@ namespace ShooterB
             }
         }
 
+        public void UnlockAllCityStagesExceptCountryside(CityConfig[] cities = null)
+        {
+            CityConfig[] sourceCities = GetResolvedCities(cities);
+            if (sourceCities == null || sourceCities.Length == 0)
+            {
+                GameLog.Warning("[CampaignProgressManager] Cannot unlock city stages because no campaign cities are configured.");
+                return;
+            }
+
+            for (int cityIndex = 0; cityIndex < sourceCities.Length; cityIndex++)
+            {
+                CityConfig city = sourceCities[cityIndex];
+                if (ShouldSkipCityForBulkStageToggle(city))
+                    continue;
+
+                if (city.stages == null)
+                    continue;
+
+                for (int stageIndex = 0; stageIndex < city.stages.Length; stageIndex++)
+                {
+                    StageConfig stage = city.stages[stageIndex];
+                    if (stage == null)
+                        continue;
+
+                    SetStageStars(stage.stageIndex, 1);
+                }
+            }
+
+            PlayerPrefs.Save();
+        }
+
+        public void LockAllCityStagesExceptCountryside(CityConfig[] cities = null)
+        {
+            CityConfig[] sourceCities = GetResolvedCities(cities);
+            if (sourceCities == null || sourceCities.Length == 0)
+            {
+                GameLog.Warning("[CampaignProgressManager] Cannot lock city stages because no campaign cities are configured.");
+                return;
+            }
+
+            for (int cityIndex = 0; cityIndex < sourceCities.Length; cityIndex++)
+            {
+                CityConfig city = sourceCities[cityIndex];
+                if (ShouldSkipCityForBulkStageToggle(city))
+                    continue;
+
+                if (city.stages == null)
+                    continue;
+
+                for (int stageIndex = 0; stageIndex < city.stages.Length; stageIndex++)
+                {
+                    StageConfig stage = city.stages[stageIndex];
+                    if (stage == null)
+                        continue;
+
+                    SetStageStars(stage.stageIndex, 0);
+                }
+            }
+
+            PlayerPrefs.Save();
+        }
+
         public int CalculateStars(StageConfig config, long score)
         {
             if (score >= config.starThreshold3) return 3;
@@ -319,6 +381,24 @@ namespace ShooterB
         private string BuildKey(int stageIndex)
         {
             return $"{PREFS_KEY_PREFIX}{stageIndex}{PREFS_KEY_SUFFIX}";
+        }
+
+        private void SetStageStars(int stageIndex, int stars)
+        {
+            PlayerPrefs.SetInt(BuildKey(stageIndex), Mathf.Max(0, stars));
+        }
+
+        private CityConfig[] GetResolvedCities(CityConfig[] cities)
+        {
+            if (cities != null && cities.Length > 0)
+                return cities;
+
+            return CampaignCities;
+        }
+
+        private static bool ShouldSkipCityForBulkStageToggle(CityConfig city)
+        {
+            return city == null || string.Equals(city.cityName, "Countryside", System.StringComparison.OrdinalIgnoreCase);
         }
 
         private static string BuildCityFirstCompletionAdShownKey(CityConfig city)

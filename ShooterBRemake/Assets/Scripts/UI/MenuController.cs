@@ -41,6 +41,7 @@ namespace ShooterB
 
         [Header("Dev Panel")]
         public bool allowBetaDevPanel = true;
+        public CityConfig[] devPanelCampaignCities;
 
         private DevPanelController devPanelController;
         private int titleTapCount;
@@ -212,6 +213,8 @@ namespace ShooterB
                 devPanelController.SetCanvas(rootCanvas);
             else
                 GameLog.Warning("[MenuController] Could not resolve the main menu canvas for the dev panel.");
+
+            devPanelController.SetCampaignCities(devPanelCampaignCities);
 
             EnsureLogoTapTrigger();
         }

@@ -78,6 +78,7 @@ namespace ShooterB
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.JAPANESE_STRAW_DUCK), Constants.DuckType.JAPANESE_STRAW_DUCK, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.JAPANESE_KIMONO_DUCK), Constants.DuckType.JAPANESE_KIMONO_DUCK, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.FRENCH_MUSKETEER), Constants.DuckType.FRENCH_MUSKETEER, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.FRENCH_MUSKETEER_2), Constants.DuckType.FRENCH_MUSKETEER_2, nameof(duckFrameLibrary));
         }
 
         private void ValidateTypeFrames(Sprite[] frames, Constants.DuckType type, string fieldName)

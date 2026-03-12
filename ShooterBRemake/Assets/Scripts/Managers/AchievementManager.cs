@@ -415,6 +415,7 @@ namespace ShooterB
                 case Constants.DuckType.FRENCH_NAPOLEON:
                 case Constants.DuckType.FRENCH_ARTIST:
                 case Constants.DuckType.FRENCH_MUSKETEER:
+                case Constants.DuckType.FRENCH_MUSKETEER_2:
                     return DuckGroup.Paris;
                 case Constants.DuckType.BRITISH_REDCOAT:
                 case Constants.DuckType.BRITISH_POLICE:

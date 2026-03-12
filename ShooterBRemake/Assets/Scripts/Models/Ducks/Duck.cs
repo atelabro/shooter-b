@@ -306,6 +306,7 @@ namespace ShooterB
                 case Constants.DuckType.FRENCH_NAPOLEON: return frenchNapoleonSizeMultiplier;
                 case Constants.DuckType.FRENCH_ARTIST: return frenchArtistSizeMultiplier;
                 case Constants.DuckType.FRENCH_MUSKETEER: return frenchNapoleonSizeMultiplier;
+                case Constants.DuckType.FRENCH_MUSKETEER_2: return frenchNapoleonSizeMultiplier;
                 case Constants.DuckType.BRITISH_REDCOAT: return britishRedcoatSizeMultiplier;
                 case Constants.DuckType.BRITISH_POLICE: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.BRITISH_PUNK: return britishPunkSizeMultiplier;

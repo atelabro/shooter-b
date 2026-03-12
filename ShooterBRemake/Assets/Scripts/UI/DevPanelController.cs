@@ -10,12 +10,18 @@ namespace ShooterB
         private GameObject panelRoot;
         private TextMeshProUGUI statusText;
         private Canvas hostCanvas;
+        private CityConfig[] campaignCities;
 
         public bool IsVisible => panelRoot != null && panelRoot.activeSelf;
 
         public void SetCanvas(Canvas canvas)
         {
             hostCanvas = canvas;
+        }
+
+        public void SetCampaignCities(CityConfig[] cities)
+        {
+            campaignCities = cities;
         }
 
         public void Show()
@@ -123,7 +129,17 @@ namespace ShooterB
                 GameManager.Instance.ResetAllProgressForTesting();
                 RefreshStatus();
             });
-            CreateActionButton(panel.transform, "Close", "Close", new Vector2(0.32f, 0.08f), new Vector2(0.68f, 0.18f), Hide);
+            CreateActionButton(panel.transform, "UnlockCityStages", "Unlock City Stages", new Vector2(0.1f, 0.11f), new Vector2(0.44f, 0.22f), () =>
+            {
+                CampaignProgressManager.Instance.UnlockAllCityStagesExceptCountryside(campaignCities);
+                RefreshStatus();
+            });
+            CreateActionButton(panel.transform, "LockCityStages", "Lock City Stages", new Vector2(0.56f, 0.11f), new Vector2(0.9f, 0.22f), () =>
+            {
+                CampaignProgressManager.Instance.LockAllCityStagesExceptCountryside(campaignCities);
+                RefreshStatus();
+            });
+            CreateActionButton(panel.transform, "Close", "Close", new Vector2(0.32f, 0.02f), new Vector2(0.68f, 0.09f), Hide);
 
             panelRoot.SetActive(false);
             GameLog.Log("[DevPanel] EnsureUi completed. Panel created and hidden by default.");
@@ -134,7 +150,8 @@ namespace ShooterB
             if (statusText == null)
                 return;
 
-            statusText.text = $"Coins: {GameManager.Instance.Coins} | Selected: {GameManager.Instance.SelectedWeaponType}";
+            int configuredCities = campaignCities != null ? campaignCities.Length : 0;
+            statusText.text = $"Coins: {GameManager.Instance.Coins} | Selected: {GameManager.Instance.SelectedWeaponType} | Cities: {configuredCities}";
         }
 
         private static TextMeshProUGUI CreateLabel(Transform parent, string name, string textValue, float fontSize, Vector2 anchorMin, Vector2 anchorMax, TextAlignmentOptions alignment)

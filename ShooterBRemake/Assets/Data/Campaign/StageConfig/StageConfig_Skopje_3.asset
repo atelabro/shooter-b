@@ -14,13 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 6
   mapName: Kale Fortress
-  mapNameMk: Кале Тврдина
-  briefingText: Elevated routes and long shots. Control tempo to survive.
-  briefingTextMk: Покачени рути и далечни истрели. Контролирај го темпото за да преживееш.
+  mapNameMk: "\u041A\u0430\u043B\u0435 \u0422\u0432\u0440\u0434\u0438\u043D\u0430"
+  briefingText: Elevated routes and long shots. Control tempo to survive. Watch out
+    for the Samuel's forces.
+  briefingTextMk: "\u041F\u043E\u043A\u0430\u0447\u0435\u043D\u0438 \u0440\u0443\u0442\u0438
+    \u0438 \u0434\u0430\u043B\u0435\u0447\u043D\u0438 \u0438\u0441\u0442\u0440\u0435\u043B\u0438.
+    \u041A\u043E\u043D\u0442\u0440\u043E\u043B\u0438\u0440\u0430\u0458 \u0433\u043E
+    \u0442\u0435\u043C\u043F\u043E\u0442\u043E \u0437\u0430 \u0434\u0430 \u043F\u0440\u0435\u0436\u0438\u0432\u0435\u0435\u0448.
+    \u0412\u043D\u0438\u043C\u0430\u0432\u0430\u0458 \u043D\u0430 \u0432\u043E\u0458\u0441\u043A\u0430\u0442\u0430
+    \u043D\u0430 \u0421\u0430\u043C\u0443\u0438\u043B."
   backgroundSprite: {fileID: -4767486021674482408, guid: bb99289c8c7b44e7aab4367c6b7b72b6, type: 3}
   starThreshold1: 0
   starThreshold2: 110
   starThreshold3: 144
   starsRequiredToUnlock: 8
   startingDifficulty: 7
+  forceStartingWeapon: 0
+  forcedStartingWeapon: 0
   spawnConfig: {fileID: 11400000, guid: 4799e6b39c93450d8be264954ed8f67e, type: 2}
