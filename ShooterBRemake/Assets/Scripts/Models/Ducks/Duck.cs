@@ -600,7 +600,10 @@ namespace ShooterB
                 return;
             }
 
-            const float bouncePoint = 0.55f;
+            const float forwardPoint = 0.45f;
+            const float retreatPoint = 0.7f;
+            float forwardX = screenLeft + screenWidth * 0.6f;
+            float retreatX = screenLeft + screenWidth * 0.3f;
             pathProgress += (speed * Time.fixedDeltaTime) / screenWidth;
             if (pathProgress >= 1f)
             {
@@ -609,15 +612,23 @@ namespace ShooterB
             }
 
             float x;
-            if (pathProgress < bouncePoint)
+            if (pathProgress < forwardPoint)
             {
-                x = Mathf.Lerp(screenLeft, screenLeft + screenWidth * bouncePoint, pathProgress / bouncePoint);
-                if (spriteRenderer != null) spriteRenderer.flipX = false;
+                x = Mathf.Lerp(screenLeft, forwardX, pathProgress / forwardPoint);
+                if (spriteRenderer != null)
+                    spriteRenderer.flipX = false;
+            }
+            else if (pathProgress < retreatPoint)
+            {
+                x = Mathf.Lerp(forwardX, retreatX, (pathProgress - forwardPoint) / (retreatPoint - forwardPoint));
+                if (spriteRenderer != null)
+                    spriteRenderer.flipX = true;
             }
             else
             {
-                x = Mathf.Lerp(screenLeft + screenWidth * bouncePoint, screenLeft, (pathProgress - bouncePoint) / (1f - bouncePoint));
-                if (spriteRenderer != null) spriteRenderer.flipX = true;
+                x = Mathf.Lerp(retreatX, screenRight, (pathProgress - retreatPoint) / (1f - retreatPoint));
+                if (spriteRenderer != null)
+                    spriteRenderer.flipX = false;
             }
 
             rb.MovePosition(new Vector2(x, GetLaneCenterY(currentStartLane)));
