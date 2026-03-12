@@ -50,6 +50,7 @@ namespace ShooterB
         private bool hasCapturedPlusLivesButtonBaseScale;
         private Vector3 extraActionButtonBaseScale = Vector3.one;
         private bool hasCapturedExtraActionButtonBaseScale;
+        private CanvasGroup startButtonCanvasGroup;
         private CanvasGroup plusLivesButtonCanvasGroup;
         private CanvasGroup extraActionButtonCanvasGroup;
 
@@ -185,6 +186,9 @@ namespace ShooterB
                 hasCapturedStartButtonBaseScale = true;
             }
 
+            if (startButton != null && startButtonCanvasGroup == null)
+                startButtonCanvasGroup = startButton.GetComponent<CanvasGroup>() ?? startButton.gameObject.AddComponent<CanvasGroup>();
+
         }
 
         private void EnsureAnimator()
@@ -202,13 +206,6 @@ namespace ShooterB
         private void HandleStartClicked()
         {
             startRequested = true;
-        }
-
-        private void StartIntroSequence()
-        {
-            StopIntroSequence();
-            ResetIntroVisuals();
-            introSequenceCoroutine = StartCoroutine(PlayIntroSequence());
         }
 
         private void StopIntroSequence()
@@ -236,7 +233,7 @@ namespace ShooterB
 
             SetButtonIntroState(plusLivesButton, plusLivesButtonCanvasGroup, plusLivesButtonBaseScale, false);
             SetButtonIntroState(extraActionButton, extraActionButtonCanvasGroup, extraActionButtonBaseScale, false);
-            SetStartButtonIntroState(false);
+            SetButtonIntroState(startButton, startButtonCanvasGroup, startButtonBaseScale, false);
         }
 
         private void RestoreFinalIntroState()
@@ -253,7 +250,7 @@ namespace ShooterB
 
             SetButtonIntroState(plusLivesButton, plusLivesButtonCanvasGroup, plusLivesButtonBaseScale, true);
             SetButtonIntroState(extraActionButton, extraActionButtonCanvasGroup, extraActionButtonBaseScale, true);
-            SetStartButtonIntroState(true);
+            SetButtonIntroState(startButton, startButtonCanvasGroup, startButtonBaseScale, true);
         }
 
         private IEnumerator PlayIntroSequence()
@@ -267,7 +264,7 @@ namespace ShooterB
 
             yield return PlayTitleBangAnimation();
             yield return TypeBriefing(configuredBriefingText);
-            yield return PlayStartButtonBangAnimation();
+            yield return PlayButtonBangAnimation(startButton, startButtonCanvasGroup, startButtonBaseScale);
 
             if (buttonRevealStagger > 0f)
                 yield return new WaitForSecondsRealtime(buttonRevealStagger);
@@ -325,30 +322,6 @@ namespace ShooterB
             }
 
             button.transform.localScale = baseScale;
-        }
-
-        private IEnumerator PlayStartButtonBangAnimation()
-        {
-            if (startButton == null)
-                yield break;
-
-            SetStartButtonIntroState(true);
-            startButton.transform.localScale = startButtonBaseScale * buttonBangStartScale;
-
-            float duration = Mathf.Max(0.01f, buttonBangDuration);
-            float elapsed = 0f;
-
-            while (elapsed < duration)
-            {
-                elapsed += Time.unscaledDeltaTime;
-                float t = Mathf.Clamp01(elapsed / duration);
-                float eased = EaseOutBackStrong01(t);
-                float scale = Mathf.LerpUnclamped(buttonBangStartScale, buttonBangOvershootScale, eased);
-                startButton.transform.localScale = startButtonBaseScale * scale;
-                yield return null;
-            }
-
-            startButton.transform.localScale = startButtonBaseScale;
         }
 
         private IEnumerator PlayButtonsBangAnimation(
@@ -440,15 +413,6 @@ namespace ShooterB
             button.transform.localScale = visible ? baseScale : baseScale * buttonBangStartScale;
         }
 
-        private void SetStartButtonIntroState(bool visible)
-        {
-            if (startButton == null)
-                return;
-
-            startButton.transform.localScale = visible
-                ? startButtonBaseScale
-                : startButtonBaseScale * buttonBangStartScale;
-        }
 
         private static void SetCanvasGroupVisible(CanvasGroup canvasGroup, bool visible)
         {
