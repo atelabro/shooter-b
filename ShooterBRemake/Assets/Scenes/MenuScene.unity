@@ -2360,7 +2360,7 @@ MonoBehaviour:
   quitButton: {fileID: 422015577}
   highScoreText: {fileID: 0}
   titleText: {fileID: 0}
-  logoTapTarget: {fileID: 0}
+  logoTapTarget: {fileID: 167389549}
   campaignButtonText: {fileID: 0}
   armoryButtonText: {fileID: 0}
   achievementsButtonText: {fileID: 0}

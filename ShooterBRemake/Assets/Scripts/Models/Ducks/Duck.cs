@@ -9,6 +9,8 @@ namespace ShooterB
         [Header("Duck Properties")]
         public Constants.DuckType duckType = Constants.DuckType.Type0;
         public int pointValue = 1;
+        public int maxHealth = 1;
+        public int currentHealth = 1;
 
         [Header("Movement")]
         public float speed = 10f;
@@ -41,6 +43,7 @@ namespace ShooterB
         [SerializeField] private float targetHitRadiusWorld = 0.45f;
         [SerializeField] private float deathSpriteScaleMultiplier = 1.25f;
         [SerializeField] private float deathSpriteDelay = 0.08f;
+        [SerializeField] private float healthBarVerticalOffset = 1.25f;
 
         [Header("Components")]
         private Rigidbody2D rb;
@@ -79,6 +82,7 @@ namespace ShooterB
         private Transform hitPuffOriginalParent;
         private Vector3 hitPuffOriginalLocalPosition;
         private Vector3 hitPuffOriginalLocalScale;
+        private DuckHealthBar healthBar;
         private const float ALIVE_ANIMATION_FPS = 12f;
 
         private const float DEAD_GRAVITY = 2f;
@@ -107,18 +111,27 @@ namespace ShooterB
                     hitPuffAnimator = hitPuffRenderer.GetComponent<Animator>();
                 }
             }
+
+            healthBar = GetComponent<DuckHealthBar>();
+            if (healthBar == null)
+            {
+                healthBar = gameObject.AddComponent<DuckHealthBar>();
+            }
         }
 
         public void Initialize(
             Constants.DuckType type, int difficulty, Vector2 startPosition,
             float boundTop, float boundBottom, float boundRight, float boundLeft,
             Sprite[] typeAliveFrames,
+            int healthOverride = 0,
             Constants.DuckStartLane startLane = Constants.DuckStartLane.Lane5,
             Constants.DuckPathProjection pathProjection = Constants.DuckPathProjection.Random,
             float goStraightWeight = 0.4f, float goTopWeight = 0.3f, float goBottomWeight = 0.3f)
         {
             duckType = type;
             pointValue = Constants.DuckPoints.GetPoints(type);
+            maxHealth = healthOverride > 0 ? healthOverride : Constants.DuckHealth.GetMaxHealth(type);
+            currentHealth = maxHealth;
             speed = Constants.DuckSpeed.GetSpeed(difficulty);
             movementWeightGoStraight = goStraightWeight;
             movementWeightGoTop = goTopWeight;
@@ -148,6 +161,7 @@ namespace ShooterB
 
             ApplyNormalizedScale();
             ApplyNormalizedHitbox();
+            ConfigureHealthBar();
 
             screenTop = boundTop;
             screenBottom = boundBottom;
@@ -225,6 +239,27 @@ namespace ShooterB
             }
             isDead = false;
             gameObject.SetActive(true);
+        }
+
+        private void ConfigureHealthBar()
+        {
+            if (healthBar == null)
+                return;
+
+            int sortingOrder = spriteRenderer != null ? spriteRenderer.sortingOrder + 2 : Constants.SORTING_LAYER_DUCKS + 2;
+            healthBar.EnsureInitialized(transform, sortingOrder);
+            healthBar.SetLayout(healthBarVerticalOffset, sortingOrder);
+            healthBar.UpdateFill(1f);
+            healthBar.SetVisible(maxHealth > 1);
+        }
+
+        public void RefreshHealthBarSorting()
+        {
+            if (healthBar == null)
+                return;
+
+            int sortingOrder = spriteRenderer != null ? spriteRenderer.sortingOrder + 2 : Constants.SORTING_LAYER_DUCKS + 2;
+            healthBar.SetLayout(healthBarVerticalOffset, sortingOrder);
         }
 
         private void ApplyNormalizedScale()
@@ -722,9 +757,19 @@ namespace ShooterB
             ReturnToPool();
         }
 
-        public void OnHit(Constants.WeaponType weaponType = Constants.WeaponType.Rifle)
+        public bool ReceiveDamage(int damageAmount, Constants.WeaponType weaponType = Constants.WeaponType.Rifle)
         {
-            if (isDead) return;
+            if (isDead || damageAmount <= 0)
+                return false;
+
+            currentHealth = Mathf.Max(0, currentHealth - damageAmount);
+            UpdateHealthBar();
+
+            if (currentHealth > 0)
+            {
+                GameLog.Log($"[DUCK] {duckType} took {damageAmount} damage from {weaponType}. Health: {currentHealth}/{maxHealth}");
+                return false;
+            }
 
             isDead = true;
             pendingDeathWeaponType = weaponType;
@@ -762,6 +807,12 @@ namespace ShooterB
             Invoke(nameof(ApplyDeathState), deathSpriteDelay);
 
             GameLog.Log($"Duck hit by {weaponType}! Type: {duckType}, Points: {pointValue}");
+            return true;
+        }
+
+        public void OnHit(Constants.WeaponType weaponType = Constants.WeaponType.Rifle)
+        {
+            ReceiveDamage(1, weaponType);
         }
 
         private Sprite GetDeathSprite(Constants.WeaponType weaponType)
@@ -783,6 +834,7 @@ namespace ShooterB
 
             // Animator remains disabled; alive animation is code-driven.
             ResetHitPuff();
+            UpdateHealthBar(true);
 
             if (transform.parent == null)
             {
@@ -821,6 +873,9 @@ namespace ShooterB
             {
                 GameLog.Warning($"[DUCK] SpriteRenderer missing on hit for type {duckType}.");
             }
+
+            if (healthBar != null)
+                healthBar.Hide();
 
             if (keepDeadDuckForDebug)
             {
@@ -871,6 +926,21 @@ namespace ShooterB
                 RestartHitPuffAnimation();
                 Invoke(nameof(HideAndReattachHitPuff), hitPuffLifetime);
             }
+        }
+
+        private void UpdateHealthBar(bool forceHide = false)
+        {
+            if (healthBar == null)
+                return;
+
+            if (forceHide || isDead || maxHealth <= 1)
+            {
+                healthBar.Hide();
+                return;
+            }
+
+            healthBar.SetVisible(true);
+            healthBar.UpdateFill(maxHealth <= 0 ? 0f : (float)currentHealth / maxHealth);
         }
 
         private void FitHitPuffToDuck()

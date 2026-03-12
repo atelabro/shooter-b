@@ -207,6 +207,12 @@ namespace ShooterB
             if (devPanelController == null)
                 devPanelController = gameObject.GetComponent<DevPanelController>() ?? gameObject.AddComponent<DevPanelController>();
 
+            Canvas rootCanvas = ResolveUiCanvas();
+            if (rootCanvas != null)
+                devPanelController.SetCanvas(rootCanvas);
+            else
+                GameLog.Warning("[MenuController] Could not resolve the main menu canvas for the dev panel.");
+
             EnsureLogoTapTrigger();
         }
 
@@ -230,11 +236,25 @@ namespace ShooterB
 
             logoTapTarget.raycastTarget = true;
 
-            TitleTapTrigger trigger = logoTapTarget.GetComponent<TitleTapTrigger>();
+            LogoTapTrigger trigger = logoTapTarget.GetComponent<LogoTapTrigger>();
             if (trigger == null)
-                trigger = logoTapTarget.gameObject.AddComponent<TitleTapTrigger>();
+                trigger = logoTapTarget.gameObject.AddComponent<LogoTapTrigger>();
 
             trigger.Initialize(HandleTitleTapped);
+        }
+
+        private Canvas ResolveUiCanvas()
+        {
+            if (logoTapTarget != null && logoTapTarget.canvas != null)
+                return logoTapTarget.canvas;
+
+            if (titleText != null && titleText.canvas != null)
+                return titleText.canvas;
+
+            if (campaignButton != null)
+                return campaignButton.GetComponentInParent<Canvas>();
+
+            return null;
         }
 
         private void HandleTitleTapped()
@@ -243,16 +263,29 @@ namespace ShooterB
                 return;
 
             if (Time.unscaledTime - lastTitleTapTime > DevPanelTapWindowSeconds)
+            {
+                GameLog.Log($"[MenuController] Logo tap window expired. Resetting count from {titleTapCount}.");
                 titleTapCount = 0;
+            }
 
             lastTitleTapTime = Time.unscaledTime;
             titleTapCount++;
+            GameLog.Log($"[MenuController] Logo tapped. Count: {titleTapCount}/{DevPanelTapCount}");
 
             if (titleTapCount < DevPanelTapCount)
                 return;
 
             titleTapCount = 0;
-            devPanelController?.Toggle();
+            EnsureDevPanel();
+            GameLog.Log($"[MenuController] Logo tap threshold reached. Dev panel controller ready: {devPanelController != null}");
+            if (devPanelController == null)
+            {
+                GameLog.Warning("[MenuController] Dev panel controller is null at toggle time.");
+                return;
+            }
+
+            GameLog.Log("[MenuController] Logo tap threshold reached. Toggling dev panel.");
+            devPanelController.Toggle();
         }
 
         private bool IsDevPanelAllowed()
@@ -407,24 +440,6 @@ namespace ShooterB
             }
 
             return null;
-        }
-
-        private sealed class TitleTapTrigger : MonoBehaviour, IPointerClickHandler
-        {
-            private Action onTap;
-
-            public void Initialize(Action callback)
-            {
-                onTap = callback;
-            }
-
-            public void OnPointerClick(PointerEventData eventData)
-            {
-                if (eventData != null && eventData.button != PointerEventData.InputButton.Left)
-                    return;
-
-                onTap?.Invoke();
-            }
         }
     }
 }

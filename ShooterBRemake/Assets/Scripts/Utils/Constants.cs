@@ -254,6 +254,21 @@ namespace ShooterB
             }
         }
 
+        public static class DuckHealth
+        {
+            public const int DEFAULT = 1;
+            public const int USA_BOSS_DUCK = 8;
+
+            public static int GetMaxHealth(DuckType type)
+            {
+                switch (type)
+                {
+                    case DuckType.USA_BOSS_DUCK: return USA_BOSS_DUCK;
+                    default: return DEFAULT;
+                }
+            }
+        }
+
         public static class DuckSpawnProbability
         {
             public const float TYPE_0 = 0.56f;

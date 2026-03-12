@@ -7,10 +7,10 @@ namespace ShooterB
         [Header("Piranha Variants")]
         public Sprite[] variantSprites;
 
-        public override void Initialize(Vector2 target, Constants.WeaponType weaponType = Constants.WeaponType.PiranhaGun)
+        public override void Initialize(Vector2 target, Constants.WeaponType weaponType = Constants.WeaponType.PiranhaGun, int bulletDamage = 1)
         {
             ApplyRandomVariantSprite();
-            base.Initialize(target, weaponType);
+            base.Initialize(target, weaponType, bulletDamage);
         }
 
         private void ApplyRandomVariantSprite()

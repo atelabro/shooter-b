@@ -9,6 +9,7 @@ namespace ShooterB
             weaponName = "LaserGun";
             weaponType = Constants.WeaponType.LaserGun;
             fireMode = Constants.WeaponFireMode.SingleTap;
+            damage = 1;
 
             // Legacy parity from ShooterBgame LaserGun.java defaults.
             maxBullets = 11;

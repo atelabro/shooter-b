@@ -10,6 +10,7 @@ namespace ShooterB
             weaponType = Constants.WeaponType.TeslaGun;
             fireMode = Constants.WeaponFireMode.SingleTap;
             maxBullets = 5;
+            damage = 1;
             fireDelay = 0.1f;
             refillDelay = 0.4f;
 

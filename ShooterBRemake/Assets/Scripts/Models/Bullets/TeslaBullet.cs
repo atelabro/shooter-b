@@ -10,25 +10,36 @@ namespace ShooterB
         public int chainCount = 2;
         private int remainingChains;
         private readonly HashSet<int> hitDuckIds = new HashSet<int>();
+        private readonly HashSet<int> killedDuckIds = new HashSet<int>();
 
-        public override void Initialize(Vector2 target, Constants.WeaponType weaponType = Constants.WeaponType.TeslaGun)
+        public override void Initialize(Vector2 target, Constants.WeaponType weaponType = Constants.WeaponType.TeslaGun, int bulletDamage = 1)
         {
             remainingChains = Mathf.Max(0, chainCount);
             hitDuckIds.Clear();
-            base.Initialize(target, weaponType);
+            killedDuckIds.Clear();
+            base.Initialize(target, weaponType, bulletDamage);
         }
 
-        public void ConfigureChain(int chainsRemaining, HashSet<int> alreadyHitDuckIds)
+        public void ConfigureChain(int chainsRemaining, HashSet<int> alreadyHitDuckIds, HashSet<int> alreadyKilledDuckIds)
         {
             remainingChains = Mathf.Max(0, chainsRemaining);
             hitDuckIds.Clear();
+            killedDuckIds.Clear();
 
-            if (alreadyHitDuckIds == null)
-                return;
-
-            foreach (int duckId in alreadyHitDuckIds)
+            if (alreadyHitDuckIds != null)
             {
-                hitDuckIds.Add(duckId);
+                foreach (int duckId in alreadyHitDuckIds)
+                {
+                    hitDuckIds.Add(duckId);
+                }
+            }
+
+            if (alreadyKilledDuckIds != null)
+            {
+                foreach (int duckId in alreadyKilledDuckIds)
+                {
+                    killedDuckIds.Add(duckId);
+                }
             }
         }
 
@@ -45,8 +56,12 @@ namespace ShooterB
             hitDuckIds.Add(primaryDuckId);
 
             Vector2 primaryHitPosition = primaryDuck.transform.position;
-            primaryDuck.OnHit(firedByWeapon);
-            GameLog.Log($"[TESLA] Primary hit duck at {primaryHitPosition}");
+            bool killedPrimaryDuck = primaryDuck.ReceiveDamage(damage, firedByWeapon);
+            if (killedPrimaryDuck)
+            {
+                killedDuckIds.Add(primaryDuckId);
+            }
+            GameLog.Log($"[TESLA] Primary hit duck at {primaryHitPosition} for {damage}");
 
             bool spawnedChain = false;
             if (remainingChains > 0)
@@ -81,14 +96,14 @@ namespace ShooterB
             }
 
             chainBullet.SetPoolSourcePrefab(poolSourcePrefab);
-            chainBullet.Initialize(nextDuck.transform.position, firedByWeapon);
-            chainBullet.ConfigureChain(chainsLeftForNextBullet, hitDuckIds);
+            chainBullet.Initialize(nextDuck.transform.position, firedByWeapon, damage);
+            chainBullet.ConfigureChain(chainsLeftForNextBullet, hitDuckIds, killedDuckIds);
             return true;
         }
 
         private void TriggerTeslaChainCombo(Vector2 comboWorldPosition)
         {
-            int chainKillCount = hitDuckIds.Count;
+            int chainKillCount = killedDuckIds.Count;
             if (chainKillCount < 2 || GameManager.Instance == null)
                 return;
 

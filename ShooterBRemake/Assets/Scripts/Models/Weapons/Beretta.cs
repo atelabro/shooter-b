@@ -10,6 +10,7 @@ namespace ShooterB
             weaponType = Constants.WeaponType.Beretta;
             fireMode = Constants.WeaponFireMode.HoldAutomatic;
             maxBullets = 14;
+            damage = 1;
             fireDelay = 0.2f;
             refillDelay = 1.6f;
 

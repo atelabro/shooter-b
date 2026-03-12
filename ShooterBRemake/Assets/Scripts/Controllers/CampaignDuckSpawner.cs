@@ -191,6 +191,7 @@ namespace ShooterB
                         SpawnEntry resolved = new SpawnEntry
                         {
                             duckType = entry.duckType,
+                            healthOverride = entry.healthOverride,
                             startLane = patternEntry.startLane,
                             pathProjection = patternEntry.pathProjection,
                             speedMultiplier = patternEntry.speedMultiplier,
@@ -280,6 +281,7 @@ namespace ShooterB
                 spawnPosition,
                 boundTop, boundBottom, boundRight, boundLeft,
                 frames,
+                entry.healthOverride,
                 entry.startLane,
                 entry.pathProjection,
                 config.weightGoStraight,
@@ -294,6 +296,7 @@ namespace ShooterB
             if (spriteRenderer != null)
             {
                 spriteRenderer.sortingOrder = nextSpawnSortingOrder;
+                duck.RefreshHealthBarSorting();
                 nextSpawnSortingOrder--;
             }
 

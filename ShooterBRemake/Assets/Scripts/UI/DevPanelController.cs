@@ -9,17 +9,28 @@ namespace ShooterB
     {
         private GameObject panelRoot;
         private TextMeshProUGUI statusText;
+        private Canvas hostCanvas;
 
         public bool IsVisible => panelRoot != null && panelRoot.activeSelf;
 
+        public void SetCanvas(Canvas canvas)
+        {
+            hostCanvas = canvas;
+        }
+
         public void Show()
         {
+            GameLog.Log($"[DevPanel] Show requested. Existing panelRoot: {panelRoot != null}");
             EnsureUi();
             if (panelRoot == null)
+            {
+                GameLog.Warning("[DevPanel] Show aborted because panelRoot is still null after EnsureUi.");
                 return;
+            }
 
             RefreshStatus();
             panelRoot.SetActive(true);
+            GameLog.Log($"[DevPanel] Panel activated. Parent: {(panelRoot.transform.parent != null ? panelRoot.transform.parent.name : "<none>")}");
         }
 
         public void Hide()
@@ -39,20 +50,24 @@ namespace ShooterB
         private void EnsureUi()
         {
             if (panelRoot != null)
+            {
+                GameLog.Log("[DevPanel] EnsureUi skipped because panelRoot already exists.");
                 return;
+            }
 
-            Canvas rootCanvas = GetComponentInParent<Canvas>();
-            if (rootCanvas == null)
-                rootCanvas = FindObjectOfType<Canvas>(true);
+            Canvas rootCanvas = hostCanvas != null ? hostCanvas : GetComponentInParent<Canvas>();
+
+            GameLog.Log($"[DevPanel] Canvas lookup complete. Found canvas: {(rootCanvas != null ? rootCanvas.name : "<none>")}");
 
             if (rootCanvas == null)
             {
-                GameLog.Warning("[DevPanel] Canvas missing, cannot create debug panel.");
+                GameLog.Warning("[DevPanel] Canvas missing, cannot create debug panel. Assign the menu canvas before showing.");
                 return;
             }
 
             panelRoot = new GameObject("DevPanel", typeof(RectTransform), typeof(Image));
             panelRoot.transform.SetParent(rootCanvas.transform, false);
+            GameLog.Log($"[DevPanel] Created panelRoot under canvas '{rootCanvas.name}'.");
 
             RectTransform rootRect = panelRoot.GetComponent<RectTransform>();
             rootRect.anchorMin = Vector2.zero;
@@ -111,6 +126,7 @@ namespace ShooterB
             CreateActionButton(panel.transform, "Close", "Close", new Vector2(0.32f, 0.08f), new Vector2(0.68f, 0.18f), Hide);
 
             panelRoot.SetActive(false);
+            GameLog.Log("[DevPanel] EnsureUi completed. Panel created and hidden by default.");
         }
 
         private void RefreshStatus()

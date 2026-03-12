@@ -11,6 +11,7 @@ namespace ShooterB
         public Constants.WeaponType weaponType;
         public Constants.WeaponFireMode fireMode = Constants.WeaponFireMode.SingleTap;
         public int maxBullets;
+        [Min(1)] public int damage = 1;
         [Min(0)] public int startModalAmmoBonus = 2;
         public float fireDelay;
         public float refillDelay;
@@ -110,7 +111,7 @@ namespace ShooterB
             if (bullet != null)
             {
                 bullet.SetPoolSourcePrefab(bulletPrefab);
-                bullet.Initialize(targetPosition, weaponType);
+                bullet.Initialize(targetPosition, weaponType, damage);
                 GameLog.Log($"[WEAPON] Bullet spawned at {gunPosition}, traveling to {targetPosition}");
             }
             else

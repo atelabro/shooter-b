@@ -19,6 +19,7 @@ namespace ShooterB
         protected SpriteRenderer spriteRenderer;
 
         protected Constants.WeaponType firedByWeapon;
+        protected int damage = 1;
         protected Vector2 targetPosition;
         protected Vector2 direction;
         protected float initialDistance;
@@ -43,9 +44,10 @@ namespace ShooterB
             }
         }
 
-        public virtual void Initialize(Vector2 target, Constants.WeaponType weaponType = Constants.WeaponType.Rifle)
+        public virtual void Initialize(Vector2 target, Constants.WeaponType weaponType = Constants.WeaponType.Rifle, int bulletDamage = 1)
         {
             firedByWeapon = weaponType;
+            damage = Mathf.Max(1, bulletDamage);
             targetPosition = target;
             direction = (targetPosition - (Vector2)transform.position).normalized;
             initialDistance = Vector2.Distance(transform.position, targetPosition);
@@ -142,20 +144,23 @@ namespace ShooterB
         protected virtual void CheckCollisions()
         {
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, effectiveRadius);
-            HashSet<Duck> uniqueDucksHit = new HashSet<Duck>();
+            HashSet<Duck> uniqueDucksKilled = new HashSet<Duck>();
 
             foreach (Collider2D hit in hits)
             {
                 Duck duck = hit.GetComponent<Duck>();
                 if (duck != null)
                 {
-                    uniqueDucksHit.Add(duck);
-                    duck.OnHit(firedByWeapon);
-                    GameLog.Log($"[BULLET] Hit duck at {hit.transform.position}");
+                    if (duck.ReceiveDamage(damage, firedByWeapon))
+                    {
+                        uniqueDucksKilled.Add(duck);
+                    }
+
+                    GameLog.Log($"[BULLET] Damaged duck at {hit.transform.position} for {damage}");
                 }
             }
 
-            TriggerComboIfNeeded(uniqueDucksHit);
+            TriggerComboIfNeeded(uniqueDucksKilled);
 
             Dispose();
         }
