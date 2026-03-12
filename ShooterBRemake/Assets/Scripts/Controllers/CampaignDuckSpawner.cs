@@ -37,6 +37,8 @@ namespace ShooterB
         private int stageSpawnDifficulty;
         private float stageBaseSpeed;
         private int nextSpawnSortingOrder;
+        private bool skipCurrentWaveRequested = false;
+        private bool isWaveInProgress = false;
 
         private void Awake()
         {
@@ -131,6 +133,17 @@ namespace ShooterB
             StopAllCoroutines();
         }
 
+        public bool SkipCurrentWave()
+        {
+            if (!isSpawning || !isWaveInProgress || GameManager.Instance.IsGameOver)
+                return false;
+
+            skipCurrentWaveRequested = true;
+            DespawnActiveWaveDucks();
+            GameLog.Log("[CampaignDuckSpawner] Debug skip requested for current wave.");
+            return true;
+        }
+
         private IEnumerator SpawnSequenceCoroutine(StageSpawnConfig config)
         {
             yield return StartCoroutine(SpawnEntriesCoroutine(config.spawnSequence, config));
@@ -146,6 +159,8 @@ namespace ShooterB
 
                 WaveConfig wave = config.waves[i];
                 int waveNumber = i + 1;
+                skipCurrentWaveRequested = false;
+                isWaveInProgress = true;
 
                 if (wave.showAnnouncement)
                 {
@@ -156,6 +171,7 @@ namespace ShooterB
 
                 yield return StartCoroutine(SpawnEntriesCoroutine(wave.spawnSequence, config));
                 yield return StartCoroutine(WaitForWaveDucksResolved(waveNumber));
+                isWaveInProgress = false;
             }
 
             StartCoroutine(WaitForAllDucksResolved());
@@ -168,24 +184,24 @@ namespace ShooterB
 
             foreach (SpawnEntry entry in entries)
             {
-                if (!isSpawning || GameManager.Instance.IsGameOver)
+                if (!isSpawning || GameManager.Instance.IsGameOver || skipCurrentWaveRequested)
                     yield break;
 
                 yield return new WaitForSeconds(entry.delay);
 
-                if (!isSpawning || GameManager.Instance.IsGameOver)
+                if (!isSpawning || GameManager.Instance.IsGameOver || skipCurrentWaveRequested)
                     yield break;
 
                 if (entry.patternRef != null && entry.patternRef.entries != null)
                 {
                     foreach (PatternEntry patternEntry in entry.patternRef.entries)
                     {
-                        if (!isSpawning || GameManager.Instance.IsGameOver)
+                        if (!isSpawning || GameManager.Instance.IsGameOver || skipCurrentWaveRequested)
                             yield break;
 
                         yield return new WaitForSeconds(patternEntry.delay);
 
-                        if (!isSpawning || GameManager.Instance.IsGameOver)
+                        if (!isSpawning || GameManager.Instance.IsGameOver || skipCurrentWaveRequested)
                             yield break;
 
                         SpawnEntry resolved = new SpawnEntry
@@ -195,6 +211,7 @@ namespace ShooterB
                             startLane = patternEntry.startLane,
                             pathProjection = patternEntry.pathProjection,
                             speedMultiplier = patternEntry.speedMultiplier,
+                            sizeMultiplier = entry.sizeMultiplier,
                             delay = patternEntry.delay
                         };
                         SpawnDuck(resolved, config);
@@ -223,6 +240,26 @@ namespace ShooterB
                     yield break;
                 }
             }
+        }
+
+        private void DespawnActiveWaveDucks()
+        {
+            if (duckPool == null)
+                return;
+
+            List<GameObject> activeDucks = new List<GameObject>();
+            foreach (Transform child in transform)
+            {
+                if (child == null)
+                    continue;
+
+                GameObject duck = child.gameObject;
+                if (duck.activeSelf)
+                    activeDucks.Add(duck);
+            }
+
+            for (int i = 0; i < activeDucks.Count; i++)
+                ReturnDuckToPool(activeDucks[i]);
         }
 
         private static string ResolveWaveLabelFormat(WaveConfig wave)
@@ -282,6 +319,7 @@ namespace ShooterB
                 boundTop, boundBottom, boundRight, boundLeft,
                 frames,
                 entry.healthOverride,
+                entry.sizeMultiplier,
                 entry.startLane,
                 entry.pathProjection,
                 config.weightGoStraight,

@@ -75,6 +75,7 @@ namespace ShooterB
         private float movementWeightGoStraight = 0.4f;
         private float movementWeightGoTop = 0.3f;
         private float movementWeightGoBottom = 0.3f;
+        private float spawnSizeMultiplier = 1f;
 
         private bool isDead = false;
         private Sprite aliveSprite;
@@ -126,6 +127,7 @@ namespace ShooterB
             float boundTop, float boundBottom, float boundRight, float boundLeft,
             Sprite[] typeAliveFrames,
             int healthOverride = 0,
+            float sizeOverride = 1f,
             Constants.DuckStartLane startLane = Constants.DuckStartLane.Lane5,
             Constants.DuckPathProjection pathProjection = Constants.DuckPathProjection.Random,
             float goStraightWeight = 0.4f, float goTopWeight = 0.3f, float goBottomWeight = 0.3f)
@@ -134,6 +136,7 @@ namespace ShooterB
             pointValue = Constants.DuckPoints.GetPoints(type);
             maxHealth = healthOverride > 0 ? healthOverride : 1;
             currentHealth = maxHealth;
+            spawnSizeMultiplier = sizeOverride > 0f ? sizeOverride : 1f;
             speed = Constants.DuckSpeed.GetSpeed(difficulty);
             movementWeightGoStraight = goStraightWeight;
             movementWeightGoTop = goTopWeight;
@@ -266,7 +269,7 @@ namespace ShooterB
 
         private void ApplyNormalizedScale()
         {
-            ApplySpriteScale(spriteRenderer != null ? spriteRenderer.sprite : null, GetTypeSizeMultiplier(duckType));
+            ApplySpriteScale(spriteRenderer != null ? spriteRenderer.sprite : null, GetTypeSizeMultiplier(duckType) * spawnSizeMultiplier);
         }
 
         private void ApplySpriteScale(Sprite sprite, float scaleMultiplier)
@@ -323,14 +326,15 @@ namespace ShooterB
                 return;
             }
 
-            float uniformScale = Mathf.Abs(transform.localScale.x);
-            if (uniformScale < 0.0001f)
+            float baseVisualScale = GetTypeSizeMultiplier(duckType);
+            if (baseVisualScale < 0.0001f)
             {
                 col.radius = targetHitRadiusWorld;
                 return;
             }
 
-            col.radius = targetHitRadiusWorld / uniformScale;
+            float worldSizeMultiplier = Mathf.Max(spawnSizeMultiplier, 0.0001f);
+            col.radius = targetHitRadiusWorld * worldSizeMultiplier / baseVisualScale;
         }
 
         private void Start()
@@ -865,7 +869,7 @@ namespace ShooterB
                 if (deathSprite != null)
                 {
                     spriteRenderer.sprite = deathSprite;
-                    ApplySpriteScale(deathSprite, GetTypeSizeMultiplier(duckType) * deathSpriteScaleMultiplier);
+                    ApplySpriteScale(deathSprite, GetTypeSizeMultiplier(duckType) * spawnSizeMultiplier * deathSpriteScaleMultiplier);
                 }
 
                 spriteRenderer.enabled = true;

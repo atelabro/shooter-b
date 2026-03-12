@@ -17,6 +17,8 @@ namespace ShooterB
         public Constants.DuckPathProjection pathProjection;
         [Tooltip("Per-duck speed multiplier. <= 0 defaults to 1. Ignored when patternRef is set.")]
         public float speedMultiplier;
+        [Tooltip("Per-duck size multiplier. Values <= 0 use 1. Ignored when patternRef is set.")]
+        public float sizeMultiplier;
         [Tooltip("If set, expands this entry into all ducks from the referenced pattern. duckType is inherited from this entry. startLane/pathProjection/speedMultiplier are overridden per pattern entry.")]
         public DuckPatternConfig patternRef;
     }

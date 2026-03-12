@@ -21,7 +21,7 @@ MonoBehaviour:
     spawnSequence:
     - duckType: 5
       delay: 0
-      healthOverride: 0
+      healthOverride: 10
       startLane: 2
       pathProjection: 1
       speedMultiplier: 1

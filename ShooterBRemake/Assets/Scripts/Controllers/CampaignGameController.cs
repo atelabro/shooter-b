@@ -245,6 +245,7 @@ namespace ShooterB
 
         private void Update()
         {
+            HandleDebugSkipWaveShortcut();
             HandleDebugStageCompleteShortcut();
         }
 
@@ -287,6 +288,17 @@ namespace ShooterB
             stageCompleteModalController.ShowDebug(stage, forcedStars);
         }
 
+        private void HandleDebugSkipWaveShortcut()
+        {
+            if (isStageComplete || campaignDuckSpawner == null)
+                return;
+
+            if (!IsDebugSkipWavePressed())
+                return;
+
+            campaignDuckSpawner.SkipCurrentWave();
+        }
+
         private static int GetDebugStageCompleteStars()
         {
 #if ENABLE_INPUT_SYSTEM
@@ -313,6 +325,17 @@ namespace ShooterB
 #endif
 
             return 0;
+        }
+
+        private static bool IsDebugSkipWavePressed()
+        {
+#if ENABLE_INPUT_SYSTEM
+            return Keyboard.current != null && Keyboard.current.kKey.wasPressedThisFrame;
+#elif ENABLE_LEGACY_INPUT_MANAGER
+            return Input.GetKeyDown(KeyCode.K);
+#else
+            return false;
+#endif
         }
 
         private void HandleWaveStarting(int waveNumber, float duration, string labelFormatOverride)
