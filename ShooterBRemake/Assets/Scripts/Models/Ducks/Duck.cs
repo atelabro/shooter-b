@@ -40,12 +40,24 @@ namespace ShooterB
         [Header("Hitbox Normalization")]
         [SerializeField] private float targetHitRadiusWorld = 0.45f;
         [SerializeField] private float deathSpriteScaleMultiplier = 1.25f;
+        [SerializeField] private float deathSpriteDelay = 0.08f;
 
         [Header("Components")]
         private Rigidbody2D rb;
         private CircleCollider2D col;
         private SpriteRenderer spriteRenderer;
         private Animator animator;
+
+        [Header("Hit Puff")]
+        [SerializeField] private SpriteRenderer hitPuffRenderer;
+        [SerializeField] private Vector2 hitPuffOffsetNormalized = new Vector2(0f, 0.05f);
+        [SerializeField] private float hitPuffWidthMultiplier = 2.5f;
+        [SerializeField] private float hitPuffHeightMultiplier = 2.5f;
+        [SerializeField] private int hitPuffSortingOffset = 1;
+
+        [Header("Debug")]
+        [SerializeField] private bool keepDeadDuckForDebug;
+        [SerializeField] private bool freezeDeadDuckForDebug = true;
 
         [Header("Boundaries")]
         private float screenTop;
@@ -66,6 +78,7 @@ namespace ShooterB
 
         private const float DEAD_GRAVITY = 2f;
         private const float DEAD_CLEANUP_TIME = 2f;
+        private Constants.WeaponType pendingDeathWeaponType = Constants.WeaponType.Rifle;
 
         private void Awake()
         {
@@ -185,6 +198,8 @@ namespace ShooterB
             {
                 animator.enabled = false;
             }
+
+            ResetHitPuff();
 
             if (currentPathProjection == Constants.DuckPathProjection.Random)
             {
@@ -689,6 +704,7 @@ namespace ShooterB
             if (isDead) return;
 
             isDead = true;
+            pendingDeathWeaponType = weaponType;
             GameManager.Instance.BirdKilled(duckType, weaponType);
 
             if (spriteRenderer != null)
@@ -708,33 +724,6 @@ namespace ShooterB
                 animator.enabled = false;
             }
 
-            // Swap to weapon-specific death sprite with a safe fallback.
-            Sprite deathSprite = GetDeathSprite(weaponType);
-
-            if (spriteRenderer != null)
-            {
-                if (deathSprite != null)
-                {
-                    float aliveHeightWorld = spriteRenderer.bounds.size.y;
-                    spriteRenderer.sprite = deathSprite;
-                    float deathHeightWorld = spriteRenderer.bounds.size.y;
-                    if (aliveHeightWorld > 0f && deathHeightWorld > 0f)
-                    {
-                        transform.localScale *= aliveHeightWorld / deathHeightWorld;
-                    }
-                    transform.localScale *= deathSpriteScaleMultiplier;
-                }
-
-                spriteRenderer.enabled = true;
-                spriteRenderer.color = Color.white;
-            }
-            else
-            {
-                GameLog.Warning($"[DUCK] SpriteRenderer missing on hit for type {duckType}.");
-            }
-
-            // Keep current scale -- PPU handles sizing relative to the alive sprite
-
             // Disable collider so it cant be hit again
             if (col != null)
             {
@@ -742,14 +731,12 @@ namespace ShooterB
             }
 
             // Animator is disabled; death sprite is controlled directly.
-
-            // Enable gravity to make it fall
-            rb.bodyType = RigidbodyType2D.Dynamic;
-            rb.gravityScale = DEAD_GRAVITY;
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.gravityScale = 0f;
             rb.linearVelocity = Vector2.zero;
 
-            // Return to pool after falling off screen
-            Invoke(nameof(ReturnToPool), DEAD_CLEANUP_TIME);
+            ShowHitPuff();
+            Invoke(nameof(ApplyDeathState), deathSpriteDelay);
 
             GameLog.Log($"Duck hit by {weaponType}! Type: {duckType}, Points: {pointValue}");
         }
@@ -768,9 +755,11 @@ namespace ShooterB
 
         private void ReturnToPool()
         {
+            CancelInvoke(nameof(ApplyDeathState));
             CancelInvoke(nameof(ReturnToPool));
 
             // Animator remains disabled; alive animation is code-driven.
+            ResetHitPuff();
 
             if (transform.parent == null)
             {
@@ -789,6 +778,126 @@ namespace ShooterB
                 GameLog.Warning($"IDuckSpawner not found on parent '{transform.parent.name}'. Deactivating duck.");
                 gameObject.SetActive(false);
             }
+        }
+
+        private void ApplyDeathState()
+        {
+            if (spriteRenderer != null)
+            {
+                Sprite deathSprite = GetDeathSprite(pendingDeathWeaponType);
+                if (deathSprite != null)
+                {
+                    spriteRenderer.sprite = deathSprite;
+                }
+
+                spriteRenderer.enabled = true;
+                spriteRenderer.color = Color.white;
+            }
+            else
+            {
+                GameLog.Warning($"[DUCK] SpriteRenderer missing on hit for type {duckType}.");
+            }
+
+            if (keepDeadDuckForDebug)
+            {
+                rb.bodyType = RigidbodyType2D.Kinematic;
+                rb.gravityScale = 0f;
+                rb.linearVelocity = Vector2.zero;
+
+                if (!freezeDeadDuckForDebug)
+                {
+                    rb.bodyType = RigidbodyType2D.Dynamic;
+                    rb.gravityScale = DEAD_GRAVITY;
+                }
+
+                return;
+            }
+
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.gravityScale = DEAD_GRAVITY;
+            rb.linearVelocity = Vector2.zero;
+            Invoke(nameof(ReturnToPool), DEAD_CLEANUP_TIME);
+        }
+
+        private void ResetHitPuff()
+        {
+            if (hitPuffRenderer != null)
+            {
+                hitPuffRenderer.enabled = false;
+            }
+        }
+
+        private void ShowHitPuff()
+        {
+            FitHitPuffToDuck();
+
+            if (hitPuffRenderer != null)
+            {
+                if (spriteRenderer != null)
+                {
+                    hitPuffRenderer.sortingLayerID = spriteRenderer.sortingLayerID;
+                    hitPuffRenderer.sortingOrder = spriteRenderer.sortingOrder + hitPuffSortingOffset;
+                }
+
+                hitPuffRenderer.enabled = true;
+            }
+        }
+
+        private void FitHitPuffToDuck()
+        {
+            if (hitPuffRenderer == null || spriteRenderer == null || spriteRenderer.sprite == null)
+            {
+                return;
+            }
+
+            Bounds duckBounds = spriteRenderer.bounds;
+            Vector3 duckSize = duckBounds.size;
+            if (duckSize.x <= 0f || duckSize.y <= 0f)
+            {
+                return;
+            }
+
+            Transform puffTransform = hitPuffRenderer.transform;
+            Vector3 targetWorldPosition = duckBounds.center + new Vector3(
+                duckSize.x * hitPuffOffsetNormalized.x,
+                duckSize.y * hitPuffOffsetNormalized.y,
+                0f);
+
+            if (puffTransform.parent != null)
+            {
+                puffTransform.localPosition = puffTransform.parent.InverseTransformPoint(targetWorldPosition);
+            }
+            else
+            {
+                puffTransform.position = targetWorldPosition;
+            }
+
+            Sprite puffSprite = hitPuffRenderer.sprite;
+            if (puffSprite == null)
+            {
+                return;
+            }
+
+            Vector2 puffSpriteSize = puffSprite.bounds.size;
+            if (puffSpriteSize.x <= 0f || puffSpriteSize.y <= 0f)
+            {
+                return;
+            }
+
+            float targetWidth = duckSize.x * hitPuffWidthMultiplier;
+            float targetHeight = duckSize.y * hitPuffHeightMultiplier;
+            Vector3 parentLossyScale = puffTransform.parent != null ? puffTransform.parent.lossyScale : Vector3.one;
+            float parentScaleX = Mathf.Abs(parentLossyScale.x);
+            float parentScaleY = Mathf.Abs(parentLossyScale.y);
+            if (parentScaleX < 0.0001f)
+                parentScaleX = 1f;
+            if (parentScaleY < 0.0001f)
+                parentScaleY = 1f;
+
+            puffTransform.localScale = new Vector3(
+                targetWidth / (puffSpriteSize.x * parentScaleX),
+                targetHeight / (puffSpriteSize.y * parentScaleY),
+                1f);
         }
 
     }
