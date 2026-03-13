@@ -38,8 +38,42 @@ namespace ShooterB
 
         protected virtual void Start()
         {
+            ValidateConfiguredValues();
             currentBullets = maxBullets;
             RegisterConfiguredDeathSprite();
+            GameLog.Log($"[WEAPON] {weaponName} initialized from prefab config - Bullets: {maxBullets}, Damage: {damage}, Fire Delay: {fireDelay}s, Refill: {refillDelay}s");
+        }
+
+        protected virtual void ValidateConfiguredValues()
+        {
+            if (string.IsNullOrWhiteSpace(weaponName))
+            {
+                GameLog.Warning($"[WEAPON] {GetType().Name} has no weaponName configured on its prefab.");
+            }
+
+            if (maxBullets <= 0)
+            {
+                GameLog.Warning($"[WEAPON] {weaponName} has invalid maxBullets ({maxBullets}). Clamping to 1.");
+                maxBullets = 1;
+            }
+
+            if (damage <= 0)
+            {
+                GameLog.Warning($"[WEAPON] {weaponName} has invalid damage ({damage}). Clamping to 1.");
+                damage = 1;
+            }
+
+            if (fireDelay < 0f)
+            {
+                GameLog.Warning($"[WEAPON] {weaponName} has invalid fireDelay ({fireDelay}). Clamping to 0.");
+                fireDelay = 0f;
+            }
+
+            if (refillDelay < 0f)
+            {
+                GameLog.Warning($"[WEAPON] {weaponName} has invalid refillDelay ({refillDelay}). Clamping to 0.");
+                refillDelay = 0f;
+            }
         }
 
         public void RegisterConfiguredDeathSprite()
