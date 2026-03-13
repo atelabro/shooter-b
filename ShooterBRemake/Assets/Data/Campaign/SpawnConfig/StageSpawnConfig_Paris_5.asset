@@ -19,7 +19,7 @@ MonoBehaviour:
     englishWaveLabelFormat: 
     macedonianWaveLabelFormat: 
     spawnSequence:
-    - duckType: 8
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 2
@@ -27,7 +27,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 4
@@ -35,7 +35,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 7
@@ -43,7 +43,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 9
@@ -83,7 +83,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 1
       healthOverride: 0
       startLane: 5
@@ -91,7 +91,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 5
@@ -99,7 +99,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 1
       healthOverride: 0
       startLane: 4
@@ -107,7 +107,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 6
@@ -128,7 +128,7 @@ MonoBehaviour:
     englishWaveLabelFormat: 
     macedonianWaveLabelFormat: 
     spawnSequence:
-    - duckType: 9
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 1
@@ -160,7 +160,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 1
       healthOverride: 0
       startLane: 9
@@ -168,23 +168,23 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 0.55
       healthOverride: 0
       startLane: 7
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.2
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 0.55
       healthOverride: 0
       startLane: 4
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.2
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 0.55
       healthOverride: 0
       startLane: 2
@@ -192,7 +192,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 1
       healthOverride: 0
       startLane: 5
@@ -200,7 +200,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 0.3
       healthOverride: 0
       startLane: 6
@@ -208,7 +208,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 4
@@ -232,7 +232,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 1.5
       healthOverride: 0
       startLane: 5
@@ -245,7 +245,7 @@ MonoBehaviour:
     englishWaveLabelFormat: 
     macedonianWaveLabelFormat: 
     spawnSequence:
-    - duckType: 10
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 2
@@ -253,7 +253,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 4
@@ -261,7 +261,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 7
@@ -269,7 +269,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 9
@@ -293,7 +293,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 1
       healthOverride: 0
       startLane: 1
@@ -301,7 +301,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 3
@@ -309,7 +309,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 6
@@ -317,7 +317,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 8
@@ -325,7 +325,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 1
       healthOverride: 0
       startLane: 1
@@ -333,7 +333,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 0.55
       healthOverride: 0
       startLane: 3
@@ -341,7 +341,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 0.55
       healthOverride: 0
       startLane: 6
@@ -349,7 +349,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 0.55
       healthOverride: 0
       startLane: 8
@@ -373,7 +373,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 1.5
       healthOverride: 0
       startLane: 5
@@ -386,7 +386,7 @@ MonoBehaviour:
     englishWaveLabelFormat: 
     macedonianWaveLabelFormat: 
     spawnSequence:
-    - duckType: 10
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 1
@@ -394,7 +394,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 3
@@ -402,7 +402,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 6
@@ -410,7 +410,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 8
@@ -450,7 +450,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 1
       healthOverride: 0
       startLane: 9
@@ -458,7 +458,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 0.55
       healthOverride: 0
       startLane: 7
@@ -466,7 +466,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 0.55
       healthOverride: 0
       startLane: 4
@@ -474,7 +474,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
+    - duckType: 21
       delay: 0.55
       healthOverride: 0
       startLane: 2
@@ -482,7 +482,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 1
       healthOverride: 0
       startLane: 3
@@ -490,7 +490,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 5
@@ -514,7 +514,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 10
+    - duckType: 21
       delay: 1.2
       healthOverride: 0
       startLane: 5
@@ -535,7 +535,7 @@ MonoBehaviour:
     englishWaveLabelFormat: 
     macedonianWaveLabelFormat: 
     spawnSequence:
-    - duckType: 10
+    - duckType: 21
       delay: 0
       healthOverride: 0
       startLane: 0
@@ -543,7 +543,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: ac4838029454f411c9e71938fa60d64f, type: 2}
-    - duckType: 10
+    - duckType: 21
       delay: 1.5
       healthOverride: 0
       startLane: 0
@@ -580,7 +580,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: 26cd0fce9810d423789df289153943ca, type: 2}
-    - duckType: 10
+    - duckType: 21
       delay: 1.5
       healthOverride: 0
       startLane: 0
@@ -596,7 +596,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: 3ada0a16951124811962ecb05570ff49, type: 2}
-    - duckType: 10
+    - duckType: 21
       delay: 1.5
       healthOverride: 0
       startLane: 0
