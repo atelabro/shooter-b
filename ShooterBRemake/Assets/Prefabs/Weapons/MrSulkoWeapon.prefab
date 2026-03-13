@@ -44,12 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eeaa08245b846208252ab6387330fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.MrSulko
-  weaponName: 
+  weaponName: MrSulko
   weaponType: 3
   fireMode: 1
-  maxBullets: 0
-  fireDelay: 0
-  refillDelay: 0
+  maxBullets: 14
+  damage: 1
+  startModalAmmoBonus: 2
+  fireDelay: 0.1
+  refillDelay: 0.72
   weaponIcon: {fileID: 7551311254184895628, guid: 778f083274ea64e909aa43c39284ad01, type: 3}
   ammoHudSprite: {fileID: -7829253711989005911, guid: 38acd43e78d7d44089e75006d1248cd6, type: 3}
   bulletPrefab: {fileID: 4120011112331769632, guid: bedcf7f5e688473a9c0a3a7f6eb59265, type: 3}

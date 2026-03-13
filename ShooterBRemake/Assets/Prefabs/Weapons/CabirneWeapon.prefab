@@ -44,11 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9904ca1620234b08ba377833c252f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.Cabirne
-  weaponName: 
-  weaponType: 0
-  maxBullets: 0
-  fireDelay: 0
-  refillDelay: 0
+  weaponName: Cabirne
+  weaponType: 1
+  fireMode: 0
+  maxBullets: 7
+  damage: 1
+  startModalAmmoBonus: 2
+  fireDelay: 0.2
+  refillDelay: 0.6
   weaponIcon: {fileID: 4155725260132385913, guid: ef567a6b67c5a44f288d9323d59bf0a5, type: 3}
   ammoHudSprite: {fileID: -8124959325333924108, guid: 7eaf3e31e79154f76bd8f4200b5ef737, type: 3}
   bulletPrefab: {fileID: 4120011112331769632, guid: 0ff1fbc710d549709db9f03ac5f10990, type: 3}

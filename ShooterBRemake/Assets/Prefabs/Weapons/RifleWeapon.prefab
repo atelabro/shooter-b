@@ -44,11 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d6d87ac4ea0b45958031ff95325ecac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.Rifle
-  weaponName: 
+  weaponName: Rifle
   weaponType: 0
-  maxBullets: 0
-  fireDelay: 0
-  refillDelay: 0
+  fireMode: 0
+  maxBullets: 2
+  damage: 2
+  startModalAmmoBonus: 2
+  fireDelay: 0.3
+  refillDelay: 0.8
   weaponIcon: {fileID: -9082628263308090024, guid: 17811d2656a5c47b29c9d1715b7e0f6f, type: 3}
   ammoHudSprite: {fileID: -8395740208524278461, guid: ef04488734ecb478baf0722a4d865ba3, type: 3}
   bulletPrefab: {fileID: 4120011112331769632, guid: 7a0390591e9a5438c883031664f521a7, type: 3}

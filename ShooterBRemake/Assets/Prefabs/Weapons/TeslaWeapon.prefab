@@ -44,11 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f86761194a64386951ea1bcb3d320f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.TeslaGun
-  weaponName: 
-  weaponType: 0
-  maxBullets: 0
-  fireDelay: 0
-  refillDelay: 0
+  weaponName: TeslaGun
+  weaponType: 5
+  fireMode: 0
+  maxBullets: 5
+  damage: 1
+  startModalAmmoBonus: 2
+  fireDelay: 0.1
+  refillDelay: 0.4
   weaponIcon: {fileID: 8161222508995843919, guid: 3e323d8db43744023b6b138942febbc9, type: 3}
   ammoHudSprite: {fileID: -6045184203495171077, guid: 3be18172971604fa8b964fa364c6164b, type: 3}
   bulletPrefab: {fileID: 4120011112331769632, guid: c7a12d32f01f48218de1f4cb8f01ab63, type: 3}

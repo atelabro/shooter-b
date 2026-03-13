@@ -44,12 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6804a7a01234626aafce9c2c0cb5e8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.Beretta
-  weaponName: 
+  weaponName: Beretta
   weaponType: 2
   fireMode: 1
   maxBullets: 14
+  damage: 1
+  startModalAmmoBonus: 2
   fireDelay: 0.2
-  refillDelay: 2.4
+  refillDelay: 1.6
   weaponIcon: {fileID: -3600997729039249136, guid: 5f4bc1b1a33aa47f9a130530da2d4665, type: 3}
   ammoHudSprite: {fileID: 1653537387157507656, guid: 5740f4596cd61439b959250ea8c62717, type: 3}
   bulletPrefab: {fileID: 4120011112331769632, guid: 2e61d410ed824f008dfe2050a20b14c3, type: 3}
