@@ -107,7 +107,8 @@ namespace ShooterB
 
         private Language GetDefaultLanguageFromSystem()
         {
-            return Application.systemLanguage == SystemLanguage.Macedonian
+            string systemLanguageName = Application.systemLanguage.ToString();
+            return string.Equals(systemLanguageName, "Macedonian", StringComparison.OrdinalIgnoreCase)
                 ? Language.Macedonian
                 : Language.English;
         }

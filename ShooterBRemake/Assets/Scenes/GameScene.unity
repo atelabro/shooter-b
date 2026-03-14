@@ -340,6 +340,7 @@ GameObject:
   - component: {fileID: 46093123}
   - component: {fileID: 46093122}
   - component: {fileID: 46093121}
+  - component: {fileID: 46093124}
   m_Layer: 5
   m_Name: RetryButton
   m_TagString: Untagged
@@ -448,6 +449,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46093119}
   m_CullTransparentMesh: 1
+--- !u!225 &46093124
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46093119}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &49299408
 GameObject:
   m_ObjectHideFlags: 0
@@ -1576,6 +1589,7 @@ GameObject:
   - component: {fileID: 423362470}
   - component: {fileID: 423362469}
   - component: {fileID: 423362468}
+  - component: {fileID: 423362471}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -1684,6 +1698,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423362466}
   m_CullTransparentMesh: 1
+--- !u!225 &423362471
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423362466}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &439035270
 GameObject:
   m_ObjectHideFlags: 0
@@ -4371,6 +4397,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.GameOverModalController
   modalRoot: {fileID: 1650351472}
+  titleText: {fileID: 284375998}
+  finalScoreHeaderText: {fileID: 195766290}
   finalScoreText: {fileID: 195766290}
   highScoreText: {fileID: 1211913449}
   modeText: {fileID: 238845039}

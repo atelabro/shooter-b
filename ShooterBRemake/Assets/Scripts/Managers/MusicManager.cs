@@ -91,8 +91,10 @@ namespace ShooterB
             if (musicSource == null)
                 return;
 
-            if (musicSource.isPlaying || musicSource.time > 0f)
+            if (musicSource.isPlaying)
                 musicSource.Stop();
+
+            musicSource.clip = null;
         }
 
         public void SetPaused(bool paused)
