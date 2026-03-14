@@ -151,9 +151,9 @@ namespace ShooterB
             GameLog.Log($"Duck killed - Type: {duckType}, Weapon: {weaponType}, Base: {basePoints}, Multiplier: {Multiplier}, Earned: {pointsEarned}");
         }
 
-        public void BirdPassed()
+        public void BirdPassed(Constants.DuckType duckType)
         {
-            MinusLife();
+            MinusLife(GetLifePenaltyForPassedDuck(duckType));
             OnBirdPassed?.Invoke();
             GameLog.Log($"Duck passed - Lives remaining: {Lives}");
 
@@ -241,10 +241,25 @@ namespace ShooterB
             duckKillSfxSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
         }
 
-        private void MinusLife()
+        private void MinusLife(int amount = 1)
         {
-            Lives = Mathf.Max(0, Lives - 1);
+            Lives = Mathf.Max(0, Lives - Mathf.Max(1, amount));
             OnLivesChanged?.Invoke(Lives);
+        }
+
+        private static int GetLifePenaltyForPassedDuck(Constants.DuckType duckType)
+        {
+            switch (duckType)
+            {
+                case Constants.DuckType.MK_SAMUIL_BOSS_DUCK:
+                case Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK:
+                case Constants.DuckType.BRITISH_SHERLOCK_BOSS_DUCK:
+                case Constants.DuckType.USA_BOSS_DUCK:
+                case Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK:
+                    return 3;
+                default:
+                    return 1;
+            }
         }
 
         private void PlusLife()

@@ -41,7 +41,12 @@ namespace ShooterB
             TripleThreatI,
             TripleThreatII,
             OverkillI,
-            OverkillII
+            OverkillII,
+            SkopjeBossHunter,
+            ParisBossHunter,
+            LondonBossHunter,
+            NewYorkBossHunter,
+            TokyoBossHunter
         }
 
         private enum ProgressSource
@@ -82,7 +87,7 @@ namespace ShooterB
             public string titleKey;
         }
 
-        private const int CurrentSchemaVersion = 3;
+        private const int CurrentSchemaVersion = 4;
         private const string SchemaVersionKey = "Achievement_SchemaVersion";
         private const string AchievementCoinSfxResourcePath = "Audio/coin";
 
@@ -260,6 +265,11 @@ namespace ShooterB
             AddBirdAchievement(AchievementId.BossSlayerI, 60, duckType: Constants.DuckType.USA_BOSS_DUCK, coinReward: 15);
             AddBirdAchievement(AchievementId.BossSlayerII, 180, duckType: Constants.DuckType.USA_BOSS_DUCK, coinReward: 40);
             AddBirdAchievement(AchievementId.BossSlayerIII, 360, duckType: Constants.DuckType.USA_BOSS_DUCK, coinReward: 80);
+            AddBirdAchievement(AchievementId.SkopjeBossHunter, 10, duckType: Constants.DuckType.MK_SAMUIL_BOSS_DUCK, coinReward: 18);
+            AddBirdAchievement(AchievementId.ParisBossHunter, 10, duckType: Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK, coinReward: 18);
+            AddBirdAchievement(AchievementId.LondonBossHunter, 10, duckType: Constants.DuckType.BRITISH_SHERLOCK_BOSS_DUCK, coinReward: 18);
+            AddBirdAchievement(AchievementId.NewYorkBossHunter, 10, duckType: Constants.DuckType.USA_BOSS_DUCK, coinReward: 18);
+            AddBirdAchievement(AchievementId.TokyoBossHunter, 10, duckType: Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK, coinReward: 18);
 
             AddCityAchievement(AchievementId.SkopjeDefenderI, 100, DuckGroup.Skopje, coinReward: 18);
             AddCityAchievement(AchievementId.SkopjeDefenderII, 350, DuckGroup.Skopje, coinReward: 50);

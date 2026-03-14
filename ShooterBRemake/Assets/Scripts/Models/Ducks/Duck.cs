@@ -976,7 +976,7 @@ namespace ShooterB
 
         private void DuckPassedScreen()
         {
-            GameManager.Instance.BirdPassed();
+            GameManager.Instance.BirdPassed(duckType);
             ReturnToPool();
         }
 

@@ -272,6 +272,11 @@ namespace ShooterB
                 ["achievement.TripleThreatII.title"] = "Triple Threat II",
                 ["achievement.OverkillI.title"] = "Overkill I",
                 ["achievement.OverkillII.title"] = "Overkill II",
+                ["achievement.SkopjeBossHunter.title"] = "Skopje Boss Hunter",
+                ["achievement.ParisBossHunter.title"] = "Paris Boss Hunter",
+                ["achievement.LondonBossHunter.title"] = "London Boss Hunter",
+                ["achievement.NewYorkBossHunter.title"] = "New York Boss Hunter",
+                ["achievement.TokyoBossHunter.title"] = "Tokyo Boss Hunter",
 
                 ["daily.Kill40.title"] = "Daily Hunter",
                 ["daily.Kill80.title"] = "Feather Reaper",
@@ -468,6 +473,11 @@ namespace ShooterB
                 ["achievement.TripleThreatII.title"] = "Тројна Закана II",
                 ["achievement.OverkillI.title"] = "Оверкил I",
                 ["achievement.OverkillII.title"] = "Оверкил II",
+                ["achievement.SkopjeBossHunter.title"] = "Ловец на Шефот од Скопје",
+                ["achievement.ParisBossHunter.title"] = "Ловец на Шефот од Париз",
+                ["achievement.LondonBossHunter.title"] = "Ловец на Шефот од Лондон",
+                ["achievement.NewYorkBossHunter.title"] = "Ловец на Шефот од Њујорк",
+                ["achievement.TokyoBossHunter.title"] = "Ловец на Шефот од Токио",
 
                 ["daily.Kill40.title"] = "Дневен Ловец",
                 ["daily.Kill80.title"] = "Жетвар на Пердуви",
