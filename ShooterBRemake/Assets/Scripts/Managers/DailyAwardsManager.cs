@@ -391,7 +391,11 @@ namespace ShooterB
                             IncrementSlot(slot, 1);
                         break;
                     case ObjectiveType.BossKills:
-                        if (duckType == Constants.DuckType.MK_VOJVODA)
+                        if (duckType == Constants.DuckType.MK_SAMUIL_BOSS_DUCK ||
+                            duckType == Constants.DuckType.USA_BOSS_DUCK ||
+                            duckType == Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK ||
+                            duckType == Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK ||
+                            duckType == Constants.DuckType.BRITISH_SHERLOCK_BOSS_DUCK)
                             IncrementSlot(slot, 1);
                         break;
                 }

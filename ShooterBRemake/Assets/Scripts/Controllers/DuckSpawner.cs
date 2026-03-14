@@ -70,15 +70,18 @@ namespace ShooterB
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.BRITISH_REDCOAT), Constants.DuckType.BRITISH_REDCOAT, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.BRITISH_POLICE), Constants.DuckType.BRITISH_POLICE, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.BRITISH_PUNK), Constants.DuckType.BRITISH_PUNK, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.BRITISH_SHERLOCK_BOSS_DUCK), Constants.DuckType.BRITISH_SHERLOCK_BOSS_DUCK, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_POLICE), Constants.DuckType.USA_POLICE, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_WORKER), Constants.DuckType.USA_WORKER, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_BUSINESS), Constants.DuckType.USA_BUSINESS, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.JAPANESE_SAMURAI), Constants.DuckType.JAPANESE_SAMURAI, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK), Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_BOSS_DUCK), Constants.DuckType.USA_BOSS_DUCK, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.JAPANESE_STRAW_DUCK), Constants.DuckType.JAPANESE_STRAW_DUCK, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.JAPANESE_KIMONO_DUCK), Constants.DuckType.JAPANESE_KIMONO_DUCK, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.FRENCH_MUSKETEER), Constants.DuckType.FRENCH_MUSKETEER, nameof(duckFrameLibrary));
-            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.FRENCH_MUSKETEER_2), Constants.DuckType.FRENCH_MUSKETEER_2, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK), Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.MK_SAMUIL_BOSS_DUCK), Constants.DuckType.MK_SAMUIL_BOSS_DUCK, nameof(duckFrameLibrary));
         }
 
         private void ValidateTypeFrames(Sprite[] frames, Constants.DuckType type, string fieldName)

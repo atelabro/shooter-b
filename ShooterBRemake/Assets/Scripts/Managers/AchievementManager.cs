@@ -410,16 +410,18 @@ namespace ShooterB
                 case Constants.DuckType.MK_PHALARX:
                 case Constants.DuckType.MK_ARCHER:
                 case Constants.DuckType.MK_VOJVODA:
+                case Constants.DuckType.MK_SAMUIL_BOSS_DUCK:
                     return DuckGroup.Skopje;
                 case Constants.DuckType.FRENCH_REVOLUTIONARY:
                 case Constants.DuckType.FRENCH_NAPOLEON:
                 case Constants.DuckType.FRENCH_ARTIST:
                 case Constants.DuckType.FRENCH_MUSKETEER:
-                case Constants.DuckType.FRENCH_MUSKETEER_2:
+                case Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK:
                     return DuckGroup.Paris;
                 case Constants.DuckType.BRITISH_REDCOAT:
                 case Constants.DuckType.BRITISH_POLICE:
                 case Constants.DuckType.BRITISH_PUNK:
+                case Constants.DuckType.BRITISH_SHERLOCK_BOSS_DUCK:
                     return DuckGroup.London;
                 case Constants.DuckType.USA_POLICE:
                 case Constants.DuckType.USA_WORKER:
@@ -427,6 +429,7 @@ namespace ShooterB
                 case Constants.DuckType.USA_BOSS_DUCK:
                     return DuckGroup.NewYork;
                 case Constants.DuckType.JAPANESE_SAMURAI:
+                case Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK:
                 case Constants.DuckType.JAPANESE_STRAW_DUCK:
                 case Constants.DuckType.JAPANESE_KIMONO_DUCK:
                     return DuckGroup.Tokyo;

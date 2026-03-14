@@ -1407,7 +1407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
   m_Padding:
-    m_Left: 40
+    m_Left: 0
     m_Right: 0
     m_Top: 4
     m_Bottom: 4
@@ -2772,7 +2772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
   m_Padding:
-    m_Left: 40
+    m_Left: 0
     m_Right: 0
     m_Top: 4
     m_Bottom: 4
@@ -3099,8 +3099,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: -73}
-  m_SizeDelta: {x: 600, y: 46}
+  m_AnchoredPosition: {x: 330, y: -73}
+  m_SizeDelta: {x: 660, y: 46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &888885633
 MonoBehaviour:
@@ -3659,8 +3659,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: -73}
-  m_SizeDelta: {x: 600, y: 46}
+  m_AnchoredPosition: {x: 330, y: -73}
+  m_SizeDelta: {x: 660, y: 46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1241057553
 MonoBehaviour:
@@ -5374,7 +5374,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: -24}
+  m_AnchoredPosition: {x: 300, y: -24}
   m_SizeDelta: {x: 600, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1733049489
@@ -6193,7 +6193,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: -24}
+  m_AnchoredPosition: {x: 300, y: -24}
   m_SizeDelta: {x: 600, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2112972106

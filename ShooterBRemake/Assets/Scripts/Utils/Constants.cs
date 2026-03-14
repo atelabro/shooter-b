@@ -83,8 +83,10 @@ namespace ShooterB
             FRENCH_MUSKETEER,
             MK_SAMUIL_GUARD,
             MK_SAMUIL_ELITE,
-            MK_SAMUIL_KING,
-            FRENCH_MUSKETEER_2
+            MK_SAMUIL_BOSS_DUCK,
+            FRENCH_MUSKETEER_BOSS_DUCK,
+            JAPANESE_SAMURAI_BOSS_DUCK,
+            BRITISH_SHERLOCK_BOSS_DUCK
         }
 
         public static string GetDuckDisplayName(DuckType type)
@@ -102,20 +104,22 @@ namespace ShooterB
                 case DuckType.FRENCH_NAPOLEON: return "French Napoleon";
                 case DuckType.FRENCH_ARTIST: return "French Artist";
                 case DuckType.FRENCH_MUSKETEER: return "French Musketeer";
-                case DuckType.FRENCH_MUSKETEER_2: return "French Musketeer II";
+                case DuckType.FRENCH_MUSKETEER_BOSS_DUCK: return "French Musketeer Boss Duck";
                 case DuckType.BRITISH_REDCOAT: return "British Redcoat";
                 case DuckType.BRITISH_POLICE: return "British Police";
                 case DuckType.BRITISH_PUNK: return "British Punk";
+                case DuckType.BRITISH_SHERLOCK_BOSS_DUCK: return "British Sherlock Boss Duck";
                 case DuckType.USA_POLICE: return "USA Police";
                 case DuckType.USA_WORKER: return "USA Worker";
                 case DuckType.USA_BUSINESS: return "USA Business";
                 case DuckType.JAPANESE_SAMURAI: return "Japanese Samurai";
+                case DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return "Japanese Samurai Boss Duck";
                 case DuckType.USA_BOSS_DUCK: return "USA Boss Duck";
                 case DuckType.JAPANESE_STRAW_DUCK: return "Japanese Straw Duck";
                 case DuckType.JAPANESE_KIMONO_DUCK: return "Japanese Kimono Duck";
                 case DuckType.MK_SAMUIL_GUARD: return "Samuil Guard";
                 case DuckType.MK_SAMUIL_ELITE: return "Samuil Elite";
-                case DuckType.MK_SAMUIL_KING: return "Samuil King";
+                case DuckType.MK_SAMUIL_BOSS_DUCK: return "Samuil Boss Duck";
                 // Reserve this switch for future region-specific duck additions (e.g. France).
                 default: return type.ToString();
             }
@@ -136,20 +140,22 @@ namespace ShooterB
                 case DuckType.FRENCH_NAPOLEON: return "FRENCH_NAPOLEON";
                 case DuckType.FRENCH_ARTIST: return "FRENCH_ARTIST";
                 case DuckType.FRENCH_MUSKETEER: return "FRENCH_MUSKETEER";
-                case DuckType.FRENCH_MUSKETEER_2: return "FRENCH_MUSKETEER_2";
+                case DuckType.FRENCH_MUSKETEER_BOSS_DUCK: return "FRENCH_MUSKETEER_BOSS_DUCK";
                 case DuckType.BRITISH_REDCOAT: return "BRITISH_REDCOAT";
                 case DuckType.BRITISH_POLICE: return "BRITISH_POLICE";
                 case DuckType.BRITISH_PUNK: return "BRITISH_PUNK";
+                case DuckType.BRITISH_SHERLOCK_BOSS_DUCK: return "BRITISH_SHERLOCK_BOSS_DUCK";
                 case DuckType.USA_POLICE: return "USA_POLICE";
                 case DuckType.USA_WORKER: return "USA_WORKER";
                 case DuckType.USA_BUSINESS: return "USA_BUSINESS";
                 case DuckType.JAPANESE_SAMURAI: return "JAPANESE_SAMURAI";
+                case DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return "JAPANESE_SAMURAI_BOSS_DUCK";
                 case DuckType.USA_BOSS_DUCK: return "USA_BOSS_DUCK";
                 case DuckType.JAPANESE_STRAW_DUCK: return "JAPANESE_STRAW_DUCK";
                 case DuckType.JAPANESE_KIMONO_DUCK: return "JAPANESE_KIMONO_DUCK";
                 case DuckType.MK_SAMUIL_GUARD: return "MK_SAMUIL_GUARD";
                 case DuckType.MK_SAMUIL_ELITE: return "MK_SAMUIL_ELITE";
-                case DuckType.MK_SAMUIL_KING: return "MK_SAMUIL_KING";
+                case DuckType.MK_SAMUIL_BOSS_DUCK: return "MK_SAMUIL_BOSS_DUCK";
                 default: return type.ToString();
             }
         }
@@ -190,7 +196,10 @@ namespace ShooterB
             SinWaveStartDown = 10,
             BounceMid = 11,
             DiagonalV = 12,
-            DiagonalInverseV = 13
+            DiagonalInverseV = 13,
+            BossCenterWeave = 14,
+            BossFigureEight = 15,
+            BossCornerTraverse = 16
         }
 
         public enum MultiKillType
@@ -225,20 +234,22 @@ namespace ShooterB
             public const int FRENCH_NAPOLEON = 2;
             public const int FRENCH_ARTIST = 2;
             public const int FRENCH_MUSKETEER = 2;
-            public const int FRENCH_MUSKETEER_2 = 2;
+            public const int FRENCH_MUSKETEER_BOSS_DUCK = 8;
             public const int BRITISH_REDCOAT = 2;
             public const int BRITISH_POLICE = 3;
             public const int BRITISH_PUNK = 4;
+            public const int BRITISH_SHERLOCK_BOSS_DUCK = 8;
             public const int USA_POLICE = 3;
             public const int USA_WORKER = 3;
             public const int USA_BUSINESS = 3;
             public const int JAPANESE_SAMURAI = 4;
+            public const int JAPANESE_SAMURAI_BOSS_DUCK = 8;
             public const int USA_BOSS_DUCK = 5;
             public const int JAPANESE_STRAW_DUCK = 4;
             public const int JAPANESE_KIMONO_DUCK = 4;
             public const int MK_SAMUIL_GUARD = 1;
             public const int MK_SAMUIL_ELITE = 1;
-            public const int MK_SAMUIL_KING = 1;
+            public const int MK_SAMUIL_BOSS_DUCK = 8;
 
             public static int GetPoints(DuckType type)
             {
@@ -255,20 +266,22 @@ namespace ShooterB
                     case DuckType.FRENCH_NAPOLEON: return FRENCH_NAPOLEON;
                     case DuckType.FRENCH_ARTIST: return FRENCH_ARTIST;
                     case DuckType.FRENCH_MUSKETEER: return FRENCH_MUSKETEER;
-                    case DuckType.FRENCH_MUSKETEER_2: return FRENCH_MUSKETEER_2;
+                    case DuckType.FRENCH_MUSKETEER_BOSS_DUCK: return FRENCH_MUSKETEER_BOSS_DUCK;
                     case DuckType.BRITISH_REDCOAT: return BRITISH_REDCOAT;
                     case DuckType.BRITISH_POLICE: return BRITISH_POLICE;
                     case DuckType.BRITISH_PUNK: return BRITISH_PUNK;
+                    case DuckType.BRITISH_SHERLOCK_BOSS_DUCK: return BRITISH_SHERLOCK_BOSS_DUCK;
                     case DuckType.USA_POLICE: return USA_POLICE;
                     case DuckType.USA_WORKER: return USA_WORKER;
                     case DuckType.USA_BUSINESS: return USA_BUSINESS;
                     case DuckType.JAPANESE_SAMURAI: return JAPANESE_SAMURAI;
+                    case DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return JAPANESE_SAMURAI_BOSS_DUCK;
                     case DuckType.USA_BOSS_DUCK: return USA_BOSS_DUCK;
                     case DuckType.JAPANESE_STRAW_DUCK: return JAPANESE_STRAW_DUCK;
                     case DuckType.JAPANESE_KIMONO_DUCK: return JAPANESE_KIMONO_DUCK;
                     case DuckType.MK_SAMUIL_GUARD: return MK_SAMUIL_GUARD;
                     case DuckType.MK_SAMUIL_ELITE: return MK_SAMUIL_ELITE;
-                    case DuckType.MK_SAMUIL_KING: return MK_SAMUIL_KING;
+                    case DuckType.MK_SAMUIL_BOSS_DUCK: return MK_SAMUIL_BOSS_DUCK;
                     default: return TYPE_0;
                 }
             }
@@ -277,13 +290,21 @@ namespace ShooterB
         public static class DuckHealth
         {
             public const int DEFAULT = 1;
+            public const int MK_SAMUIL_BOSS_DUCK = 8;
             public const int USA_BOSS_DUCK = 8;
+            public const int FRENCH_MUSKETEER_BOSS_DUCK = 8;
+            public const int JAPANESE_SAMURAI_BOSS_DUCK = 8;
+            public const int BRITISH_SHERLOCK_BOSS_DUCK = 8;
 
             public static int GetMaxHealth(DuckType type)
             {
                 switch (type)
                 {
+                    case DuckType.MK_SAMUIL_BOSS_DUCK: return MK_SAMUIL_BOSS_DUCK;
                     case DuckType.USA_BOSS_DUCK: return USA_BOSS_DUCK;
+                    case DuckType.FRENCH_MUSKETEER_BOSS_DUCK: return FRENCH_MUSKETEER_BOSS_DUCK;
+                    case DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return JAPANESE_SAMURAI_BOSS_DUCK;
+                    case DuckType.BRITISH_SHERLOCK_BOSS_DUCK: return BRITISH_SHERLOCK_BOSS_DUCK;
                     default: return DEFAULT;
                 }
             }

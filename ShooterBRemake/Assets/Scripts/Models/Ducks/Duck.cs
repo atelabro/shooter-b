@@ -215,6 +215,10 @@ namespace ShooterB
                     ? new Vector2(screenLeft, screenBottom + margin)
                     : new Vector2(screenLeft, screenTop - margin);
             }
+            else if (IsBossPath(currentPathProjection))
+            {
+                startPosition = new Vector2(screenLeft, GetLaneCenterY(currentStartLane));
+            }
 
             if (spriteRenderer != null)
                 spriteRenderer.flipX = false;
@@ -306,16 +310,19 @@ namespace ShooterB
                 case Constants.DuckType.FRENCH_NAPOLEON: return frenchNapoleonSizeMultiplier;
                 case Constants.DuckType.FRENCH_ARTIST: return frenchArtistSizeMultiplier;
                 case Constants.DuckType.FRENCH_MUSKETEER: return frenchNapoleonSizeMultiplier;
-                case Constants.DuckType.FRENCH_MUSKETEER_2: return frenchNapoleonSizeMultiplier;
+                case Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK: return frenchNapoleonSizeMultiplier;
                 case Constants.DuckType.BRITISH_REDCOAT: return britishRedcoatSizeMultiplier;
                 case Constants.DuckType.BRITISH_POLICE: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.BRITISH_PUNK: return britishPunkSizeMultiplier;
+                case Constants.DuckType.BRITISH_SHERLOCK_BOSS_DUCK: return britishPunkSizeMultiplier;
                 case Constants.DuckType.USA_POLICE: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.USA_WORKER: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.USA_BUSINESS: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.JAPANESE_SAMURAI: return britishPunkSizeMultiplier;
+                case Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return britishPunkSizeMultiplier;
                 case Constants.DuckType.JAPANESE_STRAW_DUCK: return britishPunkSizeMultiplier;
                 case Constants.DuckType.JAPANESE_KIMONO_DUCK: return britishPunkSizeMultiplier;
+                case Constants.DuckType.MK_SAMUIL_BOSS_DUCK: return mkVojvodaSizeMultiplier;
                 default: return 1f;
             }
         }
@@ -395,6 +402,10 @@ namespace ShooterB
             {
                 AdvanceDiagonalVPath();
             }
+            else if (IsBossPath(currentPathProjection))
+            {
+                AdvanceBossPath();
+            }
             else
             {
                 AdvanceBezierPath();
@@ -435,6 +446,11 @@ namespace ShooterB
 
         private bool IsDiagonalVPath(Constants.DuckPathProjection p)
             => p == Constants.DuckPathProjection.DiagonalV || p == Constants.DuckPathProjection.DiagonalInverseV;
+
+        private bool IsBossPath(Constants.DuckPathProjection p)
+            => p == Constants.DuckPathProjection.BossCenterWeave ||
+               p == Constants.DuckPathProjection.BossFigureEight ||
+               p == Constants.DuckPathProjection.BossCornerTraverse;
 
         private float GetSinWaveCenterY()
         {
@@ -672,6 +688,195 @@ namespace ShooterB
             }
 
             rb.MovePosition(new Vector2(x, y));
+        }
+
+        private void AdvanceBossPath()
+        {
+            switch (currentPathProjection)
+            {
+                case Constants.DuckPathProjection.BossCenterWeave:
+                    AdvanceBossCenterWeavePath();
+                    break;
+                case Constants.DuckPathProjection.BossFigureEight:
+                    AdvanceBossFigureEightPath();
+                    break;
+                case Constants.DuckPathProjection.BossCornerTraverse:
+                    AdvanceBossCornerTraversePath();
+                    break;
+                default:
+                    DuckPassedScreen();
+                    break;
+            }
+        }
+
+        private void AdvanceBossCenterWeavePath()
+        {
+            float screenWidth = screenRight - screenLeft;
+            float screenHeight = screenTop - screenBottom;
+            if (screenWidth <= 0f || screenHeight <= 0f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            pathProgress += (speed * Time.fixedDeltaTime) / screenWidth;
+            if (pathProgress >= 1f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            float margin = screenHeight * 0.05f;
+            float centerY = GetLaneCenterY(currentStartLane);
+            float amplitude = Mathf.Min(
+                screenHeight * 0.22f,
+                Mathf.Max(0f, centerY - (screenBottom + margin), (screenTop - margin) - centerY));
+
+            float x;
+            if (pathProgress < 0.2f)
+                x = Mathf.Lerp(screenLeft, screenLeft + screenWidth * 0.34f, pathProgress / 0.2f);
+            else if (pathProgress < 0.82f)
+                x = Mathf.Lerp(screenLeft + screenWidth * 0.34f, screenLeft + screenWidth * 0.64f, (pathProgress - 0.2f) / 0.62f);
+            else
+                x = Mathf.Lerp(screenLeft + screenWidth * 0.64f, screenRight, (pathProgress - 0.82f) / 0.18f);
+
+            float phase = Mathf.InverseLerp(0.2f, 0.82f, Mathf.Clamp(pathProgress, 0.2f, 0.82f));
+            float y = centerY + Mathf.Sin(phase * Mathf.PI * 4f) * amplitude;
+            y = Mathf.Clamp(y, screenBottom + margin, screenTop - margin);
+
+            rb.MovePosition(new Vector2(x, y));
+            if (spriteRenderer != null)
+                spriteRenderer.flipX = false;
+        }
+
+        private void AdvanceBossFigureEightPath()
+        {
+            float screenWidth = screenRight - screenLeft;
+            float screenHeight = screenTop - screenBottom;
+            if (screenWidth <= 0f || screenHeight <= 0f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            pathProgress += (speed * Time.fixedDeltaTime) / screenWidth;
+            if (pathProgress >= 1f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            float margin = screenHeight * 0.05f;
+            float entryEndX = screenLeft + screenWidth * 0.36f;
+            float loopCenterX = screenLeft + screenWidth * 0.5f;
+            float loopCenterY = GetLaneCenterY(currentStartLane);
+            float loopRadiusX = screenWidth * 0.14f;
+            float loopRadiusY = Mathf.Min(
+                screenHeight * 0.22f,
+                Mathf.Max(0.1f, loopCenterY - (screenBottom + margin), (screenTop - margin) - loopCenterY));
+            float startAngle = -Mathf.PI * 0.5f;
+            float endAngle = startAngle + (Mathf.PI * 2f);
+
+            Vector2 position;
+            if (pathProgress < 0.18f)
+            {
+                float t = pathProgress / 0.18f;
+                position = new Vector2(Mathf.Lerp(screenLeft, entryEndX, t), loopCenterY);
+            }
+            else if (pathProgress < 0.82f)
+            {
+                float t = (pathProgress - 0.18f) / 0.64f;
+                float angle = Mathf.Lerp(startAngle, endAngle, t);
+                float x = loopCenterX + Mathf.Sin(angle) * loopRadiusX;
+                float y = loopCenterY + Mathf.Sin(angle * 2f) * loopRadiusY;
+                position = new Vector2(x, Mathf.Clamp(y, screenBottom + margin, screenTop - margin));
+            }
+            else
+            {
+                float t = (pathProgress - 0.82f) / 0.18f;
+                float exitStartX = loopCenterX + Mathf.Sin(endAngle) * loopRadiusX;
+                float exitStartY = loopCenterY + Mathf.Sin(endAngle * 2f) * loopRadiusY;
+                position = new Vector2(Mathf.Lerp(exitStartX, screenRight, t), Mathf.Lerp(exitStartY, loopCenterY, t));
+            }
+
+            rb.MovePosition(position);
+            if (spriteRenderer != null)
+                spriteRenderer.flipX = false;
+        }
+
+        private void AdvanceBossCornerTraversePath()
+        {
+            float screenWidth = screenRight - screenLeft;
+            float screenHeight = screenTop - screenBottom;
+            if (screenWidth <= 0f || screenHeight <= 0f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            pathProgress += (speed * Time.fixedDeltaTime) / screenWidth;
+            if (pathProgress >= 1f)
+            {
+                DuckPassedScreen();
+                return;
+            }
+
+            float margin = screenHeight * 0.05f;
+            float centerY = GetLaneCenterY(currentStartLane);
+            bool startUpper = centerY <= screenBottom + screenHeight * 0.5f;
+            float cornerY = startUpper ? screenTop - screenHeight * 0.16f : screenBottom + screenHeight * 0.16f;
+            float oppositeY = startUpper ? screenBottom + screenHeight * 0.22f : screenTop - screenHeight * 0.22f;
+            cornerY = Mathf.Clamp(cornerY, screenBottom + margin, screenTop - margin);
+            oppositeY = Mathf.Clamp(oppositeY, screenBottom + margin, screenTop - margin);
+            float retreatY = Mathf.Lerp(cornerY, centerY, 0.55f);
+            float exitY = Mathf.Lerp(oppositeY, centerY, 0.35f);
+            Vector2 pos;
+
+            if (pathProgress < 0.22f)
+            {
+                float t = pathProgress / 0.22f;
+                pos = new Vector2(
+                    Mathf.Lerp(screenLeft, screenLeft + screenWidth * 0.26f, t),
+                    Mathf.Lerp(centerY, cornerY, t));
+
+                if (spriteRenderer != null)
+                    spriteRenderer.flipX = false;
+            }
+            else if (pathProgress < 0.42f)
+            {
+                float t = (pathProgress - 0.22f) / 0.20f;
+                pos = new Vector2(
+                    Mathf.Lerp(screenLeft + screenWidth * 0.26f, screenLeft + screenWidth * 0.18f, t),
+                    Mathf.Lerp(cornerY, retreatY, t));
+
+                if (spriteRenderer != null)
+                    spriteRenderer.flipX = true;
+            }
+            else if (pathProgress < 0.82f)
+            {
+                float t = (pathProgress - 0.42f) / 0.40f;
+                Vector2 p0 = new Vector2(screenLeft + screenWidth * 0.18f, retreatY);
+                Vector2 p1 = new Vector2(screenLeft + screenWidth * 0.34f, retreatY);
+                Vector2 p2 = new Vector2(screenLeft + screenWidth * 0.62f, oppositeY);
+                Vector2 p3 = new Vector2(screenLeft + screenWidth * 0.84f, oppositeY);
+                pos = CubicBezier(p0, p1, p2, p3, t);
+
+                if (spriteRenderer != null)
+                    spriteRenderer.flipX = false;
+            }
+            else
+            {
+                float t = (pathProgress - 0.82f) / 0.18f;
+                pos = new Vector2(
+                    Mathf.Lerp(screenLeft + screenWidth * 0.84f, screenRight, t),
+                    Mathf.Lerp(oppositeY, exitY, t));
+
+                if (spriteRenderer != null)
+                    spriteRenderer.flipX = false;
+            }
+
+            pos.y = Mathf.Clamp(pos.y, screenBottom + margin, screenTop - margin);
+            rb.MovePosition(pos);
         }
 
         private Vector2 CubicBezier(Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3, float t)
