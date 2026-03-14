@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ShooterB
 {
@@ -22,6 +23,7 @@ namespace ShooterB
             if (popupText == null)
                 popupText = GetComponent<TMP_Text>();
 
+            DisableRaycastBlocking();
             ApplyOutlineToText();
         }
 
@@ -51,6 +53,16 @@ namespace ShooterB
                 instanceMaterial.SetFloat("_OutlineWidth", Mathf.Clamp01(outlineWidth));
 
             popupText.fontMaterial = instanceMaterial;
+        }
+
+        private void DisableRaycastBlocking()
+        {
+            Graphic[] graphics = GetComponentsInChildren<Graphic>(true);
+            for (int i = 0; i < graphics.Length; i++)
+            {
+                if (graphics[i] != null)
+                    graphics[i].raycastTarget = false;
+            }
         }
 
         private Color GetColor(Constants.MultiKillType type)

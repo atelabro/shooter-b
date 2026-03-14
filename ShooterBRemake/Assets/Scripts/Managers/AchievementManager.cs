@@ -436,6 +436,7 @@ namespace ShooterB
                 case Constants.DuckType.USA_POLICE:
                 case Constants.DuckType.USA_WORKER:
                 case Constants.DuckType.USA_BUSINESS:
+                case Constants.DuckType.USA_SWAT:
                 case Constants.DuckType.USA_BOSS_DUCK:
                     return DuckGroup.NewYork;
                 case Constants.DuckType.JAPANESE_SAMURAI:

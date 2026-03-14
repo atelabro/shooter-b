@@ -35,6 +35,7 @@ namespace ShooterB
         public Vector2 achievementsBadgeOffset = new Vector2(-16f, 0f);
         public Vector2 achievementsBadgeSize = new Vector2(28f, 28f);
         public Color achievementsBadgeColor = new Color32(220, 45, 45, 255);
+        public Color achievementsBadgeAdRewardColor = new Color32(56, 168, 74, 255);
 
         [Header("Localization")]
         public LanguageDropdownController languageDropdown;
@@ -305,12 +306,22 @@ namespace ShooterB
             if (achievementsBadgeRoot == null || achievementsBadgeText == null)
                 return;
 
+            Image badgeImage = achievementsBadgeRoot.GetComponent<Image>();
             int unfinishedCount = DailyAwardsManager.Instance.GetUnfinishedTodayCount();
-            bool shouldShow = unfinishedCount > 0;
+            bool hasPendingDailyObjectives = unfinishedCount > 0;
+            bool hasPendingAdReward = !hasPendingDailyObjectives && DailyAwardsManager.Instance.CanClaimDailyAdWatchBonus();
+            bool shouldShow = hasPendingDailyObjectives || hasPendingAdReward;
 
             achievementsBadgeRoot.gameObject.SetActive(shouldShow);
-            if (shouldShow)
-                achievementsBadgeText.text = unfinishedCount > 99 ? "99+" : unfinishedCount.ToString();
+            if (!shouldShow)
+                return;
+
+            if (badgeImage != null)
+                badgeImage.color = hasPendingDailyObjectives ? achievementsBadgeColor : achievementsBadgeAdRewardColor;
+
+            achievementsBadgeText.text = hasPendingDailyObjectives
+                ? (unfinishedCount > 99 ? "99+" : unfinishedCount.ToString())
+                : "1";
         }
 
         private void EnsureAchievementsBadgeReferences()

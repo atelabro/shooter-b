@@ -286,7 +286,7 @@ namespace ShooterB
             for (int i = 0; i < ordered.Count; i++)
             {
                 Constants.WeaponType type = ordered[i];
-                WeaponCardViewModel model = ArmoryUIDataSource.BuildCardModel(type, GetWeaponIcon(type));
+                WeaponCardViewModel model = ArmoryUIDataSource.BuildCardModel(type, GetWeaponPrefabByType(type), GetWeaponIcon(type));
                 modelsByWeapon[type] = model;
 
                 WeaponCardItemUI card = CreateCardUI(model);
@@ -475,7 +475,10 @@ namespace ShooterB
             for (int i = 0; i < ordered.Count; i++)
             {
                 Constants.WeaponType weaponType = ordered[i];
-                modelsByWeapon[weaponType] = ArmoryUIDataSource.BuildCardModel(weaponType, GetWeaponIcon(weaponType));
+                modelsByWeapon[weaponType] = ArmoryUIDataSource.BuildCardModel(
+                    weaponType,
+                    GetWeaponPrefabByType(weaponType),
+                    GetWeaponIcon(weaponType));
             }
         }
 

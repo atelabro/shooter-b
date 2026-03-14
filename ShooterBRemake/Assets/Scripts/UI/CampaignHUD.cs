@@ -573,11 +573,7 @@ namespace ShooterB
                 LocalizationManager.Instance.Get("campaign.hud.popup.daily_set_body", "All daily objectives completed"),
                 DailyAwardsManager.Instance.GetDailySetBonusCoins(),
                 false,
-                "DAILY_SET",
-                true,
-                DailyAwardsManager.Instance.GetDailyAdWatchBonusCoins(),
-                DailyAwardsManager.Instance.IsDailyAdWatchBonusGranted(),
-                () => DailyAwardsManager.Instance.TryClaimDailyAdWatchBonus("campaign_hud_popup", null));
+                "DAILY_SET");
         }
 
         private void ShowRewardPopup(

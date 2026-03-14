@@ -318,6 +318,7 @@ namespace ShooterB
                 case Constants.DuckType.USA_POLICE: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.USA_WORKER: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.USA_BUSINESS: return britishPoliceSizeMultiplier;
+                case Constants.DuckType.USA_SWAT: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.JAPANESE_SAMURAI: return britishPunkSizeMultiplier;
                 case Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return britishPunkSizeMultiplier;
                 case Constants.DuckType.JAPANESE_STRAW_DUCK: return britishPunkSizeMultiplier;

@@ -13,112 +13,8 @@ namespace ShooterB
             public int maxBullets;
             public float travelSpeed;
             public float areaOfEffect;
-            public int chainLightning;
             public string descriptionKey;
         }
-
-        private static readonly Dictionary<Constants.WeaponType, WeaponStats> StatsByWeapon =
-            new Dictionary<Constants.WeaponType, WeaponStats>
-            {
-                {
-                    Constants.WeaponType.Rifle,
-                    new WeaponStats
-                    {
-                        fireMode = Constants.WeaponFireMode.SingleTap,
-                        fireDelay = 0.3f,
-                        reloadDelay = 0.8f,
-                        maxBullets = 2,
-                        travelSpeed = 50f,
-                        areaOfEffect = 1.22f,
-                        chainLightning = 0,
-                        descriptionKey = "armory.weapon.description.rifle"
-                    }
-                },
-                {
-                    Constants.WeaponType.Cabirne,
-                    new WeaponStats
-                    {
-                        fireMode = Constants.WeaponFireMode.SingleTap,
-                        fireDelay = 0.2f,
-                        reloadDelay = 0.6f,
-                        maxBullets = 7,
-                        travelSpeed = 45f,
-                        areaOfEffect = 0.54f,
-                        chainLightning = 0,
-                        descriptionKey = "armory.weapon.description.cabirne"
-                    }
-                },
-                {
-                    Constants.WeaponType.Beretta,
-                    new WeaponStats
-                    {
-                        fireMode = Constants.WeaponFireMode.HoldAutomatic,
-                        fireDelay = 0.2f,
-                        reloadDelay = 2.4f,
-                        maxBullets = 14,
-                        travelSpeed = 50f,
-                        areaOfEffect = 0.32f,
-                        chainLightning = 0,
-                        descriptionKey = "armory.weapon.description.beretta"
-                    }
-                },
-                {
-                    Constants.WeaponType.LaserGun,
-                    new WeaponStats
-                    {
-                        fireMode = Constants.WeaponFireMode.SingleTap,
-                        fireDelay = 0.26f,
-                        reloadDelay = 0.83f,
-                        maxBullets = 11,
-                        travelSpeed = 50f,
-                        areaOfEffect = 1.49f,
-                        chainLightning = 0,
-                        descriptionKey = "armory.weapon.description.laser"
-                    }
-                },
-                {
-                    Constants.WeaponType.PiranhaGun,
-                    new WeaponStats
-                    {
-                        fireMode = Constants.WeaponFireMode.SingleTap,
-                        fireDelay = 0.9f,
-                        reloadDelay = 1.4f,
-                        maxBullets = 3,
-                        travelSpeed = 16.67f,
-                        areaOfEffect = 1.49f,
-                        chainLightning = 0,
-                        descriptionKey = "armory.weapon.description.piranha"
-                    }
-                },
-                {
-                    Constants.WeaponType.TeslaGun,
-                    new WeaponStats
-                    {
-                        fireMode = Constants.WeaponFireMode.SingleTap,
-                        fireDelay = 0.1f,
-                        reloadDelay = 0.4f,
-                        maxBullets = 5,
-                        travelSpeed = 60f,
-                        areaOfEffect = 6.0f,
-                        chainLightning = 2,
-                        descriptionKey = "armory.weapon.description.tesla"
-                    }
-                },
-                {
-                    Constants.WeaponType.MrSulko,
-                    new WeaponStats
-                    {
-                        fireMode = Constants.WeaponFireMode.HoldAutomatic,
-                        fireDelay = 0.1f,
-                        reloadDelay = 0.72f,
-                        maxBullets = 14,
-                        travelSpeed = 58f,
-                        areaOfEffect = 0.54f,
-                        chainLightning = 0,
-                        descriptionKey = "armory.weapon.description.mrsulko"
-                    }
-                }
-            };
 
         private static readonly Constants.WeaponType[] OrderedWeapons =
         {
@@ -144,9 +40,9 @@ namespace ShooterB
             };
         }
 
-        public static WeaponCardViewModel BuildCardModel(Constants.WeaponType type, Sprite iconOverride = null)
+        public static WeaponCardViewModel BuildCardModel(Constants.WeaponType type, Weapon weaponPrefab, Sprite iconOverride = null)
         {
-            WeaponStats stats = GetStats(type);
+            WeaponStats stats = GetStats(type, weaponPrefab);
             string weaponNameKey = GetWeaponNameKey(type);
             string fireModeKey = stats.fireMode == Constants.WeaponFireMode.HoldAutomatic
                 ? "armory.fire_mode.automatic"
@@ -168,18 +64,80 @@ namespace ShooterB
                 travelSpeedLabel = $"{stats.travelSpeed:0.##}",
                 bulletsLabel = stats.maxBullets.ToString(),
                 aoeLabel = $"{stats.areaOfEffect:0.##}",
-                icon = iconOverride
+                icon = iconOverride != null ? iconOverride : weaponPrefab != null ? weaponPrefab.weaponIcon : null
             };
 
             return model;
         }
 
-        private static WeaponStats GetStats(Constants.WeaponType type)
+        private static WeaponStats GetStats(Constants.WeaponType type, Weapon weaponPrefab)
         {
-            if (StatsByWeapon.TryGetValue(type, out WeaponStats stats))
-                return stats;
+            WeaponStats stats = new WeaponStats
+            {
+                fireMode = Constants.WeaponFireMode.SingleTap,
+                fireDelay = 0.3f,
+                reloadDelay = 0.8f,
+                maxBullets = 1,
+                travelSpeed = 0f,
+                areaOfEffect = 0f,
+                descriptionKey = GetDescriptionKey(type)
+            };
 
-            return StatsByWeapon[Constants.WeaponType.Rifle];
+            if (weaponPrefab == null)
+            {
+                GameLog.Warning($"[ARMORY] Missing weapon prefab for {type}; using fallback display values.");
+                return stats;
+            }
+
+            stats.fireMode = weaponPrefab.fireMode;
+            stats.fireDelay = weaponPrefab.fireDelay;
+            stats.reloadDelay = weaponPrefab.refillDelay;
+            stats.maxBullets = weaponPrefab.maxBullets;
+
+            if (weaponPrefab.bulletPrefab == null)
+            {
+                GameLog.Warning($"[ARMORY] Weapon prefab {weaponPrefab.name} has no bullet prefab assigned.");
+                return stats;
+            }
+
+            Bullet bullet = weaponPrefab.bulletPrefab.GetComponent<Bullet>();
+            if (bullet == null)
+            {
+                GameLog.Warning($"[ARMORY] Bullet prefab {weaponPrefab.bulletPrefab.name} is missing Bullet component.");
+                return stats;
+            }
+
+            stats.travelSpeed = bullet.baseSpeed;
+            stats.areaOfEffect = bullet.effectiveRadius;
+
+            TeslaBullet teslaBullet = bullet as TeslaBullet;
+            if (teslaBullet != null)
+                stats.areaOfEffect = teslaBullet.aoeRadius;
+
+            return stats;
+        }
+
+        private static string GetDescriptionKey(Constants.WeaponType type)
+        {
+            switch (type)
+            {
+                case Constants.WeaponType.Rifle:
+                    return "armory.weapon.description.rifle";
+                case Constants.WeaponType.Cabirne:
+                    return "armory.weapon.description.cabirne";
+                case Constants.WeaponType.Beretta:
+                    return "armory.weapon.description.beretta";
+                case Constants.WeaponType.LaserGun:
+                    return "armory.weapon.description.laser";
+                case Constants.WeaponType.PiranhaGun:
+                    return "armory.weapon.description.piranha";
+                case Constants.WeaponType.TeslaGun:
+                    return "armory.weapon.description.tesla";
+                case Constants.WeaponType.MrSulko:
+                    return "armory.weapon.description.mrsulko";
+                default:
+                    return string.Empty;
+            }
         }
 
         private static int GetHardcodedCost(Constants.WeaponType type)
