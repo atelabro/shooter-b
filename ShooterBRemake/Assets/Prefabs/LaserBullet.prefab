@@ -169,8 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc325b8efd634d77abd772903047c3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.LaserBullet
-  startRadius: 1.2
-  secondRadius: 0.6
-  effectiveRadius: 1.485
+  startRadius: 1.6
+  secondRadius: 1
+  effectiveRadius: 1.285
   baseSpeed: 50
-  visualScaleMultiplier: 0.32439026
+  visualScaleMultiplier: 0.6

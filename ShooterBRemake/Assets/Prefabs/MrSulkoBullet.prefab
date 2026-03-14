@@ -169,7 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 638636e08e9b452d9b17d00642d9eb2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.MrSulkoBullet
-  startRadius: 0.55
-  secondRadius: 0.2
-  effectiveRadius: 0.54
+  startRadius: 0.6
+  secondRadius: 0.3
+  effectiveRadius: 0.64
   baseSpeed: 58
+  visualScaleMultiplier: 0.8

@@ -173,4 +173,4 @@ MonoBehaviour:
   secondRadius: 0.7
   effectiveRadius: 1.215
   baseSpeed: 50
-  visualScaleMultiplier: 1
+  visualScaleMultiplier: 1.2

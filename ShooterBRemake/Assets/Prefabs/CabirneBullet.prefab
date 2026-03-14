@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CabirneBullet
   startRadius: 0.55
-  secondRadius: 0.18
+  secondRadius: 0.22
   effectiveRadius: 0.6
   baseSpeed: 45
   visualScaleMultiplier: 1

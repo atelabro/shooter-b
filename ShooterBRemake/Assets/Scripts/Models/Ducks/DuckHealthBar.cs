@@ -102,7 +102,13 @@ namespace ShooterB
         private static Sprite GetDefaultBarSprite()
         {
             if (defaultBarSprite == null)
-                defaultBarSprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0f, 0f, 1f, 1f), new Vector2(0.5f, 0.5f), 1f);
+                defaultBarSprite = Sprite.Create(
+                    Texture2D.whiteTexture,
+                    new Rect(0f, 0f, 1f, 1f),
+                    new Vector2(0.5f, 0.5f),
+                    1f,
+                    0u,
+                    SpriteMeshType.FullRect);
 
             return defaultBarSprite;
         }

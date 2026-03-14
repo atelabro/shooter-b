@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,8 @@ namespace ShooterB
 {
     public class StageCompleteModalController : MonoBehaviour
     {
+        private const string ButtonRevealResourcePath = "Audio/small_drum";
+
         private sealed class StageCompleteModalActionRunner : MonoBehaviour
         {
         }
@@ -39,6 +42,13 @@ namespace ShooterB
         [Range(0.2f, 1.5f)] public float starIdleScale = 0.72f;
         [Range(1f, 2.5f)] public float starPopScale = 1.22f;
 
+        [Header("Button Reveal Timing")]
+        [Min(0f)] public float buttonRevealInitialDelaySeconds = 0.08f;
+        [Min(0f)] public float buttonRevealStepDelaySeconds = 0.06f;
+        [Min(0.01f)] public float buttonBangDurationSeconds = 0.18f;
+        [Range(0.5f, 1.2f)] public float buttonBangStartScale = 0.78f;
+        [Range(0.8f, 1.4f)] public float buttonBangOvershootScale = 1.08f;
+
         [Header("Buttons")]
         public Button restartButton;
         public Button backButton;
@@ -52,11 +62,22 @@ namespace ShooterB
         private bool isInitialized;
         private ModalDialogAnimator modalAnimator;
         private AudioSource starAudioSource;
+        private AudioClip buttonRevealClip;
         private Coroutine starRevealRoutine;
+        private Coroutine buttonRevealRoutine;
         private Coroutine closeRoutine;
         private static StageCompleteModalActionRunner actionRunner;
         private readonly Vector3[] starBaseScales = new Vector3[3];
         private int lastResolvedStars;
+        private Vector3 restartButtonBaseScale = Vector3.one;
+        private bool hasCapturedRestartButtonBaseScale;
+        private Vector3 backButtonBaseScale = Vector3.one;
+        private bool hasCapturedBackButtonBaseScale;
+        private Vector3 continueButtonBaseScale = Vector3.one;
+        private bool hasCapturedContinueButtonBaseScale;
+        private Graphic[] restartButtonGraphics;
+        private Graphic[] backButtonGraphics;
+        private Graphic[] continueButtonGraphics;
 
         private void Awake()
         {
@@ -70,6 +91,9 @@ namespace ShooterB
 
             if (starRevealRoutine != null)
                 StopCoroutine(starRevealRoutine);
+
+            if (buttonRevealRoutine != null)
+                StopCoroutine(buttonRevealRoutine);
 
             CancelPendingCloseTransition();
 
@@ -119,6 +143,8 @@ namespace ShooterB
             if (stageNameText != null)
                 stageNameText.text = CampaignLocalizationResolver.GetStageName(config);
             ResetStarIconsForReveal();
+            StopButtonRevealSequence(false);
+            ResetButtonIntroVisuals();
 
             if (modalRoot != null)
             {
@@ -153,6 +179,7 @@ namespace ShooterB
         {
             EnsureInitialized();
             EnsureModalRoot();
+            StopButtonRevealSequence(true);
 
             if (modalRoot != null)
             {
@@ -320,6 +347,7 @@ namespace ShooterB
             ResolveTextReferences();
             EnsureStarAudioReady();
             CaptureStarBaseScales();
+            CaptureButtonAnimationDefaults();
             RefreshLocalizedTexts();
 
             if (restartButton != null)
@@ -425,6 +453,9 @@ namespace ShooterB
             }
 
             starAudioSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
+
+            if (buttonRevealClip == null)
+                buttonRevealClip = Resources.Load<AudioClip>(ButtonRevealResourcePath);
         }
 
         private void CaptureStarBaseScales()
@@ -442,6 +473,36 @@ namespace ShooterB
                 if (rectTransform != null)
                     starBaseScales[i] = rectTransform.localScale;
             }
+        }
+
+        private void CaptureButtonAnimationDefaults()
+        {
+            if (restartButton != null && !hasCapturedRestartButtonBaseScale)
+            {
+                restartButtonBaseScale = restartButton.transform.localScale;
+                hasCapturedRestartButtonBaseScale = true;
+            }
+
+            if (backButton != null && !hasCapturedBackButtonBaseScale)
+            {
+                backButtonBaseScale = backButton.transform.localScale;
+                hasCapturedBackButtonBaseScale = true;
+            }
+
+            if (continueButton != null && !hasCapturedContinueButtonBaseScale)
+            {
+                continueButtonBaseScale = continueButton.transform.localScale;
+                hasCapturedContinueButtonBaseScale = true;
+            }
+
+            if (restartButton != null && restartButtonGraphics == null)
+                restartButtonGraphics = GetButtonGraphics(restartButton);
+
+            if (backButton != null && backButtonGraphics == null)
+                backButtonGraphics = GetButtonGraphics(backButton);
+
+            if (continueButton != null && continueButtonGraphics == null)
+                continueButtonGraphics = GetButtonGraphics(continueButton);
         }
 
         private void ResetStarIconsForReveal()
@@ -486,9 +547,13 @@ namespace ShooterB
         private void StartStarRevealSequence()
         {
             StopStarRevealSequence();
+            StopButtonRevealSequence(false);
 
             if (starIcons == null || starIcons.Length == 0)
+            {
+                StartButtonRevealSequence();
                 return;
+            }
 
             starRevealRoutine = StartCoroutine(PlayStarRevealSequence());
         }
@@ -526,6 +591,7 @@ namespace ShooterB
             }
 
             starRevealRoutine = null;
+            StartButtonRevealSequence();
         }
 
         private IEnumerator AnimateStarPop(RectTransform rectTransform, int index)
@@ -558,6 +624,94 @@ namespace ShooterB
             starAudioSource.PlayOneShot(clip);
         }
 
+        private void PlayButtonRevealClip()
+        {
+            EnsureStarAudioReady();
+            if (starAudioSource == null || buttonRevealClip == null)
+                return;
+
+            starAudioSource.PlayOneShot(buttonRevealClip);
+        }
+
+        private void StartButtonRevealSequence()
+        {
+            StopButtonRevealSequence(false);
+            buttonRevealRoutine = StartCoroutine(PlayButtonRevealSequence());
+        }
+
+        private void StopButtonRevealSequence(bool restoreFinalState)
+        {
+            if (buttonRevealRoutine != null)
+            {
+                StopCoroutine(buttonRevealRoutine);
+                buttonRevealRoutine = null;
+            }
+
+            if (restoreFinalState)
+                RestoreFinalButtonIntroState();
+        }
+
+        private void ResetButtonIntroVisuals()
+        {
+            CaptureButtonAnimationDefaults();
+            SetButtonIntroState(restartButton, restartButtonGraphics, restartButtonBaseScale, false, buttonBangStartScale);
+            SetButtonIntroState(backButton, backButtonGraphics, backButtonBaseScale, false, buttonBangStartScale);
+            SetButtonIntroState(continueButton, continueButtonGraphics, continueButtonBaseScale, false, buttonBangStartScale);
+        }
+
+        private void RestoreFinalButtonIntroState()
+        {
+            SetButtonIntroState(restartButton, restartButtonGraphics, restartButtonBaseScale, true, buttonBangStartScale);
+            SetButtonIntroState(backButton, backButtonGraphics, backButtonBaseScale, true, buttonBangStartScale);
+            SetButtonIntroState(continueButton, continueButtonGraphics, continueButtonBaseScale, true, buttonBangStartScale);
+        }
+
+        private IEnumerator PlayButtonRevealSequence()
+        {
+            if (buttonRevealInitialDelaySeconds > 0f)
+                yield return WaitForUnscaledSeconds(buttonRevealInitialDelaySeconds);
+
+            yield return PlayButtonBangAnimation(restartButton, restartButtonGraphics, restartButtonBaseScale);
+
+            if (buttonRevealStepDelaySeconds > 0f)
+                yield return WaitForUnscaledSeconds(buttonRevealStepDelaySeconds);
+
+            yield return PlayButtonBangAnimation(backButton, backButtonGraphics, backButtonBaseScale);
+
+            if (buttonRevealStepDelaySeconds > 0f)
+                yield return WaitForUnscaledSeconds(buttonRevealStepDelaySeconds);
+
+            yield return PlayButtonBangAnimation(continueButton, continueButtonGraphics, continueButtonBaseScale);
+            RestoreFinalButtonIntroState();
+            buttonRevealRoutine = null;
+        }
+
+        private IEnumerator PlayButtonBangAnimation(Button button, IReadOnlyList<Graphic> graphics, Vector3 baseScale)
+        {
+            if (button == null)
+                yield break;
+
+            SetGraphicsVisible(graphics, true);
+            button.interactable = true;
+            button.transform.localScale = baseScale * buttonBangStartScale;
+            PlayButtonRevealClip();
+
+            float duration = Mathf.Max(0.01f, buttonBangDurationSeconds);
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                float eased = EaseOutBackStrong01(t);
+                float scale = Mathf.LerpUnclamped(buttonBangStartScale, buttonBangOvershootScale, eased);
+                button.transform.localScale = baseScale * scale;
+                yield return null;
+            }
+
+            button.transform.localScale = baseScale;
+        }
+
         private IEnumerator WaitForUnscaledSeconds(float seconds)
         {
             float elapsed = 0f;
@@ -575,6 +729,15 @@ namespace ShooterB
                 return Mathf.LerpUnclamped(starIdleScale, starPopScale, t / 0.45f);
 
             return Mathf.LerpUnclamped(starPopScale, 1f, (t - 0.45f) / 0.55f);
+        }
+
+        private static float EaseOutBackStrong01(float t)
+        {
+            t = Mathf.Clamp01(t);
+            float c1 = 1.7f;
+            float c3 = c1 + 1f;
+            float x = t - 1f;
+            return 1f + (c3 * x * x * x) + (c1 * x * x);
         }
 
         private Vector3 GetBaseStarScale(int index)
@@ -601,6 +764,7 @@ namespace ShooterB
             float delay = 0f;
             if (modalRoot != null)
             {
+                StopButtonRevealSequence(true);
                 EnsureAnimator();
                 delay = modalAnimator != null ? modalAnimator.HideWithDelay() : 0f;
                 if (modalAnimator == null)
@@ -674,6 +838,42 @@ namespace ShooterB
             }
 
             return null;
+        }
+
+        private static void SetButtonIntroState(Button button, IReadOnlyList<Graphic> graphics, Vector3 baseScale, bool visible, float hiddenScale)
+        {
+            if (button == null)
+                return;
+
+            SetGraphicsVisible(graphics, visible);
+            button.interactable = visible;
+            button.transform.localScale = visible ? baseScale : baseScale * hiddenScale;
+        }
+
+        private static void SetGraphicsVisible(IReadOnlyList<Graphic> graphics, bool visible)
+        {
+            if (graphics == null)
+                return;
+
+            float alpha = visible ? 1f : 0f;
+            for (int i = 0; i < graphics.Count; i++)
+            {
+                Graphic graphic = graphics[i];
+                if (graphic == null)
+                    continue;
+
+                Color color = graphic.color;
+                color.a = alpha;
+                graphic.color = color;
+            }
+        }
+
+        private static Graphic[] GetButtonGraphics(Button button)
+        {
+            if (button == null)
+                return null;
+
+            return button.GetComponentsInChildren<Graphic>(true);
         }
 
         private static CityConfig FindNextUnlockedCity(CityConfig activeCity, CityConfig[] allCities)

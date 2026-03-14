@@ -169,8 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f217b41965d9414c84dc3b325f8d2e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.BerettaBullet
-  startRadius: 0.3
-  secondRadius: 0.12
-  effectiveRadius: 0.5
+  startRadius: 0.4
+  secondRadius: 0.2
+  effectiveRadius: 0.55
   baseSpeed: 50
   visualScaleMultiplier: 1

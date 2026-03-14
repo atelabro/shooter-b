@@ -2549,15 +2549,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3924556375695803023, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
       propertyPath: m_fontColor.g
-      value: 0.6725222
+      value: 0.6745098
       objectReference: {fileID: 0}
     - target: {fileID: 3924556375695803023, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
       propertyPath: m_fontColor.r
-      value: 0.9339623
+      value: 0.9372549
       objectReference: {fileID: 0}
     - target: {fileID: 3924556375695803023, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4280527854
+      value: 4280528111
       objectReference: {fileID: 0}
     - target: {fileID: 5079378722992161961, guid: f3b8cd73c6b24fd49a8f0f35e5b3f6d2, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3372,7 +3372,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.9372549, g: 0.6745098, b: 0.13725491, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4475,8 +4475,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4280528111
+  m_fontColor: {r: 0.9372549, g: 0.6745098, b: 0.13725491, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6318,6 +6318,14 @@ MonoBehaviour:
   resumeButtonText: {fileID: 0}
   restartButtonText: {fileID: 0}
   menuButtonText: {fileID: 0}
+  titleRevealDelay: 0.02
+  titleBangDuration: 0.2
+  titleBangStartScale: 0.68
+  titleBangOvershootScale: 1.12
+  buttonRevealStagger: 0.06
+  buttonBangDuration: 0.18
+  buttonBangStartScale: 0.78
+  buttonBangOvershootScale: 1.08
 --- !u!114 &2041902083
 MonoBehaviour:
   m_ObjectHideFlags: 0

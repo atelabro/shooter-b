@@ -7,6 +7,9 @@ namespace ShooterB
 {
     public class GameStartingModalController : MonoBehaviour
     {
+        private const string ModalOpenResourcePath = "Audio/modal_open";
+        private const string ButtonRevealResourcePath = "Audio/small_drum";
+
         [Header("Modal Root")]
         public GameObject modalRoot;
 
@@ -39,6 +42,9 @@ namespace ShooterB
         private bool mercyBonusProcessedThisStage;
         private bool adRequestInFlight;
         private ModalDialogAnimator modalAnimator;
+        private AudioSource modalAudioSource;
+        private AudioClip modalOpenClip;
+        private AudioClip buttonRevealClip;
         private Coroutine introSequenceCoroutine;
         private string configuredTitleText = string.Empty;
         private string configuredBriefingText = string.Empty;
@@ -105,6 +111,7 @@ namespace ShooterB
                     modalRoot.SetActive(true);
             }
 
+            PlayModalOpenClip();
             introSequenceCoroutine = StartCoroutine(PlayIntroSequence());
 
             if (startButton != null)
@@ -148,6 +155,7 @@ namespace ShooterB
                 modalRoot = gameObject;
 
             EnsureAnimator();
+            EnsureAudioReady();
 
             Image rootImage = modalRoot.GetComponent<Image>();
             if (rootImage != null)
@@ -201,6 +209,27 @@ namespace ShooterB
                 modalAnimator = modalRoot.AddComponent<ModalDialogAnimator>();
 
             modalAnimator.modalRoot = modalRoot;
+        }
+
+        private void EnsureAudioReady()
+        {
+            if (modalAudioSource == null)
+            {
+                modalAudioSource = GetComponent<AudioSource>();
+                if (modalAudioSource == null)
+                    modalAudioSource = gameObject.AddComponent<AudioSource>();
+
+                modalAudioSource.playOnAwake = false;
+                modalAudioSource.loop = false;
+            }
+
+            modalAudioSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
+
+            if (modalOpenClip == null)
+                modalOpenClip = Resources.Load<AudioClip>(ModalOpenResourcePath);
+
+            if (buttonRevealClip == null)
+                buttonRevealClip = Resources.Load<AudioClip>(ButtonRevealResourcePath);
         }
 
         private void HandleStartClicked()
@@ -269,9 +298,12 @@ namespace ShooterB
             if (buttonRevealStagger > 0f)
                 yield return new WaitForSecondsRealtime(buttonRevealStagger);
 
-            yield return PlayButtonsBangAnimation(
-                plusLivesButton, plusLivesButtonCanvasGroup, plusLivesButtonBaseScale,
-                extraActionButton, extraActionButtonCanvasGroup, extraActionButtonBaseScale);
+            yield return PlayButtonBangAnimation(plusLivesButton, plusLivesButtonCanvasGroup, plusLivesButtonBaseScale);
+
+            if (buttonRevealStagger > 0f)
+                yield return new WaitForSecondsRealtime(buttonRevealStagger);
+
+            yield return PlayButtonBangAnimation(extraActionButton, extraActionButtonCanvasGroup, extraActionButtonBaseScale);
 
             introSequenceCoroutine = null;
         }
@@ -307,6 +339,7 @@ namespace ShooterB
 
             SetCanvasGroupVisible(canvasGroup, true);
             button.transform.localScale = baseScale * buttonBangStartScale;
+            PlayButtonRevealClip();
 
             float duration = Mathf.Max(0.01f, buttonBangDuration);
             float elapsed = 0f;
@@ -322,51 +355,6 @@ namespace ShooterB
             }
 
             button.transform.localScale = baseScale;
-        }
-
-        private IEnumerator PlayButtonsBangAnimation(
-            Button firstButton, CanvasGroup firstCanvasGroup, Vector3 firstBaseScale,
-            Button secondButton, CanvasGroup secondCanvasGroup, Vector3 secondBaseScale)
-        {
-            if (firstButton == null && secondButton == null)
-                yield break;
-
-            if (firstButton != null)
-            {
-                SetCanvasGroupVisible(firstCanvasGroup, true);
-                firstButton.transform.localScale = firstBaseScale * buttonBangStartScale;
-            }
-
-            if (secondButton != null)
-            {
-                SetCanvasGroupVisible(secondCanvasGroup, true);
-                secondButton.transform.localScale = secondBaseScale * buttonBangStartScale;
-            }
-
-            float duration = Mathf.Max(0.01f, buttonBangDuration);
-            float elapsed = 0f;
-
-            while (elapsed < duration)
-            {
-                elapsed += Time.unscaledDeltaTime;
-                float t = Mathf.Clamp01(elapsed / duration);
-                float eased = EaseOutBackStrong01(t);
-                float scale = Mathf.LerpUnclamped(buttonBangStartScale, buttonBangOvershootScale, eased);
-
-                if (firstButton != null)
-                    firstButton.transform.localScale = firstBaseScale * scale;
-
-                if (secondButton != null)
-                    secondButton.transform.localScale = secondBaseScale * scale;
-
-                yield return null;
-            }
-
-            if (firstButton != null)
-                firstButton.transform.localScale = firstBaseScale;
-
-            if (secondButton != null)
-                secondButton.transform.localScale = secondBaseScale;
         }
 
         private IEnumerator TypeBriefing(string fullText)
@@ -393,6 +381,24 @@ namespace ShooterB
         private static bool IsPunctuation(char c)
         {
             return c == '.' || c == ',' || c == '!' || c == '?' || c == ';' || c == ':';
+        }
+
+        private void PlayModalOpenClip()
+        {
+            EnsureAudioReady();
+            if (modalAudioSource == null || modalOpenClip == null)
+                return;
+
+            modalAudioSource.PlayOneShot(modalOpenClip);
+        }
+
+        private void PlayButtonRevealClip()
+        {
+            EnsureAudioReady();
+            if (modalAudioSource == null || buttonRevealClip == null)
+                return;
+
+            modalAudioSource.PlayOneShot(buttonRevealClip);
         }
 
         private static float EaseOutBackStrong01(float t)

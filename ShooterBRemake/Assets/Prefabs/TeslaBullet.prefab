@@ -171,8 +171,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.TeslaBullet
   startRadius: 1.2
   secondRadius: 0.6
-  effectiveRadius: 1.485
+  effectiveRadius: 1.285
   baseSpeed: 60
-  visualScaleMultiplier: 0.32439026
+  visualScaleMultiplier: 0.5243903
   aoeRadius: 6
   chainCount: 2

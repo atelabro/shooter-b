@@ -173,6 +173,6 @@ MonoBehaviour:
   secondRadius: 0.6
   effectiveRadius: 1.25
   baseSpeed: 16.67
-  visualScaleMultiplier: 0.32439026
+  visualScaleMultiplier: 0.6
   variantSprites:
   - {fileID: -3807317259276297779, guid: c3106131753ff486da81d42d703a1eb0, type: 3}

@@ -2,11 +2,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace ShooterB
 {
     public class PauseModalController : MonoBehaviour
     {
+        private const string ModalOpenResourcePath = "Audio/modal_open";
+        private const string ButtonRevealResourcePath = "Audio/small_drum";
+
         private sealed class PauseModalActionRunner : MonoBehaviour
         {
         }
@@ -22,10 +26,36 @@ namespace ShooterB
         public TextMeshProUGUI resumeButtonText;
         public TextMeshProUGUI restartButtonText;
         public TextMeshProUGUI menuButtonText;
+
+        [Header("Intro Animation")]
+        [Min(0f)] public float titleRevealDelay = 0.02f;
+        [Min(0.01f)] public float titleBangDuration = 0.2f;
+        [Range(0.5f, 1.2f)] public float titleBangStartScale = 0.68f;
+        [Range(0.8f, 1.4f)] public float titleBangOvershootScale = 1.12f;
+        [Min(0f)] public float buttonRevealStagger = 0.06f;
+        [Min(0.01f)] public float buttonBangDuration = 0.18f;
+        [Range(0.5f, 1.2f)] public float buttonBangStartScale = 0.78f;
+        [Range(0.8f, 1.4f)] public float buttonBangOvershootScale = 1.08f;
+
         private bool isInitialized;
         private ModalDialogAnimator modalAnimator;
+        private AudioSource modalAudioSource;
+        private AudioClip modalOpenClip;
+        private AudioClip buttonRevealClip;
         private Coroutine closeRoutine;
+        private Coroutine introSequenceCoroutine;
         private static PauseModalActionRunner actionRunner;
+        private Vector3 titleBaseScale = Vector3.one;
+        private bool hasCapturedTitleBaseScale;
+        private Vector3 resumeButtonBaseScale = Vector3.one;
+        private bool hasCapturedResumeButtonBaseScale;
+        private Vector3 restartButtonBaseScale = Vector3.one;
+        private bool hasCapturedRestartButtonBaseScale;
+        private Vector3 menuButtonBaseScale = Vector3.one;
+        private bool hasCapturedMenuButtonBaseScale;
+        private Graphic[] resumeButtonGraphics;
+        private Graphic[] restartButtonGraphics;
+        private Graphic[] menuButtonGraphics;
 
         private void Awake()
         {
@@ -38,6 +68,7 @@ namespace ShooterB
                 return;
 
             CancelPendingCloseTransition();
+            StopIntroSequence(true);
 
             if (resumeButton != null)
                 resumeButton.onClick.RemoveListener(OnResumeClicked);
@@ -62,6 +93,8 @@ namespace ShooterB
             CancelPendingCloseTransition();
 
             EnsureModalRoot();
+            StopIntroSequence(false);
+            ResetIntroVisuals();
 
             if (modalRoot != null)
             {
@@ -73,6 +106,8 @@ namespace ShooterB
                     modalRoot.SetActive(true);
             }
 
+            PlayModalOpenClip();
+            introSequenceCoroutine = StartCoroutine(PlayIntroSequence());
             GameManager.Instance.PauseGame();
         }
 
@@ -80,6 +115,7 @@ namespace ShooterB
         {
             EnsureInitialized();
             EnsureModalRoot();
+            StopIntroSequence(true);
 
             if (modalRoot != null)
             {
@@ -145,7 +181,9 @@ namespace ShooterB
 
             EnsureModalRoot();
             EnsureAnimator();
+            EnsureAudioReady();
             ResolveTextReferences();
+            CaptureAnimationDefaults();
             RefreshLocalizedTexts();
 
             if (resumeButton != null)
@@ -171,6 +209,27 @@ namespace ShooterB
                 modalAnimator = modalRoot.AddComponent<ModalDialogAnimator>();
 
             modalAnimator.modalRoot = modalRoot;
+        }
+
+        private void EnsureAudioReady()
+        {
+            if (modalAudioSource == null)
+            {
+                modalAudioSource = GetComponent<AudioSource>();
+                if (modalAudioSource == null)
+                    modalAudioSource = gameObject.AddComponent<AudioSource>();
+
+                modalAudioSource.playOnAwake = false;
+                modalAudioSource.loop = false;
+            }
+
+            modalAudioSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
+
+            if (modalOpenClip == null)
+                modalOpenClip = Resources.Load<AudioClip>(ModalOpenResourcePath);
+
+            if (buttonRevealClip == null)
+                buttonRevealClip = Resources.Load<AudioClip>(ButtonRevealResourcePath);
         }
 
         private void ResolveTextReferences()
@@ -203,9 +262,222 @@ namespace ShooterB
                 menuButtonText.text = LocalizationManager.Instance.Get("common.back", "Back");
         }
 
+        private void CaptureAnimationDefaults()
+        {
+            if (pauseTitleText != null && !hasCapturedTitleBaseScale)
+            {
+                titleBaseScale = pauseTitleText.rectTransform.localScale;
+                hasCapturedTitleBaseScale = true;
+            }
+
+            if (resumeButton != null && !hasCapturedResumeButtonBaseScale)
+            {
+                resumeButtonBaseScale = resumeButton.transform.localScale;
+                hasCapturedResumeButtonBaseScale = true;
+            }
+
+            if (restartButton != null && !hasCapturedRestartButtonBaseScale)
+            {
+                restartButtonBaseScale = restartButton.transform.localScale;
+                hasCapturedRestartButtonBaseScale = true;
+            }
+
+            if (menuButton != null && !hasCapturedMenuButtonBaseScale)
+            {
+                menuButtonBaseScale = menuButton.transform.localScale;
+                hasCapturedMenuButtonBaseScale = true;
+            }
+
+            if (resumeButton != null && resumeButtonGraphics == null)
+                resumeButtonGraphics = GetButtonGraphics(resumeButton);
+
+            if (restartButton != null && restartButtonGraphics == null)
+                restartButtonGraphics = GetButtonGraphics(restartButton);
+
+            if (menuButton != null && menuButtonGraphics == null)
+                menuButtonGraphics = GetButtonGraphics(menuButton);
+        }
+
         private void HandleLanguageChanged(LocalizationManager.Language language)
         {
             RefreshLocalizedTexts();
+        }
+
+        private void PlayModalOpenClip()
+        {
+            EnsureAudioReady();
+            if (modalAudioSource == null || modalOpenClip == null)
+                return;
+
+            modalAudioSource.PlayOneShot(modalOpenClip);
+        }
+
+        private void PlayButtonRevealClip()
+        {
+            EnsureAudioReady();
+            if (modalAudioSource == null || buttonRevealClip == null)
+                return;
+
+            modalAudioSource.PlayOneShot(buttonRevealClip);
+        }
+
+        private void StopIntroSequence(bool restoreFinalState)
+        {
+            if (introSequenceCoroutine != null)
+            {
+                StopCoroutine(introSequenceCoroutine);
+                introSequenceCoroutine = null;
+            }
+
+            if (restoreFinalState)
+                RestoreFinalIntroState();
+        }
+
+        private void ResetIntroVisuals()
+        {
+            CaptureAnimationDefaults();
+
+            if (pauseTitleText != null)
+            {
+                pauseTitleText.alpha = 0f;
+                pauseTitleText.rectTransform.localScale = titleBaseScale * titleBangStartScale;
+            }
+
+            SetButtonIntroState(resumeButton, resumeButtonGraphics, resumeButtonBaseScale, false);
+            SetButtonIntroState(restartButton, restartButtonGraphics, restartButtonBaseScale, false);
+            SetButtonIntroState(menuButton, menuButtonGraphics, menuButtonBaseScale, false);
+        }
+
+        private void RestoreFinalIntroState()
+        {
+            if (pauseTitleText != null)
+            {
+                pauseTitleText.alpha = 1f;
+                pauseTitleText.rectTransform.localScale = titleBaseScale;
+            }
+
+            SetButtonIntroState(resumeButton, resumeButtonGraphics, resumeButtonBaseScale, true);
+            SetButtonIntroState(restartButton, restartButtonGraphics, restartButtonBaseScale, true);
+            SetButtonIntroState(menuButton, menuButtonGraphics, menuButtonBaseScale, true);
+        }
+
+        private IEnumerator PlayIntroSequence()
+        {
+            float modalShowDuration = modalAnimator != null ? modalAnimator.showDuration : 0f;
+            if (modalShowDuration > 0f)
+                yield return new WaitForSecondsRealtime(modalShowDuration);
+
+            if (titleRevealDelay > 0f)
+                yield return new WaitForSecondsRealtime(titleRevealDelay);
+
+            yield return PlayTitleBangAnimation();
+            yield return PlayButtonBangAnimation(resumeButton, resumeButtonGraphics, resumeButtonBaseScale);
+
+            if (buttonRevealStagger > 0f)
+                yield return new WaitForSecondsRealtime(buttonRevealStagger);
+
+            yield return PlayButtonBangAnimation(restartButton, restartButtonGraphics, restartButtonBaseScale);
+
+            if (buttonRevealStagger > 0f)
+                yield return new WaitForSecondsRealtime(buttonRevealStagger);
+
+            yield return PlayButtonBangAnimation(menuButton, menuButtonGraphics, menuButtonBaseScale);
+            RestoreFinalIntroState();
+            introSequenceCoroutine = null;
+        }
+
+        private IEnumerator PlayTitleBangAnimation()
+        {
+            if (pauseTitleText == null)
+                yield break;
+
+            pauseTitleText.alpha = 1f;
+
+            float duration = Mathf.Max(0.01f, titleBangDuration);
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                float eased = EaseOutBackStrong01(t);
+                float scale = Mathf.LerpUnclamped(titleBangStartScale, titleBangOvershootScale, eased);
+                pauseTitleText.rectTransform.localScale = titleBaseScale * scale;
+                yield return null;
+            }
+
+            pauseTitleText.rectTransform.localScale = titleBaseScale;
+        }
+
+        private IEnumerator PlayButtonBangAnimation(Button button, IReadOnlyList<Graphic> graphics, Vector3 baseScale)
+        {
+            if (button == null)
+                yield break;
+
+            SetGraphicsVisible(graphics, true);
+            button.interactable = true;
+            button.transform.localScale = baseScale * buttonBangStartScale;
+            PlayButtonRevealClip();
+
+            float duration = Mathf.Max(0.01f, buttonBangDuration);
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                float eased = EaseOutBackStrong01(t);
+                float scale = Mathf.LerpUnclamped(buttonBangStartScale, buttonBangOvershootScale, eased);
+                button.transform.localScale = baseScale * scale;
+                yield return null;
+            }
+
+            button.transform.localScale = baseScale;
+        }
+
+        private static float EaseOutBackStrong01(float t)
+        {
+            t = Mathf.Clamp01(t);
+            float c1 = 1.7f;
+            float c3 = c1 + 1f;
+            float x = t - 1f;
+            return 1f + (c3 * x * x * x) + (c1 * x * x);
+        }
+
+        private void SetButtonIntroState(Button button, IReadOnlyList<Graphic> graphics, Vector3 baseScale, bool visible)
+        {
+            if (button == null)
+                return;
+
+            SetGraphicsVisible(graphics, visible);
+            button.interactable = visible;
+            button.transform.localScale = visible ? baseScale : baseScale * buttonBangStartScale;
+        }
+
+        private static void SetGraphicsVisible(IReadOnlyList<Graphic> graphics, bool visible)
+        {
+            if (graphics == null)
+                return;
+
+            float alpha = visible ? 1f : 0f;
+            for (int i = 0; i < graphics.Count; i++)
+            {
+                Graphic graphic = graphics[i];
+                if (graphic == null)
+                    continue;
+
+                Color color = graphic.color;
+                color.a = alpha;
+                graphic.color = color;
+            }
+        }
+
+        private static Graphic[] GetButtonGraphics(Button button)
+        {
+            if (button == null)
+                return null;
+
+            return button.GetComponentsInChildren<Graphic>(true);
         }
 
         private TextMeshProUGUI FindTextByContent(string content)
@@ -233,6 +505,7 @@ namespace ShooterB
             float delay = 0f;
             if (modalRoot != null)
             {
+                StopIntroSequence(true);
                 EnsureAnimator();
                 delay = modalAnimator != null ? modalAnimator.HideWithDelay() : 0f;
                 if (modalAnimator == null)
