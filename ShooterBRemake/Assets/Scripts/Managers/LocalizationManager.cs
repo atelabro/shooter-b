@@ -90,11 +90,26 @@ namespace ShooterB
 
         private void LoadLanguagePreference()
         {
-            int raw = PlayerPrefs.GetInt(Constants.PREFS_LANGUAGE, (int)Language.English);
-            if (!Enum.IsDefined(typeof(Language), raw))
-                raw = (int)Language.English;
+            if (PlayerPrefs.HasKey(Constants.PREFS_LANGUAGE))
+            {
+                int raw = PlayerPrefs.GetInt(Constants.PREFS_LANGUAGE, (int)Language.English);
+                if (!Enum.IsDefined(typeof(Language), raw))
+                    raw = (int)Language.English;
 
-            CurrentLanguage = (Language)raw;
+                CurrentLanguage = (Language)raw;
+                return;
+            }
+
+            CurrentLanguage = GetDefaultLanguageFromSystem();
+            PlayerPrefs.SetInt(Constants.PREFS_LANGUAGE, (int)CurrentLanguage);
+            PlayerPrefs.Save();
+        }
+
+        private Language GetDefaultLanguageFromSystem()
+        {
+            return Application.systemLanguage == SystemLanguage.Macedonian
+                ? Language.Macedonian
+                : Language.English;
         }
 
         private void InitializeTables()
