@@ -8,6 +8,7 @@ namespace ShooterB
 {
     public class StageCompleteModalController : MonoBehaviour
     {
+        private const string ModalOpenResourcePath = "Audio/modal_open";
         private const string ButtonRevealResourcePath = "Audio/small_drum";
 
         private sealed class StageCompleteModalActionRunner : MonoBehaviour
@@ -71,6 +72,7 @@ namespace ShooterB
         private bool isInitialized;
         private ModalDialogAnimator modalAnimator;
         private AudioSource starAudioSource;
+        private AudioClip modalOpenClip;
         private AudioClip buttonRevealClip;
         private Coroutine starRevealRoutine;
         private Coroutine buttonRevealRoutine;
@@ -172,6 +174,7 @@ namespace ShooterB
                     modalRoot.SetActive(true);
             }
 
+            PlayModalOpenClip();
             StartStarRevealSequence();
         }
 
@@ -472,6 +475,9 @@ namespace ShooterB
 
             starAudioSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
 
+            if (modalOpenClip == null)
+                modalOpenClip = Resources.Load<AudioClip>(ModalOpenResourcePath);
+
             if (buttonRevealClip == null)
                 buttonRevealClip = Resources.Load<AudioClip>(ButtonRevealResourcePath);
         }
@@ -761,6 +767,15 @@ namespace ShooterB
                 return;
 
             starAudioSource.PlayOneShot(clip);
+        }
+
+        private void PlayModalOpenClip()
+        {
+            EnsureStarAudioReady();
+            if (starAudioSource == null || modalOpenClip == null)
+                return;
+
+            starAudioSource.PlayOneShot(modalOpenClip);
         }
 
         private void PlayButtonRevealClip()
