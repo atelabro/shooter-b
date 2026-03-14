@@ -42,6 +42,15 @@ namespace ShooterB
         [Range(0.2f, 1.5f)] public float starIdleScale = 0.72f;
         [Range(1f, 2.5f)] public float starPopScale = 1.22f;
 
+        [Header("Title Animation")]
+        [Min(0f)] public float titleRevealDelay = 0.08f;
+        [Min(0.01f)] public float titleDropDuration = 0.65f;
+        [Min(0.01f)] public float titleWobbleDuration = 0.35f;
+        [Range(0.5f, 1.2f)] public float titleStartScale = 0.72f;
+        [Range(0.8f, 1.5f)] public float titleOvershootScale = 1.18f;
+        public Vector2 titleStartOffset = new Vector2(0f, 120f);
+        public float titleWobbleAngle = 8f;
+
         [Header("Button Reveal Timing")]
         [Min(0f)] public float buttonRevealInitialDelaySeconds = 0.08f;
         [Min(0f)] public float buttonRevealStepDelaySeconds = 0.06f;
@@ -69,6 +78,10 @@ namespace ShooterB
         private static StageCompleteModalActionRunner actionRunner;
         private readonly Vector3[] starBaseScales = new Vector3[3];
         private int lastResolvedStars;
+        private Vector3 titleBaseScale = Vector3.one;
+        private Vector2 titleBaseAnchoredPosition = Vector2.zero;
+        private bool hasCapturedTitleBaseScale;
+        private bool hasCapturedTitleBaseAnchoredPosition;
         private Vector3 restartButtonBaseScale = Vector3.one;
         private bool hasCapturedRestartButtonBaseScale;
         private Vector3 backButtonBaseScale = Vector3.one;
@@ -96,6 +109,7 @@ namespace ShooterB
                 StopCoroutine(buttonRevealRoutine);
 
             CancelPendingCloseTransition();
+            StopTitleIntroState(true);
 
             if (restartButton != null)
                 restartButton.onClick.RemoveListener(OnRestartClicked);
@@ -143,6 +157,8 @@ namespace ShooterB
             if (stageNameText != null)
                 stageNameText.text = CampaignLocalizationResolver.GetStageName(config);
             ResetStarIconsForReveal();
+            StopTitleIntroState(false);
+            ResetTitleIntroVisuals();
             StopButtonRevealSequence(false);
             ResetButtonIntroVisuals();
 
@@ -179,6 +195,7 @@ namespace ShooterB
         {
             EnsureInitialized();
             EnsureModalRoot();
+            StopTitleIntroState(true);
             StopButtonRevealSequence(true);
 
             if (modalRoot != null)
@@ -346,6 +363,7 @@ namespace ShooterB
             ResolveButtons();
             ResolveTextReferences();
             EnsureStarAudioReady();
+            CaptureTitleAnimationDefaults();
             CaptureStarBaseScales();
             CaptureButtonAnimationDefaults();
             RefreshLocalizedTexts();
@@ -475,6 +493,21 @@ namespace ShooterB
             }
         }
 
+        private void CaptureTitleAnimationDefaults()
+        {
+            if (titleText != null && !hasCapturedTitleBaseScale)
+            {
+                titleBaseScale = titleText.rectTransform.localScale;
+                hasCapturedTitleBaseScale = true;
+            }
+
+            if (titleText != null && !hasCapturedTitleBaseAnchoredPosition)
+            {
+                titleBaseAnchoredPosition = titleText.rectTransform.anchoredPosition;
+                hasCapturedTitleBaseAnchoredPosition = true;
+            }
+        }
+
         private void CaptureButtonAnimationDefaults()
         {
             if (restartButton != null && !hasCapturedRestartButtonBaseScale)
@@ -548,6 +581,7 @@ namespace ShooterB
         {
             StopStarRevealSequence();
             StopButtonRevealSequence(false);
+            StartTitleRevealSequence();
 
             if (starIcons == null || starIcons.Length == 0)
             {
@@ -565,6 +599,50 @@ namespace ShooterB
 
             StopCoroutine(starRevealRoutine);
             starRevealRoutine = null;
+        }
+
+        private void StartTitleRevealSequence()
+        {
+            if (titleText == null)
+                return;
+
+            StartCoroutine(PlayTitleRevealSequence());
+        }
+
+        private void StopTitleIntroState(bool restoreFinalState)
+        {
+            StopAllCoroutines();
+            starRevealRoutine = null;
+            buttonRevealRoutine = null;
+
+            if (restoreFinalState)
+                RestoreFinalTitleIntroState();
+        }
+
+        private void ResetTitleIntroVisuals()
+        {
+            CaptureTitleAnimationDefaults();
+
+            if (titleText == null)
+                return;
+
+            RectTransform titleRect = titleText.rectTransform;
+            titleText.alpha = 0f;
+            titleRect.localScale = titleBaseScale * titleStartScale;
+            titleRect.anchoredPosition = titleBaseAnchoredPosition + titleStartOffset;
+            titleRect.localRotation = Quaternion.Euler(0f, 0f, -titleWobbleAngle);
+        }
+
+        private void RestoreFinalTitleIntroState()
+        {
+            if (titleText == null)
+                return;
+
+            RectTransform titleRect = titleText.rectTransform;
+            titleText.alpha = 1f;
+            titleRect.localScale = titleBaseScale;
+            titleRect.anchoredPosition = titleBaseAnchoredPosition;
+            titleRect.localRotation = Quaternion.identity;
         }
 
         private IEnumerator PlayStarRevealSequence()
@@ -592,6 +670,67 @@ namespace ShooterB
 
             starRevealRoutine = null;
             StartButtonRevealSequence();
+        }
+
+        private IEnumerator PlayTitleRevealSequence()
+        {
+            float modalShowDuration = modalAnimator != null ? modalAnimator.showDuration : 0f;
+            if (modalShowDuration > 0f)
+                yield return WaitForUnscaledSeconds(modalShowDuration);
+
+            if (titleRevealDelay > 0f)
+                yield return WaitForUnscaledSeconds(titleRevealDelay);
+
+            yield return PlayTitleDropAnimation();
+            RestoreFinalTitleIntroState();
+        }
+
+        private IEnumerator PlayTitleDropAnimation()
+        {
+            if (titleText == null)
+                yield break;
+
+            RectTransform titleRect = titleText.rectTransform;
+            titleText.alpha = 1f;
+
+            float dropDuration = Mathf.Max(0.01f, titleDropDuration);
+            float elapsed = 0f;
+
+            while (elapsed < dropDuration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / dropDuration);
+                float moveEase = EaseOutBounce01(t);
+                float scaleEase = EaseOutBackStrong01(t);
+                float rotationEase = EaseOutBackStrong01(t);
+                float scale = Mathf.LerpUnclamped(titleStartScale, titleOvershootScale, scaleEase);
+
+                titleRect.anchoredPosition = Vector2.LerpUnclamped(titleBaseAnchoredPosition + titleStartOffset, titleBaseAnchoredPosition, moveEase);
+                titleRect.localScale = titleBaseScale * scale;
+                titleRect.localRotation = Quaternion.Euler(0f, 0f, Mathf.LerpUnclamped(-titleWobbleAngle, titleWobbleAngle * 0.35f, rotationEase));
+                yield return null;
+            }
+
+            float wobbleDuration = Mathf.Max(0.01f, titleWobbleDuration);
+            elapsed = 0f;
+
+            while (elapsed < wobbleDuration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / wobbleDuration);
+                float damp = 1f - t;
+                float angle = Mathf.Sin(t * Mathf.PI * 2.5f) * titleWobbleAngle * 0.35f * damp;
+                float scale = Mathf.LerpUnclamped(titleOvershootScale, 1f, EaseOutCubic01(t));
+
+                titleRect.anchoredPosition = titleBaseAnchoredPosition;
+                titleRect.localScale = titleBaseScale * scale;
+                titleRect.localRotation = Quaternion.Euler(0f, 0f, angle);
+                yield return null;
+            }
+
+            titleRect.anchoredPosition = titleBaseAnchoredPosition;
+            titleRect.localScale = titleBaseScale;
+            titleRect.localRotation = Quaternion.identity;
         }
 
         private IEnumerator AnimateStarPop(RectTransform rectTransform, int index)
@@ -738,6 +877,38 @@ namespace ShooterB
             float c3 = c1 + 1f;
             float x = t - 1f;
             return 1f + (c3 * x * x * x) + (c1 * x * x);
+        }
+
+        private static float EaseOutBounce01(float t)
+        {
+            t = Mathf.Clamp01(t);
+            const float n1 = 7.5625f;
+            const float d1 = 2.75f;
+
+            if (t < 1f / d1)
+                return n1 * t * t;
+
+            if (t < 2f / d1)
+            {
+                t -= 1.5f / d1;
+                return (n1 * t * t) + 0.75f;
+            }
+
+            if (t < 2.5f / d1)
+            {
+                t -= 2.25f / d1;
+                return (n1 * t * t) + 0.9375f;
+            }
+
+            t -= 2.625f / d1;
+            return (n1 * t * t) + 0.984375f;
+        }
+
+        private static float EaseOutCubic01(float t)
+        {
+            t = Mathf.Clamp01(t);
+            float inverse = 1f - t;
+            return 1f - (inverse * inverse * inverse);
         }
 
         private Vector3 GetBaseStarScale(int index)

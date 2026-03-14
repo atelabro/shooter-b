@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d962d8b503954f4b8768f6b8741ddc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.PiranhaBullet
-  startRadius: 1.2
+  startRadius: 1
   secondRadius: 0.6
   effectiveRadius: 1.25
   baseSpeed: 16.67

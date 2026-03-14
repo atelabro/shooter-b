@@ -69,6 +69,7 @@ namespace ShooterB
                 if (briefingTypingCoroutine != null)
                     StopCoroutine(briefingTypingCoroutine);
 
+                briefingText.text = string.Empty;
                 briefingTypingCoroutine = StartCoroutine(TypeBriefing(CampaignLocalizationResolver.GetCityBriefing(city)));
             }
 
@@ -233,10 +234,10 @@ namespace ShooterB
             for (int i = 0; i < fullText.Length; i++)
             {
                 briefingText.text += fullText[i];
-                yield return new WaitForSeconds(secondsPerCharacter);
+                yield return new WaitForSecondsRealtime(secondsPerCharacter);
 
                 if (IsPunctuation(fullText[i]))
-                    yield return new WaitForSeconds(punctuationPause);
+                    yield return new WaitForSecondsRealtime(punctuationPause);
             }
 
             briefingTypingCoroutine = null;
