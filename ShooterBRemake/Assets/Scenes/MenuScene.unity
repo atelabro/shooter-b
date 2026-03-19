@@ -2372,8 +2372,9 @@ MonoBehaviour:
   achievementsBadgeOffset: {x: -16, y: 0}
   achievementsBadgeSize: {x: 28, y: 28}
   achievementsBadgeColor: {r: 0.8627451, g: 0.1764706, b: 0.1764706, a: 1}
+  achievementsBadgeAdRewardColor: {r: 0.21960784, g: 0.65882355, b: 0.2901961, a: 1}
   languageDropdown: {fileID: 2099000102}
-  allowBetaDevPanel: 1
+  allowBetaDevPanel: 0
   devPanelCampaignCities: []
 --- !u!4 &688693834
 Transform:
@@ -4862,7 +4863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.RewardedAdService
   providerMode: 1
-  useTestAdUnitIds: 1
+  useTestAdUnitIds: 0
   androidCampaignStartPlusLivesUnitId: ca-app-pub-3126525952020256/4931630846
   androidCampaignStartPlusBulletsUnitId: ca-app-pub-3126525952020256/4931630846
   androidDailyAwardsSetBonusUnitId: ca-app-pub-3126525952020256/4931630846

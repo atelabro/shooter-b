@@ -13,6 +13,10 @@ namespace ShooterB
         public float effectiveRadius = 0.45f;
         public float baseSpeed = 35f;
         public float visualScaleMultiplier = 1f;
+        [Header("Motion Feel")]
+        public float easeOutDuration = 0.08f;
+        public float easeOutStartSpeedMultiplier = 1.2f;
+        public float easeOutPower = 2f;
 
         protected Rigidbody2D rb;
         protected CircleCollider2D col;
@@ -24,6 +28,7 @@ namespace ShooterB
         protected Vector2 direction;
         protected float initialDistance;
         protected float currentDistance;
+        protected float travelTime;
         protected bool bangTriggered = false;
         protected bool isActive = false;
         protected GameObject poolSourcePrefab;
@@ -52,6 +57,7 @@ namespace ShooterB
             direction = (targetPosition - (Vector2)transform.position).normalized;
             initialDistance = Vector2.Distance(transform.position, targetPosition);
             currentDistance = initialDistance;
+            travelTime = 0f;
             bangTriggered = false;
             isActive = true;
 
@@ -99,7 +105,18 @@ namespace ShooterB
 
         protected virtual void MoveBullet()
         {
-            float frameDistance = baseSpeed * Time.fixedDeltaTime;
+            travelTime += Time.fixedDeltaTime;
+
+            float easedProgress = easeOutDuration > 0f
+                ? Mathf.Clamp01(travelTime / easeOutDuration)
+                : 1f;
+            float easedT = 1f - Mathf.Pow(1f - easedProgress, Mathf.Max(0.01f, easeOutPower));
+            float speedMultiplier = Mathf.Lerp(
+                Mathf.Max(0.01f, easeOutStartSpeedMultiplier),
+                1f,
+                easedT);
+            float currentSpeed = baseSpeed * speedMultiplier;
+            float frameDistance = currentSpeed * Time.fixedDeltaTime;
 
             if (currentDistance <= frameDistance)
             {
@@ -108,7 +125,7 @@ namespace ShooterB
             }
             else
             {
-                Vector2 velocity = direction * baseSpeed;
+                Vector2 velocity = direction * currentSpeed;
                 rb.linearVelocity = velocity;
             }
         }
