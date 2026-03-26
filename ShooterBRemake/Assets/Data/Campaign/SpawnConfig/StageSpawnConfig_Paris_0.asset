@@ -242,4 +242,4 @@ MonoBehaviour:
   weightGoStraight: 0.45
   weightGoTop: 0.3
   weightGoBottom: 0.25
-  duckSpeedMultiplier: 0.91
+  duckSpeedMultiplier: 0.9

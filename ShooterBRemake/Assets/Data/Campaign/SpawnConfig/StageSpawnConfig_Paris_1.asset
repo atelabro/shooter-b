@@ -16,206 +16,278 @@ MonoBehaviour:
   waves:
   - showAnnouncement: 0
     announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
     spawnSequence:
     - duckType: 8
       delay: 0
+      healthOverride: 0
       startLane: 1
       pathProjection: 1
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 21
       delay: 1
+      healthOverride: 0
       startLane: 3
       pathProjection: 8
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: bea3f299f3d084fc1a1167bd3b12d420, type: 2}
     - duckType: 8
       delay: 0.5
+      healthOverride: 0
       startLane: 3
       pathProjection: 1
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 8
       delay: 0
+      healthOverride: 0
       startLane: 6
       pathProjection: 1
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 8
       delay: 0
+      healthOverride: 0
       startLane: 8
       pathProjection: 1
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 8
       delay: 1.1
+      healthOverride: 0
       startLane: 2
       pathProjection: 1
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 8
       delay: 0
+      healthOverride: 0
       startLane: 4
       pathProjection: 1
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 8
       delay: 0
+      healthOverride: 0
       startLane: 7
       pathProjection: 1
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 8
       delay: 0
+      healthOverride: 0
       startLane: 9
       pathProjection: 1
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
   - showAnnouncement: 1
     announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
     spawnSequence:
     - duckType: 9
       delay: 1.2
+      healthOverride: 0
       startLane: 1
       pathProjection: 1
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 9
       delay: 0.55
+      healthOverride: 0
       startLane: 3
       pathProjection: 1
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 9
       delay: 0.55
+      healthOverride: 0
       startLane: 6
       pathProjection: 1
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 9
       delay: 0.55
+      healthOverride: 0
       startLane: 8
       pathProjection: 1
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 9
       delay: 1.2
+      healthOverride: 0
       startLane: 5
       pathProjection: 2
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 9
       delay: 0
+      healthOverride: 0
       startLane: 5
       pathProjection: 3
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 8
       delay: 1.3
+      healthOverride: 0
       startLane: 5
       pathProjection: 6
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 8
       delay: 0.3
+      healthOverride: 0
       startLane: 6
       pathProjection: 6
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 8
       delay: 0
+      healthOverride: 0
       startLane: 4
       pathProjection: 6
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 10
       delay: 1.3
+      healthOverride: 0
       startLane: 4
       pathProjection: 1
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
     - duckType: 10
       delay: 0
+      healthOverride: 0
       startLane: 6
       pathProjection: 1
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 0}
   - showAnnouncement: 1
     announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
     spawnSequence:
     - duckType: 8
       delay: 1.8
+      healthOverride: 0
       startLane: 5
       pathProjection: 0
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: ec794f1a2210c40359e01dc4d1b6d10a, type: 2}
     - duckType: 21
       delay: 1.8
+      healthOverride: 0
       startLane: 5
       pathProjection: 0
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
     - duckType: 9
       delay: 1.8
+      healthOverride: 0
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: 5e1c1d28e634146d1b83af237f03a79a, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
     spawnSequence:
     - duckType: 9
       delay: 0
+      healthOverride: 0
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: 8d319f5046e5b416c85abb405b9ee08c, type: 2}
     - duckType: 10
       delay: 1.8
+      healthOverride: 0
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: 5248d020e064e496dad861e365813b82, type: 2}
     - duckType: 9
       delay: 1.8
+      healthOverride: 0
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: 19d75bb314f194aeb9fc7fa8989d7b01, type: 2}
     - duckType: 10
       delay: 1.8
+      healthOverride: 0
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
     spawnSequence:
     - duckType: 10
       delay: 0
+      healthOverride: 0
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0, type: 2}
     - duckType: 9
       delay: 1.8
+      healthOverride: 0
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8, type: 2}
     - duckType: 10
       delay: 1.8
+      healthOverride: 0
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9, type: 2}
     - duckType: 9
       delay: 1.8
+      healthOverride: 0
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
+      sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7, type: 2}
   weightGoStraight: 0.45
   weightGoTop: 0.3
   weightGoBottom: 0.25
-  duckSpeedMultiplier: 0.93
+  duckSpeedMultiplier: 0.91
