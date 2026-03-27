@@ -21,8 +21,8 @@ MonoBehaviour:
     влезови пред да ја преплават линијата.
   backgroundSprite: {fileID: -297034593490658831, guid: 89237d1200df84079819b0096195d16f, type: 3}
   starThreshold1: 0
-  starThreshold2: 330
-  starThreshold3: 432
+  starThreshold2: 323
+  starThreshold3: 423
   starsRequiredToUnlock: 4
   startingDifficulty: 15
-  spawnConfig: {fileID: 11400000, guid: 9b2d5a1c4f7343ec8ef362e0a4fbb303, type: 2}
+  spawnConfig: {fileID: 11400000, guid: c0a10000000000000000000000000003, type: 2}

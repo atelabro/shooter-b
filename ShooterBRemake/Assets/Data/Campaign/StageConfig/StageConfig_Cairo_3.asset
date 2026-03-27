@@ -21,8 +21,8 @@ MonoBehaviour:
     линии пред одбраната да попушти.
   backgroundSprite: {fileID: 2145999880113749899, guid: 04de6f018792c4381aca3270400b2eec, type: 3}
   starThreshold1: 0
-  starThreshold2: 338
-  starThreshold3: 442
+  starThreshold2: 336
+  starThreshold3: 440
   starsRequiredToUnlock: 7
   startingDifficulty: 16
-  spawnConfig: {fileID: 11400000, guid: 9b2d5a1c4f7343ec8ef362e0a4fbb304, type: 2}
+  spawnConfig: {fileID: 11400000, guid: c0a10000000000000000000000000004, type: 2}

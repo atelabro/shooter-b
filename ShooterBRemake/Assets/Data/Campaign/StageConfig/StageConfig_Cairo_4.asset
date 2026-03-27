@@ -21,8 +21,8 @@ MonoBehaviour:
     бранови бараат совршен приоритет на целите.
   backgroundSprite: {fileID: 6801450236302274237, guid: ca807725d45ae4857a7061c234d3cc3c, type: 3}
   starThreshold1: 0
-  starThreshold2: 359
-  starThreshold3: 469
+  starThreshold2: 357
+  starThreshold3: 467
   starsRequiredToUnlock: 10
   startingDifficulty: 17
-  spawnConfig: {fileID: 11400000, guid: 9b2d5a1c4f7343ec8ef362e0a4fbb305, type: 2}
+  spawnConfig: {fileID: 11400000, guid: c0a10000000000000000000000000005, type: 2}

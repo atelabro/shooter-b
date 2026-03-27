@@ -89,11 +89,17 @@ namespace ShooterB
             BRITISH_SHERLOCK_BOSS_DUCK,
             USA_SWAT = 28,
             USA_ADMIRAL = 29,
-            USA_ADMIRAL_ELITE = 30,
+            USA_ADMIRAL_BOSS_DUCK = 30,
             USA_HOLLYWOOD = 31,
             USA_LEO = 32,
             USA_TOM = 33,
-            USA_MARINE = 34
+            USA_MARINE = 34,
+            EGYPT_MUMMY = 35,
+            EGYPT_PHARAOH = 36,
+            EGYPT_ANUBIS = 37,
+            EGYPT_RAIDER = 38,
+            EGYPT_SCARAB = 39,
+            EGYPT_SCARAB_BOSS_DUCK = 40
         }
 
         public static string GetDuckDisplayName(DuckType type)
@@ -121,11 +127,17 @@ namespace ShooterB
                 case DuckType.USA_BUSINESS: return "USA Business";
                 case DuckType.USA_SWAT: return "USA SWAT";
                 case DuckType.USA_ADMIRAL: return "USA Admiral";
-                case DuckType.USA_ADMIRAL_ELITE: return "USA Admiral Elite";
+                case DuckType.USA_ADMIRAL_BOSS_DUCK: return "USA Admiral Boss Duck";
                 case DuckType.USA_HOLLYWOOD: return "USA Hollywood";
                 case DuckType.USA_LEO: return "USA Leo";
                 case DuckType.USA_TOM: return "USA Tom";
                 case DuckType.USA_MARINE: return "USA Marine";
+                case DuckType.EGYPT_MUMMY: return "Egypt Mummy";
+                case DuckType.EGYPT_PHARAOH: return "Egypt Pharaoh";
+                case DuckType.EGYPT_ANUBIS: return "Egypt Anubis";
+                case DuckType.EGYPT_RAIDER: return "Egypt Raider";
+                case DuckType.EGYPT_SCARAB: return "Egypt Scarab";
+                case DuckType.EGYPT_SCARAB_BOSS_DUCK: return "Egypt Scarab Boss Duck";
                 case DuckType.JAPANESE_SAMURAI: return "Japanese Samurai";
                 case DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return "Japanese Samurai Boss Duck";
                 case DuckType.USA_BOSS_DUCK: return "USA Boss Duck";
@@ -164,11 +176,17 @@ namespace ShooterB
                 case DuckType.USA_BUSINESS: return "USA_BUSINESS";
                 case DuckType.USA_SWAT: return "USA_SWAT";
                 case DuckType.USA_ADMIRAL: return "USA_ADMIRAL";
-                case DuckType.USA_ADMIRAL_ELITE: return "USA_ADMIRAL_ELITE";
+                case DuckType.USA_ADMIRAL_BOSS_DUCK: return "USA_ADMIRAL_BOSS_DUCK";
                 case DuckType.USA_HOLLYWOOD: return "USA_HOLLYWOOD";
                 case DuckType.USA_LEO: return "USA_LEO";
                 case DuckType.USA_TOM: return "USA_TOM";
                 case DuckType.USA_MARINE: return "USA_MARINE";
+                case DuckType.EGYPT_MUMMY: return "EGYPT_MUMMY";
+                case DuckType.EGYPT_PHARAOH: return "EGYPT_PHARAOH";
+                case DuckType.EGYPT_ANUBIS: return "EGYPT_ANUBIS";
+                case DuckType.EGYPT_RAIDER: return "EGYPT_RAIDER";
+                case DuckType.EGYPT_SCARAB: return "EGYPT_SCARAB";
+                case DuckType.EGYPT_SCARAB_BOSS_DUCK: return "EGYPT_SCARAB_BOSS_DUCK";
                 case DuckType.JAPANESE_SAMURAI: return "JAPANESE_SAMURAI";
                 case DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return "JAPANESE_SAMURAI_BOSS_DUCK";
                 case DuckType.USA_BOSS_DUCK: return "USA_BOSS_DUCK";
@@ -178,6 +196,48 @@ namespace ShooterB
                 case DuckType.MK_SAMUIL_ELITE: return "MK_SAMUIL_ELITE";
                 case DuckType.MK_SAMUIL_BOSS_DUCK: return "MK_SAMUIL_BOSS_DUCK";
                 default: return type.ToString();
+            }
+        }
+
+        public static bool IsEliteDuckType(DuckType type)
+        {
+            switch (type)
+            {
+                case DuckType.MK_VOJVODA:
+                case DuckType.MK_SAMUIL_ELITE:
+                case DuckType.FRENCH_REVOLUTIONARY:
+                case DuckType.FRENCH_MUSKETEER:
+                case DuckType.BRITISH_PUNK:
+                case DuckType.JAPANESE_SAMURAI:
+                case DuckType.EGYPT_ANUBIS:
+                case DuckType.EGYPT_SCARAB:
+                case DuckType.MK_SAMUIL_BOSS_DUCK:
+                case DuckType.USA_BOSS_DUCK:
+                case DuckType.USA_ADMIRAL_BOSS_DUCK:
+                case DuckType.FRENCH_MUSKETEER_BOSS_DUCK:
+                case DuckType.JAPANESE_SAMURAI_BOSS_DUCK:
+                case DuckType.BRITISH_SHERLOCK_BOSS_DUCK:
+                case DuckType.EGYPT_SCARAB_BOSS_DUCK:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public static bool IsBossDuckType(DuckType type)
+        {
+            switch (type)
+            {
+                case DuckType.MK_SAMUIL_BOSS_DUCK:
+                case DuckType.USA_BOSS_DUCK:
+                case DuckType.USA_ADMIRAL_BOSS_DUCK:
+                case DuckType.FRENCH_MUSKETEER_BOSS_DUCK:
+                case DuckType.JAPANESE_SAMURAI_BOSS_DUCK:
+                case DuckType.BRITISH_SHERLOCK_BOSS_DUCK:
+                case DuckType.EGYPT_SCARAB_BOSS_DUCK:
+                    return true;
+                default:
+                    return false;
             }
         }
 
@@ -265,11 +325,17 @@ namespace ShooterB
             public const int USA_BUSINESS = 3;
             public const int USA_SWAT = 4;
             public const int USA_ADMIRAL = 4;
-            public const int USA_ADMIRAL_ELITE = 5;
+            public const int USA_ADMIRAL_BOSS_DUCK = 8;
             public const int USA_HOLLYWOOD = 3;
             public const int USA_LEO = 3;
             public const int USA_TOM = 3;
             public const int USA_MARINE = 4;
+            public const int EGYPT_MUMMY = 3;
+            public const int EGYPT_PHARAOH = 4;
+            public const int EGYPT_ANUBIS = 4;
+            public const int EGYPT_RAIDER = 3;
+            public const int EGYPT_SCARAB = 4;
+            public const int EGYPT_SCARAB_BOSS_DUCK = 8;
             public const int JAPANESE_SAMURAI = 4;
             public const int JAPANESE_SAMURAI_BOSS_DUCK = 8;
             public const int USA_BOSS_DUCK = 5;
@@ -304,11 +370,17 @@ namespace ShooterB
                     case DuckType.USA_BUSINESS: return USA_BUSINESS;
                     case DuckType.USA_SWAT: return USA_SWAT;
                     case DuckType.USA_ADMIRAL: return USA_ADMIRAL;
-                    case DuckType.USA_ADMIRAL_ELITE: return USA_ADMIRAL_ELITE;
+                    case DuckType.USA_ADMIRAL_BOSS_DUCK: return USA_ADMIRAL_BOSS_DUCK;
                     case DuckType.USA_HOLLYWOOD: return USA_HOLLYWOOD;
                     case DuckType.USA_LEO: return USA_LEO;
                     case DuckType.USA_TOM: return USA_TOM;
                     case DuckType.USA_MARINE: return USA_MARINE;
+                    case DuckType.EGYPT_MUMMY: return EGYPT_MUMMY;
+                    case DuckType.EGYPT_PHARAOH: return EGYPT_PHARAOH;
+                    case DuckType.EGYPT_ANUBIS: return EGYPT_ANUBIS;
+                    case DuckType.EGYPT_RAIDER: return EGYPT_RAIDER;
+                    case DuckType.EGYPT_SCARAB: return EGYPT_SCARAB;
+                    case DuckType.EGYPT_SCARAB_BOSS_DUCK: return EGYPT_SCARAB_BOSS_DUCK;
                     case DuckType.JAPANESE_SAMURAI: return JAPANESE_SAMURAI;
                     case DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return JAPANESE_SAMURAI_BOSS_DUCK;
                     case DuckType.USA_BOSS_DUCK: return USA_BOSS_DUCK;
@@ -327,9 +399,11 @@ namespace ShooterB
             public const int DEFAULT = 1;
             public const int MK_SAMUIL_BOSS_DUCK = 8;
             public const int USA_BOSS_DUCK = 8;
+            public const int USA_ADMIRAL_BOSS_DUCK = 8;
             public const int FRENCH_MUSKETEER_BOSS_DUCK = 8;
             public const int JAPANESE_SAMURAI_BOSS_DUCK = 8;
             public const int BRITISH_SHERLOCK_BOSS_DUCK = 8;
+            public const int EGYPT_SCARAB_BOSS_DUCK = 8;
 
             public static int GetMaxHealth(DuckType type)
             {
@@ -337,9 +411,11 @@ namespace ShooterB
                 {
                     case DuckType.MK_SAMUIL_BOSS_DUCK: return MK_SAMUIL_BOSS_DUCK;
                     case DuckType.USA_BOSS_DUCK: return USA_BOSS_DUCK;
+                    case DuckType.USA_ADMIRAL_BOSS_DUCK: return USA_ADMIRAL_BOSS_DUCK;
                     case DuckType.FRENCH_MUSKETEER_BOSS_DUCK: return FRENCH_MUSKETEER_BOSS_DUCK;
                     case DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return JAPANESE_SAMURAI_BOSS_DUCK;
                     case DuckType.BRITISH_SHERLOCK_BOSS_DUCK: return BRITISH_SHERLOCK_BOSS_DUCK;
+                    case DuckType.EGYPT_SCARAB_BOSS_DUCK: return EGYPT_SCARAB_BOSS_DUCK;
                     default: return DEFAULT;
                 }
             }

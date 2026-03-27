@@ -399,15 +399,11 @@ namespace ShooterB
                         IncrementSlot(slot, 1);
                         break;
                     case ObjectiveType.EliteKills:
-                        if (IsEliteDuck(duckType))
+                        if (Constants.IsEliteDuckType(duckType))
                             IncrementSlot(slot, 1);
                         break;
                     case ObjectiveType.BossKills:
-                        if (duckType == Constants.DuckType.MK_SAMUIL_BOSS_DUCK ||
-                            duckType == Constants.DuckType.USA_BOSS_DUCK ||
-                            duckType == Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK ||
-                            duckType == Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK ||
-                            duckType == Constants.DuckType.BRITISH_SHERLOCK_BOSS_DUCK)
+                        if (Constants.IsBossDuckType(duckType))
                             IncrementSlot(slot, 1);
                         break;
                 }
@@ -688,16 +684,6 @@ namespace ShooterB
             }
 
             return true;
-        }
-
-        private static bool IsEliteDuck(Constants.DuckType duckType)
-        {
-            return duckType == Constants.DuckType.MK_PHALARX ||
-                   duckType == Constants.DuckType.MK_ARCHER ||
-                   duckType == Constants.DuckType.MK_VOJVODA ||
-                   duckType == Constants.DuckType.FRENCH_REVOLUTIONARY ||
-                   duckType == Constants.DuckType.FRENCH_MUSKETEER ||
-                   duckType == Constants.DuckType.USA_ADMIRAL_ELITE;
         }
 
         private static bool IsEligibleCampaignProgress()

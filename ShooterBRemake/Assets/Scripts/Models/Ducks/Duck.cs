@@ -137,7 +137,7 @@ namespace ShooterB
         {
             duckType = type;
             pointValue = Constants.DuckPoints.GetPoints(type);
-            maxHealth = healthOverride > 0 ? healthOverride : 1;
+            maxHealth = healthOverride > 0 ? healthOverride : Constants.DuckHealth.GetMaxHealth(type);
             currentHealth = maxHealth;
             spawnSizeMultiplier = sizeOverride > 0f ? sizeOverride : 1f;
             speed = Constants.DuckSpeed.GetSpeed(difficulty);
@@ -323,11 +323,17 @@ namespace ShooterB
                 case Constants.DuckType.USA_BUSINESS: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.USA_SWAT: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.USA_ADMIRAL: return usaAdmiralSizeMultiplier;
-                case Constants.DuckType.USA_ADMIRAL_ELITE: return usaAdmiralEliteSizeMultiplier;
+                case Constants.DuckType.USA_ADMIRAL_BOSS_DUCK: return usaAdmiralEliteSizeMultiplier;
                 case Constants.DuckType.USA_HOLLYWOOD: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.USA_LEO: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.USA_TOM: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.USA_MARINE: return usaMarineSizeMultiplier;
+                case Constants.DuckType.EGYPT_MUMMY: return britishPoliceSizeMultiplier;
+                case Constants.DuckType.EGYPT_PHARAOH: return britishPunkSizeMultiplier;
+                case Constants.DuckType.EGYPT_ANUBIS: return britishPunkSizeMultiplier;
+                case Constants.DuckType.EGYPT_RAIDER: return britishPoliceSizeMultiplier;
+                case Constants.DuckType.EGYPT_SCARAB: return frenchArtistSizeMultiplier;
+                case Constants.DuckType.EGYPT_SCARAB_BOSS_DUCK: return frenchArtistSizeMultiplier;
                 case Constants.DuckType.JAPANESE_SAMURAI: return britishPunkSizeMultiplier;
                 case Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return britishPunkSizeMultiplier;
                 case Constants.DuckType.JAPANESE_STRAW_DUCK: return britishPunkSizeMultiplier;

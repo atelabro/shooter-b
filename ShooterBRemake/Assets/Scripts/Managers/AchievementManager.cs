@@ -31,6 +31,8 @@ namespace ShooterB
             LosAngelesSweepII,
             TokyoOperationI,
             TokyoOperationII,
+            CairoExpeditionI,
+            CairoExpeditionII,
             RifleVeteran,
             CabirnePrecision,
             BerettaStorm,
@@ -49,7 +51,8 @@ namespace ShooterB
             LondonBossHunter,
             NewYorkBossHunter,
             LosAngelesBossHunter,
-            TokyoBossHunter
+            TokyoBossHunter,
+            CairoBossHunter
         }
 
         private enum ProgressSource
@@ -74,7 +77,8 @@ namespace ShooterB
             London,
             NewYork,
             LosAngeles,
-            Tokyo
+            Tokyo,
+            Cairo
         }
 
         private struct AchievementDefinition
@@ -92,7 +96,7 @@ namespace ShooterB
             public string titleKey;
         }
 
-        private const int CurrentSchemaVersion = 5;
+        private const int CurrentSchemaVersion = 6;
         private const string SchemaVersionKey = "Achievement_SchemaVersion";
         private const string AchievementCoinSfxResourcePath = "Audio/coin";
 
@@ -274,8 +278,9 @@ namespace ShooterB
             AddBirdAchievement(AchievementId.ParisBossHunter, 10, duckType: Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK, requiredCampaignGroup: DuckGroup.Paris, coinReward: 18);
             AddBirdAchievement(AchievementId.LondonBossHunter, 10, duckType: Constants.DuckType.BRITISH_SHERLOCK_BOSS_DUCK, requiredCampaignGroup: DuckGroup.London, coinReward: 18);
             AddBirdAchievement(AchievementId.NewYorkBossHunter, 10, duckType: Constants.DuckType.USA_BOSS_DUCK, requiredCampaignGroup: DuckGroup.NewYork, coinReward: 18);
-            AddBirdAchievement(AchievementId.LosAngelesBossHunter, 10, duckType: Constants.DuckType.USA_BOSS_DUCK, requiredCampaignGroup: DuckGroup.LosAngeles, coinReward: 18);
+            AddBirdAchievement(AchievementId.LosAngelesBossHunter, 10, duckType: Constants.DuckType.USA_ADMIRAL_BOSS_DUCK, requiredCampaignGroup: DuckGroup.LosAngeles, coinReward: 18);
             AddBirdAchievement(AchievementId.TokyoBossHunter, 10, duckType: Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK, requiredCampaignGroup: DuckGroup.Tokyo, coinReward: 18);
+            AddBirdAchievement(AchievementId.CairoBossHunter, 10, duckType: Constants.DuckType.EGYPT_SCARAB_BOSS_DUCK, requiredCampaignGroup: DuckGroup.Cairo, coinReward: 18);
 
             AddCityAchievement(AchievementId.SkopjeDefenderI, 100, DuckGroup.Skopje, coinReward: 18);
             AddCityAchievement(AchievementId.SkopjeDefenderII, 350, DuckGroup.Skopje, coinReward: 50);
@@ -289,6 +294,8 @@ namespace ShooterB
             AddCityAchievement(AchievementId.LosAngelesSweepII, 350, DuckGroup.LosAngeles, coinReward: 50);
             AddCityAchievement(AchievementId.TokyoOperationI, 100, DuckGroup.Tokyo, coinReward: 18);
             AddCityAchievement(AchievementId.TokyoOperationII, 350, DuckGroup.Tokyo, coinReward: 50);
+            AddCityAchievement(AchievementId.CairoExpeditionI, 100, DuckGroup.Cairo, coinReward: 18);
+            AddCityAchievement(AchievementId.CairoExpeditionII, 350, DuckGroup.Cairo, coinReward: 50);
 
             AddBirdAchievement(AchievementId.RifleVeteran, 1200, weaponType: Constants.WeaponType.Rifle, coinReward: 20);
             AddBirdAchievement(AchievementId.CabirnePrecision, 400, weaponType: Constants.WeaponType.Cabirne, coinReward: 18);
@@ -450,7 +457,8 @@ namespace ShooterB
                 case Constants.DuckType.USA_BUSINESS:
                 case Constants.DuckType.USA_SWAT:
                 case Constants.DuckType.USA_ADMIRAL:
-                case Constants.DuckType.USA_ADMIRAL_ELITE:
+                case Constants.DuckType.USA_ADMIRAL_BOSS_DUCK:
+                    return DuckGroup.LosAngeles;
                 case Constants.DuckType.USA_HOLLYWOOD:
                 case Constants.DuckType.USA_LEO:
                 case Constants.DuckType.USA_TOM:
@@ -462,6 +470,13 @@ namespace ShooterB
                 case Constants.DuckType.JAPANESE_STRAW_DUCK:
                 case Constants.DuckType.JAPANESE_KIMONO_DUCK:
                     return DuckGroup.Tokyo;
+                case Constants.DuckType.EGYPT_MUMMY:
+                case Constants.DuckType.EGYPT_PHARAOH:
+                case Constants.DuckType.EGYPT_ANUBIS:
+                case Constants.DuckType.EGYPT_RAIDER:
+                case Constants.DuckType.EGYPT_SCARAB:
+                case Constants.DuckType.EGYPT_SCARAB_BOSS_DUCK:
+                    return DuckGroup.Cairo;
                 default:
                     return DuckGroup.None;
             }
@@ -487,6 +502,8 @@ namespace ShooterB
                     return DuckGroup.LosAngeles;
                 case "Tokyo":
                     return DuckGroup.Tokyo;
+                case "Cairo":
+                    return DuckGroup.Cairo;
                 default:
                     return DuckGroup.None;
             }
@@ -499,7 +516,7 @@ namespace ShooterB
                    duckType == Constants.DuckType.USA_BUSINESS ||
                    duckType == Constants.DuckType.USA_SWAT ||
                    duckType == Constants.DuckType.USA_ADMIRAL ||
-                   duckType == Constants.DuckType.USA_ADMIRAL_ELITE ||
+                   duckType == Constants.DuckType.USA_ADMIRAL_BOSS_DUCK ||
                    duckType == Constants.DuckType.USA_HOLLYWOOD ||
                    duckType == Constants.DuckType.USA_LEO ||
                    duckType == Constants.DuckType.USA_TOM ||
@@ -532,6 +549,7 @@ namespace ShooterB
                 case DuckGroup.NewYork: return "achievement.city_group.newyork";
                 case DuckGroup.LosAngeles: return "achievement.city_group.losangeles";
                 case DuckGroup.Tokyo:   return "achievement.city_group.tokyo";
+                case DuckGroup.Cairo:   return "achievement.city_group.cairo";
                 default:                return null;
             }
         }
@@ -687,25 +705,6 @@ namespace ShooterB
             }
         }
 
-        private static bool IsEliteDuck(Constants.DuckType duckType)
-        {
-            return duckType == Constants.DuckType.MK_PHALARX ||
-                   duckType == Constants.DuckType.MK_ARCHER ||
-                   duckType == Constants.DuckType.MK_VOJVODA ||
-                   duckType == Constants.DuckType.FRENCH_REVOLUTIONARY ||
-                   duckType == Constants.DuckType.FRENCH_MUSKETEER ||
-                   duckType == Constants.DuckType.USA_ADMIRAL_ELITE;
-        }
-
-        private static bool IsBossDuck(Constants.DuckType duckType)
-        {
-            return duckType == Constants.DuckType.MK_SAMUIL_BOSS_DUCK ||
-                   duckType == Constants.DuckType.USA_BOSS_DUCK ||
-                   duckType == Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK ||
-                   duckType == Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK ||
-                   duckType == Constants.DuckType.BRITISH_SHERLOCK_BOSS_DUCK;
-        }
-
         private static bool IsBossAchievement(AchievementDefinition definition)
         {
             return definition.id == AchievementId.BossSlayerI ||
@@ -715,7 +714,9 @@ namespace ShooterB
 
         private static bool IsEligibleSpecialDuck(AchievementDefinition definition, Constants.DuckType duckType)
         {
-            return IsBossAchievement(definition) ? IsBossDuck(duckType) : IsEliteDuck(duckType);
+            return IsBossAchievement(definition)
+                ? Constants.IsBossDuckType(duckType)
+                : Constants.IsEliteDuckType(duckType);
         }
 
         private static bool IsEligibleCampaignProgress()

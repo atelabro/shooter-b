@@ -20,8 +20,8 @@ MonoBehaviour:
     пред да се насоберат.
   backgroundSprite: {fileID: -624276174764907762, guid: 09a0d535963eb4da39abbb198046b1d3, type: 3}
   starThreshold1: 0
-  starThreshold2: 382
-  starThreshold3: 500
+  starThreshold2: 332
+  starThreshold3: 435
   starsRequiredToUnlock: 2
   startingDifficulty: 14
-  spawnConfig: {fileID: 11400000, guid: 9b2d5a1c4f7343ec8ef362e0a4fbb302, type: 2}
+  spawnConfig: {fileID: 11400000, guid: c0a10000000000000000000000000002, type: 2}

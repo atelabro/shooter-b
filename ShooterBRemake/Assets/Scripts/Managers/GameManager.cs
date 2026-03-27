@@ -255,7 +255,9 @@ namespace ShooterB
                 case Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK:
                 case Constants.DuckType.BRITISH_SHERLOCK_BOSS_DUCK:
                 case Constants.DuckType.USA_BOSS_DUCK:
+                case Constants.DuckType.USA_ADMIRAL_BOSS_DUCK:
                 case Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK:
+                case Constants.DuckType.EGYPT_SCARAB_BOSS_DUCK:
                     return 3;
                 default:
                     return 1;

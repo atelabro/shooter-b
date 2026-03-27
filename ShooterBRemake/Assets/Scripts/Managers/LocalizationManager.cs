@@ -255,6 +255,7 @@ namespace ShooterB
                 ["achievement.city_group.newyork"] = "New York",
                 ["achievement.city_group.losangeles"] = "Los Angeles",
                 ["achievement.city_group.tokyo"] = "Japanese",
+                ["achievement.city_group.cairo"] = "Egyptian",
 
                 ["achievement.FieldPromotion.title"] = "Field Promotion",
                 ["achievement.CityCleaner.title"] = "City Cleaner",
@@ -279,6 +280,8 @@ namespace ShooterB
                 ["achievement.LosAngelesSweepII.title"] = "Los Angeles Sweep II",
                 ["achievement.TokyoOperationI.title"] = "Tokyo Operation I",
                 ["achievement.TokyoOperationII.title"] = "Tokyo Operation II",
+                ["achievement.CairoExpeditionI.title"] = "Cairo Expedition I",
+                ["achievement.CairoExpeditionII.title"] = "Cairo Expedition II",
                 ["achievement.RifleVeteran.title"] = "Rifle Veteran",
                 ["achievement.CabirnePrecision.title"] = "Cabirne Precision",
                 ["achievement.BerettaStorm.title"] = "Beretta Storm",
@@ -298,6 +301,7 @@ namespace ShooterB
                 ["achievement.NewYorkBossHunter.title"] = "New York Boss Hunter",
                 ["achievement.LosAngelesBossHunter.title"] = "Los Angeles Boss Hunter",
                 ["achievement.TokyoBossHunter.title"] = "Tokyo Boss Hunter",
+                ["achievement.CairoBossHunter.title"] = "Cairo Boss Hunter",
 
                 ["daily.Kill40.title"] = "Daily Hunter",
                 ["daily.Kill80.title"] = "Feather Reaper",
@@ -466,6 +470,7 @@ namespace ShooterB
                 ["achievement.city_group.newyork"] = "Њујоршки",
                 ["achievement.city_group.losangeles"] = "Лосанџелески",
                 ["achievement.city_group.tokyo"] = "Јапонски",
+                ["achievement.city_group.cairo"] = "Египетски",
 
                 ["achievement.FieldPromotion.title"] = "Теренска Промоција",
                 ["achievement.CityCleaner.title"] = "Чистач на Градови",
@@ -490,6 +495,8 @@ namespace ShooterB
                 ["achievement.LosAngelesSweepII.title"] = "Чистење на Лос Анџелес II",
                 ["achievement.TokyoOperationI.title"] = "Токиска Операција I",
                 ["achievement.TokyoOperationII.title"] = "Токиска Операција II",
+                ["achievement.CairoExpeditionI.title"] = "Каирска Експедиција I",
+                ["achievement.CairoExpeditionII.title"] = "Каирска Експедиција II",
                 ["achievement.RifleVeteran.title"] = "Ветеран со Пушка",
                 ["achievement.CabirnePrecision.title"] = "Кабирне Прецизност",
                 ["achievement.BerettaStorm.title"] = "Берета Бура",
@@ -509,6 +516,7 @@ namespace ShooterB
                 ["achievement.NewYorkBossHunter.title"] = "Ловец на Шефот од Њујорк",
                 ["achievement.LosAngelesBossHunter.title"] = "Ловец на Шефот од Лос Анџелес",
                 ["achievement.TokyoBossHunter.title"] = "Ловец на Шефот од Токио",
+                ["achievement.CairoBossHunter.title"] = "Ловец на Шефот од Каиро",
 
                 ["daily.Kill40.title"] = "Дневен Ловец",
                 ["daily.Kill80.title"] = "Жетвар на Пердуви",

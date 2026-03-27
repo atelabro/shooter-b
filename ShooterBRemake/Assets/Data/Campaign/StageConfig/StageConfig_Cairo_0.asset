@@ -20,8 +20,8 @@ MonoBehaviour:
     и казни ги широките флангови.
   backgroundSprite: {fileID: 3707636455751972981, guid: 1bf2900f26cec43d093623a92fb5996b, type: 3}
   starThreshold1: 0
-  starThreshold2: 335
-  starThreshold3: 439
+  starThreshold2: 305
+  starThreshold3: 400
   starsRequiredToUnlock: 0
   startingDifficulty: 13
-  spawnConfig: {fileID: 11400000, guid: c055c7d5218c48148e41d065b78aae6a, type: 2}
+  spawnConfig: {fileID: 11400000, guid: c0a10000000000000000000000000001, type: 2}

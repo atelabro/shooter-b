@@ -48,7 +48,7 @@ MonoBehaviour:
   weaponType: 5
   fireMode: 0
   maxBullets: 5
-  damage: 1
+  damage: 2
   startModalAmmoBonus: 2
   fireDelay: 0.1
   refillDelay: 0.4

@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CityConfig
   cityName: Cairo
   cityNameMk: Каиро
-  briefingText: Duck formations are fortifying Cairo landmarks. Clear the desert approaches,
-    secure the pyramids, and break the siege before it spreads east.
-  briefingTextMk: Паткините формации ги утврдуваат знаменитостите на Каиро. Исчисти
-    ги пустинските приоди, обезбеди ги пирамидите и скрши ја опсадата пред да се
-    прошири на исток.
+  briefingText: Duck forces are closing in on Cairo. Clear the desert and secure
+    the pyramids.
+  briefingTextMk: Паткините сили се приближуваат кон Каиро. Исчисти ја пустината
+    и обезбеди ги пирамидите.
   pinSpriteResourcePath: Pins/CairoBadge
   pinPosition: {x: 90, y: 30}
   stages:

@@ -76,11 +76,17 @@ namespace ShooterB
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_BUSINESS), Constants.DuckType.USA_BUSINESS, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_SWAT), Constants.DuckType.USA_SWAT, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_ADMIRAL), Constants.DuckType.USA_ADMIRAL, nameof(duckFrameLibrary));
-            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_ADMIRAL_ELITE), Constants.DuckType.USA_ADMIRAL_ELITE, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_ADMIRAL_BOSS_DUCK), Constants.DuckType.USA_ADMIRAL_BOSS_DUCK, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_HOLLYWOOD), Constants.DuckType.USA_HOLLYWOOD, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_LEO), Constants.DuckType.USA_LEO, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_TOM), Constants.DuckType.USA_TOM, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_MARINE), Constants.DuckType.USA_MARINE, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.EGYPT_MUMMY), Constants.DuckType.EGYPT_MUMMY, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.EGYPT_PHARAOH), Constants.DuckType.EGYPT_PHARAOH, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.EGYPT_ANUBIS), Constants.DuckType.EGYPT_ANUBIS, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.EGYPT_RAIDER), Constants.DuckType.EGYPT_RAIDER, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.EGYPT_SCARAB), Constants.DuckType.EGYPT_SCARAB, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.EGYPT_SCARAB_BOSS_DUCK), Constants.DuckType.EGYPT_SCARAB_BOSS_DUCK, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.JAPANESE_SAMURAI), Constants.DuckType.JAPANESE_SAMURAI, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK), Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_BOSS_DUCK), Constants.DuckType.USA_BOSS_DUCK, nameof(duckFrameLibrary));
