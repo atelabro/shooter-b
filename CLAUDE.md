@@ -146,6 +146,10 @@ open -a "Unity Hub" .
 4. Build to Android/iOS for device testing
 5. Iterate based on performance and gameplay feel
 
+## Additional Implementation Guides
+
+- For adding new duck types, follow `ADDING_DUCK_TYPES.md`
+
 ## Current Status
 
 ### Completed

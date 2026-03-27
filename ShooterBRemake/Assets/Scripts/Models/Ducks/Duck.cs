@@ -37,7 +37,7 @@ namespace ShooterB
         [SerializeField] private float frenchArtistSizeMultiplier = 0.88f;
         [SerializeField] private float britishRedcoatSizeMultiplier = 1f;
         [SerializeField] private float britishPoliceSizeMultiplier = 1f;
-        [SerializeField] private float usaAdmiralSizeMultiplier = 0.88f;
+        [SerializeField] private float usaAdmiralSizeMultiplier = 0.92f;
         [SerializeField] private float britishPunkSizeMultiplier = 1f;
 
         [Header("Hitbox Normalization")]
