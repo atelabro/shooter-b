@@ -21,37 +21,37 @@ MonoBehaviour:
       delay: 0
       startLane: 1
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 14
       delay: 0
       startLane: 3
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 14
       delay: 0
       startLane: 6
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.08
     - duckType: 14
       delay: 0
       startLane: 8
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.08
     - duckType: 14
       delay: 1.1
       startLane: 2
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 14
       delay: 0
       startLane: 4
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.08
     - duckType: 14
       delay: 0
       startLane: 7
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.08
     - duckType: 14
       delay: 0
       startLane: 9
@@ -223,4 +223,4 @@ MonoBehaviour:
   weightGoStraight: 0.38
   weightGoTop: 0.35
   weightGoBottom: 0.27
-  duckSpeedMultiplier: 0.94
+  duckSpeedMultiplier: 0.97

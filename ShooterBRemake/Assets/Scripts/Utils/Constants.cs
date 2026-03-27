@@ -87,7 +87,8 @@ namespace ShooterB
             FRENCH_MUSKETEER_BOSS_DUCK,
             JAPANESE_SAMURAI_BOSS_DUCK,
             BRITISH_SHERLOCK_BOSS_DUCK,
-            USA_SWAT
+            USA_SWAT,
+            USA_ADMIRAL
         }
 
         public static string GetDuckDisplayName(DuckType type)
@@ -114,6 +115,7 @@ namespace ShooterB
                 case DuckType.USA_WORKER: return "USA Worker";
                 case DuckType.USA_BUSINESS: return "USA Business";
                 case DuckType.USA_SWAT: return "USA SWAT";
+                case DuckType.USA_ADMIRAL: return "USA Admiral";
                 case DuckType.JAPANESE_SAMURAI: return "Japanese Samurai";
                 case DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return "Japanese Samurai Boss Duck";
                 case DuckType.USA_BOSS_DUCK: return "USA Boss Duck";
@@ -151,6 +153,7 @@ namespace ShooterB
                 case DuckType.USA_WORKER: return "USA_WORKER";
                 case DuckType.USA_BUSINESS: return "USA_BUSINESS";
                 case DuckType.USA_SWAT: return "USA_SWAT";
+                case DuckType.USA_ADMIRAL: return "USA_ADMIRAL";
                 case DuckType.JAPANESE_SAMURAI: return "JAPANESE_SAMURAI";
                 case DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return "JAPANESE_SAMURAI_BOSS_DUCK";
                 case DuckType.USA_BOSS_DUCK: return "USA_BOSS_DUCK";
@@ -246,6 +249,7 @@ namespace ShooterB
             public const int USA_WORKER = 3;
             public const int USA_BUSINESS = 3;
             public const int USA_SWAT = 4;
+            public const int USA_ADMIRAL = 4;
             public const int JAPANESE_SAMURAI = 4;
             public const int JAPANESE_SAMURAI_BOSS_DUCK = 8;
             public const int USA_BOSS_DUCK = 5;
@@ -279,6 +283,7 @@ namespace ShooterB
                     case DuckType.USA_WORKER: return USA_WORKER;
                     case DuckType.USA_BUSINESS: return USA_BUSINESS;
                     case DuckType.USA_SWAT: return USA_SWAT;
+                    case DuckType.USA_ADMIRAL: return USA_ADMIRAL;
                     case DuckType.JAPANESE_SAMURAI: return JAPANESE_SAMURAI;
                     case DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return JAPANESE_SAMURAI_BOSS_DUCK;
                     case DuckType.USA_BOSS_DUCK: return USA_BOSS_DUCK;
