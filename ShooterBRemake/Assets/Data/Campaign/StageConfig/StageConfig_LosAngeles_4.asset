@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_LosAngeles_4
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 34
+  mapName: Port Lockdown
+  mapNameMk: Блокада на Пристаништето
+  briefingText: Final Los Angeles engagement at the port. Heavy traffic and layered
+    lines demand clean target priority.
+  briefingTextMk: Финална пресметка во Лос Анџелес кај пристаништето. Густ сообраќај
+    и слоевити линии бараат чист приоритет на целите.
+  backgroundSprite: {fileID: 2289460082471321250, guid: 44c79911a268c480394cf6253c6fd8bc, type: 3}
+  starThreshold1: 0
+  starThreshold2: 355
+  starThreshold3: 465
+  starsRequiredToUnlock: 10
+  startingDifficulty: 17
+  spawnConfig: {fileID: 11400000, guid: c7f0c802639d475da62c1ae063bc1463, type: 2}

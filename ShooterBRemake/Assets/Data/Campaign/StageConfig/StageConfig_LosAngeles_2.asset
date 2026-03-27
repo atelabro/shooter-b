@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_LosAngeles_2
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 32
+  mapName: Rodeo Drive Rush
+  mapNameMk: Налет на Родео Драјв
+  briefingText: Pressure builds in tight luxury lanes. Maintain rhythm and deny every
+    crossing angle.
+  briefingTextMk: Притисокот расте во тесните луксузни линии. Одржи ритам и затвори
+    го секој вкрстен агол.
+  backgroundSprite: {fileID: 1841474853757043255, guid: 6f5659e5fa16442db997b41e81b72849, type: 3}
+  starThreshold1: 0
+  starThreshold2: 316
+  starThreshold3: 414
+  starsRequiredToUnlock: 4
+  startingDifficulty: 15
+  spawnConfig: {fileID: 11400000, guid: 7ee3cae5deee460598d528292f23f284, type: 2}

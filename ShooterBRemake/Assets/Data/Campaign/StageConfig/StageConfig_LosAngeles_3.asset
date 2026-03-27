@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_LosAngeles_3
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 33
+  mapName: Santa Monica Breakwater
+  mapNameMk: Санта Моника Бранобран
+  briefingText: Coastal lanes stay exposed and fast. Break the wave timing before
+    the beach is overrun.
+  briefingTextMk: Крајбрежните линии се отворени и брзи. Разбиј го темпото на брановите
+    пред плажата да биде прегазена.
+  backgroundSprite: {fileID: -5258571155298985392, guid: 21d0480381fce4b868968aecfe028277, type: 3}
+  starThreshold1: 0
+  starThreshold2: 334
+  starThreshold3: 438
+  starsRequiredToUnlock: 7
+  startingDifficulty: 16
+  spawnConfig: {fileID: 11400000, guid: d02bd83e0cfc45bf9ce1bfdb0e1cdec1, type: 2}

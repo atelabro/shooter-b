@@ -1,0 +1,595 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7d10ede515c4c36b362e617a940917, type: 3}
+  m_Name: StageSpawnConfig_LosAngeles_4
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageSpawnConfig
+  spawnSequence: []
+  waves:
+  - showAnnouncement: 0
+    announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
+    spawnSequence:
+    - duckType: 14
+      delay: 0
+      healthOverride: 0
+      startLane: 2
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 14
+      delay: 0
+      healthOverride: 0
+      startLane: 4
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 14
+      delay: 0
+      healthOverride: 0
+      startLane: 7
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 14
+      delay: 0
+      healthOverride: 0
+      startLane: 9
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 1
+      healthOverride: 0
+      startLane: 1
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 0
+      healthOverride: 0
+      startLane: 3
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 0
+      healthOverride: 0
+      startLane: 6
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 0
+      healthOverride: 0
+      startLane: 8
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 1
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 4
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 5
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 14
+      delay: 1
+      healthOverride: 0
+      startLane: 4
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 14
+      delay: 0
+      healthOverride: 0
+      startLane: 6
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 1.5
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 0
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 11400000, guid: f7a91e162400f49519a969748570e081, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
+    spawnSequence:
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 9
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0.55
+      healthOverride: 0
+      startLane: 7
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0.55
+      healthOverride: 0
+      startLane: 4
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0.55
+      healthOverride: 0
+      startLane: 2
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 14
+      delay: 1
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 6
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 14
+      delay: 0.3
+      healthOverride: 0
+      startLane: 6
+      pathProjection: 6
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 14
+      delay: 0
+      healthOverride: 0
+      startLane: 4
+      pathProjection: 6
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 1
+      healthOverride: 0
+      startLane: 3
+      pathProjection: 8
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 0
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 9
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 1
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 2
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 3
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 1.5
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 0
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 11400000, guid: ec794f1a2210c40359e01dc4d1b6d10a, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
+    spawnSequence:
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 2
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 4
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 7
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 9
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 1
+      healthOverride: 0
+      startLane: 1
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 0.55
+      healthOverride: 0
+      startLane: 3
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 0.55
+      healthOverride: 0
+      startLane: 6
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 0.55
+      healthOverride: 0
+      startLane: 8
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 1
+      healthOverride: 0
+      startLane: 1
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 3
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 6
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 8
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 1
+      healthOverride: 0
+      startLane: 3
+      pathProjection: 8
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 9
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 1.1
+      healthOverride: 0
+      startLane: 4
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 0
+      healthOverride: 0
+      startLane: 6
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 14
+      delay: 1.5
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 0
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 11400000, guid: 16803afcbc0a046e999a0d9de306ed56, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
+    spawnSequence:
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 1
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 3
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 6
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 8
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 1
+      healthOverride: 0
+      startLane: 2
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 4
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 7
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 9
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 14
+      delay: 1
+      healthOverride: 0
+      startLane: 9
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 14
+      delay: 0.55
+      healthOverride: 0
+      startLane: 7
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 14
+      delay: 0.55
+      healthOverride: 0
+      startLane: 4
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 14
+      delay: 0.55
+      healthOverride: 0
+      startLane: 2
+      pathProjection: 1
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 1
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 4
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 5
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 1.2
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 6
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 0.3
+      healthOverride: 0
+      startLane: 6
+      pathProjection: 6
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 15
+      delay: 0
+      healthOverride: 0
+      startLane: 4
+      pathProjection: 6
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 1.2
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 4
+      speedMultiplier: 1.35
+      sizeMultiplier: 0
+      patternRef: {fileID: 0}
+    - duckType: 16
+      delay: 1.5
+      healthOverride: 0
+      startLane: 5
+      pathProjection: 0
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 11400000, guid: b5ad9f0c401ae4ba496f1a7448c3515a, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 3
+    englishWaveLabelFormat: 
+    macedonianWaveLabelFormat: 
+    spawnSequence:
+    - duckType: 16
+      delay: 0
+      healthOverride: 0
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 11400000, guid: 26cd0fce9810d423789df289153943ca, type: 2}
+    - duckType: 16
+      delay: 1.5
+      healthOverride: 0
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 11400000, guid: 3ada0a16951124811962ecb05570ff49, type: 2}
+    - duckType: 16
+      delay: 1.5
+      healthOverride: 0
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 11400000, guid: 16f75fdc480b7453192c0a21c497da84, type: 2}
+  - showAnnouncement: 1
+    announcementDuration: 3
+    englishWaveLabelFormat: Oh no, someone called the S.W.A.T.
+    macedonianWaveLabelFormat: "\u041B\u0435\u043B\u0435, \u043D\u0435\u043A\u043E\u0458
+      \u0433\u0438 \u043F\u043E\u0432\u0438\u043A\u0430 \u0421\u0412\u0410\u0422-\u043E\u0432\u0446\u0438"
+    spawnSequence:
+    - duckType: 28
+      delay: 0
+      healthOverride: 2
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 11400000, guid: ac4838029454f411c9e71938fa60d64f, type: 2}
+    - duckType: 28
+      delay: 1.5
+      healthOverride: 2
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 11400000, guid: 2d01777c954db436b831e9b796d71c6a, type: 2}
+    - duckType: 28
+      delay: 1.5
+      healthOverride: 2
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 11400000, guid: 0ae1decb711d844b9988dc9bb05eceec, type: 2}
+    - duckType: 28
+      delay: 1.5
+      healthOverride: 2
+      startLane: 0
+      pathProjection: 0
+      speedMultiplier: 1
+      sizeMultiplier: 0
+      patternRef: {fileID: 11400000, guid: b3e3de1eccf4b4d088d7be0cd1d9aa3e, type: 2}
+  weightGoStraight: 0.38
+  weightGoTop: 0.35
+  weightGoBottom: 0.27
+  duckSpeedMultiplier: 0.99

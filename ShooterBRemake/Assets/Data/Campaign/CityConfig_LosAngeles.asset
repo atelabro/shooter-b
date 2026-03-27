@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f372f08ed27514277aa37c0253c2e049, type: 3}
+  m_Name: CityConfig_LosAngeles
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CityConfig
+  cityName: Los Angeles
+  cityNameMk: Лос Анџелес
+  briefingText: Duck formations are spreading across Los Angeles. Clear the coast,
+    lock down the streets, and stop the city from tipping into chaos.
+  briefingTextMk: Паткини формации се шират низ Лос Анџелес. Исчисти го брегот, обезбеди
+    ги улиците и спречи градот да потоне во хаос.
+  pinSpriteResourcePath: Pins/LosAngelesBadge
+  pinPosition: {x: -650, y: 70}
+  stages:
+  - {fileID: 11400000, guid: 37ca15a37c7943e3b038c56028396960, type: 2}
+  - {fileID: 11400000, guid: c9f70f8aab114b639e8abe4935f96e53, type: 2}
+  - {fileID: 11400000, guid: 4d5476e86c7b448aa0c5370c24b20b67, type: 2}
+  - {fileID: 11400000, guid: e44b921afed6432eba4001f2c21bc51b, type: 2}
+  - {fileID: 11400000, guid: 4fe21e226f8d4311b0a554be468347ab, type: 2}
+  starsRequiredToUnlock: 11
