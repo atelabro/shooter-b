@@ -437,6 +437,12 @@ namespace ShooterB
                 case Constants.DuckType.USA_WORKER:
                 case Constants.DuckType.USA_BUSINESS:
                 case Constants.DuckType.USA_SWAT:
+                case Constants.DuckType.USA_ADMIRAL:
+                case Constants.DuckType.USA_ADMIRAL_ELITE:
+                case Constants.DuckType.USA_HOLLYWOOD:
+                case Constants.DuckType.USA_LEO:
+                case Constants.DuckType.USA_TOM:
+                case Constants.DuckType.USA_MARINE:
                 case Constants.DuckType.USA_BOSS_DUCK:
                     return DuckGroup.NewYork;
                 case Constants.DuckType.JAPANESE_SAMURAI:
@@ -613,7 +619,8 @@ namespace ShooterB
                    duckType == Constants.DuckType.MK_ARCHER ||
                    duckType == Constants.DuckType.MK_VOJVODA ||
                    duckType == Constants.DuckType.FRENCH_REVOLUTIONARY ||
-                   duckType == Constants.DuckType.FRENCH_MUSKETEER;
+                   duckType == Constants.DuckType.FRENCH_MUSKETEER ||
+                   duckType == Constants.DuckType.USA_ADMIRAL_ELITE;
         }
 
         private static bool IsEligibleCampaignProgress()

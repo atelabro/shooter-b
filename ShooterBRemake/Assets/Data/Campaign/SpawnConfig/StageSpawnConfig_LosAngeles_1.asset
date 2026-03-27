@@ -17,102 +17,102 @@ MonoBehaviour:
   - showAnnouncement: 0
     announcementDuration: 3
     spawnSequence:
-    - duckType: 14
+    - duckType: 32
       delay: 0
       startLane: 1
       pathProjection: 1
       speedMultiplier: 1.05
-    - duckType: 14
+    - duckType: 32
       delay: 0
       startLane: 3
       pathProjection: 1
       speedMultiplier: 1.05
-    - duckType: 14
+    - duckType: 31
       delay: 0
       startLane: 6
       pathProjection: 1
       speedMultiplier: 1.08
-    - duckType: 14
+    - duckType: 31
       delay: 0
       startLane: 8
       pathProjection: 1
       speedMultiplier: 1.08
-    - duckType: 14
+    - duckType: 31
       delay: 1.1
       startLane: 2
       pathProjection: 1
       speedMultiplier: 1.05
-    - duckType: 14
+    - duckType: 31
       delay: 0
       startLane: 4
       pathProjection: 1
       speedMultiplier: 1.08
-    - duckType: 14
+    - duckType: 31
       delay: 0
       startLane: 7
       pathProjection: 1
       speedMultiplier: 1.08
-    - duckType: 14
+    - duckType: 31
       delay: 0
       startLane: 9
       pathProjection: 1
       speedMultiplier: 1
-    - duckType: 15
+    - duckType: 32
       delay: 1.2
       startLane: 1
       pathProjection: 1
       speedMultiplier: 1
-    - duckType: 15
+    - duckType: 32
       delay: 0.55
       startLane: 3
       pathProjection: 1
       speedMultiplier: 1
-    - duckType: 15
+    - duckType: 32
       delay: 0.55
       startLane: 6
       pathProjection: 1
       speedMultiplier: 1
-    - duckType: 15
+    - duckType: 32
       delay: 0.55
       startLane: 8
       pathProjection: 1
       speedMultiplier: 1
-    - duckType: 15
+    - duckType: 32
       delay: 1.2
       startLane: 5
       pathProjection: 2
       speedMultiplier: 1
-    - duckType: 15
+    - duckType: 32
       delay: 0
       startLane: 5
       pathProjection: 3
       speedMultiplier: 1
-    - duckType: 14
+    - duckType: 31
       delay: 1.2
       startLane: 5
       pathProjection: 6
       speedMultiplier: 1
-    - duckType: 14
+    - duckType: 31
       delay: 0.3
       startLane: 6
       pathProjection: 6
       speedMultiplier: 1
-    - duckType: 14
+    - duckType: 31
       delay: 0
       startLane: 4
       pathProjection: 6
       speedMultiplier: 1
-    - duckType: 16
+    - duckType: 33
       delay: 1.3
       startLane: 4
       pathProjection: 1
       speedMultiplier: 1
-    - duckType: 16
+    - duckType: 33
       delay: 0
       startLane: 6
       pathProjection: 1
       speedMultiplier: 1
-    - duckType: 15
+    - duckType: 32
       delay: 1.8
       startLane: 5
       pathProjection: 0
@@ -121,19 +121,19 @@ MonoBehaviour:
   - showAnnouncement: 1
     announcementDuration: 3
     spawnSequence:
-    - duckType: 15
+    - duckType: 32
       delay: 0
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: 16803afcbc0a046e999a0d9de306ed56, type: 2}
-    - duckType: 14
+    - duckType: 31
       delay: 1.8
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: d8c1b2ad318ae4983a857cc91f45ce1e, type: 2}
-    - duckType: 15
+    - duckType: 32
       delay: 1.8
       startLane: 0
       pathProjection: 0
@@ -142,25 +142,25 @@ MonoBehaviour:
   - showAnnouncement: 1
     announcementDuration: 3
     spawnSequence:
-    - duckType: 16
+    - duckType: 33
       delay: 0
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8, type: 2}
-    - duckType: 15
+    - duckType: 32
       delay: 1.8
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9, type: 2}
-    - duckType: 16
+    - duckType: 33
       delay: 1.8
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7, type: 2}
-    - duckType: 14
+    - duckType: 31
       delay: 1.8
       startLane: 0
       pathProjection: 0
@@ -169,25 +169,25 @@ MonoBehaviour:
   - showAnnouncement: 1
     announcementDuration: 3
     spawnSequence:
-    - duckType: 15
+    - duckType: 32
       delay: 0
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: ec794f1a2210c40359e01dc4d1b6d10a, type: 2}
-    - duckType: 16
+    - duckType: 33
       delay: 1.8
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: 2cba38f4705ce4f4196a5ba8e0495999, type: 2}
-    - duckType: 15
+    - duckType: 32
       delay: 1.8
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: efa1dc85c253441beba3718897527763, type: 2}
-    - duckType: 16
+    - duckType: 33
       delay: 1.8
       startLane: 0
       pathProjection: 0
@@ -196,25 +196,25 @@ MonoBehaviour:
   - showAnnouncement: 1
     announcementDuration: 3
     spawnSequence:
-    - duckType: 16
+    - duckType: 33
       delay: 0
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: 7b5adc80f6125479fba01bf3891086b7, type: 2}
-    - duckType: 15
+    - duckType: 32
       delay: 1.8
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: c1d2d1f2289d242c08b77ce368b01033, type: 2}
-    - duckType: 16
+    - duckType: 33
       delay: 1.8
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
       patternRef: {fileID: 11400000, guid: b3e3de1eccf4b4d088d7be0cd1d9aa3e, type: 2}
-    - duckType: 15
+    - duckType: 32
       delay: 1.8
       startLane: 0
       pathProjection: 0

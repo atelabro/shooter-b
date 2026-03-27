@@ -38,6 +38,8 @@ namespace ShooterB
         [SerializeField] private float britishRedcoatSizeMultiplier = 1f;
         [SerializeField] private float britishPoliceSizeMultiplier = 1f;
         [SerializeField] private float usaAdmiralSizeMultiplier = 0.92f;
+        [SerializeField] private float usaAdmiralEliteSizeMultiplier = 0.92f;
+        [SerializeField] private float usaMarineSizeMultiplier = 1f;
         [SerializeField] private float britishPunkSizeMultiplier = 1f;
 
         [Header("Hitbox Normalization")]
@@ -321,6 +323,11 @@ namespace ShooterB
                 case Constants.DuckType.USA_BUSINESS: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.USA_SWAT: return britishPoliceSizeMultiplier;
                 case Constants.DuckType.USA_ADMIRAL: return usaAdmiralSizeMultiplier;
+                case Constants.DuckType.USA_ADMIRAL_ELITE: return usaAdmiralEliteSizeMultiplier;
+                case Constants.DuckType.USA_HOLLYWOOD: return britishPoliceSizeMultiplier;
+                case Constants.DuckType.USA_LEO: return britishPoliceSizeMultiplier;
+                case Constants.DuckType.USA_TOM: return britishPoliceSizeMultiplier;
+                case Constants.DuckType.USA_MARINE: return usaMarineSizeMultiplier;
                 case Constants.DuckType.JAPANESE_SAMURAI: return britishPunkSizeMultiplier;
                 case Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return britishPunkSizeMultiplier;
                 case Constants.DuckType.JAPANESE_STRAW_DUCK: return britishPunkSizeMultiplier;

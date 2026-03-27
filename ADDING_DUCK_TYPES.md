@@ -85,6 +85,11 @@ Current project expectation for full-frame ducks:
 - `width: 512`
 - `height: 512`
 
+This is important:
+- every duck frame in a duck folder should use the full `0,0,512,512` rect unless there is a deliberate documented exception
+- do not leave trimmed sprite rects in place for duck animation frames
+- if a new duck ships with trimmed imports, fix the `.png.meta` files before tuning size or hitbox values
+
 Why this matters:
 - trimmed imports can cause visual inconsistencies
 - mismatched frame bounds can look like jitter or shaking

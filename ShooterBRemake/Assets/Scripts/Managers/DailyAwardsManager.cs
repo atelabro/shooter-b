@@ -630,7 +630,8 @@ namespace ShooterB
                    duckType == Constants.DuckType.MK_ARCHER ||
                    duckType == Constants.DuckType.MK_VOJVODA ||
                    duckType == Constants.DuckType.FRENCH_REVOLUTIONARY ||
-                   duckType == Constants.DuckType.FRENCH_MUSKETEER;
+                   duckType == Constants.DuckType.FRENCH_MUSKETEER ||
+                   duckType == Constants.DuckType.USA_ADMIRAL_ELITE;
         }
 
         private static bool IsEligibleCampaignProgress()
