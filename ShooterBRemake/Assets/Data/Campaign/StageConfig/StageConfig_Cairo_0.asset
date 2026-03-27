@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_Cairo_0
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 35
+  mapName: Desert Approach
+  mapNameMk: Пустински Приод
+  briefingText: First Cairo push across the open desert. Hold the center and punish wide flanks.
+  briefingTextMk: Прв пробив во Каиро преку отворената пустина. Држи ја средината
+    и казни ги широките флангови.
+  backgroundSprite: {fileID: 3707636455751972981, guid: 1bf2900f26cec43d093623a92fb5996b, type: 3}
+  starThreshold1: 0
+  starThreshold2: 335
+  starThreshold3: 439
+  starsRequiredToUnlock: 0
+  startingDifficulty: 13
+  spawnConfig: {fileID: 11400000, guid: c055c7d5218c48148e41d065b78aae6a, type: 2}

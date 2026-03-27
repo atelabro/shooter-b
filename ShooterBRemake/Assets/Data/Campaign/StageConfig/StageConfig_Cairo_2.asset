@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_Cairo_2
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 37
+  mapName: Pyramid Gate
+  mapNameMk: Порта на Пирамидите
+  briefingText: The pyramid lanes open into long arcs. Break the high entries before
+    they overwhelm the line.
+  briefingTextMk: Линиите кај пирамидите се отвораат во долги лакови. Разбиј ги високите
+    влезови пред да ја преплават линијата.
+  backgroundSprite: {fileID: -297034593490658831, guid: 89237d1200df84079819b0096195d16f, type: 3}
+  starThreshold1: 0
+  starThreshold2: 330
+  starThreshold3: 432
+  starsRequiredToUnlock: 4
+  startingDifficulty: 15
+  spawnConfig: {fileID: 11400000, guid: 9b2d5a1c4f7343ec8ef362e0a4fbb303, type: 2}

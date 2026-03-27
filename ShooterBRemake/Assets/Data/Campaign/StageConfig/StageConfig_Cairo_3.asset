@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_Cairo_3
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 38
+  mapName: Sphinx Watch
+  mapNameMk: Стража кај Сфингата
+  briefingText: Vertical pressure builds around the Sphinx. Control the top lanes
+    before the defense collapses.
+  briefingTextMk: Вертикалниот притисок расте околу Сфингата. Контролирај ги горните
+    линии пред одбраната да попушти.
+  backgroundSprite: {fileID: 2145999880113749899, guid: 04de6f018792c4381aca3270400b2eec, type: 3}
+  starThreshold1: 0
+  starThreshold2: 338
+  starThreshold3: 442
+  starsRequiredToUnlock: 7
+  startingDifficulty: 16
+  spawnConfig: {fileID: 11400000, guid: 9b2d5a1c4f7343ec8ef362e0a4fbb304, type: 2}
