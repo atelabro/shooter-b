@@ -13,15 +13,20 @@ namespace ShooterB
             Kill40,
             Kill80,
             Kill120,
+            Kill160,
             Combo8,
             Combo16,
+            Combo24,
             TripleOrBetter4,
             TripleOrBetter8,
+            TripleOrBetter12,
             Elite8,
             Elite15,
             Boss5,
+            Boss8,
             Complete2,
-            Complete4
+            Complete4,
+            Complete5
         }
 
         private enum ObjectiveType
@@ -56,6 +61,7 @@ namespace ShooterB
             public int target;
             public string titleKey;
             public int coinReward;
+            public int minStageIndex;
         }
 
         private const string PrefsPrefix = "DailyAwards";
@@ -64,7 +70,7 @@ namespace ShooterB
         private const string SetBonusGrantedKey = PrefsPrefix + "_SetBonusGranted";
         private const string AdWatchBonusGrantedKey = PrefsPrefix + "_AdWatchBonusGranted";
         private const string SchemaVersionKey = PrefsPrefix + "_SchemaVersion";
-        private const int CurrentSchemaVersion = 2;
+        private const int CurrentSchemaVersion = 3;
         private const int DailyObjectiveCount = 3;
         private const int DailySetBonusCoins = 30;
         private const int DailyAdWatchBonusCoins = 10;
@@ -301,19 +307,24 @@ namespace ShooterB
             definitions.Clear();
             AddDefinition(DailyObjectiveId.Kill40, ObjectiveType.BirdKills, 40, 8);
             AddDefinition(DailyObjectiveId.Kill80, ObjectiveType.BirdKills, 80, 10);
-            AddDefinition(DailyObjectiveId.Kill120, ObjectiveType.BirdKills, 120, 12);
+            AddDefinition(DailyObjectiveId.Kill120, ObjectiveType.BirdKills, 120, 12, minStageIndex: 12);
+            AddDefinition(DailyObjectiveId.Kill160, ObjectiveType.BirdKills, 160, 16, minStageIndex: 24);
             AddDefinition(DailyObjectiveId.Combo8, ObjectiveType.ComboAny, 8, 8);
-            AddDefinition(DailyObjectiveId.Combo16, ObjectiveType.ComboAny, 16, 12);
+            AddDefinition(DailyObjectiveId.Combo16, ObjectiveType.ComboAny, 16, 12, minStageIndex: 10);
+            AddDefinition(DailyObjectiveId.Combo24, ObjectiveType.ComboAny, 24, 16, minStageIndex: 24);
             AddDefinition(DailyObjectiveId.TripleOrBetter4, ObjectiveType.ComboTripleOrBetter, 4, 10);
-            AddDefinition(DailyObjectiveId.TripleOrBetter8, ObjectiveType.ComboTripleOrBetter, 8, 14);
+            AddDefinition(DailyObjectiveId.TripleOrBetter8, ObjectiveType.ComboTripleOrBetter, 8, 14, minStageIndex: 12);
+            AddDefinition(DailyObjectiveId.TripleOrBetter12, ObjectiveType.ComboTripleOrBetter, 12, 18, minStageIndex: 24);
             AddDefinition(DailyObjectiveId.Elite8, ObjectiveType.EliteKills, 8, 10);
-            AddDefinition(DailyObjectiveId.Elite15, ObjectiveType.EliteKills, 15, 14);
-            AddDefinition(DailyObjectiveId.Boss5, ObjectiveType.BossKills, 5, 16);
+            AddDefinition(DailyObjectiveId.Elite15, ObjectiveType.EliteKills, 15, 14, minStageIndex: 12);
+            AddDefinition(DailyObjectiveId.Boss5, ObjectiveType.BossKills, 5, 16, minStageIndex: 12);
+            AddDefinition(DailyObjectiveId.Boss8, ObjectiveType.BossKills, 8, 20, minStageIndex: 24);
             AddDefinition(DailyObjectiveId.Complete2, ObjectiveType.StageCompleted, 2, 10);
-            AddDefinition(DailyObjectiveId.Complete4, ObjectiveType.StageCompleted, 4, 16);
+            AddDefinition(DailyObjectiveId.Complete4, ObjectiveType.StageCompleted, 4, 16, minStageIndex: 12);
+            AddDefinition(DailyObjectiveId.Complete5, ObjectiveType.StageCompleted, 5, 20, minStageIndex: 24);
         }
 
-        private void AddDefinition(DailyObjectiveId id, ObjectiveType type, int target, int coinReward)
+        private void AddDefinition(DailyObjectiveId id, ObjectiveType type, int target, int coinReward, int minStageIndex = 3)
         {
             definitions[id] = new DailyObjectiveDefinition
             {
@@ -321,7 +332,8 @@ namespace ShooterB
                 type = type,
                 target = Mathf.Max(1, target),
                 titleKey = $"daily.{id}.title",
-                coinReward = Mathf.Max(0, coinReward)
+                coinReward = Mathf.Max(0, coinReward),
+                minStageIndex = Mathf.Max(3, minStageIndex)
             };
         }
 
@@ -554,7 +566,7 @@ namespace ShooterB
         {
             selectedObjectiveIds.Clear();
 
-            List<DailyObjectiveId> pool = definitions.Keys.ToList();
+            List<DailyObjectiveId> pool = GetAvailableObjectivePool();
             Shuffle(pool, BuildStableSeed(dayToken));
             for (int i = 0; i < DailyObjectiveCount && i < pool.Count; i++)
                 selectedObjectiveIds.Add(pool[i]);
@@ -581,6 +593,60 @@ namespace ShooterB
 
             PlayerPrefs.Save();
             GameLog.Log($"[DailyAwards] New day initialized: {dayToken}");
+        }
+
+        private List<DailyObjectiveId> GetAvailableObjectivePool()
+        {
+            int highestUnlockedStageIndex = GetHighestUnlockedStageIndex();
+            List<DailyObjectiveId> pool = definitions
+                .Where(entry => highestUnlockedStageIndex >= entry.Value.minStageIndex)
+                .Select(entry => entry.Key)
+                .ToList();
+
+            if (pool.Count >= DailyObjectiveCount)
+                return pool;
+
+            return definitions.Keys.ToList();
+        }
+
+        private static int GetHighestUnlockedStageIndex()
+        {
+            CampaignProgressManager progress = CampaignProgressManager.Instance;
+            CityConfig[] cities = progress.CampaignCities;
+            if (cities == null || cities.Length == 0)
+                return GetHighestUnlockedStageIndexFromPrefs();
+
+            int highestUnlockedStageIndex = 3;
+            for (int cityIndex = 0; cityIndex < cities.Length; cityIndex++)
+            {
+                CityConfig city = cities[cityIndex];
+                if (city == null || city.stages == null)
+                    continue;
+
+                for (int stageIndex = 0; stageIndex < city.stages.Length; stageIndex++)
+                {
+                    StageConfig stage = city.stages[stageIndex];
+                    if (stage == null)
+                        continue;
+
+                    if (progress.IsStageUnlocked(stage, city, cities))
+                        highestUnlockedStageIndex = Mathf.Max(highestUnlockedStageIndex, stage.stageIndex);
+                }
+            }
+
+            return highestUnlockedStageIndex;
+        }
+
+        private static int GetHighestUnlockedStageIndexFromPrefs()
+        {
+            int highestUnlockedStageIndex = 3;
+            for (int stageIndex = 3; stageIndex <= 128; stageIndex++)
+            {
+                if (PlayerPrefs.GetInt($"Campaign_Stage_{stageIndex}_Stars", 0) >= 1)
+                    highestUnlockedStageIndex = stageIndex;
+            }
+
+            return highestUnlockedStageIndex;
         }
 
         private void LoadSlotState()

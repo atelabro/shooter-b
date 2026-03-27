@@ -27,6 +27,8 @@ namespace ShooterB
             LondonPatrolII,
             NewYorkCleanupI,
             NewYorkCleanupII,
+            LosAngelesSweepI,
+            LosAngelesSweepII,
             TokyoOperationI,
             TokyoOperationII,
             RifleVeteran,
@@ -46,6 +48,7 @@ namespace ShooterB
             ParisBossHunter,
             LondonBossHunter,
             NewYorkBossHunter,
+            LosAngelesBossHunter,
             TokyoBossHunter
         }
 
@@ -70,6 +73,7 @@ namespace ShooterB
             Paris,
             London,
             NewYork,
+            LosAngeles,
             Tokyo
         }
 
@@ -80,6 +84,7 @@ namespace ShooterB
             public Constants.MultiKillType? comboType;
             public DuckFilterMode duckFilterMode;
             public DuckGroup duckGroup;
+            public DuckGroup requiredCampaignGroup;
             public Constants.DuckType duckType;
             public Constants.WeaponType? weaponType;
             public int targetCount;
@@ -87,7 +92,7 @@ namespace ShooterB
             public string titleKey;
         }
 
-        private const int CurrentSchemaVersion = 4;
+        private const int CurrentSchemaVersion = 5;
         private const string SchemaVersionKey = "Achievement_SchemaVersion";
         private const string AchievementCoinSfxResourcePath = "Audio/coin";
 
@@ -262,14 +267,15 @@ namespace ShooterB
             AddBirdAchievement(AchievementId.EliteControlI, 150, duckFilterMode: DuckFilterMode.EliteOnly, coinReward: 20);
             AddBirdAchievement(AchievementId.EliteControlII, 400, duckFilterMode: DuckFilterMode.EliteOnly, coinReward: 45);
 
-            AddBirdAchievement(AchievementId.BossSlayerI, 60, duckType: Constants.DuckType.USA_BOSS_DUCK, coinReward: 15);
-            AddBirdAchievement(AchievementId.BossSlayerII, 180, duckType: Constants.DuckType.USA_BOSS_DUCK, coinReward: 40);
-            AddBirdAchievement(AchievementId.BossSlayerIII, 360, duckType: Constants.DuckType.USA_BOSS_DUCK, coinReward: 80);
-            AddBirdAchievement(AchievementId.SkopjeBossHunter, 10, duckType: Constants.DuckType.MK_SAMUIL_BOSS_DUCK, coinReward: 18);
-            AddBirdAchievement(AchievementId.ParisBossHunter, 10, duckType: Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK, coinReward: 18);
-            AddBirdAchievement(AchievementId.LondonBossHunter, 10, duckType: Constants.DuckType.BRITISH_SHERLOCK_BOSS_DUCK, coinReward: 18);
-            AddBirdAchievement(AchievementId.NewYorkBossHunter, 10, duckType: Constants.DuckType.USA_BOSS_DUCK, coinReward: 18);
-            AddBirdAchievement(AchievementId.TokyoBossHunter, 10, duckType: Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK, coinReward: 18);
+            AddBirdAchievement(AchievementId.BossSlayerI, 60, duckFilterMode: DuckFilterMode.EliteOnly, coinReward: 15);
+            AddBirdAchievement(AchievementId.BossSlayerII, 180, duckFilterMode: DuckFilterMode.EliteOnly, coinReward: 40);
+            AddBirdAchievement(AchievementId.BossSlayerIII, 360, duckFilterMode: DuckFilterMode.EliteOnly, coinReward: 80);
+            AddBirdAchievement(AchievementId.SkopjeBossHunter, 10, duckType: Constants.DuckType.MK_SAMUIL_BOSS_DUCK, requiredCampaignGroup: DuckGroup.Skopje, coinReward: 18);
+            AddBirdAchievement(AchievementId.ParisBossHunter, 10, duckType: Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK, requiredCampaignGroup: DuckGroup.Paris, coinReward: 18);
+            AddBirdAchievement(AchievementId.LondonBossHunter, 10, duckType: Constants.DuckType.BRITISH_SHERLOCK_BOSS_DUCK, requiredCampaignGroup: DuckGroup.London, coinReward: 18);
+            AddBirdAchievement(AchievementId.NewYorkBossHunter, 10, duckType: Constants.DuckType.USA_BOSS_DUCK, requiredCampaignGroup: DuckGroup.NewYork, coinReward: 18);
+            AddBirdAchievement(AchievementId.LosAngelesBossHunter, 10, duckType: Constants.DuckType.USA_BOSS_DUCK, requiredCampaignGroup: DuckGroup.LosAngeles, coinReward: 18);
+            AddBirdAchievement(AchievementId.TokyoBossHunter, 10, duckType: Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK, requiredCampaignGroup: DuckGroup.Tokyo, coinReward: 18);
 
             AddCityAchievement(AchievementId.SkopjeDefenderI, 100, DuckGroup.Skopje, coinReward: 18);
             AddCityAchievement(AchievementId.SkopjeDefenderII, 350, DuckGroup.Skopje, coinReward: 50);
@@ -279,6 +285,8 @@ namespace ShooterB
             AddCityAchievement(AchievementId.LondonPatrolII, 350, DuckGroup.London, coinReward: 50);
             AddCityAchievement(AchievementId.NewYorkCleanupI, 100, DuckGroup.NewYork, coinReward: 18);
             AddCityAchievement(AchievementId.NewYorkCleanupII, 350, DuckGroup.NewYork, coinReward: 50);
+            AddCityAchievement(AchievementId.LosAngelesSweepI, 100, DuckGroup.LosAngeles, coinReward: 18);
+            AddCityAchievement(AchievementId.LosAngelesSweepII, 350, DuckGroup.LosAngeles, coinReward: 50);
             AddCityAchievement(AchievementId.TokyoOperationI, 100, DuckGroup.Tokyo, coinReward: 18);
             AddCityAchievement(AchievementId.TokyoOperationII, 350, DuckGroup.Tokyo, coinReward: 50);
 
@@ -304,6 +312,7 @@ namespace ShooterB
             Constants.DuckType? duckType = null,
             Constants.WeaponType? weaponType = null,
             DuckFilterMode duckFilterMode = DuckFilterMode.Any,
+            DuckGroup requiredCampaignGroup = DuckGroup.None,
             int coinReward = 0)
         {
             definitions[id] = new AchievementDefinition
@@ -312,6 +321,7 @@ namespace ShooterB
                 progressSource = ProgressSource.BirdKill,
                 comboType = null,
                 duckFilterMode = duckType.HasValue ? DuckFilterMode.Exact : duckFilterMode,
+                requiredCampaignGroup = requiredCampaignGroup,
                 duckType = duckType ?? default,
                 weaponType = weaponType,
                 targetCount = targetCount,
@@ -332,6 +342,7 @@ namespace ShooterB
                 progressSource = ProgressSource.ComboKill,
                 comboType = comboType,
                 duckFilterMode = DuckFilterMode.Any,
+                requiredCampaignGroup = DuckGroup.None,
                 duckType = default,
                 weaponType = null,
                 targetCount = targetCount,
@@ -349,6 +360,7 @@ namespace ShooterB
                 comboType = null,
                 duckFilterMode = DuckFilterMode.Group,
                 duckGroup = group,
+                requiredCampaignGroup = group,
                 duckType = default,
                 weaponType = null,
                 targetCount = targetCount,
@@ -455,6 +467,61 @@ namespace ShooterB
             }
         }
 
+        private static DuckGroup GetActiveCampaignGroup()
+        {
+            CityConfig activeCity = CampaignProgressManager.Instance.ActiveCityConfig;
+            if (activeCity == null || string.IsNullOrWhiteSpace(activeCity.cityName))
+                return DuckGroup.None;
+
+            switch (activeCity.cityName.Trim())
+            {
+                case "Skopje":
+                    return DuckGroup.Skopje;
+                case "Paris":
+                    return DuckGroup.Paris;
+                case "London":
+                    return DuckGroup.London;
+                case "New York":
+                    return DuckGroup.NewYork;
+                case "Los Angeles":
+                    return DuckGroup.LosAngeles;
+                case "Tokyo":
+                    return DuckGroup.Tokyo;
+                default:
+                    return DuckGroup.None;
+            }
+        }
+
+        private static bool IsUsaDuck(Constants.DuckType duckType)
+        {
+            return duckType == Constants.DuckType.USA_POLICE ||
+                   duckType == Constants.DuckType.USA_WORKER ||
+                   duckType == Constants.DuckType.USA_BUSINESS ||
+                   duckType == Constants.DuckType.USA_SWAT ||
+                   duckType == Constants.DuckType.USA_ADMIRAL ||
+                   duckType == Constants.DuckType.USA_ADMIRAL_ELITE ||
+                   duckType == Constants.DuckType.USA_HOLLYWOOD ||
+                   duckType == Constants.DuckType.USA_LEO ||
+                   duckType == Constants.DuckType.USA_TOM ||
+                   duckType == Constants.DuckType.USA_MARINE ||
+                   duckType == Constants.DuckType.USA_BOSS_DUCK;
+        }
+
+        private static bool DoesDuckCountForGroup(Constants.DuckType duckType, DuckGroup group)
+        {
+            if (group == DuckGroup.NewYork || group == DuckGroup.LosAngeles)
+            {
+                if (!IsUsaDuck(duckType))
+                    return false;
+
+                DuckGroup activeGroup = GetActiveCampaignGroup();
+                if (activeGroup == DuckGroup.NewYork || activeGroup == DuckGroup.LosAngeles)
+                    return activeGroup == group;
+            }
+
+            return GetDuckGroup(duckType) == group;
+        }
+
         private static string GetCityGroupNameKey(DuckGroup group)
         {
             switch (group)
@@ -463,6 +530,7 @@ namespace ShooterB
                 case DuckGroup.Paris:   return "achievement.city_group.paris";
                 case DuckGroup.London:  return "achievement.city_group.london";
                 case DuckGroup.NewYork: return "achievement.city_group.newyork";
+                case DuckGroup.LosAngeles: return "achievement.city_group.losangeles";
                 case DuckGroup.Tokyo:   return "achievement.city_group.tokyo";
                 default:                return null;
             }
@@ -490,7 +558,9 @@ namespace ShooterB
 
             if (definition.duckFilterMode == DuckFilterMode.EliteOnly)
             {
-                string format = LocalizationManager.Instance.Get("achievement.description.bird_kill_elite", "Kill {0} elite ducks.");
+                string format = IsBossAchievement(definition)
+                    ? LocalizationManager.Instance.Get("achievement.description.bird_kill_boss", "Kill {0} boss ducks.")
+                    : LocalizationManager.Instance.Get("achievement.description.bird_kill_elite", "Kill {0} elite ducks.");
                 return string.Format(format, definition.targetCount);
             }
 
@@ -596,17 +666,21 @@ namespace ShooterB
                 if (definition.progressSource != ProgressSource.BirdKill)
                     continue;
 
+                if (definition.requiredCampaignGroup != DuckGroup.None &&
+                    GetActiveCampaignGroup() != definition.requiredCampaignGroup)
+                    continue;
+
                 if (definition.duckFilterMode == DuckFilterMode.Exact && definition.duckType != duckType)
                     continue;
 
                 if (definition.weaponType.HasValue && definition.weaponType.Value != weaponType)
                     continue;
 
-                if (definition.duckFilterMode == DuckFilterMode.EliteOnly && !IsEliteDuck(duckType))
+                if (definition.duckFilterMode == DuckFilterMode.EliteOnly && !IsEligibleSpecialDuck(definition, duckType))
                     continue;
 
                 if (definition.duckFilterMode == DuckFilterMode.Group &&
-                    GetDuckGroup(duckType) != definition.duckGroup)
+                    !DoesDuckCountForGroup(duckType, definition.duckGroup))
                     continue;
 
                 IncrementProgress(definition.id, 1);
@@ -621,6 +695,27 @@ namespace ShooterB
                    duckType == Constants.DuckType.FRENCH_REVOLUTIONARY ||
                    duckType == Constants.DuckType.FRENCH_MUSKETEER ||
                    duckType == Constants.DuckType.USA_ADMIRAL_ELITE;
+        }
+
+        private static bool IsBossDuck(Constants.DuckType duckType)
+        {
+            return duckType == Constants.DuckType.MK_SAMUIL_BOSS_DUCK ||
+                   duckType == Constants.DuckType.USA_BOSS_DUCK ||
+                   duckType == Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK ||
+                   duckType == Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK ||
+                   duckType == Constants.DuckType.BRITISH_SHERLOCK_BOSS_DUCK;
+        }
+
+        private static bool IsBossAchievement(AchievementDefinition definition)
+        {
+            return definition.id == AchievementId.BossSlayerI ||
+                   definition.id == AchievementId.BossSlayerII ||
+                   definition.id == AchievementId.BossSlayerIII;
+        }
+
+        private static bool IsEligibleSpecialDuck(AchievementDefinition definition, Constants.DuckType duckType)
+        {
+            return IsBossAchievement(definition) ? IsBossDuck(duckType) : IsEliteDuck(duckType);
         }
 
         private static bool IsEligibleCampaignProgress()

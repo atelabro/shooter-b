@@ -21,67 +21,67 @@ MonoBehaviour:
       delay: 0
       startLane: 2
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 4
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 7
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 9
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 1
       startLane: 9
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0.55
       startLane: 7
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0.55
       startLane: 4
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0.55
       startLane: 2
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 1.1
       startLane: 5
       pathProjection: 2
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 5
       pathProjection: 3
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 1
       startLane: 4
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 6
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 19
       delay: 1.7
       startLane: 5
       pathProjection: 0
-      speedMultiplier: 1
+      speedMultiplier: 1.05
       patternRef: {fileID: 11400000, guid: 16803afcbc0a046e999a0d9de306ed56, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
@@ -90,72 +90,72 @@ MonoBehaviour:
       delay: 0
       startLane: 1
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 3
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 6
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 8
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 1
       startLane: 1
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0.55
       startLane: 3
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0.55
       startLane: 6
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0.55
       startLane: 8
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 1
       startLane: 5
       pathProjection: 6
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0.3
       startLane: 6
       pathProjection: 6
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 4
       pathProjection: 6
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 1
       startLane: 3
       pathProjection: 8
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 5
       pathProjection: 9
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 20
       delay: 1.7
       startLane: 5
       pathProjection: 0
-      speedMultiplier: 1
+      speedMultiplier: 1.05
       patternRef: {fileID: 11400000, guid: b5ad9f0c401ae4ba496f1a7448c3515a, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
@@ -164,62 +164,62 @@ MonoBehaviour:
       delay: 0
       startLane: 2
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 4
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 7
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 9
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 1
       startLane: 1
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 3
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 6
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 8
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 1
       startLane: 5
       pathProjection: 4
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0
       startLane: 5
       pathProjection: 5
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 1
       startLane: 1
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0.55
       startLane: 3
       pathProjection: 1
-      speedMultiplier: 1
+      speedMultiplier: 1.05
     - duckType: 17
       delay: 0.55
       startLane: 6
