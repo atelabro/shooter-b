@@ -360,14 +360,6 @@ MonoBehaviour:
     englishWaveLabelFormat: Just a little bit more
     macedonianWaveLabelFormat: "\u0423\u0448\u0442\u0435 \u043C\u0430\u043B\u043A\u0443"
     spawnSequence:
-    - duckType: 7
-      delay: 0
-      healthOverride: 0
-      startLane: 0
-      pathProjection: 0
-      speedMultiplier: 1
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: efa1dc85c253441beba3718897527763, type: 2}
     - duckType: 22
       delay: 2
       healthOverride: 0
@@ -384,14 +376,6 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: 16f75fdc480b7453192c0a21c497da84, type: 2}
-    - duckType: 22
-      delay: 1.5
-      healthOverride: 0
-      startLane: 0
-      pathProjection: 1
-      speedMultiplier: 1
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: ac4838029454f411c9e71938fa60d64f, type: 2}
     - duckType: 23
       delay: 3
       healthOverride: 3

@@ -190,12 +190,6 @@ MonoBehaviour:
     englishWaveLabelFormat: 
     macedonianWaveLabelFormat: 
     spawnSequence:
-    - duckType: 7
-      delay: 0
-      startLane: 0
-      pathProjection: 0
-      speedMultiplier: 1
-      patternRef: {fileID: 11400000, guid: 19d75bb314f194aeb9fc7fa8989d7b01, type: 2}
     - duckType: 6
       delay: 2.5
       startLane: 0

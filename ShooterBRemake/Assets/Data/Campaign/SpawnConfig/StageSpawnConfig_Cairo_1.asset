@@ -202,7 +202,7 @@ MonoBehaviour:
       patternRef: {fileID: 11400000, guid: d8c1b2ad318ae4983a857cc91f45ce1e, type: 2}
     - duckType: 35
       delay: 1.8
-      healthOverride: 0
+      healthOverride: 2
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1.05
@@ -252,7 +252,7 @@ MonoBehaviour:
     spawnSequence:
     - duckType: 35
       delay: 0
-      healthOverride: 0
+      healthOverride: 2
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1.05
@@ -268,7 +268,7 @@ MonoBehaviour:
       patternRef: {fileID: 11400000, guid: 2cba38f4705ce4f4196a5ba8e0495999, type: 2}
     - duckType: 35
       delay: 1.8
-      healthOverride: 0
+      healthOverride: 2
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1.05

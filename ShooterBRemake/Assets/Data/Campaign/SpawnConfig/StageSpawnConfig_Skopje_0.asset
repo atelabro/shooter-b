@@ -235,14 +235,6 @@ MonoBehaviour:
     - duckType: 5
       delay: 2
       healthOverride: 0
-      startLane: 4
-      pathProjection: 1
-      speedMultiplier: 0.9
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: ec794f1a2210c40359e01dc4d1b6d10a, type: 2}
-    - duckType: 5
-      delay: 2
-      healthOverride: 0
       startLane: 7
       pathProjection: 1
       speedMultiplier: 0.9
