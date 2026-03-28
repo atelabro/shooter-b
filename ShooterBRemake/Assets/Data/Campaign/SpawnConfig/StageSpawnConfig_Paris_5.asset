@@ -232,14 +232,6 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 21
-      delay: 1.5
-      healthOverride: 0
-      startLane: 5
-      pathProjection: 0
-      speedMultiplier: 1
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: ec794f1a2210c40359e01dc4d1b6d10a, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
     englishWaveLabelFormat: 
@@ -537,28 +529,12 @@ MonoBehaviour:
     spawnSequence:
     - duckType: 21
       delay: 0
-      healthOverride: 0
+      healthOverride: 2
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: ac4838029454f411c9e71938fa60d64f, type: 2}
-    - duckType: 21
-      delay: 1.5
-      healthOverride: 0
-      startLane: 0
-      pathProjection: 0
-      speedMultiplier: 1
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: 2d01777c954db436b831e9b796d71c6a, type: 2}
-    - duckType: 21
-      delay: 1.5
-      healthOverride: 0
-      startLane: 0
-      pathProjection: 0
-      speedMultiplier: 1
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
     - duckType: 25
       delay: 1.5
       healthOverride: 3
@@ -575,45 +551,13 @@ MonoBehaviour:
       \u0441\u0435\u0440\u0438\u043E\u0437\u0435\u043D \u043D\u0430\u043F\u0430\u0434"
     spawnSequence:
     - duckType: 21
-      delay: 0
-      healthOverride: 0
-      startLane: 0
-      pathProjection: 0
-      speedMultiplier: 1
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: 26cd0fce9810d423789df289153943ca, type: 2}
-    - duckType: 21
       delay: 1.5
-      healthOverride: 0
-      startLane: 0
-      pathProjection: 0
-      speedMultiplier: 1
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: 0ae1decb711d844b9988dc9bb05eceec, type: 2}
-    - duckType: 21
-      delay: 1.5
-      healthOverride: 0
-      startLane: 0
-      pathProjection: 0
-      speedMultiplier: 1
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: 3ada0a16951124811962ecb05570ff49, type: 2}
-    - duckType: 21
-      delay: 1.5
-      healthOverride: 0
+      healthOverride: 2
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: 16f75fdc480b7453192c0a21c497da84, type: 2}
-    - duckType: 21
-      delay: 1.5
-      healthOverride: 0
-      startLane: 0
-      pathProjection: 0
-      speedMultiplier: 1
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: c1d2d1f2289d242c08b77ce368b01033, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
     englishWaveLabelFormat: Oh no it is D'Artagnan or just Charles de Batz-Castelmore

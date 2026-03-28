@@ -21,18 +21,18 @@ Countryside does not currently have an explicit final boss entry to exclude.
 
 - Total stages: 40
 - Total waves: 200
-- Total duck spawns: 4679
+- Total duck spawns: 4468
 - Total boss duck health: 115
-- Total health excluding city-final bosses: 7720
-- Total hit points: 7835
+- Total health excluding city-final bosses: 7618
+- Total hit points: 7733
 
 ## By City
 
 | Campaign Order | City | Stages | Waves | Duck Spawns | Boss Duck Health | Health Excluding Final Boss | Total Hit Points |
 | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | 1 | Countryside | 3 | 10 | 143 | 0 | 231 | 231 |
-| 2 | Skopje | 5 | 21 | 548 | 6 | 751 | 757 |
-| 3 | Paris | 6 | 32 | 705 | 12 | 706 | 718 |
+| 2 | Skopje | 5 | 21 | 492 | 6 | 499 | 505 |
+| 3 | Paris | 6 | 32 | 550 | 12 | 568 | 580 |
 | 4 | London | 5 | 26 | 626 | 15 | 663 | 678 |
 | 5 | New York | 6 | 32 | 766 | 10 | 868 | 878 |
 | 6 | Los Angeles | 5 | 26 | 605 | 18 | 740 | 758 |
@@ -46,17 +46,17 @@ Countryside does not currently have an explicit final boss entry to exclude.
 | 1 | Countryside | 1 | 0 | Countryside - Day 1 | 2 | 22 | 0 | 22 | 22 |
 | 1 | Countryside | 2 | 1 | Countryside - Day 2 | 4 | 60 | 0 | 144 | 144 |
 | 1 | Countryside | 3 | 2 | Countryside - Day 3 | 4 | 61 | 0 | 65 | 65 |
-| 2 | Skopje | 1 | 3 | Macedonia Square | 3 | 105 | 0 | 105 | 105 |
-| 2 | Skopje | 2 | 4 | Stone Bridge & Vardar | 4 | 106 | 0 | 106 | 106 |
-| 2 | Skopje | 3 | 5 | Old Bazaar (Carsija) | 4 | 109 | 0 | 109 | 109 |
-| 2 | Skopje | 4 | 6 | Kale Fortress | 5 | 113 | 0 | 159 | 159 |
-| 2 | Skopje | 5 | 7 | Vodno / Millennium Cross | 5 | 115 | 6 | 272 | 278 |
-| 3 | Paris | 1 | 8 | Eiffel District | 5 | 95 | 0 | 95 | 95 |
-| 3 | Paris | 2 | 9 | Louvre Front | 5 | 118 | 0 | 118 | 118 |
-| 3 | Paris | 3 | 10 | Moulin Quarter | 5 | 111 | 0 | 111 | 111 |
-| 3 | Paris | 4 | 11 | Notre Dame Perimeter | 5 | 120 | 0 | 120 | 120 |
-| 3 | Paris | 5 | 12 | Sacre-Coeur Heights | 5 | 114 | 0 | 114 | 114 |
-| 3 | Paris | 6 | 13 | Arc de Triomphe Ring | 7 | 147 | 12 | 148 | 160 |
+| 2 | Skopje | 1 | 3 | Macedonia Square | 3 | 96 | 0 | 96 | 96 |
+| 2 | Skopje | 2 | 4 | Stone Bridge & Vardar | 4 | 97 | 0 | 97 | 97 |
+| 2 | Skopje | 3 | 5 | Old Bazaar (Carsija) | 4 | 102 | 0 | 102 | 102 |
+| 2 | Skopje | 4 | 6 | Kale Fortress | 5 | 94 | 0 | 98 | 98 |
+| 2 | Skopje | 5 | 7 | Vodno / Millennium Cross | 5 | 103 | 6 | 106 | 112 |
+| 3 | Paris | 1 | 8 | Eiffel District | 5 | 87 | 0 | 87 | 87 |
+| 3 | Paris | 2 | 9 | Louvre Front | 5 | 93 | 0 | 93 | 93 |
+| 3 | Paris | 3 | 10 | Moulin Quarter | 5 | 90 | 0 | 90 | 90 |
+| 3 | Paris | 4 | 11 | Notre Dame Perimeter | 5 | 93 | 0 | 93 | 93 |
+| 3 | Paris | 5 | 12 | Sacre-Coeur Heights | 5 | 94 | 0 | 94 | 94 |
+| 3 | Paris | 6 | 13 | Arc de Triomphe Ring | 7 | 93 | 12 | 111 | 123 |
 | 4 | London | 1 | 20 | Big Ben Watchline | 5 | 117 | 0 | 117 | 117 |
 | 4 | London | 2 | 21 | Buckingham Perimeter | 5 | 145 | 0 | 145 | 145 |
 | 4 | London | 3 | 22 | London Eye Circuit | 5 | 123 | 0 | 123 | 123 |

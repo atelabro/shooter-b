@@ -216,14 +216,6 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 8
-      delay: 1.5
-      healthOverride: 0
-      startLane: 5
-      pathProjection: 0
-      speedMultiplier: 1
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: bea3f299f3d084fc1a1167bd3b12d420, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
     englishWaveLabelFormat: 
@@ -394,14 +386,6 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: 26cd0fce9810d423789df289153943ca, type: 2}
-    - duckType: 9
-      delay: 1.5
-      healthOverride: 0
-      startLane: 0
-      pathProjection: 0
-      speedMultiplier: 1
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: 3ada0a16951124811962ecb05570ff49, type: 2}
     - duckType: 10
       delay: 1.5
       healthOverride: 0
@@ -431,14 +415,6 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: 2d01777c954db436b831e9b796d71c6a, type: 2}
-    - duckType: 10
-      delay: 1.5
-      healthOverride: 0
-      startLane: 0
-      pathProjection: 0
-      speedMultiplier: 1
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: 0ae1decb711d844b9988dc9bb05eceec, type: 2}
     - duckType: 21
       delay: 1.5
       healthOverride: 0

@@ -141,14 +141,6 @@ MonoBehaviour:
     englishWaveLabelFormat: 
     macedonianWaveLabelFormat: 
     spawnSequence:
-    - duckType: 9
-      delay: 1.8
-      healthOverride: 0
-      startLane: 5
-      pathProjection: 0
-      speedMultiplier: 1
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: f7a91e162400f49519a969748570e081, type: 2}
     - duckType: 8
       delay: 1.8
       healthOverride: 0
@@ -207,14 +199,6 @@ MonoBehaviour:
     englishWaveLabelFormat: 
     macedonianWaveLabelFormat: 
     spawnSequence:
-    - duckType: 9
-      delay: 0
-      healthOverride: 0
-      startLane: 0
-      pathProjection: 0
-      speedMultiplier: 1
-      sizeMultiplier: 0
-      patternRef: {fileID: 11400000, guid: 0f0b08d1aae3b4a13a10d933416229cc, type: 2}
     - duckType: 8
       delay: 1.8
       healthOverride: 0
