@@ -50,8 +50,8 @@ MonoBehaviour:
   maxBullets: 3
   damage: 2
   startModalAmmoBonus: 2
-  fireDelay: 0.9
-  refillDelay: 1.4
+  fireDelay: 0.75
+  refillDelay: 1
   weaponIcon: {fileID: -2241728581558494222, guid: 72f7c8eb1b1bc4ebe89040b40b1ed7eb, type: 3}
   ammoHudSprite: {fileID: -3807317259276297779, guid: c3106131753ff486da81d42d703a1eb0, type: 3}
   bulletPrefab: {fileID: 4120011112331769632, guid: 6d8f4f8dc86f48c1a5d8c2f0b6e9a123, type: 3}

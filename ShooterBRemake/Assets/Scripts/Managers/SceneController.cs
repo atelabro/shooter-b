@@ -166,6 +166,7 @@ namespace ShooterB
 
         public void LoadCampaignStage(StageConfig config)
         {
+            Time.timeScale = 1f;
             CurrentScene = Constants.SceneType.CampaignGame;
             GameLog.Log($"Loading campaign stage: {config.mapName} (index {config.stageIndex})");
 

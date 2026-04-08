@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StageConfig_London_4
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 24
-  mapName: Whitehall Final Push
-  mapNameMk: Вајтхол Финален Пробив
+  mapName: Whitehall Push
+  mapNameMk: Вајтхол Пробив
   briefingText: Final London holdout. Constant pressure from every lane, no downtime.
   briefingTextMk: Финална одбрана на Лондон. Постојан притисок од секоја линија без пауза.
   backgroundSprite: {fileID: 3900472106126663053, guid: 59763e1944dc541ffade968ca127eeea, type: 3}

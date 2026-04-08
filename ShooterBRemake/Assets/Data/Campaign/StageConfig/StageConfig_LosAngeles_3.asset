@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StageConfig_LosAngeles_3
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 33
-  mapName: Santa Monica Breakwater
-  mapNameMk: Санта Моника Бранобран
+  mapName: Santa Monica
+  mapNameMk: Санта Моника
   briefingText: Coastal lanes stay exposed and fast. Break the wave timing before
     the beach is overrun.
   briefingTextMk: Крајбрежните линии се отворени и брзи. Разбиј го темпото на брановите

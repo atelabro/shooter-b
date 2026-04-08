@@ -305,23 +305,21 @@ namespace ShooterB
         private void RegisterDefinitions()
         {
             definitions.Clear();
-            AddDefinition(DailyObjectiveId.Kill40, ObjectiveType.BirdKills, 40, 8);
-            AddDefinition(DailyObjectiveId.Kill80, ObjectiveType.BirdKills, 80, 10);
-            AddDefinition(DailyObjectiveId.Kill120, ObjectiveType.BirdKills, 120, 12, minStageIndex: 12);
-            AddDefinition(DailyObjectiveId.Kill160, ObjectiveType.BirdKills, 160, 16, minStageIndex: 24);
-            AddDefinition(DailyObjectiveId.Combo8, ObjectiveType.ComboAny, 8, 8);
-            AddDefinition(DailyObjectiveId.Combo16, ObjectiveType.ComboAny, 16, 12, minStageIndex: 10);
-            AddDefinition(DailyObjectiveId.Combo24, ObjectiveType.ComboAny, 24, 16, minStageIndex: 24);
-            AddDefinition(DailyObjectiveId.TripleOrBetter4, ObjectiveType.ComboTripleOrBetter, 4, 10);
-            AddDefinition(DailyObjectiveId.TripleOrBetter8, ObjectiveType.ComboTripleOrBetter, 8, 14, minStageIndex: 12);
-            AddDefinition(DailyObjectiveId.TripleOrBetter12, ObjectiveType.ComboTripleOrBetter, 12, 18, minStageIndex: 24);
+            AddDefinition(DailyObjectiveId.Kill40, ObjectiveType.BirdKills, 10, 8);
+            AddDefinition(DailyObjectiveId.Kill80, ObjectiveType.BirdKills, 20, 10);
+            AddDefinition(DailyObjectiveId.Kill120, ObjectiveType.BirdKills, 30, 12, minStageIndex: 12);
+            AddDefinition(DailyObjectiveId.Kill160, ObjectiveType.BirdKills, 40, 16, minStageIndex: 24);
+            AddDefinition(DailyObjectiveId.Combo8, ObjectiveType.ComboAny, 4, 8);
+            AddDefinition(DailyObjectiveId.Combo16, ObjectiveType.ComboAny, 7, 12, minStageIndex: 10);
+            AddDefinition(DailyObjectiveId.Combo24, ObjectiveType.ComboAny, 10, 16, minStageIndex: 24);
+            AddDefinition(DailyObjectiveId.TripleOrBetter4, ObjectiveType.ComboTripleOrBetter, 1, 10);
+            AddDefinition(DailyObjectiveId.TripleOrBetter8, ObjectiveType.ComboTripleOrBetter, 2, 14, minStageIndex: 12);
+            AddDefinition(DailyObjectiveId.TripleOrBetter12, ObjectiveType.ComboTripleOrBetter, 3, 18, minStageIndex: 24);
             AddDefinition(DailyObjectiveId.Elite8, ObjectiveType.EliteKills, 8, 10);
             AddDefinition(DailyObjectiveId.Elite15, ObjectiveType.EliteKills, 15, 14, minStageIndex: 12);
-            AddDefinition(DailyObjectiveId.Boss5, ObjectiveType.BossKills, 5, 16, minStageIndex: 12);
-            AddDefinition(DailyObjectiveId.Boss8, ObjectiveType.BossKills, 8, 20, minStageIndex: 24);
-            AddDefinition(DailyObjectiveId.Complete2, ObjectiveType.StageCompleted, 2, 10);
-            AddDefinition(DailyObjectiveId.Complete4, ObjectiveType.StageCompleted, 4, 16, minStageIndex: 12);
-            AddDefinition(DailyObjectiveId.Complete5, ObjectiveType.StageCompleted, 5, 20, minStageIndex: 24);
+            AddDefinition(DailyObjectiveId.Complete2, ObjectiveType.StageCompleted, 1, 10);
+            AddDefinition(DailyObjectiveId.Complete4, ObjectiveType.StageCompleted, 2, 16, minStageIndex: 12);
+            AddDefinition(DailyObjectiveId.Complete5, ObjectiveType.StageCompleted, 3, 20, minStageIndex: 24);
         }
 
         private void AddDefinition(DailyObjectiveId id, ObjectiveType type, int target, int coinReward, int minStageIndex = 3)

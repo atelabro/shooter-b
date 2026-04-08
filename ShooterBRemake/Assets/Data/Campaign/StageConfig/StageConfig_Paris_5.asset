@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StageConfig_Paris_5
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 13
-  mapName: Arc de Triomphe Ring
-  mapNameMk: "\u0422\u0440\u0438\u0443\u043C\u0444\u0430\u043B\u043D\u0430 \u041A\u0430\u043F\u0438\u0458\u0430"
+  mapName: Arc Ring
+  mapNameMk: Триумфален Круг
   briefingText: Final Paris circle. High-speed entries from every angle.
   briefingTextMk: "\u0424\u0438\u043D\u0430\u043B\u0435\u043D \u043A\u0440\u0443\u0433
     \u0432\u043E \u041F\u0430\u0440\u0438\u0437. \u0412\u0438\u0441\u043E\u043A\u043E\u0431\u0440\u0437\u0438\u043D\u0441\u043A\u0438

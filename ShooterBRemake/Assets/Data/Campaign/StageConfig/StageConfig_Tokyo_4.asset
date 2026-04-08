@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StageConfig_Tokyo_4
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 29
-  mapName: Shibuya Neon Siege
-  mapNameMk: Шибуја Неонска Опсада
+  mapName: Shibuya Neon
+  mapNameMk: Шибуја Неон
   briefingText: Final Tokyo engagement under neon chaos. Maintain combo tempo to survive.
   briefingTextMk: Финална пресметка во Токио под неонски хаос. Одржи го темпото на комбо за да преживееш.
   backgroundSprite: {fileID: -2626040343620404388, guid: 54e1d3a31ad6249d0b6483b04ae29e9b, type: 3}

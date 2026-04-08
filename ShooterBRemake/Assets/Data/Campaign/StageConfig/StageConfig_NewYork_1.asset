@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StageConfig_NewYork_1
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 15
-  mapName: Brooklyn Bridge Run
-  mapNameMk: "\u041C\u043E\u0441\u0442\u043E\u0442 \u043D\u0430 \u0411\u0440\u0443\u043A\u043B\u0438\u043D"
+  mapName: Brooklyn
+  mapNameMk: Бруклин
   briefingText: Bridge crossings are under heavy pressure. Track fast entries and
     hold lanes.
   briefingTextMk: "\u041F\u0440\u0435\u043C\u0438\u043D\u0438\u0442\u0435 \u043D\u0430

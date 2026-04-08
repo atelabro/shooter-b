@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StageConfig_Tokyo_3
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 28
-  mapName: Tokyo Tower Control
-  mapNameMk: "\u041A\u043E\u043D\u0442\u0440\u043E\u043B\u0430 \u0437\u0430 \u041A\u0443\u043B\u0430\u0442\u0430
+  mapName: Tokyo Tower
+  mapNameMk: Токио Кула
     \u0432\u043E \u0422\u043E\u043A\u0438\u043E"
   briefingText: Vertical pressure spikes around the tower. Control top lanes before
     they collapse.

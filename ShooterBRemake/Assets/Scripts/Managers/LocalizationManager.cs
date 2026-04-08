@@ -315,8 +315,6 @@ namespace ShooterB
                 ["daily.TripleOrBetter12.title"] = "Triple Lockdown",
                 ["daily.Elite8.title"] = "Elite Patrol",
                 ["daily.Elite15.title"] = "Elite Sweep",
-                ["daily.Boss5.title"] = "Boss Hunting",
-                ["daily.Boss8.title"] = "Boss Lockdown",
                 ["daily.Complete2.title"] = "Frontline Duty",
                 ["daily.Complete4.title"] = "Endurance Duty",
                 ["daily.Complete5.title"] = "Full Circuit",
@@ -325,7 +323,6 @@ namespace ShooterB
                 ["daily.description.combo_any"] = "Trigger {0} combos.",
                 ["daily.description.combo_triple_or_better"] = "Get {0} triple-or-better combos.",
                 ["daily.description.elite_kills"] = "Kill {0} elite ducks.",
-                ["daily.description.boss_kills"] = "Kill {0} boss ducks.",
                 ["daily.description.stage_completed"] = "Complete {0} campaign stages.",
                 ["daily.description.stage_completed_singular"] = "Complete {0} campaign stage.",
                 ["daily.description.game_completed"] = "Finish {0} games.",
@@ -530,9 +527,7 @@ namespace ShooterB
                 ["daily.TripleOrBetter12.title"] = "Тројна Блокада",
                 ["daily.Elite8.title"] = "Елитна Патрола",
                 ["daily.Elite15.title"] = "Елитно Чистење",
-                ["daily.Boss5.title"] = "Лов на Шефови",
-                ["daily.Boss8.title"] = "Блокада на Шефови",
-                ["daily.Complete2.title"] = "Фронтова Должност",
+                ["daily.Complete2.title"] = "Фронтовска Должност",
                 ["daily.Complete4.title"] = "Издржливост",
                 ["daily.Complete5.title"] = "Цел Круг",
 
@@ -540,9 +535,8 @@ namespace ShooterB
                 ["daily.description.combo_any"] = "Направи {0} комбоа.",
                 ["daily.description.combo_triple_or_better"] = "Направи {0} тројни или подобри комбоа.",
                 ["daily.description.elite_kills"] = "Убиј {0} елитни патки.",
-                ["daily.description.boss_kills"] = "Убиј {0} шеф-патки.",
                 ["daily.description.stage_completed"] = "Заврши {0} кампањски нивоа.",
-                ["daily.description.stage_completed_singular"] = "Заврши {0} кампањско ниво.",
+                ["daily.description.stage_completed_singular"] = "Заврши {0} кампањски ниво.",
                 ["daily.description.game_completed"] = "Заврши {0} игри.",
                 ["daily.description.game_completed_singular"] = "Заврши {0} игра."
             };

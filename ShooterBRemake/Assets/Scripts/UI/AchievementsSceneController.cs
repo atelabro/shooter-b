@@ -19,6 +19,7 @@ namespace ShooterB
         public TextMeshProUGUI sceneTitleText;
         public TextMeshProUGUI generalTitleText;
         public TextMeshProUGUI dailyAwardsTitleText;
+        public Sprite dailyAdBonusIcon;
         public Button dailyAdBonusButton;
         public TextMeshProUGUI dailyAdBonusButtonText;
         public Button backButton;
@@ -489,10 +490,28 @@ namespace ShooterB
             GameObject textObject = new GameObject("Text", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
             textObject.transform.SetParent(buttonObject.transform, false);
 
+            if (dailyAdBonusIcon != null)
+            {
+                GameObject iconObject = new GameObject("Icon", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+                iconObject.transform.SetParent(buttonObject.transform, false);
+
+                RectTransform iconRect = iconObject.GetComponent<RectTransform>();
+                iconRect.anchorMin = new Vector2(0f, 0.5f);
+                iconRect.anchorMax = new Vector2(0f, 0.5f);
+                iconRect.pivot = new Vector2(0.5f, 0.5f);
+                iconRect.sizeDelta = new Vector2(42f, 42f);
+                iconRect.anchoredPosition = new Vector2(30f, 0f);
+
+                Image iconImage = iconObject.GetComponent<Image>();
+                iconImage.sprite = dailyAdBonusIcon;
+                iconImage.preserveAspect = true;
+                iconImage.color = new Color(1f, 1f, 1f, 1f);
+            }
+
             RectTransform textRect = textObject.GetComponent<RectTransform>();
             textRect.anchorMin = Vector2.zero;
             textRect.anchorMax = Vector2.one;
-            textRect.offsetMin = new Vector2(10f, 4f);
+            textRect.offsetMin = new Vector2(dailyAdBonusIcon != null ? 46f : 10f, 4f);
             textRect.offsetMax = new Vector2(-10f, -4f);
 
             dailyAdBonusButtonText = textObject.GetComponent<TextMeshProUGUI>();

@@ -166,11 +166,13 @@ open -a "Unity Hub" .
 - Localization - LocalizationManager (English + Macedonian), LanguageDropdownController
 - Armory - ArmoryController, ArmoryUIDataSource, WeaponCardItemUI, UnlockWeaponModalUI
 - Economy - Coin system in GameManager, CurrencyHeaderUI
+- Rewarded ads - RewardedAdService with Mock + AdMob mediation support, pre-stage bonuses (+2 lives / +ammo), daily ad bonus, city first-completion ad flow
 - UI utilities - RewardPopupQueueController, ComboPopupController, LivesContainerController, SafeAreaLayoutFitter, OrientationEnforcer
 - BackgroundManager - Static class with background path mapping
 - MenuController - Campaign, Armory, Achievements, Quit; daily badge on Achievements button
 
 ### Known Issues / TODO
-- Rewarded ads are not integrated yet for pre-stage bonuses (+2 lives / +ammo)
 - Campaign scoring revisit: accuracy % or kill count may suit fixed stages better than points
-- GameManager.OnBirdsKilledChanged is fired but never subscribed to - dead code to remove
+- Campaign and daily reward balance are still being tuned across stage configs, daily objectives, and reward pacing
+- Documentation can drift behind the current Unity implementation and should be updated when systems move from prototype to live wiring
+- Automated test coverage is effectively absent; current confidence depends on manual Unity Editor and device testing

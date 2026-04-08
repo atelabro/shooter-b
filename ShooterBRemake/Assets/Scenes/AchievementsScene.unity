@@ -309,6 +309,7 @@ MonoBehaviour:
   sceneTitleText: {fileID: 0}
   generalTitleText: {fileID: 0}
   dailyAwardsTitleText: {fileID: 1663473365}
+  dailyAdBonusIcon: {fileID: 9041924648945057244, guid: cdf8a56d33e584181a8973efd28b50b7, type: 3}
   dailyAdBonusButton: {fileID: 0}
   dailyAdBonusButtonText: {fileID: 0}
   backButton: {fileID: 280817555}

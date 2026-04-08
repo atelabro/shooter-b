@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StageConfig_NewYork_4
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 18
-  mapName: Times Square Crossfire
-  mapNameMk: Тајмс Сквер Вкрстен Оган
+  mapName: Times Square
+  mapNameMk: Тајмс Сквер
   briefingText: Lights and chaos. Threats flood from every lane with minimal reaction time.
   briefingTextMk: Светла и хаос. Заканите надоаѓаат од секоја линија со минимално време за реакција.
   backgroundSprite: {fileID: 2435483641052818400, guid: 8d0913bbfb5b9444ba99b96857bf30d6, type: 3}

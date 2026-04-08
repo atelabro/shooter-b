@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StageConfig_London_3
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 23
-  mapName: Tower Bridge Ambush
-  mapNameMk: Тауер Бриџ Заседа
+  mapName: Tower Bridge
+  mapNameMk: Тауер Бриџ
   briefingText: Bridge crossings are saturated. Prioritize high-speed entries first.
   briefingTextMk: Премините на мостот се заситени. Прво неутрализирај ги најбрзите влезови.
   backgroundSprite: {fileID: 8070779983081810468, guid: 0e5a77fb10c294f9cb72f10efb8f890d, type: 3}

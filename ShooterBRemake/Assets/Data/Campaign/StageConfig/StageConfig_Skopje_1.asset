@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StageConfig_Skopje_1
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
   stageIndex: 4
-  mapName: Stone Bridge & Vardar
-  mapNameMk: Камен Мост и Вардар
+  mapName: Stone Bridge
+  mapNameMk: Камен Мост
   briefingText: Movement near the bridge is chaotic. Track silhouettes and commit.
   briefingTextMk: Движењето кај мостот е хаотично. Следи ги силуетите и дејствувај решително.
   backgroundSprite: {fileID: -1432944543603230661, guid: a241a4c410bdf4ffc8a5e777d3e3a812, type: 3}
