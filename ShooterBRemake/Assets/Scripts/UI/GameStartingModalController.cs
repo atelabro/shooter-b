@@ -2,6 +2,9 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 namespace ShooterB
 {
@@ -126,7 +129,10 @@ namespace ShooterB
             TryOfferMercyBoost();
 
             while (!startRequested)
+            {
+                HandleDevRewardShortcuts();
                 yield return null;
+            }
 
             if (startButton != null)
                 startButton.onClick.RemoveListener(HandleStartClicked);
@@ -542,6 +548,64 @@ namespace ShooterB
         private static void ResumeGameAudioAfterAd()
         {
             AudioListener.pause = false;
+        }
+
+        private void HandleDevRewardShortcuts()
+        {
+            if (!IsDevPlusLivesPressed() && !IsDevPlusBulletsPressed())
+                return;
+
+            if (IsDevPlusLivesPressed())
+                ApplyDevPlusLives();
+
+            if (IsDevPlusBulletsPressed())
+                ApplyDevPlusBullets();
+        }
+
+        private void ApplyDevPlusLives()
+        {
+            if (plusLivesUsedThisStage || adRequestInFlight || GameManager.Instance == null)
+                return;
+
+            GameManager.Instance.AddBonusLives(2);
+            plusLivesUsedThisStage = true;
+            RefreshAdButtonsState();
+        }
+
+        private void ApplyDevPlusBullets()
+        {
+            if (extraActionUsedThisStage || adRequestInFlight)
+                return;
+
+            ShooterController shooterController = FindObjectOfType<ShooterController>();
+            if (shooterController == null)
+                return;
+
+            shooterController.ApplyConfiguredStageAmmoBonusToAllWeapons();
+            extraActionUsedThisStage = true;
+            RefreshAdButtonsState();
+        }
+
+        private static bool IsDevPlusLivesPressed()
+        {
+#if ENABLE_INPUT_SYSTEM
+            return Keyboard.current != null && Keyboard.current.jKey.wasPressedThisFrame;
+#elif ENABLE_LEGACY_INPUT_MANAGER
+            return Input.GetKeyDown(KeyCode.J);
+#else
+            return false;
+#endif
+        }
+
+        private static bool IsDevPlusBulletsPressed()
+        {
+#if ENABLE_INPUT_SYSTEM
+            return Keyboard.current != null && Keyboard.current.hKey.wasPressedThisFrame;
+#elif ENABLE_LEGACY_INPUT_MANAGER
+            return Input.GetKeyDown(KeyCode.H);
+#else
+            return false;
+#endif
         }
     }
 }

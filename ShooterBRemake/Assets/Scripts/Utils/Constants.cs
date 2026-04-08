@@ -9,7 +9,6 @@ namespace ShooterB
 
         public const int INITIAL_LIVES = 3;
         public const int MAX_LIVES = 3;
-        public const int BONUS_LIFE_BIRD_COUNT = 50;
 
         public const int MIN_DIFFICULTY = 1;
         public const int MAX_DIFFICULTY = 35;

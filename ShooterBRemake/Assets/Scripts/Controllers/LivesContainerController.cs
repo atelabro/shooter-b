@@ -20,6 +20,7 @@ namespace ShooterB
 
         private readonly List<Sprite> initialLifeSprites = new List<Sprite>();
         private bool initialized;
+        private int displayCapacityLives;
 
         private void Awake()
         {
@@ -34,13 +35,15 @@ namespace ShooterB
                 return;
 
             int totalSlots = Mathf.Min(Mathf.Max(1, maxDisplayedLives), lifeIcons.Count);
-            int activeSlots = Mathf.Clamp(Constants.INITIAL_LIVES, 1, totalSlots);
-            if (lives > activeSlots)
-                activeSlots = Mathf.Min(totalSlots, lives);
+            int baselineSlots = Mathf.Clamp(Constants.INITIAL_LIVES, 1, totalSlots);
+            displayCapacityLives = Mathf.Clamp(
+                Mathf.Max(displayCapacityLives, baselineSlots, lives),
+                baselineSlots,
+                totalSlots);
 
-            int shownLives = Mathf.Clamp(lives, 0, activeSlots);
-            int lostCount = activeSlots - shownLives;
-            int hiddenLeadingSlots = totalSlots - activeSlots;
+            int shownLives = Mathf.Clamp(lives, 0, displayCapacityLives);
+            int lostCount = displayCapacityLives - shownLives;
+            int hiddenLeadingSlots = totalSlots - displayCapacityLives;
 
             for (int i = 0; i < totalSlots; i++)
             {

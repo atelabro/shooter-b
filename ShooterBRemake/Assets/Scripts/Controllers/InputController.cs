@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
@@ -12,6 +13,7 @@ namespace ShooterB
         public PauseModalController pauseModalController;
 
         private bool isPointerHeld;
+        private PointerEventData _pointerEventData;
 
         private void Start()
         {
@@ -28,6 +30,7 @@ namespace ShooterB
                 pauseModalController = FindObjectOfType<PauseModalController>(true);
             }
 
+            _pointerEventData = new PointerEventData(EventSystem.current);
             GameLog.Log($"[INPUT] InputController initialized");
         }
 
@@ -97,7 +100,7 @@ namespace ShooterB
 
             if (pressedThisFrame)
             {
-                if (IsPointerOverUI())
+                if (IsPointerOverUI(screenPosition))
                 {
                     isPointerHeld = false;
                     return;
@@ -140,18 +143,18 @@ namespace ShooterB
             shooterController.UpdateFire(worldPosition);
         }
 
-        private bool IsPointerOverUI()
+        private static readonly List<RaycastResult> _uiRaycastResults = new List<RaycastResult>();
+
+        private bool IsPointerOverUI(Vector2 screenPosition)
         {
             if (EventSystem.current == null)
                 return false;
 
-            if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
-            {
-                int touchId = Touchscreen.current.primaryTouch.touchId.ReadValue();
-                return EventSystem.current.IsPointerOverGameObject(touchId);
-            }
+            _pointerEventData.position = screenPosition;
 
-            return EventSystem.current.IsPointerOverGameObject();
+            _uiRaycastResults.Clear();
+            EventSystem.current.RaycastAll(_pointerEventData, _uiRaycastResults);
+            return _uiRaycastResults.Count > 0;
         }
     }
 }

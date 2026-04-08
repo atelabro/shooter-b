@@ -115,12 +115,6 @@ namespace ShooterB
             BirdCount++;
             birdsUntilNextDifficulty--;
 
-            if (BirdCount % Constants.BONUS_LIFE_BIRD_COUNT == 0)
-            {
-                PlusLife();
-                GameLog.Log($"Bonus life awarded at bird count: {BirdCount}");
-            }
-
             if (birdsUntilNextDifficulty <= 0 && Difficulty < Constants.MAX_DIFFICULTY)
             {
                 Difficulty++;
@@ -262,12 +256,6 @@ namespace ShooterB
                 default:
                     return 1;
             }
-        }
-
-        private void PlusLife()
-        {
-            Lives = Mathf.Min(Constants.MAX_LIVES, Lives + 1);
-            OnLivesChanged?.Invoke(Lives);
         }
 
         public void AddBonusLives(int amount)
