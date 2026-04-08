@@ -78,6 +78,7 @@ namespace ShooterB
             _ = UIClickSoundManager.Instance;
             _ = WeaponReloadSoundManager.Instance;
             _ = WeaponShootSoundManager.Instance;
+            PushNotificationManager.Initialize();
             AudioSettingsManager.Instance.OnAudioSettingsChanged += HandleAudioSettingsChanged;
         }
 

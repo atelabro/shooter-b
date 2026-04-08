@@ -32,7 +32,11 @@ namespace ShooterB
         public const string PREFS_MUSIC_VOLUME = "MusicVolume";
         public const string PREFS_SFX_VOLUME = "SfxVolume";
         public const string PREFS_VIBRATION_ENABLED = "VibrationEnabled";
+        public const string PREFS_DAILY_LOGIN_LAST_CLAIM = "DailyLogin_LastClaimDate";
         public const string FONT_COLOR_HEX = "FFB02A";
+        public const int DAILY_LOGIN_COINS_MIN = 10;
+        public const int DAILY_LOGIN_COINS_MAX = 30;
+        public const int DAILY_LOGIN_NOTIFICATION_HOUR = 10;
 
         public enum GameMode
         {

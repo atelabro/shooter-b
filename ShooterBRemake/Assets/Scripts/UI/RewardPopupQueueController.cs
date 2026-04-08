@@ -18,6 +18,7 @@ namespace ShooterB
             public string logPrefix;
             public GameObject prefab;
             public Transform container;
+            public Vector2 anchoredPosition;
             public float lifetime;
             public bool showActionButton;
             public int actionBonusCoins;
@@ -109,7 +110,7 @@ namespace ShooterB
             RectTransform popupRect = activePopup.GetComponent<RectTransform>();
             if (popupRect != null)
             {
-                popupRect.anchoredPosition = new Vector2(0f, 220f);
+                popupRect.anchoredPosition = request.anchoredPosition;
                 popupRect.SetAsLastSibling();
             }
 
