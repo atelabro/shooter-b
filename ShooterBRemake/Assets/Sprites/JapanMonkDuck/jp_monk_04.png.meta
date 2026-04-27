@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 110aa5c45556448cdb6e620dd7ae1a2a
+guid: cded17d478188479ea7dfa5c87cb2fe4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3580466899298726849
-    second: jp_kimono3_07_0
+      213: 5175554371557250321
+    second: jp_monk_04_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,6 +97,19 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
     buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -113,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: jp_kimono3_07_0
+      name: jp_monk_04_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 512
-        height: 512
+        x: 10
+        y: 66
+        width: 473
+        height: 393
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f3c41414350af4ec0800000000000000
-      internalID: -3580466899298726849
+      spriteID: 115d368974343d740800000000000000
+      internalID: 5175554371557250321
       vertices: []
       indices: 
       edges: []
@@ -148,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      jp_kimono3_07_0: -3580466899298726849
+      jp_monk_04_0: 5175554371557250321
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 576e9a132f4b7415e8101e8ef5df9427
+guid: efc85d87ee5945c782b7c14671c3815e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1958884692027283687
-    second: jp_kimono3_01_0
+      213: 3656224510272427430
+    second: kyoto_kimono_03_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: jp_kimono3_01_0
+      name: kyoto_kimono_03_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7e89c30bf3b5f2b10800000000000000
-      internalID: 1958884692027283687
+      spriteID: 6a55dd112d48db230800000000000000
+      internalID: 3656224510272427430
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      jp_kimono3_01_0: 1958884692027283687
+      kyoto_kimono_03_0: 3656224510272427430
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

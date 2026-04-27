@@ -17,7 +17,7 @@ MonoBehaviour:
   - showAnnouncement: 0
     announcementDuration: 3
     spawnSequence:
-    - duckType: 20
+    - duckType: 41
       delay: 0
       healthOverride: 3
       startLane: 5

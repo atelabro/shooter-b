@@ -338,6 +338,7 @@ namespace ShooterB
                 case Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK: return britishPunkSizeMultiplier;
                 case Constants.DuckType.JAPANESE_STRAW_DUCK: return britishPunkSizeMultiplier;
                 case Constants.DuckType.JAPANESE_KIMONO_DUCK: return britishPunkSizeMultiplier;
+                case Constants.DuckType.KYOTO_KIMONO_DUCK: return britishPunkSizeMultiplier;
                 case Constants.DuckType.MK_SAMUIL_BOSS_DUCK: return mkVojvodaSizeMultiplier;
                 default: return 1f;
             }

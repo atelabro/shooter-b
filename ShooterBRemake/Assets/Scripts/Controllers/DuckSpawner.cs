@@ -92,6 +92,7 @@ namespace ShooterB
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.USA_BOSS_DUCK), Constants.DuckType.USA_BOSS_DUCK, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.JAPANESE_STRAW_DUCK), Constants.DuckType.JAPANESE_STRAW_DUCK, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.JAPANESE_KIMONO_DUCK), Constants.DuckType.JAPANESE_KIMONO_DUCK, nameof(duckFrameLibrary));
+            ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.KYOTO_KIMONO_DUCK), Constants.DuckType.KYOTO_KIMONO_DUCK, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.FRENCH_MUSKETEER), Constants.DuckType.FRENCH_MUSKETEER, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK), Constants.DuckType.FRENCH_MUSKETEER_BOSS_DUCK, nameof(duckFrameLibrary));
             ValidateTypeFrames(duckFrameLibrary.GetFrames(Constants.DuckType.MK_SAMUIL_BOSS_DUCK), Constants.DuckType.MK_SAMUIL_BOSS_DUCK, nameof(duckFrameLibrary));

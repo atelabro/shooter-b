@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 227ed762b25284321b0a06d60b97005a
+guid: 0cf3c53c9242a4361b831dbcce1ee393
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3656224510272427430
-    second: jp_kimono3_03_0
+      213: -2315427494852034493
+    second: jp_kyoto_straw_07_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,6 +97,19 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
     buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -113,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: jp_kimono3_03_0
+      name: jp_kyoto_straw_07_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 512
-        height: 512
+        x: 18
+        y: 48
+        width: 475
+        height: 409
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6a55dd112d48db230800000000000000
-      internalID: 3656224510272427430
+      spriteID: 3400c2a06f2fddfd0800000000000000
+      internalID: -2315427494852034493
       vertices: []
       indices: 
       edges: []
@@ -148,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      jp_kimono3_03_0: 3656224510272427430
+      jp_kyoto_straw_07_0: -2315427494852034493
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

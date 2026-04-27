@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2d1e5d5b71c1c4179b82cb1eab7f969a
+guid: 595b98224892c4cf9ad9691a711ac229
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8961859656448709316
-    second: jp_kimono3_06_0
+      213: -6319872625525070658
+    second: yakuza_01_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,6 +97,19 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
     buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -113,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: jp_kimono3_06_0
+      name: yakuza_01_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 512
-        height: 512
+        x: 22
+        y: 70
+        width: 472
+        height: 349
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c3d687adf1411a380800000000000000
-      internalID: -8961859656448709316
+      spriteID: eb4ecd9c45d4b48a0800000000000000
+      internalID: -6319872625525070658
       vertices: []
       indices: 
       edges: []
@@ -148,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      jp_kimono3_06_0: -8961859656448709316
+      yakuza_01_0: -6319872625525070658
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

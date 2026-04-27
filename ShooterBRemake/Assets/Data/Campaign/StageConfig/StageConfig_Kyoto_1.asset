@@ -17,7 +17,7 @@ MonoBehaviour:
   mapNameMk: Арашијама Премин
   briefingText: Shadows rush through the bamboo. Stop them before they surround you.
   briefingTextMk: Сенки јуришаат низ бамбусот. Запри ги пред да те опколат.
-  backgroundSprite: {fileID: 3943281050505548038, guid: 80f4c817d8eaf44f4913fa4fa9a6c11d, type: 3}
+  backgroundSprite: {fileID: -496269237868639610, guid: 80e5b29bfbeae494cafc22410c457ac2, type: 3}
   starThreshold1: 0
   starThreshold2: 382
   starThreshold3: 500

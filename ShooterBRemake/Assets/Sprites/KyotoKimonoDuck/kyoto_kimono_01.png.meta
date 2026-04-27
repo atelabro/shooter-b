@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 80e5b29bfbeae494cafc22410c457ac2
+guid: cadf9bd27d124cd486c7fc7169d095d7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -496269237868639610
-    second: kyoto_arashyjama_02_0
+      213: 1958884692027283687
+    second: kyoto_kimono_01_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,19 +97,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
     buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -126,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: kyoto_arashyjama_02_0
+      name: kyoto_kimono_01_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1376
-        height: 768
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 68ac2ebe1c5ec19f0800000000000000
-      internalID: -496269237868639610
+      spriteID: 7e89c30bf3b5f2b10800000000000000
+      internalID: 1958884692027283687
       vertices: []
       indices: 
       edges: []
@@ -161,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      kyoto_arashyjama_02_0: -496269237868639610
+      kyoto_kimono_01_0: 1958884692027283687
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 80e5b29bfbeae494cafc22410c457ac2
+guid: 30281d7cac95047199fc8610df26216c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -496269237868639610
-    second: kyoto_arashyjama_02_0
+      213: 7075440909496018887
+    second: yakuza_05_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: kyoto_arashyjama_02_0
+      name: yakuza_05_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1376
-        height: 768
+        x: 22
+        y: 54
+        width: 472
+        height: 365
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 68ac2ebe1c5ec19f0800000000000000
-      internalID: -496269237868639610
+      spriteID: 7c7e6c71504013260800000000000000
+      internalID: 7075440909496018887
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      kyoto_arashyjama_02_0: -496269237868639610
+      yakuza_05_0: 7075440909496018887
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
