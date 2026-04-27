@@ -18,7 +18,7 @@ namespace ShooterB
 
         public bool TryInitialize(Constants.DuckType type, SpriteRenderer rootRenderer, int sortingOrder)
         {
-            if (partLibrary == null || !partLibrary.TryGetConfig(type, out config))
+            if (partLibrary == null || rootRenderer == null || !partLibrary.TryGetConfig(type, out config))
                 return false;
 
             rootRenderer.enabled = false;
@@ -60,6 +60,7 @@ namespace ShooterB
 
         public Sprite GetNormalizationSprite()
         {
+            if (!isActive) return null;
             return config.torsoSprite;
         }
 
@@ -90,13 +91,15 @@ namespace ShooterB
 
         public void PrepareForDeath(SpriteRenderer rootRenderer)
         {
-            DestroyParts();
-            if (rootRenderer != null)
-                rootRenderer.enabled = true;
-            isActive = false;
+            TearDown(rootRenderer);
         }
 
         public void ResetState(SpriteRenderer rootRenderer)
+        {
+            TearDown(rootRenderer);
+        }
+
+        private void TearDown(SpriteRenderer rootRenderer)
         {
             DestroyParts();
             if (rootRenderer != null)
