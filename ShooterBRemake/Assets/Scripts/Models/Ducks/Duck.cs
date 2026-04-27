@@ -55,6 +55,7 @@ namespace ShooterB
         private CircleCollider2D col;
         private SpriteRenderer spriteRenderer;
         private Animator animator;
+        private DuckPartAnimator partAnimator;
 
         [Header("Hit Puff")]
         [SerializeField] private SpriteRenderer hitPuffRenderer;
@@ -101,6 +102,7 @@ namespace ShooterB
             col = GetComponent<CircleCollider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
+            partAnimator = GetComponent<DuckPartAnimator>();
 
             rb.gravityScale = 0;
             rb.bodyType = RigidbodyType2D.Kinematic;
@@ -167,7 +169,11 @@ namespace ShooterB
                 spriteRenderer.enabled = true;
             }
 
-            ApplyNormalizedScale();
+            bool usingParts = partAnimator != null && partAnimator.TryInitialize(
+                duckType,
+                spriteRenderer,
+                spriteRenderer != null ? spriteRenderer.sortingOrder : Constants.SORTING_LAYER_DUCKS);
+            ApplyNormalizedScale(usingParts ? partAnimator.GetNormalizationSprite() : null);
             ApplyNormalizedHitbox();
             ConfigureHealthBar();
 
@@ -274,9 +280,10 @@ namespace ShooterB
             healthBar.SetLayout(healthBarVerticalOffset, healthBarWidth, healthBarHeight, sortingOrder);
         }
 
-        private void ApplyNormalizedScale()
+        private void ApplyNormalizedScale(Sprite overrideSprite = null)
         {
-            ApplySpriteScale(spriteRenderer != null ? spriteRenderer.sprite : null, GetTypeSizeMultiplier(duckType) * spawnSizeMultiplier);
+            Sprite sprite = overrideSprite != null ? overrideSprite : (spriteRenderer != null ? spriteRenderer.sprite : null);
+            ApplySpriteScale(sprite, GetTypeSizeMultiplier(duckType) * spawnSizeMultiplier);
         }
 
         private void ApplySpriteScale(Sprite sprite, float scaleMultiplier)
@@ -339,6 +346,7 @@ namespace ShooterB
                 case Constants.DuckType.JAPANESE_STRAW_DUCK: return britishPunkSizeMultiplier;
                 case Constants.DuckType.JAPANESE_KIMONO_DUCK: return britishPunkSizeMultiplier;
                 case Constants.DuckType.KYOTO_KIMONO_DUCK: return britishPunkSizeMultiplier;
+                case Constants.DuckType.JAPANESE_MONK_DUCK: return britishPunkSizeMultiplier;
                 case Constants.DuckType.MK_SAMUIL_BOSS_DUCK: return mkVojvodaSizeMultiplier;
                 default: return 1f;
             }
@@ -375,6 +383,7 @@ namespace ShooterB
             if (isDead) return;
 
             AnimateAliveSprite();
+            if (partAnimator != null) partAnimator.Tick(Time.fixedDeltaTime);
 
             if (currentPathProjection == Constants.DuckPathProjection.Random)
             {
@@ -904,6 +913,8 @@ namespace ShooterB
 
         private void AnimateAliveSprite()
         {
+            if (partAnimator != null && partAnimator.IsActive) return;
+
             if (aliveFrames == null || aliveFrames.Length <= 1 || spriteRenderer == null)
             {
                 return;
@@ -1043,6 +1054,7 @@ namespace ShooterB
             rb.gravityScale = 0f;
             rb.linearVelocity = Vector2.zero;
 
+            if (partAnimator != null) partAnimator.PrepareForDeath(spriteRenderer);
             ShowHitPuff();
             Invoke(nameof(ApplyDeathState), deathSpriteDelay);
 
@@ -1071,6 +1083,7 @@ namespace ShooterB
         {
             CancelInvoke(nameof(ApplyDeathState));
             CancelInvoke(nameof(ReturnToPool));
+            if (partAnimator != null) partAnimator.ResetState(spriteRenderer);
 
             // Animator remains disabled; alive animation is code-driven.
             ResetHitPuff();
