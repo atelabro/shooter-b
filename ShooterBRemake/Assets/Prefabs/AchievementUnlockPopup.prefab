@@ -52,6 +52,8 @@ MonoBehaviour:
   headerText: {fileID: 120003}
   titleText: {fileID: 130003}
   rewardText: {fileID: 140003}
+  actionButton: {fileID: 0}
+  actionButtonText: {fileID: 0}
   popupText: {fileID: 0}
   headerColor: {r: 1, g: 0.82, b: 0.22, a: 1}
   bodyColor: {r: 1, g: 1, b: 1, a: 1}
@@ -116,7 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.12, g: 0.12, b: 0.12, a: 0.45}
+  m_Color: {r: 0.12, g: 0.12, b: 0.12, a: 0.18431373}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -207,7 +209,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4291944703
+    rgba: 4281913855
   m_fontColor: {r: 1, g: 0.82, b: 0.22, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
