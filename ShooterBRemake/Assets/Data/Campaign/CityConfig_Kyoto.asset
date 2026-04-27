@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: CityConfig_Kyoto
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.CityConfig
   cityName: Kyoto
-  cityNameMk: Кјото
+  cityNameMk: "\u041A\u0458\u043E\u0442\u043E"
   briefingText: Kyoto has gone quiet. Samurai ducks now guard the old temples.
-  briefingTextMk: Кјото замолкна. Самурај патки сега ги чуваат старите храмови.
+  briefingTextMk: "\u041A\u0458\u043E\u0442\u043E \u0437\u0430\u043C\u043E\u043B\u043A\u043D\u0430.
+    \u0421\u0430\u043C\u0443\u0440\u0430\u0458 \u043F\u0430\u0442\u043A\u0438 \u0441\u0435\u0433\u0430
+    \u0433\u0438 \u0447\u0443\u0432\u0430\u0430\u0442 \u0441\u0442\u0430\u0440\u0438\u0442\u0435
+    \u0445\u0440\u0430\u043C\u043E\u0432\u0438."
   pinSpriteResourcePath: Pins/KyotoBadge
-  pinPosition: {x: 610, y: 115}
+  pinPosition: {x: 610, y: 100}
   stages:
   - {fileID: 11400000, guid: d9fcaa12698f4eeaa7c54da5caba1ef9, type: 2}
   - {fileID: 11400000, guid: 0320287afcef46cdbe865e62214f498f, type: 2}
