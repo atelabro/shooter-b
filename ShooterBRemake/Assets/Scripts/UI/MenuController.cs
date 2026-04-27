@@ -263,9 +263,6 @@ namespace ShooterB
 
         private void HandleTitleTapped()
         {
-            if (!IsDevPanelAllowed())
-                return;
-
             if (Time.unscaledTime - lastTitleTapTime > DevPanelTapWindowSeconds)
             {
                 GameLog.Log($"[MenuController] Logo tap window expired. Resetting count from {titleTapCount}.");
@@ -280,15 +277,22 @@ namespace ShooterB
                 return;
 
             titleTapCount = 0;
+            DateTime fireTime = DateTime.Now.AddMinutes(1);
+            PushNotificationManager.ScheduleDebugReminder(fireTime);
+            GameLog.Log($"[MenuController] TEST NOTIFICATION scheduled via 7 logo taps for {fireTime:yyyy-MM-dd HH:mm:ss}.");
+
+            if (!IsDevPanelAllowed())
+                return;
+
             EnsureDevPanel();
-            GameLog.Log($"[MenuController] Logo tap threshold reached. Dev panel controller ready: {devPanelController != null}");
+            GameLog.Log($"[MenuController] Dev panel controller ready: {devPanelController != null}");
             if (devPanelController == null)
             {
                 GameLog.Warning("[MenuController] Dev panel controller is null at toggle time.");
                 return;
             }
 
-            GameLog.Log("[MenuController] Logo tap threshold reached. Toggling dev panel.");
+            GameLog.Log("[MenuController] Toggling dev panel.");
             devPanelController.Toggle();
         }
 

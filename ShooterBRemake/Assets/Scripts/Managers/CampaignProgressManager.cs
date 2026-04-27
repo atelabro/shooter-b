@@ -329,7 +329,7 @@ namespace ShooterB
                 int cityIndex = System.Array.IndexOf(allCities, city);
                 if (cityIndex > 0)
                 {
-                    CityConfig previousCity = allCities[cityIndex - 1];
+                    CityConfig previousCity = FindPreviousPlayableCity(allCities, cityIndex);
                     if (!IsCityCompleted(previousCity))
                         return false;
                 }
@@ -345,6 +345,18 @@ namespace ShooterB
             }
 
             return totalStars >= city.starsRequiredToUnlock;
+        }
+
+        private static CityConfig FindPreviousPlayableCity(CityConfig[] allCities, int cityIndex)
+        {
+            for (int i = cityIndex - 1; i >= 0; i--)
+            {
+                CityConfig previousCity = allCities[i];
+                if (previousCity != null && previousCity.stages != null && previousCity.stages.Length > 0)
+                    return previousCity;
+            }
+
+            return null;
         }
 
         public bool IsCityCompleted(CityConfig city)

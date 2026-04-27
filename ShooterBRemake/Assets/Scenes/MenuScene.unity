@@ -1758,6 +1758,8 @@ MonoBehaviour:
   crateButton: {fileID: 1039036791}
   canvasGroup: {fileID: 481569864}
   crateAnimator: {fileID: 1039036794}
+  labelText: {fileID: 531541508}
+  hintText: {fileID: 1338178692}
   rewardPopupQueue: {fileID: 170100706}
   rewardPopupPrefab: {fileID: 100000, guid: 2fb642ce6e5e4cf6bbf42b8ce4e827f9, type: 3}
   rewardPopupContainer: {fileID: 163885411}
@@ -1772,7 +1774,7 @@ MonoBehaviour:
   openAnimationDuration: 0.6
   postOpenHoldDuration: 0.75
   hideFadeDuration: 0.3
-  debugResetClaimOnStart: 1
+  debugResetClaimOnStart: 0
 --- !u!225 &481569864
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -3645,7 +3647,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -40, y: -28.5}
-  m_SizeDelta: {x: 120, y: 123}
+  m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1039036791
 MonoBehaviour:

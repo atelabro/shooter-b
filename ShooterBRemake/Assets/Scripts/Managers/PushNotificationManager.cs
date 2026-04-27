@@ -14,8 +14,7 @@ namespace ShooterB
     {
         private const string AndroidChannelId = "daily_login_bonus";
         private const int NotificationId = 1001;
-        private const string NotificationTitle = "Daily Bonus Ready!";
-        private const string NotificationBody = "Your crate is waiting. Come crack it open!";
+        private const int DebugNotificationId = 1002;
 
         public static void Initialize()
         {
@@ -31,10 +30,11 @@ namespace ShooterB
 #endif
 
 #if UNITY_IOS
-            AuthorizationRequest.StartAuthorization(
+            _ = new AuthorizationRequest(
                 AuthorizationOption.Alert |
                 AuthorizationOption.Sound |
-                AuthorizationOption.Badge);
+                AuthorizationOption.Badge,
+                true);
 #endif
         }
 
@@ -43,14 +43,30 @@ namespace ShooterB
             DateTime target = DateTime.Today
                 .AddDays(1)
                 .AddHours(Constants.DAILY_LOGIN_NOTIFICATION_HOUR);
+            ScheduleReminder(target, NotificationId);
+        }
+
+        public static void ScheduleDebugReminder(DateTime fireTime)
+        {
+            ScheduleReminder(fireTime, DebugNotificationId);
+        }
+
+        private static void ScheduleReminder(DateTime target, int notificationId)
+        {
+            string notificationTitle = LocalizationManager.Instance.Get(
+                "daily_login.notification.title",
+                "Daily Bonus Ready!");
+            string notificationBody = LocalizationManager.Instance.Get(
+                "daily_login.notification.body",
+                "Your crate is waiting. Come crack it open!");
 
 #if UNITY_ANDROID
-            AndroidNotificationCenter.CancelNotification(NotificationId);
+            AndroidNotificationCenter.CancelNotification(notificationId);
 
             AndroidNotification notification = new AndroidNotification
             {
-                Title = NotificationTitle,
-                Text = NotificationBody,
+                Title = notificationTitle,
+                Text = notificationBody,
                 FireTime = target,
                 SmallIcon = "icon_0",
                 LargeIcon = "icon_1"
@@ -59,11 +75,11 @@ namespace ShooterB
             AndroidNotificationCenter.SendNotificationWithExplicitID(
                 notification,
                 AndroidChannelId,
-                NotificationId);
+                notificationId);
 #endif
 
 #if UNITY_IOS
-            iOSNotificationCenter.RemoveScheduledNotification(NotificationId.ToString());
+            iOSNotificationCenter.RemoveScheduledNotification(notificationId.ToString());
 
             iOSNotificationCalendarTrigger trigger = new iOSNotificationCalendarTrigger
             {
@@ -78,9 +94,9 @@ namespace ShooterB
 
             iOSNotification notification = new iOSNotification
             {
-                Identifier = NotificationId.ToString(),
-                Title = NotificationTitle,
-                Body = NotificationBody,
+                Identifier = notificationId.ToString(),
+                Title = notificationTitle,
+                Body = notificationBody,
                 ShowInForeground = false,
                 Trigger = trigger
             };
