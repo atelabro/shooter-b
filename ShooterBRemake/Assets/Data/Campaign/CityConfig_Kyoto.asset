@@ -18,5 +18,10 @@ MonoBehaviour:
   briefingTextMk: "\u0413\u0440\u0430\u0434\u043E\u0442 \u043D\u0430 \u0441\u0430\u043C\u0443\u0440\u0430\u0438\u0442\u0435 \u0448\u0442\u043E\u0442\u0443\u043A\u0443 \u0441\u0435 \u043F\u043E\u0458\u0430\u0432\u0438 \u043A\u0430\u043A\u043E \u0436\u0430\u0440\u0438\u0448\u0442\u0435 \u043D\u0430 \u043F\u0430\u0442\u043A\u0438\u0442\u0435."
   pinSpriteResourcePath: Pins/KyotoBadge
   pinPosition: {x: 610, y: 115}
-  stages: []
+  stages:
+  - {fileID: 11400000, guid: d9fcaa12698f4eeaa7c54da5caba1ef9, type: 2}
+  - {fileID: 11400000, guid: 0320287afcef46cdbe865e62214f498f, type: 2}
+  - {fileID: 11400000, guid: ef09ef93afe349a3bb8278cb3b892834, type: 2}
+  - {fileID: 11400000, guid: 5812aa40c0dd45cfb690bbd3f7e7e80c, type: 2}
+  - {fileID: 11400000, guid: 76e5db3c65d4459fb748492e895f3afb, type: 2}
   starsRequiredToUnlock: 18

@@ -53,6 +53,7 @@ namespace ShooterB
         public GameObject achievementPopupPrefab;
         public Transform achievementPopupContainer;
         public float achievementPopupLifetime = 1.8f;
+        public Vector2 achievementPopupAnchoredPosition = new Vector2(0f, 260f);
 
         private readonly List<Image> ammoBulletIcons = new List<Image>();
         private int lastKnownMaxAmmo = -1;
@@ -630,6 +631,7 @@ namespace ShooterB
                 logPrefix = "[GameHUD]",
                 prefab = achievementPopupPrefab,
                 container = parent,
+                anchoredPosition = achievementPopupAnchoredPosition,
                 lifetime = showActionButton ? Mathf.Max(achievementPopupLifetime, 8f) : achievementPopupLifetime,
                 showActionButton = showActionButton,
                 actionBonusCoins = actionBonusCoins,
