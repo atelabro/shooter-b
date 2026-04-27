@@ -7,7 +7,7 @@ namespace ShooterB
     public struct DuckPartConfig
     {
         public Sprite torsoSprite;
-        public Sprite wingSprite;
+        public Sprite leftWingSprite;
         public Sprite rightWingSprite;
         public Vector2 leftWingPivotOffset;
         public Vector2 rightWingPivotOffset;

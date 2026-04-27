@@ -13,6 +13,7 @@ namespace ShooterB
     [CreateAssetMenu(fileName = "DuckPartLibrary", menuName = "ShooterB/Duck Part Library")]
     public class DuckPartLibrary : ScriptableObject
     {
+        [Header("Duck Part Entries")]
         public DuckPartEntry[] entries;
 
         public bool TryGetConfig(Constants.DuckType type, out DuckPartConfig config)
