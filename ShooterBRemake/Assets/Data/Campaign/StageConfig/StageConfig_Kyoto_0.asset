@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_Kyoto_0
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 40
+  mapName: Fushimi Gates
+  mapNameMk: Фушими Порти
+  briefingText: The first trail leads through Fushimi. Break the gate patrols.
+  briefingTextMk: Првата трага води низ Фушими. Разбиј ги патролите кај портите.
+  backgroundSprite: {fileID: 2232796320254143871, guid: f7d70f6495f4e4520844587243049188, type: 3}
+  starThreshold1: 0
+  starThreshold2: 335
+  starThreshold3: 439
+  starsRequiredToUnlock: 0
+  startingDifficulty: 13
+  spawnConfig: {fileID: 11400000, guid: 9f8af049361448b49287f1ef21afe61c, type: 2}
