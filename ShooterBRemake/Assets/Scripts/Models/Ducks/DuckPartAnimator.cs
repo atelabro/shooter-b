@@ -27,7 +27,6 @@ namespace ShooterB
                 return false;
 
             currentDuckType = type;
-            rootRenderer.sprite = null;
             rootRenderer.enabled = false;
 
             int sortingLayerID = rootRenderer.sortingLayerID;
@@ -123,7 +122,10 @@ namespace ShooterB
         {
             DestroyParts();
             if (rootRenderer != null)
+            {
+                rootRenderer.sprite = null;
                 rootRenderer.enabled = true;
+            }
             isActive = false;
         }
 

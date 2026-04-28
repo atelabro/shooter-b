@@ -1054,8 +1054,8 @@ namespace ShooterB
             rb.gravityScale = 0f;
             rb.linearVelocity = Vector2.zero;
 
-            if (partAnimator != null) partAnimator.PrepareForDeath(spriteRenderer);
             ShowHitPuff();
+            if (partAnimator != null) partAnimator.PrepareForDeath(spriteRenderer);
             Invoke(nameof(ApplyDeathState), deathSpriteDelay);
 
             GameLog.Log($"Duck hit by {weaponType}! Type: {duckType}, Points: {pointValue}");
