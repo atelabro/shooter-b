@@ -27,6 +27,7 @@ namespace ShooterB
                 return false;
 
             currentDuckType = type;
+            rootRenderer.sprite = null;
             rootRenderer.enabled = false;
 
             int sortingLayerID = rootRenderer.sortingLayerID;
