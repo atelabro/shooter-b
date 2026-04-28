@@ -19,7 +19,7 @@ MonoBehaviour:
     englishWaveLabelFormat: 
     macedonianWaveLabelFormat: 
     spawnSequence:
-    - duckType: 41
+    - duckType: 42
       delay: 0
       healthOverride: 3
       startLane: 2
@@ -27,7 +27,7 @@ MonoBehaviour:
       speedMultiplier: 1.1
       sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: f58e9d68a74ce483699796122483e086, type: 2}
-    - duckType: 17
+    - duckType: 42
       delay: 0.25
       healthOverride: 3
       startLane: 9
@@ -35,7 +35,7 @@ MonoBehaviour:
       speedMultiplier: 1.2
       sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: 2d01777c954db436b831e9b796d71c6a, type: 2}
-    - duckType: 17
+    - duckType: 42
       delay: 0.25
       healthOverride: 2
       startLane: 1
@@ -43,7 +43,7 @@ MonoBehaviour:
       speedMultiplier: 1.2
       sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: f58e9d68a74ce483699796122483e086, type: 2}
-    - duckType: 17
+    - duckType: 42
       delay: 0.35
       healthOverride: 4
       startLane: 5
@@ -629,7 +629,8 @@ MonoBehaviour:
   - showAnnouncement: 1
     announcementDuration: 3
     englishWaveLabelFormat: Samurai boss incoming. Stay sharp!
-    macedonianWaveLabelFormat: Доаѓа самурај шеф. Внимавај!
+    macedonianWaveLabelFormat: "\u0414\u043E\u0430\u0453\u0430 \u0441\u0430\u043C\u0443\u0440\u0430\u0458
+      \u0448\u0435\u0444. \u0412\u043D\u0438\u043C\u0430\u0432\u0430\u0458!"
     spawnSequence:
     - duckType: 26
       delay: 1

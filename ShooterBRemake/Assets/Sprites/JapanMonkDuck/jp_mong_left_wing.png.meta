@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7facfdc7e72374478bb197eb83fa3ba2
+guid: 6037742004d354b8c889049087f06024
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1409662982641446768
-    second: jp_monk_06_0
+      213: -5414342718591986260
+    second: jp_mong_left_wing_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: jp_monk_06_0
+      name: jp_mong_left_wing_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 66
-        width: 488
-        height: 393
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 44
+        y: 63
+        width: 183
+        height: 127
+      alignment: 9
+      pivot: {x: 0.90505916, y: 0.50837815}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 07f6c559301209310800000000000000
-      internalID: 1409662982641446768
+      spriteID: ca51a1edbf36cd4b0800000000000000
+      internalID: -5414342718591986260
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 3b80f3a150dde48f4a216c050b0ef057
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      jp_monk_06_0: 1409662982641446768
+      jp_mong_left_wing_0: -5414342718591986260
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

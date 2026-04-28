@@ -283,7 +283,8 @@ namespace ShooterB
         private void ApplyNormalizedScale(Sprite overrideSprite = null)
         {
             Sprite sprite = overrideSprite != null ? overrideSprite : (spriteRenderer != null ? spriteRenderer.sprite : null);
-            ApplySpriteScale(sprite, GetTypeSizeMultiplier(duckType) * spawnSizeMultiplier);
+            float partScale = overrideSprite != null && partAnimator != null ? partAnimator.SizeMultiplier : 1f;
+            ApplySpriteScale(sprite, GetTypeSizeMultiplier(duckType) * spawnSizeMultiplier * partScale);
         }
 
         private void ApplySpriteScale(Sprite sprite, float scaleMultiplier)
@@ -1198,12 +1199,21 @@ namespace ShooterB
 
         private void FitHitPuffToDuck()
         {
-            if (hitPuffRenderer == null || spriteRenderer == null || spriteRenderer.sprite == null)
-            {
+            if (hitPuffRenderer == null)
                 return;
+
+            Bounds duckBounds;
+            if (partAnimator != null && partAnimator.IsActive)
+            {
+                duckBounds = partAnimator.GetWorldBounds();
+                if (duckBounds.size == Vector3.zero) return;
+            }
+            else
+            {
+                if (spriteRenderer == null || spriteRenderer.sprite == null) return;
+                duckBounds = spriteRenderer.bounds;
             }
 
-            Bounds duckBounds = spriteRenderer.bounds;
             Vector3 duckSize = duckBounds.size;
             if (duckSize.x <= 0f || duckSize.y <= 0f)
             {

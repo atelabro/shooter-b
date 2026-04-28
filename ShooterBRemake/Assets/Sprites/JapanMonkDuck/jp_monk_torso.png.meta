@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cded17d478188479ea7dfa5c87cb2fe4
+guid: e736035a3cd0c45219510325570324f0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5175554371557250321
-    second: jp_monk_04_0
+      213: 3579549117590493117
+    second: jp_monk_torso_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: jp_monk_04_0
+      name: jp_monk_torso_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 66
-        width: 473
-        height: 393
+        x: 0
+        y: 0
+        width: 512
+        height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 115d368974343d740800000000000000
-      internalID: 5175554371557250321
+      spriteID: db75b0a05fc1da130800000000000000
+      internalID: 3579549117590493117
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: a79de38f32d68428aa2b0a2dcb7c01d7
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      jp_monk_04_0: 5175554371557250321
+      jp_monk_torso_0: 3579549117590493117
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

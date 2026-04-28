@@ -33,6 +33,8 @@ namespace ShooterB
             config.leftWingOffset       = EditorGUILayout.Vector2Field("L Wing Offset",  config.leftWingOffset);
             config.rightWingOffset      = EditorGUILayout.Vector2Field("R Wing Offset",  config.rightWingOffset);
 
+            config.sizeMultiplier = EditorGUILayout.FloatField("Size Multiplier", config.sizeMultiplier);
+
             EditorGUILayout.Space();
 
             config.flapSpeed     = EditorGUILayout.FloatField("Flap Speed",     config.flapSpeed);

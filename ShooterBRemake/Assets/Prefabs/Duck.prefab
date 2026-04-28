@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 8066639504399674289}
   - component: {fileID: 5707027550214133449}
   - component: {fileID: 5044256694237563094}
+  - component: {fileID: 5995486106557667143}
   m_Layer: 0
   m_Name: Duck
   m_TagString: Untagged
@@ -303,6 +304,9 @@ MonoBehaviour:
   frenchArtistSizeMultiplier: 0.88
   britishRedcoatSizeMultiplier: 1
   britishPoliceSizeMultiplier: 1
+  usaAdmiralSizeMultiplier: 0.92
+  usaAdmiralEliteSizeMultiplier: 0.92
+  usaMarineSizeMultiplier: 1
   britishPunkSizeMultiplier: 1
   targetHitRadiusWorld: 0.43
   deathSpriteScaleMultiplier: 0.4
@@ -341,3 +345,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5995486106557667143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5614944451369821607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31498e804eb534b94a97aa7358e0949e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.DuckPartAnimator
+  partLibrary: {fileID: 11400000, guid: e7f57abdb72ed47d392e7907f408c5af, type: 2}

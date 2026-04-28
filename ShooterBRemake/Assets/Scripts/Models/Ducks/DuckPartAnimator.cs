@@ -9,6 +9,7 @@ namespace ShooterB
         public bool IsActive => isActive;
         public DuckPartLibrary PartLibrary => partLibrary;
         public Constants.DuckType CurrentDuckType => currentDuckType;
+        public float SizeMultiplier => isActive && config.sizeMultiplier > 0f ? config.sizeMultiplier : 1f;
 
         private bool isActive;
         private DuckPartConfig config;
@@ -16,6 +17,7 @@ namespace ShooterB
         private Constants.DuckType currentDuckType;
 
         private GameObject torsoObject;
+        private SpriteRenderer torsoRenderer;
         private GameObject leftWingPivot;
         private GameObject leftWingObject;
         private GameObject rightWingPivot;
@@ -33,7 +35,7 @@ namespace ShooterB
 
             torsoObject = new GameObject("Torso");
             torsoObject.transform.SetParent(transform, false);
-            SpriteRenderer torsoRenderer = torsoObject.AddComponent<SpriteRenderer>();
+            torsoRenderer = torsoObject.AddComponent<SpriteRenderer>();
             torsoRenderer.sprite = config.torsoSprite;
             torsoRenderer.sortingLayerID = sortingLayerID;
             torsoRenderer.sortingOrder = sortingOrder;
@@ -72,6 +74,12 @@ namespace ShooterB
             return config.torsoSprite;
         }
 
+        public Bounds GetWorldBounds()
+        {
+            if (!isActive || torsoRenderer == null) return default;
+            return torsoRenderer.bounds;
+        }
+
         public void Tick(float deltaTime)
         {
             if (!isActive) return;
@@ -95,6 +103,8 @@ namespace ShooterB
             {
                 rightWingPivot.transform.localPosition = new Vector3(config.rightWingPivotOffset.x, config.rightWingPivotOffset.y, 0f);
                 float rightAngle = Mathf.Sin((animTime + config.phaseOffset) * config.flapSpeed * Mathf.PI * 2f) * config.flapAmplitude;
+                // flipX reverses the rotation direction, so negate when right wing is a mirrored copy
+                if (config.rightWingSprite == null) rightAngle = -rightAngle;
                 rightWingPivot.transform.localRotation = Quaternion.Euler(0f, 0f, rightAngle);
             }
 
@@ -131,10 +141,11 @@ namespace ShooterB
 
         private void DestroyParts()
         {
-            if (torsoObject != null) Destroy(torsoObject);
-            if (leftWingPivot != null) Destroy(leftWingPivot);
-            if (rightWingPivot != null) Destroy(rightWingPivot);
+            if (torsoObject != null) { torsoObject.SetActive(false); Destroy(torsoObject); }
+            if (leftWingPivot != null) { leftWingPivot.SetActive(false); Destroy(leftWingPivot); }
+            if (rightWingPivot != null) { rightWingPivot.SetActive(false); Destroy(rightWingPivot); }
             torsoObject = null;
+            torsoRenderer = null;
             leftWingPivot = null;
             leftWingObject = null;
             rightWingPivot = null;

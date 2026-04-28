@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be207309418e74b2baa1fc1209c50ff4, type: 3}
+  m_Name: DuckPartLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.DuckPartLibrary
+  entries:
+  - duckType: 42
+    config:
+      torsoSprite: {fileID: 3579549117590493117, guid: e736035a3cd0c45219510325570324f0, type: 3}
+      leftWingSprite: {fileID: -5414342718591986260, guid: 6037742004d354b8c889049087f06024, type: 3}
+      rightWingSprite: {fileID: 0}
+      leftWingPivotOffset: {x: -0.6903945, y: -0.31980446}
+      rightWingPivotOffset: {x: 0.4340198, y: -0.5482362}
+      leftWingOffset: {x: 0, y: 0}
+      rightWingOffset: {x: 0, y: 0}
+      sizeMultiplier: 0
+      flapSpeed: 2
+      flapAmplitude: 50
+      phaseOffset: 0
+      torsoBobAmount: 0
+      torsoBobSpeed: 0
