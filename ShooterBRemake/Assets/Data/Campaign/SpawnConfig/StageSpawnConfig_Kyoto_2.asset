@@ -36,13 +36,13 @@ MonoBehaviour:
       pathProjection: 5
       speedMultiplier: 1.1
       patternRef: {fileID: 11400000, guid: f58e9d68a74ce483699796122483e086, type: 2}
-    - duckType: 17
+    - duckType: 20
       delay: 0.55
       startLane: 3
       pathProjection: 8
       speedMultiplier: 1.12
       patternRef: {fileID: 11400000, guid: 0ae1decb711d844b9988dc9bb05eceec, type: 2}
-    - duckType: 17
+    - duckType: 20
       delay: 0
       startLane: 7
       pathProjection: 9
@@ -114,19 +114,19 @@ MonoBehaviour:
       pathProjection: 1
       speedMultiplier: 1.05
       patternRef: {fileID: 0}
-    - duckType: 17
+    - duckType: 42
       delay: 1
       startLane: 5
       pathProjection: 6
       speedMultiplier: 1.05
       patternRef: {fileID: 0}
-    - duckType: 17
+    - duckType: 43
       delay: 0.3
       startLane: 6
       pathProjection: 6
       speedMultiplier: 1.05
       patternRef: {fileID: 0}
-    - duckType: 17
+    - duckType: 42
       delay: 0
       startLane: 4
       pathProjection: 6
@@ -144,7 +144,7 @@ MonoBehaviour:
       pathProjection: 9
       speedMultiplier: 1.05
       patternRef: {fileID: 0}
-    - duckType: 19
+    - duckType: 43
       delay: 1.1
       healthOverride: 3
       startLane: 5
@@ -203,7 +203,7 @@ MonoBehaviour:
   - showAnnouncement: 1
     announcementDuration: 3
     spawnSequence:
-    - duckType: 17
+    - duckType: 41
       delay: 0
       startLane: 0
       pathProjection: 0
@@ -232,7 +232,7 @@ MonoBehaviour:
   - showAnnouncement: 1
     announcementDuration: 3
     spawnSequence:
-    - duckType: 19
+    - duckType: 42
       delay: 0
       healthOverride: 3
       startLane: 0
@@ -245,14 +245,14 @@ MonoBehaviour:
       pathProjection: 0
       speedMultiplier: 1.05
       patternRef: {fileID: 11400000, guid: 2cba38f4705ce4f4196a5ba8e0495999, type: 2}
-    - duckType: 19
+    - duckType: 43
       delay: 1.8
       healthOverride: 4
       startLane: 0
       pathProjection: 0
       speedMultiplier: 1.1
       patternRef: {fileID: 11400000, guid: f58e9d68a74ce483699796122483e086, type: 2}
-    - duckType: 17
+    - duckType: 41
       delay: 1.8
       startLane: 0
       pathProjection: 0

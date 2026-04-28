@@ -51,7 +51,7 @@ MonoBehaviour:
       speedMultiplier: 1.25
       sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
-    - duckType: 17
+    - duckType: 20
       delay: 0.25
       healthOverride: 2
       startLane: 4
@@ -168,7 +168,7 @@ MonoBehaviour:
       speedMultiplier: 1.05
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 17
+    - duckType: 20
       delay: 1
       healthOverride: 3
       startLane: 5
@@ -224,7 +224,7 @@ MonoBehaviour:
       speedMultiplier: 1.05
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 17
+    - duckType: 43
       delay: 1.5
       healthOverride: 4
       startLane: 5
@@ -333,7 +333,7 @@ MonoBehaviour:
       speedMultiplier: 1.05
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 17
+    - duckType: 42
       delay: 1
       healthOverride: 3
       startLane: 3
@@ -349,7 +349,7 @@ MonoBehaviour:
       speedMultiplier: 1.05
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 17
+    - duckType: 43
       delay: 1.1
       healthOverride: 3
       startLane: 4
@@ -426,7 +426,7 @@ MonoBehaviour:
       speedMultiplier: 1.05
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 19
+    - duckType: 42
       delay: 0
       healthOverride: 4
       startLane: 7
@@ -458,7 +458,7 @@ MonoBehaviour:
       speedMultiplier: 1.05
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 17
+    - duckType: 20
       delay: 0.55
       healthOverride: 3
       startLane: 4
@@ -498,7 +498,7 @@ MonoBehaviour:
       speedMultiplier: 1.05
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 19
+    - duckType: 43
       delay: 1
       healthOverride: 5
       startLane: 5
@@ -530,7 +530,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 17
+    - duckType: 44
       delay: 1
       healthOverride: 4
       startLane: 5
@@ -546,7 +546,7 @@ MonoBehaviour:
       speedMultiplier: 1.25
       sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
-    - duckType: 41
+    - duckType: 44
       delay: 0
       healthOverride: 6
       startLane: 5

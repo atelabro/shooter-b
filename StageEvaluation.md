@@ -34,6 +34,11 @@
 | Tokyo_2 | Tokyo | 27 | 15 | ~1.01 | 5 | Japanese types | 432 |
 | Tokyo_3 | Tokyo | 28 | 16 | ~1.03 | 5 | Japanese types | 442 |
 | Tokyo_4 | Tokyo | 29 | 17 | ~1.05 | 5 | Japanese types | 455+ |
+| Kyoto_0 | Kyoto | 40 | 13 | 1.08 | 5 | SAMURAI, STRAW, KIMONO, KYOTO_KIMONO | 439 |
+| Kyoto_1 | Kyoto | 41 | 14 | 1.12 | 5 | Japanese types + MONK | 500 |
+| Kyoto_2 | Kyoto | 42 | 15 | 1.16 | 5 | Japanese types + KYOTO_KIMONO, MONK, TANUKI | 432 |
+| Kyoto_3 | Kyoto | 43 | 16 | 1.20 | 5 | Japanese types + KYOTO_KIMONO, MONK, TANUKI, YAKUZA_BOSS | 442 |
+| Kyoto_4 | Kyoto | 44 | 17 | 1.25 | 5 | Japanese types + MONK, TANUKI, YAKUZA_BOSS, SAMURAI_BOSS | 469 |
 
 ---
 

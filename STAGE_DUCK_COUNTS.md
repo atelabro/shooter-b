@@ -14,6 +14,7 @@ Excluded from health totals are the explicit final boss entries at the end of ea
 - Los Angeles: `duckType 30`, `healthOverride 18`
 - Cairo: `duckType 40`, `healthOverride 24`
 - Tokyo: `duckType 26`, `healthOverride 30`
+- Kyoto: `duckType 26`, `healthOverride 30`
 
 Countryside does not currently have an explicit final boss entry to exclude.
 
@@ -83,3 +84,15 @@ Countryside does not currently have an explicit final boss entry to exclude.
 | 8 | Tokyo | 3 | 27 | Fuji Skyline | 5 | 127 | 0 | 645 | 645 |
 | 8 | Tokyo | 4 | 28 | Tokyo Tower Control | 5 | 130 | 0 | 480 | 480 |
 | 8 | Tokyo | 5 | 29 | Shibuya Neon Siege | 7 | 139 | 30 | 665 | 695 |
+
+## Kyoto Roster Update
+
+Pattern-expanded duck spawns by type after the Kyoto roster refresh:
+
+| Stage | Stage Name | 17 Samurai | 19 Straw | 20 Kimono | 26 Samurai Boss | 41 Kyoto Kimono | 42 Monk | 43 Tanuki | 44 Yakuza Boss | Total |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Kyoto 1 | Fushimi Gates | 75 | 56 | 16 | 0 | 6 | 0 | 0 | 0 | 153 |
+| Kyoto 2 | Arashiyama Crossing | 102 | 48 | 8 | 0 | 4 | 19 | 0 | 0 | 181 |
+| Kyoto 3 | Golden Pavilion | 69 | 44 | 12 | 0 | 24 | 18 | 8 | 0 | 175 |
+| Kyoto 4 | Gion Ambush | 61 | 34 | 7 | 0 | 57 | 16 | 10 | 8 | 193 |
+| Kyoto 5 | Temple Grounds | 112 | 25 | 21 | 6 | 22 | 28 | 34 | 18 | 266 |
