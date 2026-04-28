@@ -2,6 +2,9 @@
 
 This guide documents the current workflow for adding new duck types to the project.
 
+For ducks that use the skeletal torso+wings animation system instead of the 8-frame flip cycle,
+see `ADDING_PART_ANIMATED_DUCKS.md`.
+
 Use this when adding one duck or batching many ducks at once.
 
 ## Recommended approach for many ducks

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e3ed31821034b4518b71e1e336a85802
+guid: 62a4ada716d32404aa9a384acf0a0823
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5414342718591986260
-    second: jp_mong_left_wing_0
+      213: -6489195432287846070
+    second: jp_tanaki_wing_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: jp_mong_left_wing_0
+      name: jp_tanaki_wing_0
       rect:
         serializedVersion: 2
-        x: 44
-        y: 63
-        width: 183
-        height: 127
+        x: 45
+        y: 84
+        width: 174
+        height: 123
       alignment: 9
-      pivot: {x: 0.89730674, y: 0.5083781}
+      pivot: {x: 0.9015505, y: 0.528835}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ca51a1edbf36cd4b0800000000000000
-      internalID: -5414342718591986260
+      spriteID: a414564b22fb1f5a0800000000000000
+      internalID: -6489195432287846070
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e22ad092eddc84e698f430fca8b23a87
+    spriteID: f0b20683e240e4ce0acbcc7475e091aa
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      jp_mong_left_wing_0: -5414342718591986260
+      jp_tanaki_wing_0: -6489195432287846070
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -104,7 +104,8 @@ namespace ShooterB
             EGYPT_SCARAB = 39,
             EGYPT_SCARAB_BOSS_DUCK = 40,
             KYOTO_KIMONO_DUCK = 41,
-            JAPANESE_MONK_DUCK = 42
+            JAPANESE_MONK_DUCK = 42,
+            JAPANESE_TANUKI_DUCK = 43
         }
 
         public static string GetDuckDisplayName(DuckType type)
@@ -150,6 +151,7 @@ namespace ShooterB
                 case DuckType.JAPANESE_KIMONO_DUCK: return "Japanese Kimono Duck";
                 case DuckType.KYOTO_KIMONO_DUCK: return "Kyoto Kimono Duck";
                 case DuckType.JAPANESE_MONK_DUCK: return "Japanese Monk Duck";
+                case DuckType.JAPANESE_TANUKI_DUCK: return "Japanese Tanuki Duck";
                 case DuckType.MK_SAMUIL_GUARD: return "Samuil Guard";
                 case DuckType.MK_SAMUIL_ELITE: return "Samuil Elite";
                 case DuckType.MK_SAMUIL_BOSS_DUCK: return "Samuil Boss Duck";
@@ -201,6 +203,7 @@ namespace ShooterB
                 case DuckType.JAPANESE_KIMONO_DUCK: return "JAPANESE_KIMONO_DUCK";
                 case DuckType.KYOTO_KIMONO_DUCK: return "KYOTO_KIMONO_DUCK";
                 case DuckType.JAPANESE_MONK_DUCK: return "JAPANESE_MONK_DUCK";
+                case DuckType.JAPANESE_TANUKI_DUCK: return "JAPANESE_TANUKI_DUCK";
                 case DuckType.MK_SAMUIL_GUARD: return "MK_SAMUIL_GUARD";
                 case DuckType.MK_SAMUIL_ELITE: return "MK_SAMUIL_ELITE";
                 case DuckType.MK_SAMUIL_BOSS_DUCK: return "MK_SAMUIL_BOSS_DUCK";
@@ -352,6 +355,7 @@ namespace ShooterB
             public const int JAPANESE_KIMONO_DUCK = 4;
             public const int KYOTO_KIMONO_DUCK = 4;
             public const int JAPANESE_MONK_DUCK = 4;
+            public const int JAPANESE_TANUKI_DUCK = 4;
             public const int MK_SAMUIL_GUARD = 1;
             public const int MK_SAMUIL_ELITE = 1;
             public const int MK_SAMUIL_BOSS_DUCK = 8;
@@ -399,6 +403,7 @@ namespace ShooterB
                     case DuckType.JAPANESE_KIMONO_DUCK: return JAPANESE_KIMONO_DUCK;
                     case DuckType.KYOTO_KIMONO_DUCK: return KYOTO_KIMONO_DUCK;
                     case DuckType.JAPANESE_MONK_DUCK: return JAPANESE_MONK_DUCK;
+                    case DuckType.JAPANESE_TANUKI_DUCK: return JAPANESE_TANUKI_DUCK;
                     case DuckType.MK_SAMUIL_GUARD: return MK_SAMUIL_GUARD;
                     case DuckType.MK_SAMUIL_ELITE: return MK_SAMUIL_ELITE;
                     case DuckType.MK_SAMUIL_BOSS_DUCK: return MK_SAMUIL_BOSS_DUCK;
