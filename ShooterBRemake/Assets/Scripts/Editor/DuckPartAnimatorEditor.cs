@@ -6,6 +6,52 @@ namespace ShooterB
     [CustomEditor(typeof(DuckPartAnimator))]
     public class DuckPartAnimatorEditor : Editor
     {
+        public override void OnInspectorGUI()
+        {
+            base.DrawDefaultInspector();
+
+            DuckPartAnimator duck = (DuckPartAnimator)target;
+
+            if (!duck.IsActive)
+            {
+                EditorGUILayout.Space();
+                EditorGUILayout.HelpBox("Enter play mode and spawn this duck type to edit its config here.", MessageType.Info);
+                return;
+            }
+
+            DuckPartLibrary library = duck.PartLibrary;
+            if (library == null) return;
+            if (!library.TryGetConfig(duck.CurrentDuckType, out DuckPartConfig config)) return;
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField(duck.CurrentDuckType.ToString(), EditorStyles.boldLabel);
+
+            EditorGUI.BeginChangeCheck();
+
+            config.leftWingPivotOffset  = EditorGUILayout.Vector2Field("L Wing Pivot",   config.leftWingPivotOffset);
+            config.rightWingPivotOffset = EditorGUILayout.Vector2Field("R Wing Pivot",   config.rightWingPivotOffset);
+            config.leftWingOffset       = EditorGUILayout.Vector2Field("L Wing Offset",  config.leftWingOffset);
+            config.rightWingOffset      = EditorGUILayout.Vector2Field("R Wing Offset",  config.rightWingOffset);
+
+            EditorGUILayout.Space();
+
+            config.flapSpeed     = EditorGUILayout.FloatField("Flap Speed",     config.flapSpeed);
+            config.flapAmplitude = EditorGUILayout.FloatField("Flap Amplitude", config.flapAmplitude);
+            config.phaseOffset   = EditorGUILayout.FloatField("Phase Offset",   config.phaseOffset);
+
+            EditorGUILayout.Space();
+
+            config.torsoBobAmount = EditorGUILayout.FloatField("Torso Bob Amount", config.torsoBobAmount);
+            config.torsoBobSpeed  = EditorGUILayout.FloatField("Torso Bob Speed",  config.torsoBobSpeed);
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                Undo.RecordObject(library, "Edit Duck Part Config");
+                library.SetConfig(duck.CurrentDuckType, config);
+                EditorUtility.SetDirty(library);
+            }
+        }
+
         void OnSceneGUI()
         {
             DuckPartAnimator duck = (DuckPartAnimator)target;
