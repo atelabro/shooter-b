@@ -16,6 +16,19 @@ namespace ShooterB
         [Header("Duck Part Entries")]
         public DuckPartEntry[] entries;
 
+        public void SetConfig(Constants.DuckType type, DuckPartConfig config)
+        {
+            if (entries == null) return;
+            for (int i = 0; i < entries.Length; i++)
+            {
+                if (entries[i].duckType == type)
+                {
+                    entries[i].config = config;
+                    return;
+                }
+            }
+        }
+
         public bool TryGetConfig(Constants.DuckType type, out DuckPartConfig config)
         {
             if (entries != null)

@@ -7,6 +7,8 @@ namespace ShooterB
         [SerializeField] private DuckPartLibrary partLibrary;
 
         public bool IsActive => isActive;
+        public DuckPartLibrary PartLibrary => partLibrary;
+        public Constants.DuckType CurrentDuckType => currentDuckType;
 
         private bool isActive;
         private DuckPartConfig config;
