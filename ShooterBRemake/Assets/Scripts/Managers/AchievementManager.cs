@@ -469,6 +469,7 @@ namespace ShooterB
                 case Constants.DuckType.JAPANESE_SAMURAI_BOSS_DUCK:
                 case Constants.DuckType.JAPANESE_STRAW_DUCK:
                 case Constants.DuckType.JAPANESE_KIMONO_DUCK:
+                case Constants.DuckType.JAPANESE_YAKUZA_BOSS_DUCK:
                     return DuckGroup.Tokyo;
                 case Constants.DuckType.EGYPT_MUMMY:
                 case Constants.DuckType.EGYPT_PHARAOH:

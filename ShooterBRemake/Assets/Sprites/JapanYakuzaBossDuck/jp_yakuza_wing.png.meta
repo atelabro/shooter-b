@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 595b98224892c4cf9ad9691a711ac229
+guid: c8b6a6e05c26d4ffe8572d89df57c425
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6319872625525070658
-    second: yakuza_01_0
+      213: 5090626978093452330
+    second: jp_yakuza_wing_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: yakuza_01_0
+      name: jp_yakuza_wing_0
       rect:
         serializedVersion: 2
-        x: 22
-        y: 70
-        width: 472
-        height: 349
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 48
+        y: 87
+        width: 150
+        height: 101
+      alignment: 9
+      pivot: {x: 0.92323834, y: 0.5105349}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eb4ecd9c45d4b48a0800000000000000
-      internalID: -6319872625525070658
+      spriteID: a2cc749e34a85a640800000000000000
+      internalID: 5090626978093452330
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: daed7243d9a2842b5893b7a6da627d62
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      yakuza_01_0: -6319872625525070658
+      jp_yakuza_wing_0: 5090626978093452330
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
