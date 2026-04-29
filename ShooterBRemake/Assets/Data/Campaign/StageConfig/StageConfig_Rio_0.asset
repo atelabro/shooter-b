@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9775243a36e7044958f84f929e28b64a, type: 3}
+  m_Name: StageConfig_Rio_0
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageConfig
+  stageIndex: 45
+  mapName: Copacabana Beach
+  mapNameMk: "\u041A\u043E\u043F\u0430\u043A\u0430\u0431\u0430\u043D\u0430 \u041F\u043B\u0430\u0436\u0430"
+  briefingText: The first Rio landing starts on Copacabana. Clear the beach patrols
+    before they reach the promenade.
+  briefingTextMk: "\u041F\u0440\u0432\u043E\u0442\u043E \u0441\u043B\u0435\u0442\u0443\u0432\u0430\u045A\u0435
+    \u0432\u043E \u0420\u0438\u043E \u043F\u043E\u0447\u043D\u0443\u0432\u0430
+    \u043D\u0430 \u041A\u043E\u043F\u0430\u043A\u0430\u0431\u0430\u043D\u0430.
+    \u0418\u0441\u0447\u0438\u0441\u0442\u0438 \u0433\u0438 \u043F\u0430\u0442\u0440\u043E\u043B\u0438\u0442\u0435
+    \u043D\u0430 \u043F\u043B\u0430\u0436\u0430\u0442\u0430 \u043F\u0440\u0435\u0434
+    \u0434\u0430 \u0441\u0442\u0438\u0433\u043D\u0430\u0442 \u0434\u043E \u0448\u0435\u0442\u0430\u043B\u0438\u0448\u0442\u0435\u0442\u043E."
+  backgroundSprite: {fileID: -574868518791921310, guid: 95f101a4b862947d094192003caea499, type: 3}
+  starThreshold1: 0
+  starThreshold2: 335
+  starThreshold3: 439
+  starsRequiredToUnlock: 0
+  startingDifficulty: 13
+  spawnConfig: {fileID: 11400000, guid: e84d0a563d8e4b04887d3f53390b8e10, type: 2}

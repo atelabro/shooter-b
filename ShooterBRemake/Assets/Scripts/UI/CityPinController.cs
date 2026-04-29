@@ -28,7 +28,13 @@ namespace ShooterB
             string cityName = CampaignLocalizationResolver.GetCityName(config);
 
             if (cityNameText != null)
-                cityNameText.text = cityName;
+            {
+                cityNameText.text = CampaignLocalizationResolver.GetCityPinName(config);
+                cityNameText.enableAutoSizing = true;
+                cityNameText.fontSizeMin = 8f;
+                cityNameText.fontSizeMax = Mathf.Max(cityNameText.fontSize, 12f);
+                cityNameText.enableWordWrapping = true;
+            }
 
             if (pinImage != null)
             {

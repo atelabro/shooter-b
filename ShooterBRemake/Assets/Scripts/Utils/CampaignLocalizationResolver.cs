@@ -15,6 +15,39 @@ namespace ShooterB
             return city.cityName ?? string.Empty;
         }
 
+        public static string GetCityPinName(CityConfig city)
+        {
+            if (city == null)
+                return string.Empty;
+
+            string configuredName = IsMacedonian()
+                ? city.pinDisplayNameMk
+                : city.pinDisplayName;
+
+            if (string.IsNullOrWhiteSpace(configuredName) && IsMacedonian())
+                configuredName = city.pinDisplayName;
+
+            if (!string.IsNullOrWhiteSpace(configuredName))
+                return configuredName;
+
+            string cityName = GetCityName(city);
+            return city.forcePinNameTwoRows
+                ? SplitLastSpace(cityName)
+                : cityName;
+        }
+
+        private static string SplitLastSpace(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return string.Empty;
+
+            int splitIndex = value.Trim().LastIndexOf(' ');
+            if (splitIndex <= 0 || splitIndex >= value.Length - 1)
+                return value;
+
+            return value.Substring(0, splitIndex) + "\n" + value.Substring(splitIndex + 1);
+        }
+
         public static string GetCityBriefing(CityConfig city)
         {
             if (city == null)

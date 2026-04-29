@@ -9,6 +9,9 @@ namespace ShooterB
         public string cityNameMk;
         [TextArea] public string briefingText;
         [TextArea] public string briefingTextMk;
+        public string pinDisplayName;
+        public string pinDisplayNameMk;
+        public bool forcePinNameTwoRows;
         public string pinSpriteResourcePath;
         public Vector2 pinPosition;
         public StageConfig[] stages;
