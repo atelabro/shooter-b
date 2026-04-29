@@ -58,3 +58,32 @@ MonoBehaviour:
       phaseOffset: 0
       torsoBobAmount: 0
       torsoBobSpeed: 0
+  - duckType: 45
+    config:
+      torsoSprite: {fileID: 5561283389060626032, guid: 37717f28c98fd4dc28e240f064905905, type: 3}
+      leftWingSprite: {fileID: -4029876723572570037, guid: 72da9a5b83eeb4bf8b9469b01c64cd75, type: 3}
+      rightWingSprite: {fileID: 0}
+      leftWingPivotOffset: {x: -0.6903945, y: -0.31980446}
+      rightWingPivotOffset: {x: 0.4340198, y: -0.5482362}
+      leftWingOffset: {x: 0, y: 0}
+      rightWingOffset: {x: 0, y: 0}
+      sizeMultiplier: 0
+      flapSpeed: 2
+      flapAmplitude: 50
+      phaseOffset: 0
+      torsoBobAmount: 0
+      torsoBobSpeed: 0
+      alternativeSkins:
+      - torsoSprite: {fileID: -7497083269605141751, guid: 6c28fa8c64a8440b6af33840ae91aff7, type: 3}
+        leftWingSprite: {fileID: -4029876723572570037, guid: 72da9a5b83eeb4bf8b9469b01c64cd75, type: 3}
+        rightWingSprite: {fileID: 0}
+        leftWingPivotOffset: {x: -0.6903945, y: -0.31980446}
+        rightWingPivotOffset: {x: 0.4340198, y: -0.5482362}
+        leftWingOffset: {x: 0, y: 0}
+        rightWingOffset: {x: 0, y: 0}
+        sizeMultiplier: 0
+        flapSpeed: 2
+        flapAmplitude: 50
+        phaseOffset: 0
+        torsoBobAmount: 0
+        torsoBobSpeed: 0

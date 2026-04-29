@@ -29,4 +29,8 @@ MonoBehaviour:
   stages:
   - {fileID: 11400000, guid: 3a6d3b43fd4f40c6ad56147ef5d3a901, type: 2}
   - {fileID: 11400000, guid: 990e04b3b5b34f578aaa5caf875112d1, type: 2}
+  - {fileID: 11400000, guid: 4a8c4beb147b40ae8b753c5183320b81, type: 2}
+  - {fileID: 11400000, guid: 0f874a86ee0b41ee88529e0c4989c7cb, type: 2}
+  - {fileID: 11400000, guid: 4d6e2589c2954d6e99ffb72a54c41281, type: 2}
+  - {fileID: 11400000, guid: 38e142000d6b4353b58630e77c39424a, type: 2}
   starsRequiredToUnlock: 23

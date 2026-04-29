@@ -106,7 +106,8 @@ namespace ShooterB
             KYOTO_KIMONO_DUCK = 41,
             JAPANESE_MONK_DUCK = 42,
             JAPANESE_TANUKI_DUCK = 43,
-            JAPANESE_YAKUZA_BOSS_DUCK = 44
+            JAPANESE_YAKUZA_BOSS_DUCK = 44,
+            BRAZIL_FOOTBALLER_DUCK = 45
         }
 
         public static string GetDuckDisplayName(DuckType type)
@@ -154,6 +155,7 @@ namespace ShooterB
                 case DuckType.JAPANESE_MONK_DUCK: return "Japanese Monk Duck";
                 case DuckType.JAPANESE_TANUKI_DUCK: return "Japanese Tanuki Duck";
                 case DuckType.JAPANESE_YAKUZA_BOSS_DUCK: return "Japanese Yakuza Boss Duck";
+                case DuckType.BRAZIL_FOOTBALLER_DUCK: return "Brazil Footballer Duck";
                 case DuckType.MK_SAMUIL_GUARD: return "Samuil Guard";
                 case DuckType.MK_SAMUIL_ELITE: return "Samuil Elite";
                 case DuckType.MK_SAMUIL_BOSS_DUCK: return "Samuil Boss Duck";
@@ -207,6 +209,7 @@ namespace ShooterB
                 case DuckType.JAPANESE_MONK_DUCK: return "JAPANESE_MONK_DUCK";
                 case DuckType.JAPANESE_TANUKI_DUCK: return "JAPANESE_TANUKI_DUCK";
                 case DuckType.JAPANESE_YAKUZA_BOSS_DUCK: return "JAPANESE_YAKUZA_BOSS_DUCK";
+                case DuckType.BRAZIL_FOOTBALLER_DUCK: return "BRAZIL_FOOTBALLER_DUCK";
                 case DuckType.MK_SAMUIL_GUARD: return "MK_SAMUIL_GUARD";
                 case DuckType.MK_SAMUIL_ELITE: return "MK_SAMUIL_ELITE";
                 case DuckType.MK_SAMUIL_BOSS_DUCK: return "MK_SAMUIL_BOSS_DUCK";
@@ -362,6 +365,7 @@ namespace ShooterB
             public const int JAPANESE_MONK_DUCK = 4;
             public const int JAPANESE_TANUKI_DUCK = 4;
             public const int JAPANESE_YAKUZA_BOSS_DUCK = 8;
+            public const int BRAZIL_FOOTBALLER_DUCK = 4;
             public const int MK_SAMUIL_GUARD = 1;
             public const int MK_SAMUIL_ELITE = 1;
             public const int MK_SAMUIL_BOSS_DUCK = 8;
@@ -411,6 +415,7 @@ namespace ShooterB
                     case DuckType.JAPANESE_MONK_DUCK: return JAPANESE_MONK_DUCK;
                     case DuckType.JAPANESE_TANUKI_DUCK: return JAPANESE_TANUKI_DUCK;
                     case DuckType.JAPANESE_YAKUZA_BOSS_DUCK: return JAPANESE_YAKUZA_BOSS_DUCK;
+                    case DuckType.BRAZIL_FOOTBALLER_DUCK: return BRAZIL_FOOTBALLER_DUCK;
                     case DuckType.MK_SAMUIL_GUARD: return MK_SAMUIL_GUARD;
                     case DuckType.MK_SAMUIL_ELITE: return MK_SAMUIL_ELITE;
                     case DuckType.MK_SAMUIL_BOSS_DUCK: return MK_SAMUIL_BOSS_DUCK;
