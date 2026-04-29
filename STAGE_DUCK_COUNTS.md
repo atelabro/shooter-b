@@ -20,12 +20,12 @@ Countryside does not currently have an explicit final boss entry to exclude.
 
 ## Summary
 
-- Total stages: 40
-- Total waves: 200
-- Total duck spawns: 4468
-- Total boss duck health: 115
-- Total health excluding city-final bosses: 7618
-- Total hit points: 7733
+- Total stages: 45
+- Total waves: 225
+- Total duck spawns: 5436
+- Total boss duck health: 145
+- Total health excluding city-final bosses: 9891
+- Total hit points: 10036
 
 ## By City
 
@@ -39,6 +39,7 @@ Countryside does not currently have an explicit final boss entry to exclude.
 | 6 | Los Angeles | 5 | 26 | 605 | 18 | 740 | 758 |
 | 7 | Cairo | 5 | 26 | 614 | 24 | 765 | 789 |
 | 8 | Tokyo | 5 | 27 | 672 | 30 | 3284 | 3314 |
+| 9 | Kyoto | 5 | 25 | 968 | 30 | 2273 | 2303 |
 
 ## By Stage
 
@@ -84,15 +85,8 @@ Countryside does not currently have an explicit final boss entry to exclude.
 | 8 | Tokyo | 3 | 27 | Fuji Skyline | 5 | 127 | 0 | 645 | 645 |
 | 8 | Tokyo | 4 | 28 | Tokyo Tower Control | 5 | 130 | 0 | 480 | 480 |
 | 8 | Tokyo | 5 | 29 | Shibuya Neon Siege | 7 | 139 | 30 | 665 | 695 |
-
-## Kyoto Roster Update
-
-Pattern-expanded duck spawns by type after the Kyoto roster refresh:
-
-| Stage | Stage Name | 17 Samurai | 19 Straw | 20 Kimono | 26 Samurai Boss | 41 Kyoto Kimono | 42 Monk | 43 Tanuki | 44 Yakuza Boss | Total |
-| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Kyoto 1 | Fushimi Gates | 75 | 56 | 16 | 0 | 6 | 0 | 0 | 0 | 153 |
-| Kyoto 2 | Arashiyama Crossing | 102 | 48 | 8 | 0 | 4 | 19 | 0 | 0 | 181 |
-| Kyoto 3 | Golden Pavilion | 69 | 44 | 12 | 0 | 24 | 18 | 8 | 0 | 175 |
-| Kyoto 4 | Gion Ambush | 61 | 34 | 7 | 0 | 57 | 16 | 10 | 8 | 193 |
-| Kyoto 5 | Temple Grounds | 112 | 25 | 21 | 6 | 22 | 28 | 34 | 18 | 266 |
+| 9 | Kyoto | 1 | 40 | Fushimi Gates | 5 | 153 | 0 | 207 | 207 |
+| 9 | Kyoto | 2 | 41 | Arashiyama Crossing | 5 | 181 | 0 | 290 | 290 |
+| 9 | Kyoto | 3 | 42 | Golden Pavilion | 5 | 175 | 0 | 367 | 367 |
+| 9 | Kyoto | 4 | 43 | Gion Ambush | 5 | 193 | 0 | 570 | 570 |
+| 9 | Kyoto | 5 | 44 | Temple Grounds | 5 | 266 | 30 | 839 | 869 |
