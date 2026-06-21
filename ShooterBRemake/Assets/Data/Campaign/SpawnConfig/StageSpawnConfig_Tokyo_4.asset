@@ -601,13 +601,11 @@ MonoBehaviour:
       patternRef: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
   - showAnnouncement: 1
     announcementDuration: 3
-    englishWaveLabelFormat: This samurai duck trained for years for this challenge!
-    macedonianWaveLabelFormat: "\u041E\u0432\u0430\u0430 \u0441\u0430\u043C\u0443\u0440\u0430\u0458
-      \u043F\u0430\u0442\u043A\u0430 \u0442\u0440\u0435\u043D\u0438\u0440\u0430\u043B\u0430
-      \u0433\u043E\u0434\u0438\u043D\u0438 \u0437\u0430 \u043E\u0432\u043E\u0458
-      \u043F\u0440\u0435\u0434\u0438\u0437\u0432\u0438\u043A. \u0412\u043D\u0438\u043C\u0430\u0432\u0430\u0458!"
+    englishWaveLabelFormat: The yakuza boss of Tokyo is here!
+    macedonianWaveLabelFormat: "\u0408\u0430\u043A\u0443\u0437\u0430 \u0448\u0435\u0444\u043E\u0442
+      \u043D\u0430 \u0422\u043E\u043A\u0438\u043E \u0434\u043E\u0430\u0453\u0430!"
     spawnSequence:
-    - duckType: 26
+    - duckType: 44
       delay: 1
       healthOverride: 30
       startLane: 5

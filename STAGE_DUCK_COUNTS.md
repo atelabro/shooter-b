@@ -15,17 +15,18 @@ Excluded from health totals are the explicit final boss entries at the end of ea
 - Cairo: `duckType 40`, `healthOverride 24`
 - Tokyo: `duckType 26`, `healthOverride 30`
 - Kyoto: `duckType 26`, `healthOverride 30`
+- Rio: `duckType 49`, `healthOverride 35`
 
 Countryside does not currently have an explicit final boss entry to exclude.
 
 ## Summary
 
-- Total stages: 45
-- Total waves: 225
-- Total duck spawns: 5436
-- Total boss duck health: 145
-- Total health excluding city-final bosses: 9891
-- Total hit points: 10036
+- Total stages: 51
+- Total waves: 255
+- Total duck spawns: 6561
+- Total boss duck health: 180
+- Total health excluding city-final bosses: 13891
+- Total hit points: 14071
 
 ## By City
 
@@ -40,6 +41,7 @@ Countryside does not currently have an explicit final boss entry to exclude.
 | 7 | Cairo | 5 | 26 | 614 | 24 | 765 | 789 |
 | 8 | Tokyo | 5 | 27 | 672 | 30 | 3284 | 3314 |
 | 9 | Kyoto | 5 | 25 | 968 | 30 | 2273 | 2303 |
+| 10 | Rio de Janeiro | 6 | 30 | 1125 | 35 | 4000 | 4035 |
 
 ## By Stage
 
@@ -90,3 +92,9 @@ Countryside does not currently have an explicit final boss entry to exclude.
 | 9 | Kyoto | 3 | 42 | Golden Pavilion | 5 | 175 | 0 | 367 | 367 |
 | 9 | Kyoto | 4 | 43 | Gion Ambush | 5 | 193 | 0 | 570 | 570 |
 | 9 | Kyoto | 5 | 44 | Temple Grounds | 5 | 266 | 30 | 839 | 869 |
+| 10 | Rio de Janeiro | 1 | 45 | Copacabana Beach | 5 | 130 | 0 | 255 | 255 |
+| 10 | Rio de Janeiro | 2 | 46 | Ipanema Beach | 5 | 158 | 0 | 348 | 348 |
+| 10 | Rio de Janeiro | 3 | 47 | Rio Favela Approach | 5 | 171 | 0 | 460 | 460 |
+| 10 | Rio de Janeiro | 4 | 48 | Favela Hills | 5 | 189 | 0 | 708 | 708 |
+| 10 | Rio de Janeiro | 5 | 49 | Sugarloaf Mountain | 5 | 201 | 0 | 915 | 915 |
+| 10 | Rio de Janeiro | 6 | 50 | Christ the Redeemer | 5 | 276 | 35 | 1314 | 1349 |

@@ -78,7 +78,8 @@ namespace ShooterB
             NewYork,
             LosAngeles,
             Tokyo,
-            Cairo
+            Cairo,
+            Rio
         }
 
         private struct AchievementDefinition
@@ -478,6 +479,12 @@ namespace ShooterB
                 case Constants.DuckType.EGYPT_SCARAB:
                 case Constants.DuckType.EGYPT_SCARAB_BOSS_DUCK:
                     return DuckGroup.Cairo;
+                case Constants.DuckType.BRAZIL_FOOTBALLER_DUCK:
+                case Constants.DuckType.BRAZIL_LIFEGUARD_DUCK:
+                case Constants.DuckType.BRAZIL_PEACH_ARMY_DUCK:
+                case Constants.DuckType.BRAZIL_CARNIVAL_DUCK:
+                case Constants.DuckType.BRAZIL_LIFEGUARD_BOSS_DUCK:
+                    return DuckGroup.Rio;
                 default:
                     return DuckGroup.None;
             }
@@ -505,6 +512,8 @@ namespace ShooterB
                     return DuckGroup.Tokyo;
                 case "Cairo":
                     return DuckGroup.Cairo;
+                case "Rio de Janeiro":
+                    return DuckGroup.Rio;
                 default:
                     return DuckGroup.None;
             }
@@ -551,6 +560,7 @@ namespace ShooterB
                 case DuckGroup.LosAngeles: return "achievement.city_group.losangeles";
                 case DuckGroup.Tokyo:   return "achievement.city_group.tokyo";
                 case DuckGroup.Cairo:   return "achievement.city_group.cairo";
+                case DuckGroup.Rio:     return "achievement.city_group.rio";
                 default:                return null;
             }
         }

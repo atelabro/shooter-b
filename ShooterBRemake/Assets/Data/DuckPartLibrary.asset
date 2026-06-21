@@ -87,3 +87,143 @@ MonoBehaviour:
         phaseOffset: 0
         torsoBobAmount: 0
         torsoBobSpeed: 0
+  - duckType: 46
+    config:
+      torsoSprite: {fileID: -2668636055972935200, guid: 81295298afa8649fc9d333e799fb4ee9, type: 3}
+      leftWingSprite: {fileID: -4883437453893835673, guid: a36e04be44f5c4398970ac2e72e543e4, type: 3}
+      rightWingSprite: {fileID: 0}
+      leftWingPivotOffset: {x: -0.6903945, y: -0.31980446}
+      rightWingPivotOffset: {x: 0.4340198, y: -0.5482362}
+      leftWingOffset: {x: 0, y: 0}
+      rightWingOffset: {x: 0, y: 0}
+      sizeMultiplier: 0
+      flapSpeed: 2
+      flapAmplitude: 50
+      phaseOffset: 0
+      torsoBobAmount: 0
+      torsoBobSpeed: 0
+      alternativeSkins:
+      - torsoSprite: {fileID: 1821385522432440112, guid: 65010d3d765274dc98152ca3e9513bd6, type: 3}
+        leftWingSprite: {fileID: -4883437453893835673, guid: a36e04be44f5c4398970ac2e72e543e4, type: 3}
+        rightWingSprite: {fileID: 0}
+        leftWingPivotOffset: {x: -0.6903945, y: -0.31980446}
+        rightWingPivotOffset: {x: 0.4340198, y: -0.5482362}
+        leftWingOffset: {x: 0, y: 0}
+        rightWingOffset: {x: 0, y: 0}
+        sizeMultiplier: 0
+        flapSpeed: 2
+        flapAmplitude: 50
+        phaseOffset: 0
+        torsoBobAmount: 0
+        torsoBobSpeed: 0
+      - torsoSprite: {fileID: -4974252873642310307, guid: ee307f5dfc07447efb004fb285793afb, type: 3}
+        leftWingSprite: {fileID: -4883437453893835673, guid: a36e04be44f5c4398970ac2e72e543e4, type: 3}
+        rightWingSprite: {fileID: 0}
+        leftWingPivotOffset: {x: -0.6903945, y: -0.31980446}
+        rightWingPivotOffset: {x: 0.4340198, y: -0.5482362}
+        leftWingOffset: {x: 0, y: 0}
+        rightWingOffset: {x: 0, y: 0}
+        sizeMultiplier: 0
+        flapSpeed: 2
+        flapAmplitude: 50
+        phaseOffset: 0
+        torsoBobAmount: 0
+        torsoBobSpeed: 0
+      - torsoSprite: {fileID: 7223510728345019355, guid: e6c1fccd981094b9b8525bf4d66c233d, type: 3}
+        leftWingSprite: {fileID: -4883437453893835673, guid: a36e04be44f5c4398970ac2e72e543e4, type: 3}
+        rightWingSprite: {fileID: 0}
+        leftWingPivotOffset: {x: -0.6903945, y: -0.31980446}
+        rightWingPivotOffset: {x: 0.4340198, y: -0.5482362}
+        leftWingOffset: {x: 0, y: 0}
+        rightWingOffset: {x: 0, y: 0}
+        sizeMultiplier: 0
+        flapSpeed: 2
+        flapAmplitude: 50
+        phaseOffset: 0
+        torsoBobAmount: 0
+        torsoBobSpeed: 0
+  - duckType: 47
+    config:
+      torsoSprite: {fileID: 4272394170999651488, guid: ae8adebc4ac59429b93974cedfa7fd90, type: 3}
+      leftWingSprite: {fileID: -6668096812483338073, guid: a9a04ad81626745158e91729c0701140, type: 3}
+      rightWingSprite: {fileID: 0}
+      leftWingPivotOffset: {x: -0.6903945, y: -0.31980446}
+      rightWingPivotOffset: {x: 0.4340198, y: -0.5482362}
+      leftWingOffset: {x: 0, y: 0}
+      rightWingOffset: {x: 0, y: 0}
+      sizeMultiplier: 0
+      flapSpeed: 2
+      flapAmplitude: 50
+      phaseOffset: 0
+      torsoBobAmount: 0
+      torsoBobSpeed: 0
+  - duckType: 48
+    config:
+      torsoSprite: {fileID: -5969010642548256401, guid: 3846e9420f9504b2f8300896c9259a7c, type: 3}
+      leftWingSprite: {fileID: -1380185470941562390, guid: 5958081bcf95f4fe5b042807aa86f149, type: 3}
+      rightWingSprite: {fileID: 0}
+      leftWingPivotOffset: {x: -0.6903945, y: -0.31980446}
+      rightWingPivotOffset: {x: 0.4340198, y: -0.5482362}
+      leftWingOffset: {x: 0, y: 0}
+      rightWingOffset: {x: 0, y: 0}
+      sizeMultiplier: 0
+      flapSpeed: 2
+      flapAmplitude: 50
+      phaseOffset: 0
+      torsoBobAmount: 0
+      torsoBobSpeed: 0
+      alternativeSkins:
+      - torsoSprite: {fileID: -6118351302753818555, guid: 2c96fd64eecac4f9eba5572f45d3d129, type: 3}
+        leftWingSprite: {fileID: -1380185470941562390, guid: 5958081bcf95f4fe5b042807aa86f149, type: 3}
+        rightWingSprite: {fileID: 0}
+        leftWingPivotOffset: {x: -0.6903945, y: -0.31980446}
+        rightWingPivotOffset: {x: 0.4340198, y: -0.5482362}
+        leftWingOffset: {x: 0, y: 0}
+        rightWingOffset: {x: 0, y: 0}
+        sizeMultiplier: 0
+        flapSpeed: 2
+        flapAmplitude: 50
+        phaseOffset: 0
+        torsoBobAmount: 0
+        torsoBobSpeed: 0
+      - torsoSprite: {fileID: -9196647288680601374, guid: 445d9cff49b644960b7cb08466fc5867, type: 3}
+        leftWingSprite: {fileID: -1380185470941562390, guid: 5958081bcf95f4fe5b042807aa86f149, type: 3}
+        rightWingSprite: {fileID: 0}
+        leftWingPivotOffset: {x: -0.6903945, y: -0.31980446}
+        rightWingPivotOffset: {x: 0.4340198, y: -0.5482362}
+        leftWingOffset: {x: 0, y: 0}
+        rightWingOffset: {x: 0, y: 0}
+        sizeMultiplier: 0
+        flapSpeed: 2
+        flapAmplitude: 50
+        phaseOffset: 0
+        torsoBobAmount: 0
+        torsoBobSpeed: 0
+      - torsoSprite: {fileID: 8942603792692715811, guid: 461d4aed7ab7c4adb8951cf2895b9450, type: 3}
+        leftWingSprite: {fileID: -1380185470941562390, guid: 5958081bcf95f4fe5b042807aa86f149, type: 3}
+        rightWingSprite: {fileID: 0}
+        leftWingPivotOffset: {x: -0.6903945, y: -0.31980446}
+        rightWingPivotOffset: {x: 0.4340198, y: -0.5482362}
+        leftWingOffset: {x: 0, y: 0}
+        rightWingOffset: {x: 0, y: 0}
+        sizeMultiplier: 0
+        flapSpeed: 2
+        flapAmplitude: 50
+        phaseOffset: 0
+        torsoBobAmount: 0
+        torsoBobSpeed: 0
+  - duckType: 49
+    config:
+      torsoSprite: {fileID: -3255128844633668151, guid: 81646543b902f4df9b119a6079e5f262, type: 3}
+      leftWingSprite: {fileID: 206251267772596246, guid: 9b3fd91a970a740d9b3e7b002249c255, type: 3}
+      rightWingSprite: {fileID: 0}
+      leftWingPivotOffset: {x: -0.6903945, y: -0.31980446}
+      rightWingPivotOffset: {x: 0.4340198, y: -0.5482362}
+      leftWingOffset: {x: 0, y: 0}
+      rightWingOffset: {x: 0, y: 0}
+      sizeMultiplier: 0
+      flapSpeed: 2
+      flapAmplitude: 50
+      phaseOffset: 0
+      torsoBobAmount: 0
+      torsoBobSpeed: 0

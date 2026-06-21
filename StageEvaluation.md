@@ -39,6 +39,12 @@
 | Kyoto_2 | Kyoto | 42 | 15 | 1.16 | 5 | Japanese types + KYOTO_KIMONO, MONK, TANUKI | 432 |
 | Kyoto_3 | Kyoto | 43 | 16 | 1.20 | 5 | Japanese types + KYOTO_KIMONO, MONK, TANUKI, YAKUZA_BOSS | 442 |
 | Kyoto_4 | Kyoto | 44 | 17 | 1.25 | 5 | Japanese types + MONK, TANUKI, YAKUZA_BOSS, SAMURAI_BOSS | 469 |
+| Rio_0 | Rio de Janeiro | 45 | 13 | 1.18 | 5 | FOOTBALLER, LIFEGUARD | 439 |
+| Rio_1 | Rio de Janeiro | 46 | 14 | 1.22 | 5 | FOOTBALLER, LIFEGUARD | 500 |
+| Rio_2 | Rio de Janeiro | 47 | 17 | 1.40 | 5 | FOOTBALLER, LIFEGUARD, PEACH_ARMY | 432 |
+| Rio_3 | Rio de Janeiro | 48 | 18 | 1.46 | 5 | Brazil regulars + CARNIVAL elite | 442 |
+| Rio_4 | Rio de Janeiro | 49 | 18 | 1.46 | 5 | Brazil regulars + CARNIVAL elite | 442 |
+| Rio_5 | Rio de Janeiro | 50 | 20 | 1.55 | 5 | Brazil regulars + CARNIVAL elite + LIFEGUARD_BOSS | 469 |
 
 ---
 

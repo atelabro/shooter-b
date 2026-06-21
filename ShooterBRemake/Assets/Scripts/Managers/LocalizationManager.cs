@@ -262,6 +262,7 @@ namespace ShooterB
                 ["achievement.city_group.losangeles"] = "Los Angeles",
                 ["achievement.city_group.tokyo"] = "Japanese",
                 ["achievement.city_group.cairo"] = "Egyptian",
+                ["achievement.city_group.rio"] = "Brazilian",
 
                 ["achievement.FieldPromotion.title"] = "Field Promotion",
                 ["achievement.CityCleaner.title"] = "City Cleaner",
@@ -480,6 +481,7 @@ namespace ShooterB
                 ["achievement.city_group.losangeles"] = "Лосанџелески",
                 ["achievement.city_group.tokyo"] = "Јапонски",
                 ["achievement.city_group.cairo"] = "Египетски",
+                ["achievement.city_group.rio"] = "Бразилски",
 
                 ["achievement.FieldPromotion.title"] = "Теренска Промоција",
                 ["achievement.CityCleaner.title"] = "Чистач на Градови",

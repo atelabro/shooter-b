@@ -107,7 +107,11 @@ namespace ShooterB
             JAPANESE_MONK_DUCK = 42,
             JAPANESE_TANUKI_DUCK = 43,
             JAPANESE_YAKUZA_BOSS_DUCK = 44,
-            BRAZIL_FOOTBALLER_DUCK = 45
+            BRAZIL_FOOTBALLER_DUCK = 45,
+            BRAZIL_LIFEGUARD_DUCK = 46,
+            BRAZIL_PEACH_ARMY_DUCK = 47,
+            BRAZIL_CARNIVAL_DUCK = 48,
+            BRAZIL_LIFEGUARD_BOSS_DUCK = 49
         }
 
         public static string GetDuckDisplayName(DuckType type)
@@ -156,6 +160,10 @@ namespace ShooterB
                 case DuckType.JAPANESE_TANUKI_DUCK: return "Japanese Tanuki Duck";
                 case DuckType.JAPANESE_YAKUZA_BOSS_DUCK: return "Japanese Yakuza Boss Duck";
                 case DuckType.BRAZIL_FOOTBALLER_DUCK: return "Brazil Footballer Duck";
+                case DuckType.BRAZIL_LIFEGUARD_DUCK: return "Brazil Lifeguard Duck";
+                case DuckType.BRAZIL_PEACH_ARMY_DUCK: return "Brazil Peach Army Duck";
+                case DuckType.BRAZIL_CARNIVAL_DUCK: return "Brazil Carnival Duck";
+                case DuckType.BRAZIL_LIFEGUARD_BOSS_DUCK: return "Brazil Lifeguard Boss Duck";
                 case DuckType.MK_SAMUIL_GUARD: return "Samuil Guard";
                 case DuckType.MK_SAMUIL_ELITE: return "Samuil Elite";
                 case DuckType.MK_SAMUIL_BOSS_DUCK: return "Samuil Boss Duck";
@@ -210,6 +218,10 @@ namespace ShooterB
                 case DuckType.JAPANESE_TANUKI_DUCK: return "JAPANESE_TANUKI_DUCK";
                 case DuckType.JAPANESE_YAKUZA_BOSS_DUCK: return "JAPANESE_YAKUZA_BOSS_DUCK";
                 case DuckType.BRAZIL_FOOTBALLER_DUCK: return "BRAZIL_FOOTBALLER_DUCK";
+                case DuckType.BRAZIL_LIFEGUARD_DUCK: return "BRAZIL_LIFEGUARD_DUCK";
+                case DuckType.BRAZIL_PEACH_ARMY_DUCK: return "BRAZIL_PEACH_ARMY_DUCK";
+                case DuckType.BRAZIL_CARNIVAL_DUCK: return "BRAZIL_CARNIVAL_DUCK";
+                case DuckType.BRAZIL_LIFEGUARD_BOSS_DUCK: return "BRAZIL_LIFEGUARD_BOSS_DUCK";
                 case DuckType.MK_SAMUIL_GUARD: return "MK_SAMUIL_GUARD";
                 case DuckType.MK_SAMUIL_ELITE: return "MK_SAMUIL_ELITE";
                 case DuckType.MK_SAMUIL_BOSS_DUCK: return "MK_SAMUIL_BOSS_DUCK";
@@ -235,6 +247,8 @@ namespace ShooterB
                 case DuckType.FRENCH_MUSKETEER_BOSS_DUCK:
                 case DuckType.JAPANESE_SAMURAI_BOSS_DUCK:
                 case DuckType.JAPANESE_YAKUZA_BOSS_DUCK:
+                case DuckType.BRAZIL_CARNIVAL_DUCK:
+                case DuckType.BRAZIL_LIFEGUARD_BOSS_DUCK:
                 case DuckType.BRITISH_SHERLOCK_BOSS_DUCK:
                 case DuckType.EGYPT_SCARAB_BOSS_DUCK:
                     return true;
@@ -253,6 +267,7 @@ namespace ShooterB
                 case DuckType.FRENCH_MUSKETEER_BOSS_DUCK:
                 case DuckType.JAPANESE_SAMURAI_BOSS_DUCK:
                 case DuckType.JAPANESE_YAKUZA_BOSS_DUCK:
+                case DuckType.BRAZIL_LIFEGUARD_BOSS_DUCK:
                 case DuckType.BRITISH_SHERLOCK_BOSS_DUCK:
                 case DuckType.EGYPT_SCARAB_BOSS_DUCK:
                     return true;
@@ -366,6 +381,10 @@ namespace ShooterB
             public const int JAPANESE_TANUKI_DUCK = 4;
             public const int JAPANESE_YAKUZA_BOSS_DUCK = 8;
             public const int BRAZIL_FOOTBALLER_DUCK = 4;
+            public const int BRAZIL_LIFEGUARD_DUCK = 3;
+            public const int BRAZIL_PEACH_ARMY_DUCK = 4;
+            public const int BRAZIL_CARNIVAL_DUCK = 6;
+            public const int BRAZIL_LIFEGUARD_BOSS_DUCK = 8;
             public const int MK_SAMUIL_GUARD = 1;
             public const int MK_SAMUIL_ELITE = 1;
             public const int MK_SAMUIL_BOSS_DUCK = 8;
@@ -416,6 +435,10 @@ namespace ShooterB
                     case DuckType.JAPANESE_TANUKI_DUCK: return JAPANESE_TANUKI_DUCK;
                     case DuckType.JAPANESE_YAKUZA_BOSS_DUCK: return JAPANESE_YAKUZA_BOSS_DUCK;
                     case DuckType.BRAZIL_FOOTBALLER_DUCK: return BRAZIL_FOOTBALLER_DUCK;
+                    case DuckType.BRAZIL_LIFEGUARD_DUCK: return BRAZIL_LIFEGUARD_DUCK;
+                    case DuckType.BRAZIL_PEACH_ARMY_DUCK: return BRAZIL_PEACH_ARMY_DUCK;
+                    case DuckType.BRAZIL_CARNIVAL_DUCK: return BRAZIL_CARNIVAL_DUCK;
+                    case DuckType.BRAZIL_LIFEGUARD_BOSS_DUCK: return BRAZIL_LIFEGUARD_BOSS_DUCK;
                     case DuckType.MK_SAMUIL_GUARD: return MK_SAMUIL_GUARD;
                     case DuckType.MK_SAMUIL_ELITE: return MK_SAMUIL_ELITE;
                     case DuckType.MK_SAMUIL_BOSS_DUCK: return MK_SAMUIL_BOSS_DUCK;
@@ -435,6 +458,7 @@ namespace ShooterB
             public const int JAPANESE_YAKUZA_BOSS_DUCK = 8;
             public const int BRITISH_SHERLOCK_BOSS_DUCK = 8;
             public const int EGYPT_SCARAB_BOSS_DUCK = 8;
+            public const int BRAZIL_LIFEGUARD_BOSS_DUCK = 8;
 
             public static int GetMaxHealth(DuckType type)
             {
@@ -448,6 +472,7 @@ namespace ShooterB
                     case DuckType.JAPANESE_YAKUZA_BOSS_DUCK: return JAPANESE_YAKUZA_BOSS_DUCK;
                     case DuckType.BRITISH_SHERLOCK_BOSS_DUCK: return BRITISH_SHERLOCK_BOSS_DUCK;
                     case DuckType.EGYPT_SCARAB_BOSS_DUCK: return EGYPT_SCARAB_BOSS_DUCK;
+                    case DuckType.BRAZIL_LIFEGUARD_BOSS_DUCK: return BRAZIL_LIFEGUARD_BOSS_DUCK;
                     default: return DEFAULT;
                 }
             }
