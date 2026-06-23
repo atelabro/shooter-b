@@ -73,6 +73,7 @@ namespace ShooterB
             LoadSelectedWeapon();
             _ = AchievementManager.Instance;
             _ = DailyAwardsManager.Instance;
+            _ = DuckTrophyManager.Instance;
             _ = AudioSettingsManager.Instance;
             _ = MusicManager.Instance;
             _ = UIClickSoundManager.Instance;

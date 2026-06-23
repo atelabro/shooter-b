@@ -1,0 +1,209 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15e08753cb3d4cbda61528bd978de109, type: 3}
+  m_Name: DuckTrophyCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterB.DuckTrophyCatalog
+  frameLibrary: {fileID: 11400000, guid: 8dfe14656d9ce4151a932b38cafdcce5, type: 2}
+  partLibrary: {fileID: 11400000, guid: e7f57abdb72ed47d392e7907f408c5af, type: 2}
+  entries:
+  - duckType: 5
+    city: 0
+    trophyClass: 0
+    sortOrder: 10
+  - duckType: 6
+    city: 0
+    trophyClass: 0
+    sortOrder: 20
+  - duckType: 22
+    city: 0
+    trophyClass: 0
+    sortOrder: 30
+  - duckType: 7
+    city: 0
+    trophyClass: 1
+    sortOrder: 40
+  - duckType: 23
+    city: 0
+    trophyClass: 1
+    sortOrder: 50
+  - duckType: 24
+    city: 0
+    trophyClass: 2
+    sortOrder: 60
+  - duckType: 9
+    city: 1
+    trophyClass: 0
+    sortOrder: 10
+  - duckType: 10
+    city: 1
+    trophyClass: 0
+    sortOrder: 20
+  - duckType: 8
+    city: 1
+    trophyClass: 1
+    sortOrder: 30
+  - duckType: 21
+    city: 1
+    trophyClass: 1
+    sortOrder: 40
+  - duckType: 25
+    city: 1
+    trophyClass: 2
+    sortOrder: 50
+  - duckType: 11
+    city: 2
+    trophyClass: 0
+    sortOrder: 10
+  - duckType: 12
+    city: 2
+    trophyClass: 0
+    sortOrder: 20
+  - duckType: 13
+    city: 2
+    trophyClass: 1
+    sortOrder: 30
+  - duckType: 27
+    city: 2
+    trophyClass: 2
+    sortOrder: 40
+  - duckType: 14
+    city: 3
+    trophyClass: 0
+    sortOrder: 10
+  - duckType: 15
+    city: 3
+    trophyClass: 0
+    sortOrder: 20
+  - duckType: 16
+    city: 3
+    trophyClass: 0
+    sortOrder: 30
+  - duckType: 28
+    city: 3
+    trophyClass: 1
+    sortOrder: 40
+  - duckType: 18
+    city: 3
+    trophyClass: 2
+    sortOrder: 50
+  - duckType: 31
+    city: 4
+    trophyClass: 0
+    sortOrder: 10
+  - duckType: 32
+    city: 4
+    trophyClass: 0
+    sortOrder: 20
+  - duckType: 33
+    city: 4
+    trophyClass: 0
+    sortOrder: 30
+  - duckType: 34
+    city: 4
+    trophyClass: 1
+    sortOrder: 40
+  - duckType: 29
+    city: 4
+    trophyClass: 1
+    sortOrder: 50
+  - duckType: 30
+    city: 4
+    trophyClass: 2
+    sortOrder: 60
+  - duckType: 19
+    city: 5
+    trophyClass: 0
+    sortOrder: 10
+  - duckType: 20
+    city: 5
+    trophyClass: 0
+    sortOrder: 20
+  - duckType: 17
+    city: 5
+    trophyClass: 1
+    sortOrder: 30
+  - duckType: 26
+    city: 5
+    trophyClass: 2
+    sortOrder: 40
+  - duckType: 35
+    city: 6
+    trophyClass: 0
+    sortOrder: 10
+  - duckType: 36
+    city: 6
+    trophyClass: 0
+    sortOrder: 20
+  - duckType: 38
+    city: 6
+    trophyClass: 0
+    sortOrder: 30
+  - duckType: 37
+    city: 6
+    trophyClass: 1
+    sortOrder: 40
+  - duckType: 39
+    city: 6
+    trophyClass: 1
+    sortOrder: 50
+  - duckType: 40
+    city: 6
+    trophyClass: 2
+    sortOrder: 60
+  - duckType: 19
+    city: 7
+    trophyClass: 0
+    sortOrder: 10
+  - duckType: 20
+    city: 7
+    trophyClass: 0
+    sortOrder: 20
+  - duckType: 41
+    city: 7
+    trophyClass: 0
+    sortOrder: 30
+  - duckType: 42
+    city: 7
+    trophyClass: 0
+    sortOrder: 40
+  - duckType: 17
+    city: 7
+    trophyClass: 1
+    sortOrder: 50
+  - duckType: 43
+    city: 7
+    trophyClass: 1
+    sortOrder: 60
+  - duckType: 44
+    city: 7
+    trophyClass: 2
+    sortOrder: 70
+  - duckType: 45
+    city: 8
+    trophyClass: 0
+    sortOrder: 10
+  - duckType: 46
+    city: 8
+    trophyClass: 0
+    sortOrder: 20
+  - duckType: 47
+    city: 8
+    trophyClass: 0
+    sortOrder: 30
+  - duckType: 48
+    city: 8
+    trophyClass: 1
+    sortOrder: 40
+  - duckType: 49
+    city: 8
+    trophyClass: 2
+    sortOrder: 50

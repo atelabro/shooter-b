@@ -115,7 +115,7 @@ MonoBehaviour:
       speedMultiplier: 1.1
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 34
+    - duckType: 29
       delay: 1.5
       healthOverride: 0
       startLane: 5
@@ -514,7 +514,7 @@ MonoBehaviour:
       speedMultiplier: 1.18
       sizeMultiplier: 0
       patternRef: {fileID: 0}
-    - duckType: 34
+    - duckType: 29
       delay: 1.5
       healthOverride: 0
       startLane: 5
@@ -543,7 +543,7 @@ MonoBehaviour:
       speedMultiplier: 1
       sizeMultiplier: 0
       patternRef: {fileID: 11400000, guid: 3ada0a16951124811962ecb05570ff49, type: 2}
-    - duckType: 34
+    - duckType: 29
       delay: 1.5
       healthOverride: 2
       startLane: 0

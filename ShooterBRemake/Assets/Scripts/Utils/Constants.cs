@@ -241,6 +241,7 @@ namespace ShooterB
                 case DuckType.JAPANESE_SAMURAI:
                 case DuckType.EGYPT_ANUBIS:
                 case DuckType.EGYPT_SCARAB:
+                case DuckType.USA_ADMIRAL:
                 case DuckType.MK_SAMUIL_BOSS_DUCK:
                 case DuckType.USA_BOSS_DUCK:
                 case DuckType.USA_ADMIRAL_BOSS_DUCK:

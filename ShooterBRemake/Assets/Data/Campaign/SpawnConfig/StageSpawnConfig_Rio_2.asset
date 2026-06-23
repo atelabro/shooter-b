@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterB.StageSpawnConfig
   spawnSequence: []
   waves:
-  - showAnnouncement: 0
+  - showAnnouncement: 1
     announcementDuration: 3
+    englishWaveLabelFormat: OMG, Peach Army is in the favelas!!
+    macedonianWaveLabelFormat: "\u041E\u041C\u0413 \u043F\u0438\u0447 \u0430\u0440\u043C\u0438\u0458\u0430\u0442\u0430 \u0434\u043E\u0458\u0434\u0435 \u0432\u043E \u0424\u0430\u0432\u0435\u043B\u0438\u0442\u0435!!"
     spawnSequence:
     - duckType: 47
       delay: 0.00

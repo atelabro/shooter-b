@@ -31,6 +31,7 @@ namespace ShooterB
 
         public event Action OnAllDucksResolved;
         public event Action<int, float, string> OnWaveStarting; // waveNumber (1-based), displayDuration, optional format override
+        public event Action<Constants.DuckType, StageConfig, CityConfig> OnCampaignDuckSpawned;
 
         private bool isSpawning = false;
         private int activeDuckCount = 0;
@@ -339,6 +340,10 @@ namespace ShooterB
             }
 
             GameManager.Instance.BirdCreated();
+            OnCampaignDuckSpawned?.Invoke(
+                entry.duckType,
+                CampaignProgressManager.Instance.ActiveStageConfig,
+                CampaignProgressManager.Instance.ActiveCityConfig);
             activeDuckCount++;
         }
 

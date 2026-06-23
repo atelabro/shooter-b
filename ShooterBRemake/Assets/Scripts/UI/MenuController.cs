@@ -45,6 +45,7 @@ namespace ShooterB
         public CityConfig[] devPanelCampaignCities;
 
         private DevPanelController devPanelController;
+        private DuckTrophyManager duckTrophyManager;
         private int titleTapCount;
         private float lastTitleTapTime;
 
@@ -70,6 +71,9 @@ namespace ShooterB
 
             LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
             InitializeLanguageDropdown();
+            duckTrophyManager = DuckTrophyManager.Instance;
+            duckTrophyManager.OnClaimableBadgeChanged += HandleTrophyBadgeChanged;
+            duckTrophyManager.OnCityRewardClaimed += HandleTrophyCityRewardClaimed;
             UpdateHighScore();
             RefreshLocalizedTexts();
             RefreshAchievementsBadge();
@@ -80,6 +84,12 @@ namespace ShooterB
         {
             if (LocalizationManager.HasInstance)
                 LocalizationManager.Instance.OnLanguageChanged -= HandleLanguageChanged;
+
+            if (duckTrophyManager != null)
+            {
+                duckTrophyManager.OnClaimableBadgeChanged -= HandleTrophyBadgeChanged;
+                duckTrophyManager.OnCityRewardClaimed -= HandleTrophyCityRewardClaimed;
+            }
         }
 
         private void OnEnable()
@@ -312,9 +322,11 @@ namespace ShooterB
 
             Image badgeImage = achievementsBadgeRoot.GetComponent<Image>();
             int unfinishedCount = DailyAwardsManager.Instance.GetUnfinishedTodayCount();
+            int trophyClaimableCount = DuckTrophyManager.Instance.GetClaimableRewardCount();
             bool hasPendingDailyObjectives = unfinishedCount > 0;
-            bool hasPendingAdReward = !hasPendingDailyObjectives && DailyAwardsManager.Instance.CanClaimDailyAdWatchBonus();
-            bool shouldShow = hasPendingDailyObjectives || hasPendingAdReward;
+            bool hasPendingTrophyReward = !hasPendingDailyObjectives && trophyClaimableCount > 0;
+            bool hasPendingAdReward = !hasPendingDailyObjectives && !hasPendingTrophyReward && DailyAwardsManager.Instance.CanClaimDailyAdWatchBonus();
+            bool shouldShow = hasPendingDailyObjectives || hasPendingTrophyReward || hasPendingAdReward;
 
             achievementsBadgeRoot.gameObject.SetActive(shouldShow);
             if (!shouldShow)
@@ -323,9 +335,22 @@ namespace ShooterB
             if (badgeImage != null)
                 badgeImage.color = hasPendingDailyObjectives ? achievementsBadgeColor : achievementsBadgeAdRewardColor;
 
-            achievementsBadgeText.text = hasPendingDailyObjectives
-                ? (unfinishedCount > 99 ? "99+" : unfinishedCount.ToString())
-                : "1";
+            if (hasPendingDailyObjectives)
+                achievementsBadgeText.text = unfinishedCount > 99 ? "99+" : unfinishedCount.ToString();
+            else if (hasPendingTrophyReward)
+                achievementsBadgeText.text = trophyClaimableCount > 99 ? "99+" : trophyClaimableCount.ToString();
+            else
+                achievementsBadgeText.text = "1";
+        }
+
+        private void HandleTrophyBadgeChanged()
+        {
+            RefreshAchievementsBadge();
+        }
+
+        private void HandleTrophyCityRewardClaimed(DuckTrophyCity city)
+        {
+            RefreshAchievementsBadge();
         }
 
         private void EnsureAchievementsBadgeReferences()
