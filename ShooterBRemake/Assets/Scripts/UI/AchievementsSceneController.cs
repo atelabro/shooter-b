@@ -55,6 +55,7 @@ namespace ShooterB
         private const string TrophyGeneratedPrefix = "Trophy_";
         private Coroutine dailyAdStatusCoroutine;
         private Coroutine trophyRewardPopupCoroutine;
+        private bool suppressNextTrophyClaimRebuild;
 
         private void Start()
         {
@@ -401,7 +402,7 @@ namespace ShooterB
                     claimImage.color = activeTabColor;
             }
 
-            claimButton.onClick.AddListener(() => ClaimTrophyCityReward(city));
+            claimButton.onClick.AddListener(() => ClaimTrophyCityReward(city, claimButton));
 
             VerticalLayoutGroup list = CreateTrophyList(section.transform);
             IReadOnlyList<DuckTrophyManager.DuckTrophyState> states = duckTrophyManager.GetDuckStatesForCity(city);
@@ -904,14 +905,36 @@ namespace ShooterB
             return fallbackSprite;
         }
 
-        private void ClaimTrophyCityReward(DuckTrophyCity city)
+        private void ClaimTrophyCityReward(DuckTrophyCity city, Button claimButton)
         {
-            if (duckTrophyManager == null || !duckTrophyManager.TryClaimCityReward(city))
+            if (duckTrophyManager == null)
                 return;
 
-            BuildTrophyRows();
+            suppressNextTrophyClaimRebuild = true;
+            bool claimed = duckTrophyManager.TryClaimCityReward(city);
+            suppressNextTrophyClaimRebuild = false;
+            if (!claimed)
+                return;
+
+            ApplyTrophyClaimedButtonState(claimButton);
             RefreshTrophyBadge();
             ShowTrophyRewardPopup(city);
+        }
+
+        private void ApplyTrophyClaimedButtonState(Button claimButton)
+        {
+            if (claimButton == null)
+                return;
+
+            claimButton.interactable = false;
+
+            TextMeshProUGUI claimText = claimButton.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (claimText != null)
+                claimText.text = LocalizationManager.Instance.Get("trophies.reward.claimed", "CLAIMED");
+
+            Image claimImage = claimButton.GetComponent<Image>();
+            if (claimImage != null)
+                claimImage.color = inactiveTabColor;
         }
 
         private void ShowTrophyRewardPopup(DuckTrophyCity city)
@@ -1128,6 +1151,12 @@ namespace ShooterB
 
         private void HandleDuckTrophyCityRewardClaimed(DuckTrophyCity city)
         {
+            if (suppressNextTrophyClaimRebuild)
+            {
+                RefreshTrophyBadge();
+                return;
+            }
+
             BuildTrophyRows();
             RefreshTrophyBadge();
         }
