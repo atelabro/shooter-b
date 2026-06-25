@@ -61,6 +61,7 @@ namespace ShooterB
         private Sprite lastAmmoSprite = null;
         private bool hasLoggedMissingReloadReferences = false;
         private RewardPopupQueueController rewardPopupQueue;
+        private ThunderPowerController thunderPowerController;
 
         private void Start()
         {
@@ -89,6 +90,7 @@ namespace ShooterB
             InitializeReloadFeedback();
 
             BuildAmmoIcons();
+            EnsureThunderPowerController();
             SubscribeToEvents();
             UpdateAllUI();
 
@@ -650,6 +652,18 @@ namespace ShooterB
             rewardPopupQueue = GetComponent<RewardPopupQueueController>();
             if (rewardPopupQueue == null)
                 rewardPopupQueue = gameObject.AddComponent<RewardPopupQueueController>();
+        }
+
+        private void EnsureThunderPowerController()
+        {
+            if (thunderPowerController != null)
+                return;
+
+            Canvas canvas = GetComponentInParent<Canvas>();
+            Transform parent = canvas != null ? canvas.transform : transform;
+            GameObject controlObject = new GameObject("ZeusThunderPower", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(ThunderPowerController));
+            controlObject.transform.SetParent(parent, false);
+            thunderPowerController = controlObject.GetComponent<ThunderPowerController>();
         }
 
         private void PositionPopupAtWorldPoint(GameObject popup, Transform parent, Vector3 worldPosition)

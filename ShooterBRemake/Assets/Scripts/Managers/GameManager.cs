@@ -33,6 +33,7 @@ namespace ShooterB
         public long HighScore { get; private set; }
         public int Lives { get; private set; }
         public int Coins { get; private set; }
+        public int ZeusThunderCount { get; private set; }
         public Constants.GameMode CurrentGameMode { get; private set; }
         public Constants.WeaponType SelectedWeaponType { get; private set; }
         public bool IsPaused { get; private set; }
@@ -45,6 +46,7 @@ namespace ShooterB
         public event Action<int> OnLivesChanged;
         public event Action<int> OnDifficultyChanged;
         public event Action<int> OnCoinsChanged;
+        public event Action<int> OnZeusThunderCountChanged;
         public event Action<bool> OnPauseStateChanged;
         public event Action OnGameOver;
         public event Action<Constants.MultiKillType, int, Vector3> OnComboKill;
@@ -69,6 +71,7 @@ namespace ShooterB
             instance = this;
             DontDestroyOnLoad(gameObject);
             LoadCoins();
+            LoadZeusThunderCount();
             LoadUnlockedWeapons();
             LoadSelectedWeapon();
             _ = AchievementManager.Instance;
@@ -378,6 +381,30 @@ namespace ShooterB
             return true;
         }
 
+        public bool BuyZeusThunderCharge()
+        {
+            if (!TrySpendCoins(Constants.ZEUS_THUNDER_COST))
+                return false;
+
+            ZeusThunderCount++;
+            SaveZeusThunderCount();
+            OnZeusThunderCountChanged?.Invoke(ZeusThunderCount);
+            GameLog.Log($"[GameManager] Zeus Thunder bought. Owned: {ZeusThunderCount}");
+            return true;
+        }
+
+        public bool TryUseZeusThunderCharge()
+        {
+            if (ZeusThunderCount <= 0)
+                return false;
+
+            ZeusThunderCount--;
+            SaveZeusThunderCount();
+            OnZeusThunderCountChanged?.Invoke(ZeusThunderCount);
+            GameLog.Log($"[GameManager] Zeus Thunder used. Remaining: {ZeusThunderCount}");
+            return true;
+        }
+
         public void ResetCoins()
         {
             if (Coins == 0)
@@ -410,13 +437,16 @@ namespace ShooterB
         public void ResetAllProgressForTesting()
         {
             PlayerPrefs.DeleteKey(Constants.PREFS_COINS);
+            PlayerPrefs.DeleteKey(Constants.PREFS_ZEUS_THUNDER_COUNT);
             PlayerPrefs.DeleteKey(Constants.PREFS_SELECTED_WEAPON);
             PlayerPrefs.DeleteKey(Constants.PREFS_UNLOCKED_WEAPONS);
 
             Coins = 0;
+            ZeusThunderCount = 0;
             LoadUnlockedWeapons();
             LoadSelectedWeapon();
             OnCoinsChanged?.Invoke(Coins);
+            OnZeusThunderCountChanged?.Invoke(ZeusThunderCount);
             OnSelectedWeaponChanged?.Invoke(SelectedWeaponType);
             GameLog.Log("[GameManager] Core testing progress reset.");
         }
@@ -509,6 +539,17 @@ namespace ShooterB
         private void LoadCoins()
         {
             Coins = Mathf.Max(0, PlayerPrefs.GetInt(Constants.PREFS_COINS, 0));
+        }
+
+        private void LoadZeusThunderCount()
+        {
+            ZeusThunderCount = Mathf.Max(0, PlayerPrefs.GetInt(Constants.PREFS_ZEUS_THUNDER_COUNT, 0));
+        }
+
+        private void SaveZeusThunderCount()
+        {
+            PlayerPrefs.SetInt(Constants.PREFS_ZEUS_THUNDER_COUNT, Mathf.Max(0, ZeusThunderCount));
+            PlayerPrefs.Save();
         }
 
         private void LoadUnlockedWeapons()

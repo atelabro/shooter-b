@@ -43,33 +43,36 @@ namespace ShooterB
             if (descriptionText != null)
                 descriptionText.text = model.description;
             if (fireTypeText != null)
-                fireTypeText.text = string.Format(
-                    LocalizationManager.Instance.Get("armory.card.fire_format", "Fire: {0}"),
-                    model.fireTypeLabel);
+                fireTypeText.text = model.isConsumable
+                    ? string.Format(LocalizationManager.Instance.Get("armory.card.owned_format", "Owned: {0}"), model.ownedCount)
+                    : string.Format(
+                        LocalizationManager.Instance.Get("armory.card.fire_format", "Fire: {0}"),
+                        model.fireTypeLabel);
             if (fireRateText != null)
-                fireRateText.text = string.Format(
-                    LocalizationManager.Instance.Get("armory.card.rate_format", "Rate: {0}"),
-                    model.fireRateLabel);
+                fireRateText.text = model.isConsumable
+                    ? string.Format(LocalizationManager.Instance.Get("armory.card.damage_format", "Damage: {0}"), Constants.ZEUS_THUNDER_DAMAGE)
+                    : string.Format(
+                        LocalizationManager.Instance.Get("armory.card.rate_format", "Rate: {0}"),
+                        model.fireRateLabel);
             if (reloadText != null)
-                reloadText.text = string.Format(
-                    LocalizationManager.Instance.Get("armory.card.reload_format", "Reload: {0}"),
-                    model.reloadLabel);
+                reloadText.gameObject.SetActive(!model.isConsumable);
             if (travelSpeedText != null)
-                travelSpeedText.text = string.Format(
-                    LocalizationManager.Instance.Get("armory.card.travel_format", "Travel: {0}"),
-                    model.travelSpeedLabel);
+                travelSpeedText.gameObject.SetActive(!model.isConsumable);
             if (chainLightningText != null)
-                chainLightningText.text = string.Format(
-                    LocalizationManager.Instance.Get("armory.card.bullets_format", "Bullets: {0}"),
-                    model.bulletsLabel);
+                chainLightningText.gameObject.SetActive(!model.isConsumable);
             if (aoeText != null)
-                aoeText.text = string.Format(
-                    LocalizationManager.Instance.Get("armory.card.aoe_format", "AoE: {0}"),
-                    model.aoeLabel);
+                aoeText.gameObject.SetActive(!model.isConsumable);
 
             if (costText != null)
             {
-                if (state.isLocked)
+                if (model.isConsumable)
+                {
+                    string coinsSuffix = LocalizationManager.Instance.Get("common.coins_suffix", "COINS");
+                    string buyFormat = LocalizationManager.Instance.Get("armory.card.buy_cost_format", "Buy: {0} {1}");
+                    costText.text = string.Format(buyFormat, model.cost, coinsSuffix);
+                    costText.color = state.canAfford ? canAffordCostColor : cannotAffordCostColor;
+                }
+                else if (state.isLocked)
                 {
                     string coinsSuffix = LocalizationManager.Instance.Get("common.coins_suffix", "COINS");
                     string costFormat = LocalizationManager.Instance.Get("armory.card.locked_cost_format", "{0} {1}");
@@ -100,11 +103,11 @@ namespace ShooterB
             }
 
             if (selectedBadge != null)
-                selectedBadge.SetActive(state.isSelected && !state.isLocked);
+                selectedBadge.SetActive(!model.isConsumable && state.isSelected && !state.isLocked);
             if (lockedOverlay != null)
-                lockedOverlay.SetActive(state.isLocked);
+                lockedOverlay.SetActive(!model.isConsumable && state.isLocked);
             if (unlockButton != null)
-                unlockButton.gameObject.SetActive(state.isLocked);
+                unlockButton.gameObject.SetActive(model.isConsumable || state.isLocked);
 
             SetOptionalLocalizedChildText(
                 selectedBadge,
@@ -116,7 +119,9 @@ namespace ShooterB
                 "LOCKED");
             SetButtonLabel(
                 unlockButton,
-                LocalizationManager.Instance.Get("armory.card.unlock_action", "View Unlock"));
+                model.isConsumable
+                    ? LocalizationManager.Instance.Get("armory.card.buy_action", "Buy")
+                    : LocalizationManager.Instance.Get("armory.card.unlock_action", "View Unlock"));
         }
 
         private static void SetOptionalLocalizedChildText(GameObject root, string key, string fallback)

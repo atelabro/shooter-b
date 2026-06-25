@@ -39,6 +39,7 @@ namespace ShooterB
         private int totalSpawnedCount = 0;
         private int[] spawnCountsByType;
         private int activeDuckCount = 0;
+        public int ActiveDuckCount => activeDuckCount;
 
         private void Awake()
         {
@@ -288,6 +289,26 @@ namespace ShooterB
             duckPool.Enqueue(duck);
             activeDuckCount = Mathf.Max(0, activeDuckCount - 1);
             GameLog.Log($"Duck returned to pool. Pool size: {duckPool.Count}");
+        }
+
+        public int DamageAllActiveDucks(int damageAmount, Constants.WeaponType weaponType)
+        {
+            if (damageAmount <= 0)
+                return 0;
+
+            int damagedCount = 0;
+            foreach (Transform child in transform)
+            {
+                if (child == null || !child.gameObject.activeSelf)
+                    continue;
+
+                Duck duck = child.GetComponent<Duck>();
+                if (duck != null && duck.ReceiveDamage(damageAmount, weaponType))
+                    damagedCount++;
+            }
+
+            GameLog.Log($"[DuckSpawner] Zeus thunder damaged {damagedCount} active ducks for {damageAmount}.");
+            return damagedCount;
         }
 
         private Constants.DuckType SelectDuckType()

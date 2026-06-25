@@ -36,6 +36,8 @@ namespace ShooterB
         private readonly Dictionary<Constants.WeaponType, WeaponCardViewModel> modelsByWeapon = new Dictionary<Constants.WeaponType, WeaponCardViewModel>();
         private readonly HashSet<Constants.WeaponType> missingIconWarnings = new HashSet<Constants.WeaponType>();
 
+        private WeaponCardItemUI zeusThunderCard;
+        private WeaponCardViewModel zeusThunderModel;
         private UnlockWeaponModalUI unlockModal;
         private Constants.WeaponType pendingModalWeapon;
         private int CurrentCoins => GameManager.Instance.Coins;
@@ -43,13 +45,17 @@ namespace ShooterB
         private void OnEnable()
         {
             GameManager.Instance.OnCoinsChanged += HandleCoinsChanged;
+            GameManager.Instance.OnZeusThunderCountChanged += HandleZeusThunderCountChanged;
         }
 
         private void OnDisable()
         {
             GameManager gameManager = FindObjectOfType<GameManager>();
             if (gameManager != null)
+            {
                 gameManager.OnCoinsChanged -= HandleCoinsChanged;
+                gameManager.OnZeusThunderCountChanged -= HandleZeusThunderCountChanged;
+            }
         }
 
         private void Start()
@@ -292,6 +298,11 @@ namespace ShooterB
                 WeaponCardItemUI card = CreateCardUI(model);
                 cardsByWeapon[type] = card;
             }
+
+            zeusThunderModel = ArmoryUIDataSource.BuildZeusThunderModel(GetWeaponIcon(Constants.WeaponType.TeslaGun));
+            zeusThunderCard = CreateCardUI(zeusThunderModel);
+            if (zeusThunderCard != null)
+                zeusThunderCard.gameObject.name = "ZeusThunderCard";
         }
 
         private WeaponCardItemUI CreateCardUI(WeaponCardViewModel model)
@@ -325,13 +336,13 @@ namespace ShooterB
             if (rowButton != null)
             {
                 rowButton.onClick.RemoveAllListeners();
-                rowButton.onClick.AddListener(() => OnCardPressed(model.weaponType));
+                rowButton.onClick.AddListener(() => OnCardPressed(model));
             }
 
             if (itemUI.unlockButton != null)
             {
                 itemUI.unlockButton.onClick.RemoveAllListeners();
-                itemUI.unlockButton.onClick.AddListener(() => OnCardPressed(model.weaponType));
+                itemUI.unlockButton.onClick.AddListener(() => OnCardPressed(model));
             }
 
             return itemUI;
@@ -396,6 +407,22 @@ namespace ShooterB
 
                 card.Bind(modelsByWeapon[type], visualState);
             }
+
+            RefreshZeusThunderCard();
+        }
+
+        private void OnCardPressed(WeaponCardViewModel model)
+        {
+            if (model == null)
+                return;
+
+            if (model.isConsumable)
+            {
+                OnZeusThunderPressed();
+                return;
+            }
+
+            OnCardPressed(model.weaponType);
         }
 
         private void OnCardPressed(Constants.WeaponType weaponType)
@@ -450,6 +477,11 @@ namespace ShooterB
             RefreshAllCardStates();
         }
 
+        private void HandleZeusThunderCountChanged(int count)
+        {
+            RefreshZeusThunderCard();
+        }
+
         private void HandleLanguageChanged(LocalizationManager.Language language)
         {
             RefreshLocalizedStaticTexts();
@@ -480,6 +512,30 @@ namespace ShooterB
                     GetWeaponPrefabByType(weaponType),
                     GetWeaponIcon(weaponType));
             }
+
+            zeusThunderModel = ArmoryUIDataSource.BuildZeusThunderModel(GetWeaponIcon(Constants.WeaponType.TeslaGun));
+        }
+
+        private void OnZeusThunderPressed()
+        {
+            if (!GameManager.Instance.BuyZeusThunderCharge())
+                return;
+
+            RefreshZeusThunderCard();
+        }
+
+        private void RefreshZeusThunderCard()
+        {
+            if (zeusThunderCard == null)
+                return;
+
+            zeusThunderModel = ArmoryUIDataSource.BuildZeusThunderModel(GetWeaponIcon(Constants.WeaponType.TeslaGun));
+            zeusThunderCard.Bind(zeusThunderModel, new WeaponCardVisualState
+            {
+                isSelected = false,
+                isLocked = false,
+                canAfford = CurrentCoins >= Constants.ZEUS_THUNDER_COST
+            });
         }
 
         private void RefreshModalIfVisible()

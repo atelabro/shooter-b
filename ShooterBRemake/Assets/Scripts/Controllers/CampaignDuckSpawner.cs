@@ -40,6 +40,7 @@ namespace ShooterB
         private int nextSpawnSortingOrder;
         private bool skipCurrentWaveRequested = false;
         private bool isWaveInProgress = false;
+        public int ActiveDuckCount => activeDuckCount;
 
         private void Awake()
         {
@@ -364,6 +365,26 @@ namespace ShooterB
             duck.SetActive(false);
             duckPool.Enqueue(duck);
             activeDuckCount = Mathf.Max(0, activeDuckCount - 1);
+        }
+
+        public int DamageAllActiveDucks(int damageAmount, Constants.WeaponType weaponType)
+        {
+            if (damageAmount <= 0)
+                return 0;
+
+            int damagedCount = 0;
+            foreach (Transform child in transform)
+            {
+                if (child == null || !child.gameObject.activeSelf)
+                    continue;
+
+                Duck duck = child.GetComponent<Duck>();
+                if (duck != null && duck.ReceiveDamage(damageAmount, weaponType))
+                    damagedCount++;
+            }
+
+            GameLog.Log($"[CampaignDuckSpawner] Zeus thunder damaged {damagedCount} active ducks for {damageAmount}.");
+            return damagedCount;
         }
 
         private GameObject GetDuckFromPool()
