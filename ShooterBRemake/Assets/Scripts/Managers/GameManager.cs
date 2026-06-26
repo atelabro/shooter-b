@@ -34,6 +34,7 @@ namespace ShooterB
         public int Lives { get; private set; }
         public int Coins { get; private set; }
         public int ZeusThunderCount { get; private set; }
+        public int ChronosLockCount { get; private set; }
         public Constants.GameMode CurrentGameMode { get; private set; }
         public Constants.WeaponType SelectedWeaponType { get; private set; }
         public bool IsPaused { get; private set; }
@@ -47,6 +48,7 @@ namespace ShooterB
         public event Action<int> OnDifficultyChanged;
         public event Action<int> OnCoinsChanged;
         public event Action<int> OnZeusThunderCountChanged;
+        public event Action<int> OnChronosLockCountChanged;
         public event Action<bool> OnPauseStateChanged;
         public event Action OnGameOver;
         public event Action<Constants.MultiKillType, int, Vector3> OnComboKill;
@@ -72,6 +74,7 @@ namespace ShooterB
             DontDestroyOnLoad(gameObject);
             LoadCoins();
             LoadZeusThunderCount();
+            LoadChronosLockCount();
             LoadUnlockedWeapons();
             LoadSelectedWeapon();
             _ = AchievementManager.Instance;
@@ -405,6 +408,30 @@ namespace ShooterB
             return true;
         }
 
+        public bool BuyChronosLockCharge()
+        {
+            if (!TrySpendCoins(Constants.CHRONOS_LOCK_COST))
+                return false;
+
+            ChronosLockCount++;
+            SaveChronosLockCount();
+            OnChronosLockCountChanged?.Invoke(ChronosLockCount);
+            GameLog.Log($"[GameManager] Chronos Lock bought. Owned: {ChronosLockCount}");
+            return true;
+        }
+
+        public bool TryUseChronosLockCharge()
+        {
+            if (ChronosLockCount <= 0)
+                return false;
+
+            ChronosLockCount--;
+            SaveChronosLockCount();
+            OnChronosLockCountChanged?.Invoke(ChronosLockCount);
+            GameLog.Log($"[GameManager] Chronos Lock used. Remaining: {ChronosLockCount}");
+            return true;
+        }
+
         public void ResetCoins()
         {
             if (Coins == 0)
@@ -438,15 +465,18 @@ namespace ShooterB
         {
             PlayerPrefs.DeleteKey(Constants.PREFS_COINS);
             PlayerPrefs.DeleteKey(Constants.PREFS_ZEUS_THUNDER_COUNT);
+            PlayerPrefs.DeleteKey(Constants.PREFS_CHRONOS_LOCK_COUNT);
             PlayerPrefs.DeleteKey(Constants.PREFS_SELECTED_WEAPON);
             PlayerPrefs.DeleteKey(Constants.PREFS_UNLOCKED_WEAPONS);
 
             Coins = 0;
             ZeusThunderCount = 0;
+            ChronosLockCount = 0;
             LoadUnlockedWeapons();
             LoadSelectedWeapon();
             OnCoinsChanged?.Invoke(Coins);
             OnZeusThunderCountChanged?.Invoke(ZeusThunderCount);
+            OnChronosLockCountChanged?.Invoke(ChronosLockCount);
             OnSelectedWeaponChanged?.Invoke(SelectedWeaponType);
             GameLog.Log("[GameManager] Core testing progress reset.");
         }
@@ -549,6 +579,17 @@ namespace ShooterB
         private void SaveZeusThunderCount()
         {
             PlayerPrefs.SetInt(Constants.PREFS_ZEUS_THUNDER_COUNT, Mathf.Max(0, ZeusThunderCount));
+            PlayerPrefs.Save();
+        }
+
+        private void LoadChronosLockCount()
+        {
+            ChronosLockCount = Mathf.Max(0, PlayerPrefs.GetInt(Constants.PREFS_CHRONOS_LOCK_COUNT, 0));
+        }
+
+        private void SaveChronosLockCount()
+        {
+            PlayerPrefs.SetInt(Constants.PREFS_CHRONOS_LOCK_COUNT, Mathf.Max(0, ChronosLockCount));
             PlayerPrefs.Save();
         }
 

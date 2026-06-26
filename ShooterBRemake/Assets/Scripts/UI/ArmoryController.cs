@@ -9,6 +9,7 @@ namespace ShooterB
     public class ArmoryController : MonoBehaviour
     {
         private const string ZeusPowerIconResourcePath = "SuperPowers/zeus-power";
+        private const string ChronosPowerIconResourcePath = "SuperPowers/chronos-power";
 
         [Serializable]
         public class WeaponIconEntry
@@ -48,6 +49,8 @@ namespace ShooterB
 
         private SuperPowerCardItemUI zeusThunderCard;
         private SuperPowerViewModel zeusThunderModel;
+        private SuperPowerCardItemUI chronosLockCard;
+        private SuperPowerViewModel chronosLockModel;
         private UnlockWeaponModalUI unlockModal;
         private Constants.WeaponType pendingModalWeapon;
         private ArmoryTab activeTab = ArmoryTab.Weapons;
@@ -65,6 +68,7 @@ namespace ShooterB
         {
             GameManager.Instance.OnCoinsChanged += HandleCoinsChanged;
             GameManager.Instance.OnZeusThunderCountChanged += HandleZeusThunderCountChanged;
+            GameManager.Instance.OnChronosLockCountChanged += HandleChronosLockCountChanged;
         }
 
         private void OnDisable()
@@ -74,6 +78,7 @@ namespace ShooterB
             {
                 gameManager.OnCoinsChanged -= HandleCoinsChanged;
                 gameManager.OnZeusThunderCountChanged -= HandleZeusThunderCountChanged;
+                gameManager.OnChronosLockCountChanged -= HandleChronosLockCountChanged;
             }
         }
 
@@ -373,6 +378,7 @@ namespace ShooterB
             cardsByWeapon.Clear();
             modelsByWeapon.Clear();
             zeusThunderCard = null;
+            chronosLockCard = null;
 
             IReadOnlyList<Constants.WeaponType> ordered = ArmoryUIDataSource.GetOrderedWeapons();
             for (int i = 0; i < ordered.Count; i++)
@@ -385,7 +391,8 @@ namespace ShooterB
                 cardsByWeapon[type] = card;
             }
 
-            zeusThunderCard = CreateSuperPowerCardUI();
+            zeusThunderCard = CreateSuperPowerCardUI("ZeusThunderCard", OnZeusThunderPressed);
+            chronosLockCard = CreateSuperPowerCardUI("ChronosLockCard", OnChronosLockPressed);
         }
 
         private WeaponCardItemUI CreateCardUI(WeaponCardViewModel model)
@@ -431,13 +438,13 @@ namespace ShooterB
             return itemUI;
         }
 
-        private SuperPowerCardItemUI CreateSuperPowerCardUI()
+        private SuperPowerCardItemUI CreateSuperPowerCardUI(string cardName, UnityEngine.Events.UnityAction onPressed)
         {
             if (superPowerListContent == null || superPowerCardPrefab == null)
                 return null;
 
             GameObject rowObj = Instantiate(superPowerCardPrefab, superPowerListContent);
-            rowObj.name = "ZeusThunderCard";
+            rowObj.name = cardName;
             SuperPowerCardItemUI itemUI = rowObj.GetComponent<SuperPowerCardItemUI>();
             if (itemUI == null)
             {
@@ -449,14 +456,14 @@ namespace ShooterB
             if (itemUI.buyButton != null)
             {
                 itemUI.buyButton.onClick.RemoveAllListeners();
-                itemUI.buyButton.onClick.AddListener(OnZeusThunderPressed);
+                itemUI.buyButton.onClick.AddListener(onPressed);
             }
 
             Button rowButton = rowObj.GetComponent<Button>();
             if (rowButton != null)
             {
                 rowButton.onClick.RemoveAllListeners();
-                rowButton.onClick.AddListener(OnZeusThunderPressed);
+                rowButton.onClick.AddListener(onPressed);
             }
 
             return itemUI;
@@ -523,6 +530,7 @@ namespace ShooterB
             }
 
             RefreshZeusThunderCard();
+            RefreshChronosLockCard();
         }
 
         private void OnCardPressed(Constants.WeaponType weaponType)
@@ -582,6 +590,11 @@ namespace ShooterB
             RefreshZeusThunderCard();
         }
 
+        private void HandleChronosLockCountChanged(int count)
+        {
+            RefreshChronosLockCard();
+        }
+
         private void HandleLanguageChanged(LocalizationManager.Language language)
         {
             RefreshLocalizedStaticTexts();
@@ -622,6 +635,7 @@ namespace ShooterB
             }
 
             zeusThunderModel = BuildZeusThunderModel();
+            chronosLockModel = BuildChronosLockModel();
         }
 
         private void OnZeusThunderPressed()
@@ -632,6 +646,14 @@ namespace ShooterB
             RefreshZeusThunderCard();
         }
 
+        private void OnChronosLockPressed()
+        {
+            if (!GameManager.Instance.BuyChronosLockCharge())
+                return;
+
+            RefreshChronosLockCard();
+        }
+
         private void RefreshZeusThunderCard()
         {
             if (zeusThunderCard == null)
@@ -639,6 +661,15 @@ namespace ShooterB
 
             zeusThunderModel = BuildZeusThunderModel();
             zeusThunderCard.Bind(zeusThunderModel, CurrentCoins >= Constants.ZEUS_THUNDER_COST);
+        }
+
+        private void RefreshChronosLockCard()
+        {
+            if (chronosLockCard == null)
+                return;
+
+            chronosLockModel = BuildChronosLockModel();
+            chronosLockCard.Bind(chronosLockModel, CurrentCoins >= Constants.CHRONOS_LOCK_COST);
         }
 
         private SuperPowerViewModel BuildZeusThunderModel()
@@ -653,6 +684,32 @@ namespace ShooterB
                 ownedCount = GameManager.Instance.ZeusThunderCount,
                 icon = Resources.Load<Sprite>(ZeusPowerIconResourcePath) ?? GetWeaponIcon(Constants.WeaponType.TeslaGun)
             };
+        }
+
+        private SuperPowerViewModel BuildChronosLockModel()
+        {
+            return new SuperPowerViewModel
+            {
+                displayName = LocalizationManager.Instance.Get("superweapon.chronos.name", "Chronos Lock"),
+                description = LocalizationManager.Instance.Get(
+                    "superweapon.chronos.description",
+                    "Drag Chronos into battle to freeze every duck on screen for a few seconds."),
+                cost = Constants.CHRONOS_LOCK_COST,
+                ownedCount = GameManager.Instance.ChronosLockCount,
+                icon = LoadSpriteResource(ChronosPowerIconResourcePath) ??
+                    LoadSpriteResource(ZeusPowerIconResourcePath) ??
+                    GetWeaponIcon(Constants.WeaponType.TeslaGun)
+            };
+        }
+
+        private static Sprite LoadSpriteResource(string resourcePath)
+        {
+            Sprite sprite = Resources.Load<Sprite>(resourcePath);
+            if (sprite != null)
+                return sprite;
+
+            Sprite[] sprites = Resources.LoadAll<Sprite>(resourcePath);
+            return sprites != null && sprites.Length > 0 ? sprites[0] : null;
         }
 
         private void RefreshModalIfVisible()

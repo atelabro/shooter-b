@@ -311,6 +311,10 @@ namespace ShooterB
                 ["superweapon.zeus.description"] = "Drag Zeus into battle to call thunder from above and strike every duck on screen.",
                 ["superweapon.zeus.type"] = "Drag Power",
                 ["superweapon.zeus.aoe"] = "Full screen",
+                ["superweapon.chronos.name"] = "Chronos Lock",
+                ["superweapon.chronos.description"] = "Drag Chronos into battle to freeze every duck on screen for a few seconds.",
+                ["superweapon.chronos.type"] = "Drag Power",
+                ["superweapon.chronos.aoe"] = "Full screen",
 
                 ["duck.name.mk_vojvoda"] = "MK Vojvoda",
                 ["duck.name.mk_archer"] = "MK Archer",
@@ -606,6 +610,10 @@ namespace ShooterB
                 ["superweapon.zeus.description"] = "Повикај помош од Зевс, таткото на сите богови. Зевс инстантно ги удира сите патки со громови.",
                 ["superweapon.zeus.type"] = "Моќ со влечење",
                 ["superweapon.zeus.aoe"] = "Цел екран",
+                ["superweapon.chronos.name"] = "Хронос Заклучување",
+                ["superweapon.chronos.description"] = "Повикај го Хронос да ги замрзне сите патки на екранот неколку секунди.",
+                ["superweapon.chronos.type"] = "Моќ со влечење",
+                ["superweapon.chronos.aoe"] = "Цел екран",
 
                 ["duck.name.mk_vojvoda"] = "МК Војвода",
                 ["duck.name.mk_archer"] = "МК Стрелец",

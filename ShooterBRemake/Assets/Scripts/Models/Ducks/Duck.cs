@@ -91,6 +91,9 @@ namespace ShooterB
         private Vector3 hitPuffOriginalLocalScale;
         private DuckHealthBar healthBar;
         private const float ALIVE_ANIMATION_FPS = 12f;
+        private bool isFrozen;
+        private float frozenUntilTime;
+        private Color preFreezeColor = Color.white;
 
         private const float DEAD_GRAVITY = 2f;
         private const float DEAD_CLEANUP_TIME = 2f;
@@ -151,6 +154,7 @@ namespace ShooterB
             aliveFrames = typeAliveFrames;
             aliveFrameIndex = 0;
             aliveFrameTimer = 0f;
+            ClearFreezeState();
 
             if (spriteRenderer != null)
             {
@@ -389,6 +393,19 @@ namespace ShooterB
         private void FixedUpdate()
         {
             if (isDead) return;
+
+            if (isFrozen)
+            {
+                if (Time.time >= frozenUntilTime)
+                {
+                    ClearFreezeState();
+                }
+                else
+                {
+                    rb.linearVelocity = Vector2.zero;
+                    return;
+                }
+            }
 
             AnimateAliveSprite();
             if (partAnimator != null) partAnimator.Tick(Time.fixedDeltaTime);
@@ -1031,6 +1048,7 @@ namespace ShooterB
             }
 
             isDead = true;
+            ClearFreezeState();
             pendingDeathWeaponType = weaponType;
             GameManager.Instance.BirdKilled(duckType, weaponType);
 
@@ -1073,6 +1091,38 @@ namespace ShooterB
         public void OnHit(Constants.WeaponType weaponType = Constants.WeaponType.Rifle)
         {
             ReceiveDamage(1, weaponType);
+        }
+
+        public bool FreezeFor(float duration)
+        {
+            if (isDead || duration <= 0f)
+                return false;
+
+            if (!isFrozen && spriteRenderer != null)
+                preFreezeColor = spriteRenderer.color;
+
+            isFrozen = true;
+            frozenUntilTime = Mathf.Max(frozenUntilTime, Time.time + duration);
+
+            if (rb != null)
+                rb.linearVelocity = Vector2.zero;
+
+            if (spriteRenderer != null)
+                spriteRenderer.color = new Color(0.55f, 0.85f, 1f, 1f);
+
+            return true;
+        }
+
+        private void ClearFreezeState()
+        {
+            if (!isFrozen)
+                return;
+
+            isFrozen = false;
+            frozenUntilTime = 0f;
+
+            if (spriteRenderer != null)
+                spriteRenderer.color = preFreezeColor;
         }
 
         private Sprite GetDeathSprite(Constants.WeaponType weaponType)

@@ -37,6 +37,7 @@ namespace ShooterB
         private int activeDuckCount = 0;
         private int stageSpawnDifficulty;
         private float stageBaseSpeed;
+        private float spawnPausedUntilTime;
         private int nextSpawnSortingOrder;
         private bool skipCurrentWaveRequested = false;
         private bool isWaveInProgress = false;
@@ -168,7 +169,7 @@ namespace ShooterB
                 {
                     string labelFormat = ResolveWaveLabelFormat(wave);
                     OnWaveStarting?.Invoke(waveNumber, wave.announcementDuration, labelFormat);
-                    yield return new WaitForSeconds(wave.announcementDuration);
+                    yield return StartCoroutine(WaitForSpawnDelay(wave.announcementDuration));
                 }
 
                 yield return StartCoroutine(SpawnEntriesCoroutine(wave.spawnSequence, config));
@@ -189,7 +190,7 @@ namespace ShooterB
                 if (!isSpawning || GameManager.Instance.IsGameOver || skipCurrentWaveRequested)
                     yield break;
 
-                yield return new WaitForSeconds(entry.delay);
+                yield return StartCoroutine(WaitForSpawnDelay(entry.delay));
 
                 if (!isSpawning || GameManager.Instance.IsGameOver || skipCurrentWaveRequested)
                     yield break;
@@ -201,7 +202,7 @@ namespace ShooterB
                         if (!isSpawning || GameManager.Instance.IsGameOver || skipCurrentWaveRequested)
                             yield break;
 
-                        yield return new WaitForSeconds(patternEntry.delay);
+                        yield return StartCoroutine(WaitForSpawnDelay(patternEntry.delay));
 
                         if (!isSpawning || GameManager.Instance.IsGameOver || skipCurrentWaveRequested)
                             yield break;
@@ -233,8 +234,9 @@ namespace ShooterB
 
             while (activeDuckCount > 0 && isSpawning && !GameManager.Instance.IsGameOver)
             {
-                yield return new WaitForSeconds(0.2f);
-                elapsed += 0.2f;
+                yield return StartCoroutine(WaitForSpawnDelay(0.2f));
+                if (!IsSpawnPaused())
+                    elapsed += 0.2f;
 
                 if (elapsed >= timeout)
                 {
@@ -385,6 +387,60 @@ namespace ShooterB
 
             GameLog.Log($"[CampaignDuckSpawner] Zeus thunder damaged {damagedCount} active ducks for {damageAmount}.");
             return damagedCount;
+        }
+
+        public int FreezeAllActiveDucks(float duration)
+        {
+            if (duration <= 0f)
+                return 0;
+
+            int frozenCount = 0;
+            foreach (Transform child in transform)
+            {
+                if (child == null || !child.gameObject.activeSelf)
+                    continue;
+
+                Duck duck = child.GetComponent<Duck>();
+                if (duck != null && duck.FreezeFor(duration))
+                    frozenCount++;
+            }
+
+            GameLog.Log($"[CampaignDuckSpawner] Chronos Lock froze {frozenCount} active ducks for {duration:0.##}s.");
+            return frozenCount;
+        }
+
+        public void PauseSpawningFor(float duration)
+        {
+            if (duration <= 0f)
+                return;
+
+            spawnPausedUntilTime = Mathf.Max(spawnPausedUntilTime, Time.time + duration);
+            GameLog.Log($"[CampaignDuckSpawner] Chronos Lock paused spawning for {duration:0.##}s.");
+        }
+
+        private IEnumerator WaitForSpawnDelay(float duration)
+        {
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                if (!isSpawning || GameManager.Instance.IsGameOver || skipCurrentWaveRequested)
+                    yield break;
+
+                if (IsSpawnPaused())
+                {
+                    yield return new WaitForSeconds(0.05f);
+                    continue;
+                }
+
+                float step = Mathf.Min(0.05f, duration - elapsed);
+                yield return new WaitForSeconds(step);
+                elapsed += step;
+            }
+        }
+
+        private bool IsSpawnPaused()
+        {
+            return Time.time < spawnPausedUntilTime;
         }
 
         private GameObject GetDuckFromPool()

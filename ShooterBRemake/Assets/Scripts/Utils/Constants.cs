@@ -28,6 +28,7 @@ namespace ShooterB
         public const string PREFS_UNLOCKED_WEAPONS = "UnlockedWeapons";
         public const string PREFS_COINS = "Coins";
         public const string PREFS_ZEUS_THUNDER_COUNT = "ZeusThunderCount";
+        public const string PREFS_CHRONOS_LOCK_COUNT = "ChronosLockCount";
         public const string PREFS_LANGUAGE = "Language";
         public const string PREFS_MASTER_VOLUME = "MasterVolume";
         public const string PREFS_MUSIC_VOLUME = "MusicVolume";
@@ -40,6 +41,8 @@ namespace ShooterB
         public const int DAILY_LOGIN_NOTIFICATION_HOUR = 10;
         public const int ZEUS_THUNDER_COST = 1000;
         public const int ZEUS_THUNDER_DAMAGE = 10;
+        public const int CHRONOS_LOCK_COST = 850;
+        public const float CHRONOS_LOCK_DURATION = 5f;
 
         public enum GameMode
         {

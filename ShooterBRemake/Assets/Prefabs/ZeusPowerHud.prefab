@@ -94,6 +94,7 @@ MonoBehaviour:
   iconImage: {fileID: 100103}
   dragIconImage: {fileID: 100303}
   countText: {fileID: 100203}
+  thunderBulletSprite: {fileID: -6045184203495171077, guid: 3be18172971604fa8b964fa364c6164b, type: 3}
   homeAnchoredPosition: {x: 8, y: 8}
 --- !u!1 &100100
 GameObject:

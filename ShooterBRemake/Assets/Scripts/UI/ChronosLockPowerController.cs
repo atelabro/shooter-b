@@ -8,30 +8,25 @@ namespace ShooterB
 {
     [RequireComponent(typeof(RectTransform))]
     [RequireComponent(typeof(Image))]
-    public class ThunderPowerController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class ChronosLockPowerController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        private const string ZeusPowerIconResourcePath = "SuperPowers/zeus-power";
-        private const string ThunderSoundResourcePath = "Audio/thunder-sound-1";
+        private const string ChronosIconResourcePath = "SuperPowers/chronos-power";
+        private const string FallbackIconResourcePath = "SuperPowers/zeus-power";
+        private const string ClockworkAudioResourcePath = "Audio/clockwork";
         private const float ControlWidth = 128f;
         private const float ControlHeight = 64f;
         private const float DropCancelDistance = 70f;
-        private const int ThunderBulletCount = 4;
-        private const float ThunderBulletFallDuration = 0.14f;
-        private const float ThunderBulletStagger = 0.025f;
 
-        [Header("Prefab References")]
         public Image iconImage;
         public Image dragIconImage;
         public TextMeshProUGUI countText;
-        public Sprite thunderBulletSprite;
 
-        [Header("Layout")]
-        public Vector2 homeAnchoredPosition = new Vector2(8f, 8f);
+        public Vector2 homeAnchoredPosition = new Vector2(144f, 8f);
 
         private RectTransform rectTransform;
         private Image backgroundImage;
         private AudioSource audioSource;
-        private AudioClip thunderSoundClip;
+        private AudioClip clockworkClip;
         private Canvas canvas;
         private Vector2 homePosition;
         private Vector2 dragIconHomePosition;
@@ -51,7 +46,7 @@ namespace ShooterB
 
         private void OnEnable()
         {
-            GameManager.Instance.OnZeusThunderCountChanged += HandleCountChanged;
+            GameManager.Instance.OnChronosLockCountChanged += HandleCountChanged;
             GameManager.Instance.OnPauseStateChanged += HandlePauseStateChanged;
             Refresh();
         }
@@ -60,7 +55,7 @@ namespace ShooterB
         {
             if (GameManager.Instance != null)
             {
-                GameManager.Instance.OnZeusThunderCountChanged -= HandleCountChanged;
+                GameManager.Instance.OnChronosLockCountChanged -= HandleCountChanged;
                 GameManager.Instance.OnPauseStateChanged -= HandlePauseStateChanged;
             }
         }
@@ -97,10 +92,19 @@ namespace ShooterB
                 : 0f;
 
             if (distanceFromHome >= DropCancelDistance)
-                TryCastThunder();
+                TryCastChronosLock();
 
             HideDragIcon();
             Refresh();
+        }
+
+        public void SetHomeAnchoredPosition(Vector2 anchoredPosition)
+        {
+            homeAnchoredPosition = anchoredPosition;
+            homePosition = anchoredPosition;
+
+            if (rectTransform != null && !dragging)
+                rectTransform.anchoredPosition = homePosition;
         }
 
         private void ConfigureLayout()
@@ -121,14 +125,17 @@ namespace ShooterB
 
         private void EnsureChildReferences()
         {
+            Sprite icon = LoadSpriteResource(ChronosIconResourcePath) ?? LoadSpriteResource(FallbackIconResourcePath);
+
             if (iconImage == null)
-                iconImage = GetComponentInChildren<Image>(true);
+                iconImage = FindChildImage("Icon");
+
+            if (iconImage == null)
+                iconImage = CreateChildImage("Icon", new Vector2(0f, 0f), new Vector2(0.55f, 1f));
 
             if (iconImage != null)
             {
-                if (iconImage.sprite == null)
-                    iconImage.sprite = Resources.Load<Sprite>(ZeusPowerIconResourcePath);
-
+                iconImage.sprite = icon;
                 iconImage.preserveAspect = true;
                 iconImage.raycastTarget = false;
             }
@@ -136,24 +143,35 @@ namespace ShooterB
             if (dragIconImage == null)
                 dragIconImage = FindChildImage("DragIcon");
 
+            if (dragIconImage == null)
+                dragIconImage = CreateChildImage("DragIcon", new Vector2(0f, 0f), new Vector2(0.55f, 1f));
+
             if (dragIconImage != null)
             {
-                if (dragIconImage.sprite == null && iconImage != null)
-                    dragIconImage.sprite = iconImage.sprite;
-
-                if (dragIconImage.sprite == null)
-                    dragIconImage.sprite = Resources.Load<Sprite>(ZeusPowerIconResourcePath);
-
+                dragIconImage.sprite = icon;
                 dragIconImage.preserveAspect = true;
                 dragIconImage.raycastTarget = false;
                 dragIconImage.gameObject.SetActive(false);
-
-                RectTransform dragIconRect = dragIconImage.rectTransform;
-                dragIconHomePosition = dragIconRect.anchoredPosition;
+                dragIconHomePosition = dragIconImage.rectTransform.anchoredPosition;
             }
 
             if (countText == null)
                 countText = GetComponentInChildren<TextMeshProUGUI>(true);
+
+            if (countText == null)
+            {
+                GameObject textObj = new GameObject("Count", typeof(RectTransform), typeof(TextMeshProUGUI));
+                textObj.transform.SetParent(transform, false);
+                RectTransform textRect = textObj.GetComponent<RectTransform>();
+                textRect.anchorMin = new Vector2(0.55f, 0f);
+                textRect.anchorMax = Vector2.one;
+                textRect.offsetMin = Vector2.zero;
+                textRect.offsetMax = Vector2.zero;
+                countText = textObj.GetComponent<TextMeshProUGUI>();
+                countText.fontSize = 30f;
+                countText.alignment = TextAlignmentOptions.MidlineLeft;
+                countText.color = Color.white;
+            }
 
             if (countText != null)
                 countText.raycastTarget = false;
@@ -161,46 +179,27 @@ namespace ShooterB
 
         private bool CanDrag()
         {
-            return GameManager.Instance.ZeusThunderCount > 0 &&
+            return GameManager.Instance.ChronosLockCount > 0 &&
                 !GameManager.Instance.IsPaused &&
                 !GameManager.Instance.IsGameOver;
         }
 
-        private void TryCastThunder()
+        private void TryCastChronosLock()
         {
             IDuckSpawner spawner = FindActiveSpawner();
             if (spawner == null || spawner.ActiveDuckCount <= 0)
                 return;
 
-            if (!GameManager.Instance.TryUseZeusThunderCharge())
+            if (!GameManager.Instance.TryUseChronosLockCharge())
                 return;
 
-            PlayThunderSound();
-            PlayThunderEffect();
-            spawner.DamageAllActiveDucks(Constants.ZEUS_THUNDER_DAMAGE, Constants.WeaponType.TeslaGun);
-        }
-
-        private void EnsureAudio()
-        {
-            audioSource = GetComponent<AudioSource>();
-            if (audioSource == null)
-                audioSource = gameObject.AddComponent<AudioSource>();
-
-            audioSource.playOnAwake = false;
-            audioSource.loop = false;
-            thunderSoundClip = Resources.Load<AudioClip>(ThunderSoundResourcePath);
-
-            if (thunderSoundClip == null)
-                GameLog.Warning($"[ThunderPowerController] Missing thunder SFX clip at Resources/{ThunderSoundResourcePath}.");
-        }
-
-        private void PlayThunderSound()
-        {
-            if (audioSource == null || thunderSoundClip == null)
-                return;
-
-            audioSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
-            audioSource.PlayOneShot(thunderSoundClip);
+            int frozenCount = spawner.FreezeAllActiveDucks(Constants.CHRONOS_LOCK_DURATION);
+            spawner.PauseSpawningFor(Constants.CHRONOS_LOCK_DURATION);
+            if (frozenCount > 0)
+            {
+                PlayClockworkSound(Constants.CHRONOS_LOCK_DURATION);
+                PlayChronosEffect();
+            }
         }
 
         private IDuckSpawner FindActiveSpawner()
@@ -223,10 +222,10 @@ namespace ShooterB
             return null;
         }
 
-        private void PlayThunderEffect()
+        private void PlayChronosEffect()
         {
             Transform parent = canvas != null ? canvas.transform : transform.parent;
-            GameObject flash = new GameObject("ZeusThunderFlash", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            GameObject flash = new GameObject("ChronosLockFlash", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
             flash.transform.SetParent(parent, false);
 
             RectTransform flashRect = flash.GetComponent<RectTransform>();
@@ -236,88 +235,88 @@ namespace ShooterB
             flashRect.offsetMax = Vector2.zero;
 
             Image flashImage = flash.GetComponent<Image>();
-            flashImage.color = new Color(0.55f, 0.75f, 1f, 0.28f);
+            flashImage.color = new Color(0.35f, 0.9f, 1f, 0.22f);
             flashImage.raycastTarget = false;
-            Destroy(flash, 0.16f);
+            Destroy(flash, 0.2f);
 
-            StartCoroutine(PlayThunderBulletRain(parent));
+            StartCoroutine(PlayClockPulse(parent));
         }
 
-        private IEnumerator PlayThunderBulletRain(Transform parent)
+        private void EnsureAudio()
         {
-            RectTransform parentRect = parent as RectTransform;
-            float width = parentRect != null ? parentRect.rect.width : Screen.width;
-            float height = parentRect != null ? parentRect.rect.height : Screen.height;
-            float[] normalizedXPositions = { 0.18f, 0.38f, 0.62f, 0.82f };
-            float[] normalizedImpactYPositions = { 0.42f, 0.58f, 0.34f, 0.68f };
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+                audioSource = gameObject.AddComponent<AudioSource>();
 
-            for (int i = 0; i < ThunderBulletCount; i++)
-                StartCoroutine(AnimateThunderBullet(parent, width, height, normalizedXPositions[i], normalizedImpactYPositions[i], i * ThunderBulletStagger));
+            audioSource.playOnAwake = false;
+            audioSource.loop = false;
+            clockworkClip = Resources.Load<AudioClip>(ClockworkAudioResourcePath);
 
-            yield return null;
+            if (clockworkClip == null)
+                GameLog.Warning($"[ChronosLockPowerController] Missing clockwork SFX clip at Resources/{ClockworkAudioResourcePath}.");
         }
 
-        private IEnumerator AnimateThunderBullet(Transform parent, float width, float height, float normalizedX, float normalizedImpactY, float delay)
+        private void PlayClockworkSound(float duration)
         {
-            if (delay > 0f)
-                yield return new WaitForSeconds(delay);
+            if (audioSource == null || clockworkClip == null || duration <= 0f)
+                return;
 
-            GameObject bolt = new GameObject("ZeusThunderBullet", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-            bolt.transform.SetParent(parent, false);
+            StopCoroutine(nameof(StopClockworkSoundAfterDelay));
+            audioSource.Stop();
+            audioSource.clip = clockworkClip;
+            audioSource.loop = true;
+            audioSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
+            audioSource.Play();
+            StartCoroutine(StopClockworkSoundAfterDelay(duration));
+        }
 
-            RectTransform boltRect = bolt.GetComponent<RectTransform>();
-            boltRect.anchorMin = new Vector2(0.5f, 0.5f);
-            boltRect.anchorMax = new Vector2(0.5f, 0.5f);
-            boltRect.pivot = new Vector2(0.5f, 0.5f);
-            boltRect.sizeDelta = new Vector2(52f, 150f);
-
-            float x = Mathf.Lerp(-width * 0.42f, width * 0.42f, normalizedX);
-            float startY = height * 0.5f + 120f;
-            float endY = Mathf.Lerp(-height * 0.22f, height * 0.28f, normalizedImpactY);
-            Vector2 start = new Vector2(x, startY);
-            Vector2 end = new Vector2(x, endY);
-            boltRect.anchoredPosition = start;
-
-            Image boltImage = bolt.GetComponent<Image>();
-            boltImage.sprite = thunderBulletSprite;
-            boltImage.preserveAspect = true;
-            boltImage.raycastTarget = false;
-            boltImage.color = new Color(0.85f, 0.96f, 1f, 1f);
-
+        private IEnumerator StopClockworkSoundAfterDelay(float duration)
+        {
             float elapsed = 0f;
-            while (elapsed < ThunderBulletFallDuration)
+            while (elapsed < duration)
             {
-                elapsed += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsed / ThunderBulletFallDuration);
-                float eased = 1f - Mathf.Pow(1f - t, 3f);
-                boltRect.anchoredPosition = Vector2.LerpUnclamped(start, end, eased);
-                boltImage.color = new Color(0.85f, 0.96f, 1f, Mathf.Lerp(1f, 0.72f, t));
+                elapsed += Time.unscaledDeltaTime;
                 yield return null;
             }
 
-            CreateThunderImpactFlash(parent, end);
-            Destroy(bolt);
+            if (audioSource != null)
+            {
+                audioSource.Stop();
+                audioSource.loop = false;
+                audioSource.clip = null;
+            }
         }
 
-        private void CreateThunderImpactFlash(Transform parent, Vector2 anchoredPosition)
+        private IEnumerator PlayClockPulse(Transform parent)
         {
-            GameObject impact = new GameObject("ZeusThunderImpact", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-            impact.transform.SetParent(parent, false);
+            GameObject pulse = new GameObject("ChronosLockPulse", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            pulse.transform.SetParent(parent, false);
 
-            RectTransform impactRect = impact.GetComponent<RectTransform>();
-            impactRect.anchorMin = new Vector2(0.5f, 0.5f);
-            impactRect.anchorMax = new Vector2(0.5f, 0.5f);
-            impactRect.pivot = new Vector2(0.5f, 0.5f);
-            impactRect.anchoredPosition = anchoredPosition;
-            impactRect.sizeDelta = new Vector2(84f, 84f);
+            RectTransform pulseRect = pulse.GetComponent<RectTransform>();
+            pulseRect.anchorMin = new Vector2(0.5f, 0.5f);
+            pulseRect.anchorMax = new Vector2(0.5f, 0.5f);
+            pulseRect.pivot = new Vector2(0.5f, 0.5f);
+            pulseRect.anchoredPosition = Vector2.zero;
+            pulseRect.sizeDelta = new Vector2(220f, 220f);
 
-            Image impactImage = impact.GetComponent<Image>();
-            impactImage.sprite = thunderBulletSprite;
-            impactImage.preserveAspect = true;
-            impactImage.raycastTarget = false;
-            impactImage.color = new Color(1f, 1f, 1f, 0.82f);
-            impact.transform.localScale = new Vector3(1.35f, 1.35f, 1f);
-            Destroy(impact, 0.12f);
+            Image pulseImage = pulse.GetComponent<Image>();
+            pulseImage.sprite = iconImage != null ? iconImage.sprite : null;
+            pulseImage.preserveAspect = true;
+            pulseImage.raycastTarget = false;
+
+            float duration = 0.45f;
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                float scale = Mathf.Lerp(0.6f, 2.4f, t);
+                pulse.transform.localScale = new Vector3(scale, scale, 1f);
+                pulseImage.color = new Color(0.65f, 0.95f, 1f, Mathf.Lerp(0.75f, 0f, t));
+                yield return null;
+            }
+
+            Destroy(pulse);
         }
 
         private void ShowDragIcon()
@@ -381,13 +380,26 @@ namespace ShooterB
             return child != null ? child.GetComponent<Image>() : null;
         }
 
-        public void SetHomeAnchoredPosition(Vector2 anchoredPosition)
+        private Image CreateChildImage(string childName, Vector2 anchorMin, Vector2 anchorMax)
         {
-            homeAnchoredPosition = anchoredPosition;
-            homePosition = anchoredPosition;
+            GameObject imageObj = new GameObject(childName, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            imageObj.transform.SetParent(transform, false);
+            RectTransform imageRect = imageObj.GetComponent<RectTransform>();
+            imageRect.anchorMin = anchorMin;
+            imageRect.anchorMax = anchorMax;
+            imageRect.offsetMin = Vector2.zero;
+            imageRect.offsetMax = Vector2.zero;
+            return imageObj.GetComponent<Image>();
+        }
 
-            if (rectTransform != null && !dragging)
-                rectTransform.anchoredPosition = homePosition;
+        private static Sprite LoadSpriteResource(string resourcePath)
+        {
+            Sprite sprite = Resources.Load<Sprite>(resourcePath);
+            if (sprite != null)
+                return sprite;
+
+            Sprite[] sprites = Resources.LoadAll<Sprite>(resourcePath);
+            return sprites != null && sprites.Length > 0 ? sprites[0] : null;
         }
 
         private void HandleCountChanged(int count)
@@ -402,16 +414,15 @@ namespace ShooterB
 
         private void Refresh()
         {
-            int count = GameManager.Instance.ZeusThunderCount;
+            int count = GameManager.Instance.ChronosLockCount;
             if (countText != null)
                 countText.text = $"x{count}";
 
-            bool canDrag = CanDrag();
             if (backgroundImage != null)
                 backgroundImage.color = Color.clear;
 
             if (iconImage != null)
-                iconImage.color = canDrag
+                iconImage.color = CanDrag()
                     ? Color.white
                     : new Color(0.55f, 0.55f, 0.55f, 0.85f);
         }

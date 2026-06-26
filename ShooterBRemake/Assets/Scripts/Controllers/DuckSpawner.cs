@@ -36,6 +36,7 @@ namespace ShooterB
         private float boundLeft;
 
         private bool isSpawning = false;
+        private float spawnPausedUntilTime;
         private int totalSpawnedCount = 0;
         private int[] spawnCountsByType;
         private int activeDuckCount = 0;
@@ -182,6 +183,13 @@ namespace ShooterB
         {
             while (isSpawning && !GameManager.Instance.IsGameOver)
             {
+                if (IsSpawnPaused())
+                {
+                    nextSpawnTime = Mathf.Max(nextSpawnTime, spawnPausedUntilTime);
+                    yield return new WaitForSeconds(0.1f);
+                    continue;
+                }
+
                 if (Time.time >= nextSpawnTime)
                 {
                     int ducksToSpawn = IsArcadeVeryHardEnabled() ? Random.Range(1, 3) : 1;
@@ -309,6 +317,42 @@ namespace ShooterB
 
             GameLog.Log($"[DuckSpawner] Zeus thunder damaged {damagedCount} active ducks for {damageAmount}.");
             return damagedCount;
+        }
+
+        public int FreezeAllActiveDucks(float duration)
+        {
+            if (duration <= 0f)
+                return 0;
+
+            int frozenCount = 0;
+            foreach (Transform child in transform)
+            {
+                if (child == null || !child.gameObject.activeSelf)
+                    continue;
+
+                Duck duck = child.GetComponent<Duck>();
+                if (duck != null && duck.FreezeFor(duration))
+                    frozenCount++;
+            }
+
+            GameLog.Log($"[DuckSpawner] Chronos Lock froze {frozenCount} active ducks for {duration:0.##}s.");
+            return frozenCount;
+        }
+
+        public void PauseSpawningFor(float duration)
+        {
+            if (duration <= 0f)
+                return;
+
+            float pauseUntil = Time.time + duration;
+            spawnPausedUntilTime = Mathf.Max(spawnPausedUntilTime, pauseUntil);
+            nextSpawnTime = Mathf.Max(nextSpawnTime, spawnPausedUntilTime);
+            GameLog.Log($"[DuckSpawner] Chronos Lock paused spawning for {duration:0.##}s.");
+        }
+
+        private bool IsSpawnPaused()
+        {
+            return Time.time < spawnPausedUntilTime;
         }
 
         private Constants.DuckType SelectDuckType()

@@ -57,7 +57,9 @@ namespace ShooterB
 
         [Header("Super Powers")]
         public GameObject thunderPowerPrefab;
+        public GameObject chronosLockPowerPrefab;
         public Vector2 thunderPowerHomeAnchoredPosition = new Vector2(8f, 8f);
+        public Vector2 chronosLockHomeAnchoredPosition = new Vector2(144f, 8f);
 
         private readonly List<Image> ammoBulletIcons = new List<Image>();
         private int lastKnownMaxAmmo = -1;
@@ -66,6 +68,7 @@ namespace ShooterB
         private bool hasLoggedMissingReloadReferences = false;
         private RewardPopupQueueController rewardPopupQueue;
         private ThunderPowerController thunderPowerController;
+        private ChronosLockPowerController chronosLockPowerController;
 
         private void Start()
         {
@@ -95,6 +98,7 @@ namespace ShooterB
 
             BuildAmmoIcons();
             EnsureThunderPowerController();
+            EnsureChronosLockPowerController();
             SubscribeToEvents();
             UpdateAllUI();
 
@@ -673,6 +677,23 @@ namespace ShooterB
             thunderPowerController = controlObject.GetComponent<ThunderPowerController>();
             if (thunderPowerController != null)
                 thunderPowerController.SetHomeAnchoredPosition(thunderPowerHomeAnchoredPosition);
+        }
+
+        private void EnsureChronosLockPowerController()
+        {
+            if (chronosLockPowerController != null)
+                return;
+
+            Canvas canvas = GetComponentInParent<Canvas>();
+            Transform parent = canvas != null ? canvas.transform : transform;
+            GameObject controlObject = chronosLockPowerPrefab != null
+                ? Instantiate(chronosLockPowerPrefab, parent)
+                : new GameObject("ChronosLockPower", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(ChronosLockPowerController));
+            controlObject.transform.SetParent(parent, false);
+            controlObject.name = "ChronosLockPower";
+            chronosLockPowerController = controlObject.GetComponent<ChronosLockPowerController>();
+            if (chronosLockPowerController != null)
+                chronosLockPowerController.SetHomeAnchoredPosition(chronosLockHomeAnchoredPosition);
         }
 
         private void PositionPopupAtWorldPoint(GameObject popup, Transform parent, Vector3 worldPosition)
