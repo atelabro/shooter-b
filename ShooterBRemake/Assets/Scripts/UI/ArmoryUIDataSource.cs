@@ -70,28 +70,6 @@ namespace ShooterB
             return model;
         }
 
-        public static WeaponCardViewModel BuildZeusThunderModel(Sprite iconOverride = null)
-        {
-            return new WeaponCardViewModel
-            {
-                weaponType = Constants.WeaponType.TeslaGun,
-                isConsumable = true,
-                displayName = LocalizationManager.Instance.Get("superweapon.zeus.name", "Zeus Thunder"),
-                description = LocalizationManager.Instance.Get(
-                    "superweapon.zeus.description",
-                    "Drag Zeus into battle to call thunder from above. Deals 10 damage to every duck on screen."),
-                cost = Constants.ZEUS_THUNDER_COST,
-                ownedCount = GameManager.Instance.ZeusThunderCount,
-                fireTypeLabel = LocalizationManager.Instance.Get("superweapon.zeus.type", "Drag Power"),
-                fireRateLabel = string.Empty,
-                reloadLabel = string.Empty,
-                travelSpeedLabel = string.Empty,
-                bulletsLabel = string.Empty,
-                aoeLabel = LocalizationManager.Instance.Get("superweapon.zeus.aoe", "Full screen"),
-                icon = iconOverride
-            };
-        }
-
         private static WeaponStats GetStats(Constants.WeaponType type, Weapon weaponPrefab)
         {
             WeaponStats stats = new WeaponStats

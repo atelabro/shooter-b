@@ -4615,6 +4615,9 @@ MonoBehaviour:
   achievementPopupPrefab: {fileID: 5400745645520572176, guid: 2fb642ce6e5e4cf6bbf42b8ce4e827f9, type: 3}
   achievementPopupContainer: {fileID: 0}
   achievementPopupLifetime: 1.8
+  achievementPopupAnchoredPosition: {x: 0, y: 260}
+  thunderPowerPrefab: {fileID: 100000, guid: 6e0dd670ea764c99a8cba2627d8177b8, type: 3}
+  thunderPowerHomeAnchoredPosition: {x: 8, y: 8}
 --- !u!4 &1651397104
 Transform:
   m_ObjectHideFlags: 0

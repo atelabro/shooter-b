@@ -55,6 +55,10 @@ namespace ShooterB
         public float achievementPopupLifetime = 1.8f;
         public Vector2 achievementPopupAnchoredPosition = new Vector2(0f, 260f);
 
+        [Header("Super Powers")]
+        public GameObject thunderPowerPrefab;
+        public Vector2 thunderPowerHomeAnchoredPosition = new Vector2(8f, 8f);
+
         private readonly List<Image> ammoBulletIcons = new List<Image>();
         private int lastKnownMaxAmmo = -1;
         private Constants.WeaponType? lastWeaponType = null;
@@ -661,9 +665,14 @@ namespace ShooterB
 
             Canvas canvas = GetComponentInParent<Canvas>();
             Transform parent = canvas != null ? canvas.transform : transform;
-            GameObject controlObject = new GameObject("ZeusThunderPower", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(ThunderPowerController));
+            GameObject controlObject = thunderPowerPrefab != null
+                ? Instantiate(thunderPowerPrefab, parent)
+                : new GameObject("ZeusThunderPower", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(ThunderPowerController));
             controlObject.transform.SetParent(parent, false);
+            controlObject.name = "ZeusThunderPower";
             thunderPowerController = controlObject.GetComponent<ThunderPowerController>();
+            if (thunderPowerController != null)
+                thunderPowerController.SetHomeAnchoredPosition(thunderPowerHomeAnchoredPosition);
         }
 
         private void PositionPopupAtWorldPoint(GameObject popup, Transform parent, Vector3 worldPosition)

@@ -5,11 +5,9 @@ namespace ShooterB
     public class WeaponCardViewModel
     {
         public Constants.WeaponType weaponType;
-        public bool isConsumable;
         public string displayName;
         public string description;
         public int cost;
-        public int ownedCount;
         public string fireTypeLabel;
         public string fireRateLabel;
         public string reloadLabel;

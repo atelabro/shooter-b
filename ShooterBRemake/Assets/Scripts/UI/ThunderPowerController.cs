@@ -9,15 +9,28 @@ namespace ShooterB
     [RequireComponent(typeof(Image))]
     public class ThunderPowerController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        private const float ControlSize = 118f;
+        private const string ZeusPowerIconResourcePath = "SuperPowers/zeus-power";
+        private const string ThunderSoundResourcePath = "Audio/thunder-sound-1";
+        private const float ControlWidth = 128f;
+        private const float ControlHeight = 64f;
         private const float DropCancelDistance = 70f;
+
+        [Header("Prefab References")]
+        public Image iconImage;
+        public Image dragIconImage;
+        public TextMeshProUGUI countText;
+
+        [Header("Layout")]
+        public Vector2 homeAnchoredPosition = new Vector2(8f, 8f);
 
         private RectTransform rectTransform;
         private Image backgroundImage;
-        private TextMeshProUGUI iconText;
-        private TextMeshProUGUI countText;
+        private AudioSource audioSource;
+        private AudioClip thunderSoundClip;
         private Canvas canvas;
         private Vector2 homePosition;
+        private Vector2 dragIconHomePosition;
+        private Vector2 dragPointerOffset;
         private bool dragging;
 
         private void Awake()
@@ -26,7 +39,8 @@ namespace ShooterB
             backgroundImage = GetComponent<Image>();
             canvas = GetComponentInParent<Canvas>();
             ConfigureLayout();
-            BuildChildren();
+            EnsureChildReferences();
+            EnsureAudio();
             Refresh();
         }
 
@@ -53,7 +67,9 @@ namespace ShooterB
 
             dragging = true;
             transform.SetAsLastSibling();
-            SetPositionFromScreen(eventData.position);
+            ShowDragIcon();
+            dragPointerOffset = GetDragPointerOffset(eventData.position);
+            SetDragIconPositionFromScreen(eventData.position);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -61,7 +77,7 @@ namespace ShooterB
             if (!dragging)
                 return;
 
-            SetPositionFromScreen(eventData.position);
+            SetDragIconPositionFromScreen(eventData.position);
         }
 
         public void OnEndDrag(PointerEventData eventData)
@@ -70,11 +86,15 @@ namespace ShooterB
                 return;
 
             dragging = false;
-            float distanceFromHome = Vector2.Distance(rectTransform.anchoredPosition, homePosition);
+            RectTransform dragIconRect = GetDragIconRectTransform();
+            float distanceFromHome = dragIconRect != null
+                ? Vector2.Distance(dragIconRect.anchoredPosition, dragIconHomePosition)
+                : 0f;
+
             if (distanceFromHome >= DropCancelDistance)
                 TryCastThunder();
 
-            ReturnHome();
+            HideDragIcon();
             Refresh();
         }
 
@@ -82,43 +102,56 @@ namespace ShooterB
         {
             rectTransform.anchorMin = new Vector2(0f, 0f);
             rectTransform.anchorMax = new Vector2(0f, 0f);
-            rectTransform.pivot = new Vector2(0.5f, 0.5f);
-            rectTransform.sizeDelta = new Vector2(ControlSize, ControlSize);
-            homePosition = new Vector2(88f, 92f);
+            rectTransform.pivot = new Vector2(0f, 0f);
+            rectTransform.sizeDelta = new Vector2(ControlWidth, ControlHeight);
+            homePosition = homeAnchoredPosition;
             rectTransform.anchoredPosition = homePosition;
 
-            backgroundImage.color = new Color(0.08f, 0.13f, 0.24f, 0.92f);
-            backgroundImage.raycastTarget = true;
+            if (backgroundImage != null)
+            {
+                backgroundImage.color = Color.clear;
+                backgroundImage.raycastTarget = true;
+            }
         }
 
-        private void BuildChildren()
+        private void EnsureChildReferences()
         {
-            iconText = CreateText("Icon", new Vector2(0f, 0.2f), new Vector2(1f, 1f), 48f, TextAlignmentOptions.Center);
-            iconText.text = "Z";
-            iconText.color = new Color(1f, 0.92f, 0.34f, 1f);
+            if (iconImage == null)
+                iconImage = GetComponentInChildren<Image>(true);
 
-            countText = CreateText("Count", Vector2.zero, new Vector2(1f, 0.34f), 24f, TextAlignmentOptions.Center);
-            countText.color = Color.white;
-        }
+            if (iconImage != null)
+            {
+                if (iconImage.sprite == null)
+                    iconImage.sprite = Resources.Load<Sprite>(ZeusPowerIconResourcePath);
 
-        private TextMeshProUGUI CreateText(string name, Vector2 anchorMin, Vector2 anchorMax, float fontSize, TextAlignmentOptions alignment)
-        {
-            GameObject obj = new GameObject(name, typeof(RectTransform), typeof(TextMeshProUGUI));
-            obj.transform.SetParent(transform, false);
+                iconImage.preserveAspect = true;
+                iconImage.raycastTarget = false;
+            }
 
-            RectTransform childRect = obj.GetComponent<RectTransform>();
-            childRect.anchorMin = anchorMin;
-            childRect.anchorMax = anchorMax;
-            childRect.offsetMin = Vector2.zero;
-            childRect.offsetMax = Vector2.zero;
+            if (dragIconImage == null)
+                dragIconImage = FindChildImage("DragIcon");
 
-            TextMeshProUGUI text = obj.GetComponent<TextMeshProUGUI>();
-            text.fontSize = fontSize;
-            text.fontStyle = FontStyles.Bold;
-            text.alignment = alignment;
-            text.enableWordWrapping = false;
-            text.raycastTarget = false;
-            return text;
+            if (dragIconImage != null)
+            {
+                if (dragIconImage.sprite == null && iconImage != null)
+                    dragIconImage.sprite = iconImage.sprite;
+
+                if (dragIconImage.sprite == null)
+                    dragIconImage.sprite = Resources.Load<Sprite>(ZeusPowerIconResourcePath);
+
+                dragIconImage.preserveAspect = true;
+                dragIconImage.raycastTarget = false;
+                dragIconImage.gameObject.SetActive(false);
+
+                RectTransform dragIconRect = dragIconImage.rectTransform;
+                dragIconHomePosition = dragIconRect.anchoredPosition;
+            }
+
+            if (countText == null)
+                countText = GetComponentInChildren<TextMeshProUGUI>(true);
+
+            if (countText != null)
+                countText.raycastTarget = false;
         }
 
         private bool CanDrag()
@@ -137,8 +170,32 @@ namespace ShooterB
             if (!GameManager.Instance.TryUseZeusThunderCharge())
                 return;
 
+            PlayThunderSound();
             PlayThunderEffect();
             spawner.DamageAllActiveDucks(Constants.ZEUS_THUNDER_DAMAGE, Constants.WeaponType.TeslaGun);
+        }
+
+        private void EnsureAudio()
+        {
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+                audioSource = gameObject.AddComponent<AudioSource>();
+
+            audioSource.playOnAwake = false;
+            audioSource.loop = false;
+            thunderSoundClip = Resources.Load<AudioClip>(ThunderSoundResourcePath);
+
+            if (thunderSoundClip == null)
+                GameLog.Warning($"[ThunderPowerController] Missing thunder SFX clip at Resources/{ThunderSoundResourcePath}.");
+        }
+
+        private void PlayThunderSound()
+        {
+            if (audioSource == null || thunderSoundClip == null)
+                return;
+
+            audioSource.volume = AudioSettingsManager.Instance.GetEffectiveSfxVolume();
+            audioSource.PlayOneShot(thunderSoundClip);
         }
 
         private IDuckSpawner FindActiveSpawner()
@@ -196,23 +253,74 @@ namespace ShooterB
             }
         }
 
-        private void SetPositionFromScreen(Vector2 screenPosition)
+        private void ShowDragIcon()
         {
-            RectTransform parentRect = rectTransform.parent as RectTransform;
-            if (parentRect == null)
+            if (dragIconImage == null)
+                return;
+
+            dragIconImage.color = Color.white;
+            dragIconImage.gameObject.SetActive(true);
+            dragIconImage.transform.SetAsLastSibling();
+        }
+
+        private void HideDragIcon()
+        {
+            RectTransform dragIconRect = GetDragIconRectTransform();
+            if (dragIconRect != null)
+                dragIconRect.anchoredPosition = dragIconHomePosition;
+
+            if (dragIconImage != null)
+                dragIconImage.gameObject.SetActive(false);
+        }
+
+        private void SetDragIconPositionFromScreen(Vector2 screenPosition)
+        {
+            RectTransform dragIconRect = GetDragIconRectTransform();
+            if (dragIconRect == null)
                 return;
 
             Camera uiCamera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay
                 ? canvas.worldCamera
                 : null;
 
-            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, screenPosition, uiCamera, out Vector2 localPoint))
-                rectTransform.anchoredPosition = localPoint;
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, screenPosition, uiCamera, out Vector2 localPoint))
+                dragIconRect.anchoredPosition = localPoint + dragPointerOffset;
         }
 
-        private void ReturnHome()
+        private Vector2 GetDragPointerOffset(Vector2 screenPosition)
         {
-            rectTransform.anchoredPosition = homePosition;
+            RectTransform dragIconRect = GetDragIconRectTransform();
+            if (dragIconRect == null)
+                return Vector2.zero;
+
+            Camera uiCamera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay
+                ? canvas.worldCamera
+                : null;
+
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, screenPosition, uiCamera, out Vector2 localPoint))
+                return dragIconRect.anchoredPosition - localPoint;
+
+            return Vector2.zero;
+        }
+
+        private RectTransform GetDragIconRectTransform()
+        {
+            return dragIconImage != null ? dragIconImage.rectTransform : null;
+        }
+
+        private Image FindChildImage(string childName)
+        {
+            Transform child = transform.Find(childName);
+            return child != null ? child.GetComponent<Image>() : null;
+        }
+
+        public void SetHomeAnchoredPosition(Vector2 anchoredPosition)
+        {
+            homeAnchoredPosition = anchoredPosition;
+            homePosition = anchoredPosition;
+
+            if (rectTransform != null && !dragging)
+                rectTransform.anchoredPosition = homePosition;
         }
 
         private void HandleCountChanged(int count)
@@ -228,14 +336,17 @@ namespace ShooterB
         private void Refresh()
         {
             int count = GameManager.Instance.ZeusThunderCount;
-            gameObject.SetActive(count > 0);
             if (countText != null)
                 countText.text = $"x{count}";
 
+            bool canDrag = CanDrag();
             if (backgroundImage != null)
-                backgroundImage.color = CanDrag()
-                    ? new Color(0.08f, 0.13f, 0.24f, 0.92f)
-                    : new Color(0.08f, 0.08f, 0.09f, 0.55f);
+                backgroundImage.color = Color.clear;
+
+            if (iconImage != null)
+                iconImage.color = canDrag
+                    ? Color.white
+                    : new Color(0.55f, 0.55f, 0.55f, 0.85f);
         }
     }
 }

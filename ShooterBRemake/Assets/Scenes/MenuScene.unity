@@ -2719,7 +2719,7 @@ MonoBehaviour:
   achievementsBadgeColor: {r: 0.8627451, g: 0.1764706, b: 0.1764706, a: 1}
   achievementsBadgeAdRewardColor: {r: 0.21960784, g: 0.65882355, b: 0.2901961, a: 1}
   languageDropdown: {fileID: 2099000102}
-  allowBetaDevPanel: 0
+  allowBetaDevPanel: 1
   devPanelCampaignCities: []
 --- !u!4 &688693834
 Transform:

@@ -8,6 +8,8 @@ namespace ShooterB
 {
     public class ArmoryController : MonoBehaviour
     {
+        private const string ZeusPowerIconResourcePath = "SuperPowers/zeus-power";
+
         [Serializable]
         public class WeaponIconEntry
         {
@@ -18,9 +20,17 @@ namespace ShooterB
         [Header("Scene References")]
         public Button quitButton;
         public TextMeshProUGUI sceneTitleText;
+        public TextMeshProUGUI weaponsSectionTitleText;
+        public TextMeshProUGUI superPowersSectionTitleText;
+        public Button weaponsTabButton;
+        public Button superPowersTabButton;
+        public GameObject weaponsPanel;
+        public GameObject superPowersPanel;
         public ScrollRect weaponsScrollRect;
         public RectTransform weaponListContent;
+        public RectTransform superPowerListContent;
         public GameObject weaponCardPrefab;
+        public GameObject superPowerCardPrefab;
         public WeaponIconEntry[] weaponIcons;
 
         [Header("Weapon Prefabs")]
@@ -36,11 +46,20 @@ namespace ShooterB
         private readonly Dictionary<Constants.WeaponType, WeaponCardViewModel> modelsByWeapon = new Dictionary<Constants.WeaponType, WeaponCardViewModel>();
         private readonly HashSet<Constants.WeaponType> missingIconWarnings = new HashSet<Constants.WeaponType>();
 
-        private WeaponCardItemUI zeusThunderCard;
-        private WeaponCardViewModel zeusThunderModel;
+        private SuperPowerCardItemUI zeusThunderCard;
+        private SuperPowerViewModel zeusThunderModel;
         private UnlockWeaponModalUI unlockModal;
         private Constants.WeaponType pendingModalWeapon;
+        private ArmoryTab activeTab = ArmoryTab.Weapons;
+        private static readonly Color ActiveTabColor = new Color(0.92f, 0.62f, 0.18f, 0.95f);
+        private static readonly Color InactiveTabColor = new Color(0.16f, 0.17f, 0.2f, 0.95f);
         private int CurrentCoins => GameManager.Instance.Coins;
+
+        private enum ArmoryTab
+        {
+            Weapons,
+            SuperPowers
+        }
 
         private void OnEnable()
         {
@@ -64,12 +83,15 @@ namespace ShooterB
 
             ResolveTextReferences();
             ConfigureBackButton();
+            ConfigureTabs();
             EnsureScrollSetup();
+            ResolveSuperPowerReferences();
             BuildUnlockModalUI();
             BuildCards();
             LocalizationManager.Instance.OnLanguageChanged += HandleLanguageChanged;
             RefreshLocalizedStaticTexts();
             RefreshAllCardStates();
+            ShowTab(activeTab);
         }
 
         private void OnDestroy()
@@ -109,6 +131,39 @@ namespace ShooterB
 
             if (sceneTitleText == null)
                 sceneTitleText = FindTextByCurrentValue("ARMORY");
+
+            if (weaponsSectionTitleText == null)
+                weaponsSectionTitleText = FindTextInSceneByName("WeaponsSectionTitle");
+
+            if (superPowersSectionTitleText == null)
+                superPowersSectionTitleText = FindTextInSceneByName("SuperPowersSectionTitle");
+
+            if (weaponsTabButton == null)
+                weaponsTabButton = FindButtonInSceneByName("WeaponsTabButton");
+
+            if (superPowersTabButton == null)
+                superPowersTabButton = FindButtonInSceneByName("SuperPowersTabButton");
+
+            if (weaponsPanel == null)
+                weaponsPanel = FindGameObjectInSceneByName("WeaponsPanel");
+
+            if (superPowersPanel == null)
+                superPowersPanel = FindGameObjectInSceneByName("SuperPowersPanel");
+        }
+
+        private void ConfigureTabs()
+        {
+            if (weaponsTabButton != null)
+            {
+                weaponsTabButton.onClick.RemoveAllListeners();
+                weaponsTabButton.onClick.AddListener(() => ShowTab(ArmoryTab.Weapons));
+            }
+
+            if (superPowersTabButton != null)
+            {
+                superPowersTabButton.onClick.RemoveAllListeners();
+                superPowersTabButton.onClick.AddListener(() => ShowTab(ArmoryTab.SuperPowers));
+            }
         }
 
         private void EnsureScrollSetup()
@@ -118,6 +173,9 @@ namespace ShooterB
 
             if (weaponsScrollRect != null && weaponsScrollRect.content != null)
             {
+                if (weaponsPanel == null)
+                    weaponsPanel = weaponsScrollRect.gameObject;
+
                 weaponListContent = weaponsScrollRect.content;
                 EnsureContentLayout(weaponListContent);
                 return;
@@ -177,6 +235,27 @@ namespace ShooterB
 
             weaponsScrollRect = createdScroll;
             weaponListContent = contentRect;
+            if (weaponsPanel == null)
+                weaponsPanel = scrollObj;
+        }
+
+        private void ResolveSuperPowerReferences()
+        {
+            if (superPowerListContent == null)
+            {
+                GameObject contentObject = GameObject.Find("SuperPowerListContent");
+                if (contentObject != null)
+                    superPowerListContent = contentObject.GetComponent<RectTransform>();
+            }
+
+            if (superPowerCardPrefab == null)
+                GameLog.Warning("[ARMORY] superPowerCardPrefab is not assigned. Super power cards will not be shown.");
+
+            if (superPowerListContent == null)
+                GameLog.Warning("[ARMORY] superPowerListContent is not assigned. Super power cards will not be shown.");
+
+            if (superPowersPanel == null && superPowerListContent != null)
+                superPowersPanel = superPowerListContent.gameObject;
         }
 
         private static void EnsureContentLayout(RectTransform content)
@@ -285,8 +364,15 @@ namespace ShooterB
                 Destroy(weaponListContent.GetChild(i).gameObject);
             }
 
+            if (superPowerListContent != null && superPowerListContent != weaponListContent)
+            {
+                for (int i = superPowerListContent.childCount - 1; i >= 0; i--)
+                    Destroy(superPowerListContent.GetChild(i).gameObject);
+            }
+
             cardsByWeapon.Clear();
             modelsByWeapon.Clear();
+            zeusThunderCard = null;
 
             IReadOnlyList<Constants.WeaponType> ordered = ArmoryUIDataSource.GetOrderedWeapons();
             for (int i = 0; i < ordered.Count; i++)
@@ -299,10 +385,7 @@ namespace ShooterB
                 cardsByWeapon[type] = card;
             }
 
-            zeusThunderModel = ArmoryUIDataSource.BuildZeusThunderModel(GetWeaponIcon(Constants.WeaponType.TeslaGun));
-            zeusThunderCard = CreateCardUI(zeusThunderModel);
-            if (zeusThunderCard != null)
-                zeusThunderCard.gameObject.name = "ZeusThunderCard";
+            zeusThunderCard = CreateSuperPowerCardUI();
         }
 
         private WeaponCardItemUI CreateCardUI(WeaponCardViewModel model)
@@ -336,13 +419,44 @@ namespace ShooterB
             if (rowButton != null)
             {
                 rowButton.onClick.RemoveAllListeners();
-                rowButton.onClick.AddListener(() => OnCardPressed(model));
+                rowButton.onClick.AddListener(() => OnCardPressed(model.weaponType));
             }
 
             if (itemUI.unlockButton != null)
             {
                 itemUI.unlockButton.onClick.RemoveAllListeners();
-                itemUI.unlockButton.onClick.AddListener(() => OnCardPressed(model));
+                itemUI.unlockButton.onClick.AddListener(() => OnCardPressed(model.weaponType));
+            }
+
+            return itemUI;
+        }
+
+        private SuperPowerCardItemUI CreateSuperPowerCardUI()
+        {
+            if (superPowerListContent == null || superPowerCardPrefab == null)
+                return null;
+
+            GameObject rowObj = Instantiate(superPowerCardPrefab, superPowerListContent);
+            rowObj.name = "ZeusThunderCard";
+            SuperPowerCardItemUI itemUI = rowObj.GetComponent<SuperPowerCardItemUI>();
+            if (itemUI == null)
+            {
+                GameLog.Error("[ARMORY] Super power card prefab is missing SuperPowerCardItemUI.");
+                Destroy(rowObj);
+                return null;
+            }
+
+            if (itemUI.buyButton != null)
+            {
+                itemUI.buyButton.onClick.RemoveAllListeners();
+                itemUI.buyButton.onClick.AddListener(OnZeusThunderPressed);
+            }
+
+            Button rowButton = rowObj.GetComponent<Button>();
+            if (rowButton != null)
+            {
+                rowButton.onClick.RemoveAllListeners();
+                rowButton.onClick.AddListener(OnZeusThunderPressed);
             }
 
             return itemUI;
@@ -409,20 +523,6 @@ namespace ShooterB
             }
 
             RefreshZeusThunderCard();
-        }
-
-        private void OnCardPressed(WeaponCardViewModel model)
-        {
-            if (model == null)
-                return;
-
-            if (model.isConsumable)
-            {
-                OnZeusThunderPressed();
-                return;
-            }
-
-            OnCardPressed(model.weaponType);
         }
 
         private void OnCardPressed(Constants.WeaponType weaponType)
@@ -498,6 +598,14 @@ namespace ShooterB
             if (sceneTitleText != null)
                 sceneTitleText.text = LocalizationManager.Instance.Get("armory.scene.title", "ARMORY");
 
+            if (weaponsSectionTitleText != null)
+                weaponsSectionTitleText.text = LocalizationManager.Instance.Get("armory.section.weapons", "Weapons");
+
+            if (superPowersSectionTitleText != null)
+                superPowersSectionTitleText.text = LocalizationManager.Instance.Get("armory.section.super_weapons", "Super Powers");
+
+            SetButtonLabel(weaponsTabButton, LocalizationManager.Instance.Get("armory.tab.weapons", "Weapons"));
+            SetButtonLabel(superPowersTabButton, LocalizationManager.Instance.Get("armory.tab.super_weapons", "Super Powers"));
             SetButtonLabel(quitButton, LocalizationManager.Instance.Get("common.back", "Back"));
         }
 
@@ -513,7 +621,7 @@ namespace ShooterB
                     GetWeaponIcon(weaponType));
             }
 
-            zeusThunderModel = ArmoryUIDataSource.BuildZeusThunderModel(GetWeaponIcon(Constants.WeaponType.TeslaGun));
+            zeusThunderModel = BuildZeusThunderModel();
         }
 
         private void OnZeusThunderPressed()
@@ -529,13 +637,22 @@ namespace ShooterB
             if (zeusThunderCard == null)
                 return;
 
-            zeusThunderModel = ArmoryUIDataSource.BuildZeusThunderModel(GetWeaponIcon(Constants.WeaponType.TeslaGun));
-            zeusThunderCard.Bind(zeusThunderModel, new WeaponCardVisualState
+            zeusThunderModel = BuildZeusThunderModel();
+            zeusThunderCard.Bind(zeusThunderModel, CurrentCoins >= Constants.ZEUS_THUNDER_COST);
+        }
+
+        private SuperPowerViewModel BuildZeusThunderModel()
+        {
+            return new SuperPowerViewModel
             {
-                isSelected = false,
-                isLocked = false,
-                canAfford = CurrentCoins >= Constants.ZEUS_THUNDER_COST
-            });
+                displayName = LocalizationManager.Instance.Get("superweapon.zeus.name", "Zeus Thunder"),
+                description = LocalizationManager.Instance.Get(
+                    "superweapon.zeus.description",
+                    "Drag Zeus into battle to call thunder from above and strike every duck on screen."),
+                cost = Constants.ZEUS_THUNDER_COST,
+                ownedCount = GameManager.Instance.ZeusThunderCount,
+                icon = Resources.Load<Sprite>(ZeusPowerIconResourcePath) ?? GetWeaponIcon(Constants.WeaponType.TeslaGun)
+            };
         }
 
         private void RefreshModalIfVisible()
@@ -558,6 +675,39 @@ namespace ShooterB
         {
             if (unlockModal != null)
                 unlockModal.Hide();
+        }
+
+        private void ShowTab(ArmoryTab tab)
+        {
+            activeTab = tab;
+
+            if (weaponsPanel != null)
+                weaponsPanel.SetActive(tab == ArmoryTab.Weapons);
+
+            if (superPowersPanel != null)
+                superPowersPanel.SetActive(tab == ArmoryTab.SuperPowers);
+
+            if (weaponsTabButton != null)
+            {
+                weaponsTabButton.interactable = true;
+                SetTabVisual(weaponsTabButton, tab == ArmoryTab.Weapons);
+            }
+
+            if (superPowersTabButton != null)
+            {
+                superPowersTabButton.interactable = true;
+                SetTabVisual(superPowersTabButton, tab == ArmoryTab.SuperPowers);
+            }
+        }
+
+        private static void SetTabVisual(Button button, bool active)
+        {
+            if (button == null)
+                return;
+
+            Image image = button.GetComponent<Image>();
+            if (image != null)
+                image.color = active ? ActiveTabColor : InactiveTabColor;
         }
 
         private Sprite GetWeaponIcon(Constants.WeaponType weaponType)
@@ -627,6 +777,36 @@ namespace ShooterB
             {
                 if (texts[i] != null && texts[i].gameObject.name == name)
                     return texts[i];
+            }
+
+            return null;
+        }
+
+        private Button FindButtonInSceneByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return null;
+
+            Button[] buttons = FindObjectsOfType<Button>(true);
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                if (buttons[i] != null && buttons[i].gameObject.name == name)
+                    return buttons[i];
+            }
+
+            return null;
+        }
+
+        private GameObject FindGameObjectInSceneByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return null;
+
+            Transform[] transforms = FindObjectsOfType<Transform>(true);
+            for (int i = 0; i < transforms.Length; i++)
+            {
+                if (transforms[i] != null && transforms[i].gameObject.name == name)
+                    return transforms[i].gameObject;
             }
 
             return null;

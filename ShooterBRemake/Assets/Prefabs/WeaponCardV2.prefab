@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1517446890222667334
 RectTransform:
   m_ObjectHideFlags: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34
+  m_fontSize: 28
   m_fontSizeBase: 34
   m_fontWeight: 400
   m_enableAutoSizing: 0
@@ -853,13 +853,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1517446890222667334}
-  - {fileID: 8163493058245422100}
   m_Father: {fileID: 7868918215518054250}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 134, y: 0}
+  m_SizeDelta: {x: 72, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8800963293624300632
 CanvasRenderer:
@@ -882,16 +881,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 0.92}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 198538158556077393, guid: 21198989758ef414a8cc06523a0020ba, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1429,8 +1428,9 @@ RectTransform:
   - {fileID: 7150134435944482790}
   - {fileID: 8959763851944360997}
   - {fileID: 4583775157728973566}
-  - {fileID: 1016774276199505775}
+  - {fileID: 8163493058245422100}
   - {fileID: 4671306548798305127}
+  - {fileID: 1016774276199505775}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1566,11 +1566,13 @@ MonoBehaviour:
   selectedBadge: {fileID: 3915060357414412563}
   lockedOverlay: {fileID: 3668141843042302168}
   unlockButton: {fileID: 6619085476618006957}
-  selectedBackgroundColor: {r: 0.16, g: 0.42, b: 0.22, a: 1}
-  unlockedBackgroundColor: {r: 0.15, g: 0.17, b: 0.22, a: 0.95}
-  lockedBackgroundColor: {r: 0.1, g: 0.1, b: 0.12, a: 0.95}
+  selectedBackgroundColor: {r: 0.22, g: 0.18, b: 0.12, a: 0.94}
+  unlockedBackgroundColor: {r: 0.16, g: 0.17, b: 0.2, a: 0.95}
+  lockedBackgroundColor: {r: 0.08, g: 0.09, b: 0.12, a: 0.95}
   canAffordCostColor: {r: 1, g: 0.9, b: 0.35, a: 1}
   cannotAffordCostColor: {r: 1, g: 0.45, b: 0.45, a: 1}
+  normalIconColor: {r: 1, g: 1, b: 1, a: 1}
+  lockedIconColor: {r: 0.42, g: 0.42, b: 0.42, a: 0.68}
 --- !u!1 &7560897614143920495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2000,7 +2002,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8163493058245422100
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2014,7 +2016,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2071963620652045251}
-  m_Father: {fileID: 4671306548798305127}
+  m_Father: {fileID: 7868918215518054250}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.68, y: 0.1}
   m_AnchorMax: {x: 0.95, y: 0.26}
@@ -2042,7 +2044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.22, g: 0.45, b: 0.75, a: 1}
+  m_Color: {r: 0.92, g: 0.62, b: 0.18, a: 0.95}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2069,7 +2071,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
   m_Navigation:
     m_Mode: 3

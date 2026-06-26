@@ -1224,8 +1224,8 @@ MonoBehaviour:
   rewardPanel: {fileID: 2348488922061002395}
   rewardImage: {fileID: 2176805016861421343}
   rewardText: {fileID: 2649128931353146450}
-  unlockedBackgroundColor: {r: 0.18, g: 0.34, b: 0.2, a: 1}
-  lockedBackgroundColor: {r: 0.18, g: 0.18, b: 0.2, a: 1}
+  unlockedBackgroundColor: {r: 0.22, g: 0.18, b: 0.12, a: 0.94}
+  lockedBackgroundColor: {r: 0.16, g: 0.17, b: 0.2, a: 0.95}
 --- !u!1 &6013192727290953961
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,8 +20,8 @@ namespace ShooterB
         public TextMeshProUGUI rewardText;
 
         [Header("State Colors")]
-        public Color unlockedBackgroundColor = new Color(0.18f, 0.34f, 0.2f, 1f);
-        public Color lockedBackgroundColor = new Color(0.18f, 0.18f, 0.2f, 1f);
+        public Color unlockedBackgroundColor = new Color(0.22f, 0.18f, 0.12f, 0.94f);
+        public Color lockedBackgroundColor = new Color(0.16f, 0.17f, 0.2f, 0.95f);
 
         public AchievementManager.AchievementId AchievementId { get; private set; }
 
@@ -100,8 +100,9 @@ namespace ShooterB
                         : lockedStatusText;
             }
 
-            if (backgroundImage != null)
-                backgroundImage.color = isUnlocked ? unlockedBackgroundColor : lockedBackgroundColor;
+            Image rowBackground = backgroundImage != null ? backgroundImage : GetComponent<Image>();
+            if (rowBackground != null)
+                rowBackground.color = isUnlocked ? unlockedBackgroundColor : lockedBackgroundColor;
 
             if (progressFillImage != null)
             {

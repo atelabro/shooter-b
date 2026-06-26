@@ -438,7 +438,7 @@ namespace ShooterB
             GameObject row = new GameObject($"Trophy_{state.entry.city}_{state.entry.duckType}", typeof(RectTransform), typeof(Image), typeof(HorizontalLayoutGroup));
             row.transform.SetParent(parent, false);
             row.GetComponent<Image>().color = discovered
-                ? new Color(0.16f, 0.2f, 0.18f, 0.96f)
+                ? new Color(0.22f, 0.18f, 0.12f, 0.94f)
                 : new Color(0.09f, 0.1f, 0.12f, 0.96f);
 
             LayoutElement rowLayout = row.AddComponent<LayoutElement>();
@@ -618,16 +618,16 @@ namespace ShooterB
             if (canvas == null)
                 return;
 
-            GameObject tabBar = new GameObject("AchievementsTabBar", typeof(RectTransform), typeof(HorizontalLayoutGroup));
+            GameObject tabBar = new GameObject("AchievementsTabBar", typeof(RectTransform), typeof(VerticalLayoutGroup));
             tabBar.transform.SetParent(canvas.transform, false);
             tabBarRoot = tabBar.GetComponent<RectTransform>();
-            tabBarRoot.anchorMin = new Vector2(0.12f, 0.79f);
-            tabBarRoot.anchorMax = new Vector2(0.88f, 0.87f);
+            tabBarRoot.anchorMin = new Vector2(0.05f, 0.48f);
+            tabBarRoot.anchorMax = new Vector2(0.2f, 0.76f);
             tabBarRoot.offsetMin = Vector2.zero;
             tabBarRoot.offsetMax = Vector2.zero;
 
-            HorizontalLayoutGroup layout = tabBar.GetComponent<HorizontalLayoutGroup>();
-            layout.spacing = 10f;
+            VerticalLayoutGroup layout = tabBar.GetComponent<VerticalLayoutGroup>();
+            layout.spacing = 12f;
             layout.childAlignment = TextAnchor.MiddleCenter;
             layout.childControlWidth = true;
             layout.childControlHeight = true;
@@ -647,9 +647,16 @@ namespace ShooterB
         {
             Button button = CreateTextButton(parent, $"{tab}TabButton");
             TextMeshProUGUI text = button.GetComponentInChildren<TextMeshProUGUI>(true);
-            text.fontSize = 24f;
-            text.fontSizeMax = 24f;
+            text.fontSize = 22f;
+            text.fontSizeMax = 22f;
             text.fontSizeMin = 14f;
+            LayoutElement layout = button.GetComponent<LayoutElement>();
+            if (layout != null)
+            {
+                layout.minHeight = 48f;
+                layout.preferredHeight = 60f;
+                layout.minWidth = 132f;
+            }
             button.onClick.AddListener(() => ShowTab(tab));
             return button;
         }
@@ -1052,8 +1059,14 @@ namespace ShooterB
                 return;
 
             RectTransform rect = scrollRect.GetComponent<RectTransform>();
-            if (rect != null && rect.anchorMax.y > 0.78f)
-                rect.anchorMax = new Vector2(rect.anchorMax.x, 0.77f);
+            if (rect != null)
+            {
+                if (rect.anchorMin.x < 0.21f)
+                    rect.anchorMin = new Vector2(0.21f, rect.anchorMin.y);
+
+                if (rect.anchorMax.y > 0.78f)
+                    rect.anchorMax = new Vector2(rect.anchorMax.x, 0.77f);
+            }
         }
 
         private string GetLocalizedTrophyCityName(DuckTrophyCity city)

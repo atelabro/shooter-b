@@ -9,5 +9,6 @@ In case of conflicts, prioritize the most specific and most recent user/develope
 
 ## Collaboration Preferences
 
-- Before editing any file, show the proposed change first and wait for user approval.
+- Before non-trivial edits, show the proposed change first and wait for user approval.
+- For small visual tweaks, typo fixes, or single-value prefab adjustments, proceed without approval.
 - Do not create commits unless the user explicitly asks for a commit.
